@@ -1,0 +1,32 @@
+﻿<Page
+    x:Class="Eurofurence.Companion.Views.BasicPage1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Eurofurence.Companion.Controls"
+    xmlns:local="using:Eurofurence.Companion.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+        DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=DebugViewModel}"
+    >
+
+
+    <Grid x:Name="LayoutRoot">
+
+        <StackPanel>
+            <TextBlock Text="{Binding Path=ContextManager.Status}"></TextBlock>
+            <TextBlock Text="{Binding Path=ContextManager.LastServerQuery}"></TextBlock>
+            <Button Click="Button_Click" Command="{Binding Path=ContextManager.UpdateCommand}" Content="Update"></Button>
+            <ProgressBar Height="50" Maximum="{Binding Path=ContextManager.SubOperationMaxValue}"
+                         Value="{Binding Path=ContextManager.SubOperationCurrentValue}"></ProgressBar>
+            <ProgressBar Height="50" Maximum="{Binding Path=ContextManager.MainOperationMaxValue}"
+                         Value="{Binding Path=ContextManager.MainOperationCurrentValue}"></ProgressBar>
+
+            <StackPanel>
+                <TextBlock Text="Last Update" Style="{StaticResource BaseTextBlockStyle}" />
+                <TextBlock Text="{Binding Path=ContextManager.LastServerQuery}" Style="{StaticResource SubheaderTextBlockStyle}" />
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
+</Page>
