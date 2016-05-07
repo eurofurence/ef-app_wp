@@ -13,6 +13,7 @@ namespace Eurofurence.Companion.DataStore
         ObservableCollection<Info> Infos { get; }
         ObservableCollection<InfoGroup> InfoGroups { get; }
         ObservableCollection<Image> Images { get; }
+        ObservableCollection<Dealer> Dealers { get; }
 
         Task RefreshAsync();
     }

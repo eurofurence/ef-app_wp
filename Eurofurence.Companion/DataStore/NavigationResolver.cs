@@ -23,13 +23,19 @@ namespace Eurofurence.Companion.DataStore
                 e.ConferenceTrack?.Entries.Add(e);
             }
 
-
             foreach (var e in dataContext.InfoGroups) e.Entries.Clear();
             foreach (var e in dataContext.Infos)
             {
                 e.Group = dataContext.InfoGroups.SingleOrDefault(a => a.Id == e.InfoGroupId);
 
                 e.Group?.Entries.Add(e);
+            }
+
+            foreach (var e in dataContext.Dealers)
+            {
+                e.ArtistImage = dataContext.Images.SingleOrDefault(a => a.Id == e.ArtistImageId);
+                e.ArtistThumbnailImage = dataContext.Images.SingleOrDefault(a => a.Id == e.ArtistThumbnailImageId);
+                e.ArtPreviewImage = dataContext.Images.SingleOrDefault(a => a.Id == e.ArtPreviewImageId);
             }
         }
     }

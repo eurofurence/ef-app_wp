@@ -33,6 +33,7 @@ namespace Eurofurence.Companion.DataModel
                 case "Info":
                 case "InfoGroup":
                 case "Image":
+                case "Dealer":
                     return type.Name;
             }
 

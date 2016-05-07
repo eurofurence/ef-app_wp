@@ -25,7 +25,7 @@
             <TextBlock Text="Event Schedule" Margin="0" Style="{ThemeResource HeaderTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}" FontSize="{ThemeResource TextStyleExtraLargePlusFontSize}" Foreground="White"/>
         </StackPanel>-->
 
-        <Border Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Border>
             <Pivot x:Name="eventPivot" Title="Grouped by:" HeaderTemplate="{StaticResource EventsHeaderTemplate}" >
                 <Pivot.TitleTemplate>
                     <DataTemplate>

@@ -9,12 +9,16 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Networking.Connectivity;
 using Windows.Storage;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -72,16 +76,21 @@ namespace Eurofurence.Companion
             }
 #endif
 
-            //RootFrame = Window.Current.Content as Frame;
-
             var layoutPage = new LayoutPage();
             KernelResolver.Current.Bind<ILayoutPage>().ToConstant(layoutPage);
-            
-
             Window.Current.Content = layoutPage;
 
 
+            var firstTimeRunResult = await HandleFirstTimeRunAsync();
+            if (firstTimeRunResult == FirstTimeRunResult.Close)
+            {
+                App.Current.Exit();
+                return;
+            }
+
             RootFrame = (Window.Current.Content as LayoutPage)?.RootFrame;
+
+            
 
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active.
@@ -135,9 +144,21 @@ namespace Eurofurence.Companion
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter.
-                if (!layoutPage.Navigate(typeof(Views.MainPage), e.Arguments))
+                if (!layoutPage.Navigate(typeof(Views.DealerListPage), e.Arguments))
                 {
                     throw new Exception("Failed to create initial page");
+                }
+
+                if (firstTimeRunResult == FirstTimeRunResult.RunAndSynchronize)
+                {
+                    layoutPage.Navigate(
+                        typeof(Views.LoadingPage),
+                        new Views.LoadingPage.LoadingPageOptions()
+                        {
+                            MustCompleteSuccessfully = true,
+                            AutoNavigateBackOnSuccess = true,
+                            AutoStartUpdateOnNavigatedTo = true
+                        });
                 }
             }
 
@@ -194,5 +215,49 @@ namespace Eurofurence.Companion
             HockeyClient.Current.HandleReactivationOfFeedbackFilePicker(args);
             base.OnActivated(args);
         }
+
+        public async Task<FirstTimeRunResult> HandleFirstTimeRunAsync()
+        {
+            var context = KernelResolver.Current.Get<ApplicationSettingsContext>();
+            if (context.LastServerQueryDateTimeUtc.HasValue)
+            {
+                return FirstTimeRunResult.RunNormally;
+            }
+
+            var connectionProfile = NetworkInformation.GetInternetConnectionProfile();
+            var connectivityLevel = connectionProfile.GetNetworkConnectivityLevel();
+            if (connectivityLevel != NetworkConnectivityLevel.InternetAccess)
+            {
+                var dlg = new MessageDialog("\nBefore you can use this application, we need to download some data from the Eurofurence servers to your phone.\n\nYour phone indicates that it currently does not have any internet connectivity.\n\nPlease restart the application again when your phone has internet connectivity.\n\nThis is only required once. When the convention data has been synchronized to your phone, you can use the app offline.\n\nThe application will now close.",
+                    "Welcome to the Eurofurence app for Windows Phone!");
+                {
+    
+                };
+
+                await dlg.ShowAsync();
+                return FirstTimeRunResult.Close;
+            }
+
+
+            FirstTimeRunResult dialogResult = FirstTimeRunResult.Close;
+
+            var messageDialog = new MessageDialog(
+                "\nBefore you can use this application, we need to download some data from the Eurofurence servers to your phone.\n\nThis will consume a few megabytes of traffic and can take anywhere from a few seconds up to a few minutes, depending on the speed of your connection.\n\nIs it okay to download the data now?\n\nChosing 'no' will close the application at this point.", "Welcome!");
+            messageDialog.Commands.Add(new UICommand("Yes", new UICommandInvokedHandler((cmd) => { dialogResult = FirstTimeRunResult.RunAndSynchronize; })));
+            messageDialog.Commands.Add(new UICommand("No", new UICommandInvokedHandler((cmd) => { dialogResult = FirstTimeRunResult.Close; })));
+
+            await messageDialog.ShowAsync();
+
+            return dialogResult;
+        }
+    }
+
+    public enum FirstTimeRunResult
+    {
+        RunNormally,
+        RunAndSynchronize,
+        Close
     }
 }
+
+

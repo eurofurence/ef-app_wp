@@ -14,7 +14,7 @@ namespace Eurofurence.Companion.DataStore
 {
     public class ContextManager : BindableBase
     {
-        private string _status = "";
+        
 
         private EurofurenceWebApiClient _apiClient;
         private IDataStore _dataStore;
@@ -37,17 +37,26 @@ namespace Eurofurence.Companion.DataStore
         public ICommand UpdateCommand { get; private set; }
         public ICommand ClearAllCommand { get; private set; }
 
-        public string Status { get { return _status; } set { SetProperty(ref _status, value); } }
-         
+        private string _mainOperationMessage = "";
+        public string MainOperationMessage { get { return _mainOperationMessage; } set { SetProperty(ref _mainOperationMessage, value); } }
+
+        private TaskStatus _updateStatus = TaskStatus.WaitingForActivation;
+        public TaskStatus UpdateStatus { get { return _updateStatus; } set { SetProperty(ref _updateStatus, value); } }
+
+
         public ContextManager(IDataStore dataStore, IDataContext dataContext, ApplicationSettingsContext applicationSettingsContext)
         {
             _dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
-            _apiClient = new EurofurenceWebApiClient("http://eurofurencewebapi.azurewebsites.net");
+            _apiClient = new EurofurenceWebApiClient(Consts.WEB_API_ENDPOINT_URL);
             _dataStore = dataStore;
             _dataContext = dataContext;
             _applicationSettingsContext = applicationSettingsContext;
 
-            Status = "Idle";
+            MainOperationMessage = "";
+
+            UpdateStatus = _applicationSettingsContext.LastServerQueryDateTimeUtc.HasValue ? 
+                TaskStatus.RanToCompletion : TaskStatus.WaitingToRun;
+
             UpdateCommand = new AwaitableCommand(Update);
             ClearAllCommand = new AwaitableCommand(ClearAll);
         }
@@ -70,7 +79,8 @@ namespace Eurofurence.Companion.DataStore
 
         public async Task Update()
         {
-            Status = "Busy";
+            UpdateStatus = TaskStatus.Running;
+            MainOperationMessage = "Initializing...";
 
             var metadata = await _apiClient.GetEndpointMetadataAsync();
 
@@ -86,10 +96,11 @@ namespace Eurofurence.Companion.DataStore
             entities.AddRange(await UpdateEntitiesAsync<Info>("Info", LastServerQueryDateTimeUtc));
             entities.AddRange(await UpdateEntitiesAsync<InfoGroup>("Info Group", LastServerQueryDateTimeUtc));
             entities.AddRange(await UpdateEntitiesAsync<Image>("Images Metadata", LastServerQueryDateTimeUtc));
+            entities.AddRange(await UpdateEntitiesAsync<Dealer>("Dealers", LastServerQueryDateTimeUtc));
 
             await UpdateImageDataAsync(entities.Where(a => a is Image).Cast<Image>());
 
-            Status = "Synchronizing";
+            MainOperationMessage = "Synchronizing...";
             await _dataStore.ApplyDeltaAsync(entities, async (current, max, id) =>
             {
                 await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
@@ -102,9 +113,10 @@ namespace Eurofurence.Companion.DataStore
             _applicationSettingsContext.LastServerQueryDateTimeUtc = metadata.CurrentDateTimeUtc;
             OnPropertyChanged(nameof(LastServerQueryDateTimeUtc));
 
-            Status = metadata.Configuration.First().Value;
-
             await _dataContext.RefreshAsync();
+
+            MainOperationMessage = "Done!";
+            UpdateStatus = TaskStatus.RanToCompletion;
         }
 
 
@@ -113,14 +125,14 @@ namespace Eurofurence.Companion.DataStore
             var imageList = images.ToList();
 
             await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { 
-                Status = "Images";
+                MainOperationMessage = "Downloading Image Content...";
                 SubOperationMaxValue = (ulong)imageList.Count;
                 SubOperationCurrentValue = 0;
             });
 
             foreach (var imageEntity in imageList)
             {
-                var content = await _apiClient.GetContentAsync(imageEntity.Url.Replace("{Endpoint}", "http://eurofurencewebapi.azurewebsites.net"));
+                var content = await _apiClient.GetContentAsync(imageEntity.Url.Replace("{Endpoint}", Consts.WEB_API_ENDPOINT_URL));
                 var bytes = content.ToCharArray().Select(a => (byte)a).ToArray();
 
                 imageEntity.Content = bytes;
@@ -133,21 +145,10 @@ namespace Eurofurence.Companion.DataStore
 
         private async Task<IList<T>> UpdateEntitiesAsync<T>(string entityName, DateTime? since)
         {
-            await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { Status = entityName; });
-
+            await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { MainOperationMessage = $"Downloading {entityName}..."; });
             var entities = await _apiClient.GetEntitiesAsync<T>(since);
 
-            //, async (progress) =>
-            //  {
-            //      //await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            //      //{
-            //      //    SubOperationCurrentValue = progress.BytesReceived;
-            //      //    SubOperationMaxValue = progress.TotalBytesToReceive ?? 0;
-            //      //});
-            //  })
-
             await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { MainOperationCurrentValue++; });
-
             return entities;
         }
 

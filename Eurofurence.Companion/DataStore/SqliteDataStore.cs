@@ -17,7 +17,8 @@ namespace Eurofurence.Companion.DataStore
             typeof(EventConferenceTrack),
             typeof(Info),
             typeof(InfoGroup),
-            typeof(Image)
+            typeof(Image),
+            typeof(Dealer)
         };
 
         public SqliteDataStore()

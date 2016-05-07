@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Eurofurence.Companion.DataModel.Api;
 using Eurofurence.Companion.DataModel;
+using Eurofurence.Companion.Common;
 
 namespace Eurofurence.Companion.DataStore
 {
@@ -14,7 +13,7 @@ namespace Eurofurence.Companion.DataStore
 
         public RealtimeApiAccessDataStore()
         {
-            _apiClient = new EurofurenceWebApiClient("https://eurofurencewebapi.azurewebsites.net/");
+            _apiClient = new EurofurenceWebApiClient(Consts.WEB_API_ENDPOINT_URL);
         }
 
         public async Task ApplyDeltaAsync(IEnumerable<EntityBase> entities, Action<int, int, string> progressCallback = null)

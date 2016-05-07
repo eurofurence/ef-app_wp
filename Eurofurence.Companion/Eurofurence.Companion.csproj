@@ -84,6 +84,7 @@
     </Compile>
     <Compile Include="Common\AwaitableCommand.cs" />
     <Compile Include="BindableBase.cs" />
+    <Compile Include="Common\Consts.cs" />
     <Compile Include="Common\NavigationHelper.cs" />
     <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Common\RelayCommand.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="SQLiteAsync.cs" />
     <Compile Include="ViewModel\Behaviors\WikiTextBoxProperties.cs" />
     <Compile Include="ViewModel\Converter\BytesToImageConverter.cs" />
+    <Compile Include="ViewModel\DealersViewModel.cs" />
     <Compile Include="ViewModel\DebugViewModel.cs" />
     <Compile Include="ViewModel\DummyNavigationProvider.cs" />
     <Compile Include="ViewModel\InfoViewModel.cs" />
@@ -139,14 +141,14 @@
     <Compile Include="Views\BasicPage1.xaml.cs">
       <DependentUpon>BasicPage1.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\DealerListPage.xaml.cs">
+      <DependentUpon>DealerListPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DebugPage.xaml.cs">
       <DependentUpon>DebugPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EventDetailPage.xaml.cs">
       <DependentUpon>EventDetailPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\EventListPage.xaml.cs">
-      <DependentUpon>EventListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EventsByDayPage.xaml.cs">
       <DependentUpon>EventsByDayPage.xaml</DependentUpon>
@@ -238,15 +240,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\DealerListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\DebugPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EventDetailPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\EventListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

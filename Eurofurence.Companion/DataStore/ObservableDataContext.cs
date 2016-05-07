@@ -16,6 +16,7 @@ namespace Eurofurence.Companion.DataStore
         public ObservableCollection<Info> Infos { get; private set; }
         public ObservableCollection<InfoGroup> InfoGroups { get; private set; }
         public ObservableCollection<Image> Images { get; private set; }
+        public ObservableCollection<Dealer> Dealers { get; private set; }
 
         private IDataStore _dataStore;
         private INavigationResolver _navigationResolver;
@@ -32,6 +33,7 @@ namespace Eurofurence.Companion.DataStore
             Infos = new ObservableCollection<Info>();
             InfoGroups = new ObservableCollection<InfoGroup>();
             Images = new ObservableCollection<Image>();
+            Dealers = new ObservableCollection<Dealer>();
 
             _navigationResolver.Resolve(this);
         }
@@ -45,6 +47,7 @@ namespace Eurofurence.Companion.DataStore
             await LoadAsync(Infos, nameof(Infos));
             await LoadAsync(InfoGroups, nameof(InfoGroups));
             await LoadAsync(Images, nameof(Images));
+            await LoadAsync(Dealers, nameof(Dealers));
             _navigationResolver.Resolve(this);
         }
 

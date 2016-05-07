@@ -35,6 +35,7 @@ namespace Eurofurence.Companion.Views
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+            this.navigationHelper.GoBackCommand = new RelayCommand((obj) => { App.Current.Exit(); });
         }
 
         /// <summary>

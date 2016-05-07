@@ -10,43 +10,10 @@
     mc:Ignorable="d"
     DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=EventsViewModel}"
     >
-    <Page.Background>
-        <ImageBrush ImageSource="ms-appx:///Assets/PageBackground.jpg" Stretch="UniformToFill"/>
-    </Page.Background>
 
     <Grid x:Name="LayoutRoot">
 
-        <!--<Grid.ChildrenTransitions>
-            <TransitionCollection>
-                <EntranceThemeTransition/>
-            </TransitionCollection>
-        </Grid.ChildrenTransitions>-->
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <!-- Title Panel -->
-
-
-        <!--<StackPanel x:Name="PanelTitle" DataContext="{Binding Path=EventConferenceDays[0]}" Grid.Row="0" Margin="0,0,0,0">
-            
-            --><!--<controls:HeaderBar Title="Event Schedule" Margin="10"></controls:HeaderBar>--><!--
-
-
-            <StackPanel Margin="19 0 0 5">
-                <TextBlock Text="Event Schedule" Style="{ThemeResource TitleTextBlockStyle}" Foreground="White"/>
-                <TextBlock Text="{Binding WeekdayFullname}" Margin="0" Style="{ThemeResource HeaderTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}" FontSize="{ThemeResource TextStyleExtraLargePlusFontSize}" Foreground="White"/>
-                <TextBlock Text="{Binding Name}" Style="{ThemeResource TitleTextBlockStyle}" FontSize="{ThemeResource TextStyleMediumFontSize}" FontWeight="Normal" Foreground="White"/>
-            </StackPanel>
-
-        </StackPanel>-->
-
-
-        <!--TODO: Content should be placed within the following grid-->
-        <Border Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Grid.Row="1">
-
+     
 
 
             <Grid x:Name="ContentRoot" Margin="19,9.5,19,0" DataContext="{Binding Path=EventEntries}">
@@ -91,6 +58,6 @@
                 </ListView>
             </Grid>
 
-        </Border>
+
     </Grid>
 </Page>

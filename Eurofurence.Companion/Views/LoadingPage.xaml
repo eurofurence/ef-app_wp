@@ -15,16 +15,31 @@
     </Page.Resources>
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="220*"/>
-            <RowDefinition Height="80*"/>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="40*"/>
-        </Grid.RowDefinitions>
+
+        <StackPanel Margin="20">
+            <TextBlock Style="{StaticResource BaseTextBlockStyle}">
+            Synchronizing.
+
+            </TextBlock>
+
+            <ProgressRing IsActive="True">
+                
+            </ProgressRing>
+
+            <TextBlock>Current Status:</TextBlock>
+            <TextBlock Text="{Binding Path=ContextManager.MainOperationMessage}"/>
+            <ProgressBar Height="30"
+                     Value="{Binding Path=ContextManager.SubOperationCurrentValue}"
+                     Maximum="{Binding Path=ContextManager.SubOperationMaxValue}"></ProgressBar>
 
 
-        <Viewbox Grid.Row="1" Margin="70">
+            <TextBlock>Overall Progress:</TextBlock>
+            <ProgressBar Height="30"
+                     Value="{Binding Path=ContextManager.MainOperationCurrentValue}"
+                     Maximum="{Binding Path=ContextManager.MainOperationMaxValue}"></ProgressBar>
+
+
+            <!--<Viewbox Grid.Row="1" Margin="70">
             <Path Fill="{ThemeResource PhoneForegroundBrush}" Data="{StaticResource WolfHead}" />
         </Viewbox>
 
@@ -53,7 +68,9 @@
 
         <TextBlock x:Name="label1" Style="{StaticResource TitleTextBlockStyle}" 
                    Grid.Row="3" Text="{Binding Path=ContextManager.Status}" 
-                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="99,14.667,99,13.833"></TextBlock>
+                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="99,14.667,99,13.833"></TextBlock>-->
+
+        </StackPanel>
 
     </Grid>
 </Page>

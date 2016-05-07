@@ -12,5 +12,6 @@ namespace Eurofurence.Companion.DependencyResolution
         public NavigationViewModel NavigationViewModel => KernelResolver.Current.Get<NavigationViewModel>();
         public LayoutViewModel LayoutViewModel => KernelResolver.Current.Get<LayoutViewModel>();
         public InfoViewModel InfoViewModel => KernelResolver.Current.Get<InfoViewModel>();
+        public DealersViewModel DealersViewModel => KernelResolver.Current.Get<DealersViewModel>();
     }
 }

@@ -32,6 +32,7 @@ namespace Eurofurence.Companion.DependencyResolution
             Bind<NavigationViewModel>().To<NavigationViewModel>();
             Bind<LayoutViewModel>().To<LayoutViewModel>();
             Bind<InfoViewModel>().To<InfoViewModel>();
+            Bind<DealersViewModel>().To<DealersViewModel>();
         }
     }
 }

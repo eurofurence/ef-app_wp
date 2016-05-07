@@ -28,6 +28,7 @@
             <DependencyResolution:ViewModelLocator x:Key="ViewModelLocator"></DependencyResolution:ViewModelLocator>
             <DataModel:StringFormatConverter x:Key="StringFormatConverter"></DataModel:StringFormatConverter>
             <Converter:BytesToImageConverter x:Key="BytesToImageConverter"></Converter:BytesToImageConverter>
+                       
             
 
 
