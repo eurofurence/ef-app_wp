@@ -1,0 +1,337 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E7787F83-46D7-4616-84CE-78F50B81F54A}</ProjectGuid>
+    <OutputType>AppContainerExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Eurofurence.Companion</RootNamespace>
+    <AssemblyName>Eurofurence.Companion</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <TargetPlatformVersion>8.1</TargetPlatformVersion>
+    <MinimumVisualStudioVersion>12</MinimumVisualStudioVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{76F1466A-8B6D-4E39-A767-685A06062A39};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_PHONE_APP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_PHONE_APP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_PHONE_APP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_PHONE_APP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_PHONE_APP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_PHONE_APP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\AwaitableCommand.cs" />
+    <Compile Include="BindableBase.cs" />
+    <Compile Include="Common\NavigationHelper.cs" />
+    <Compile Include="Common\ObservableDictionary.cs" />
+    <Compile Include="Common\RelayCommand.cs" />
+    <Compile Include="Common\SuspensionManager.cs" />
+    <Compile Include="Controls\HeaderBar.xaml.cs">
+      <DependentUpon>HeaderBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\StringFormatConverter.cs" />
+    <Compile Include="DataStore\ApplicationSettingsContext.cs" />
+    <Compile Include="DataStore\ContextManager.cs" />
+    <Compile Include="DataModel\EurofurenceWebApiClient.cs" />
+    <Compile Include="DataModel\Api\EndpointMetadataModel.cs" />
+    <Compile Include="DataModel\NavigationDataSource.cs" />
+    <Compile Include="DataModel\SampleDataSource.cs" />
+    <Compile Include="DataStore\IApplicationSettingsManager.cs" />
+    <Compile Include="DataStore\INavigationResolver.cs" />
+    <Compile Include="DataStore\ApplicationSettingsManager.cs" />
+    <Compile Include="DataStore\MockDataContext.cs" />
+    <Compile Include="DataStore\NavigationResolver.cs" />
+    <Compile Include="DataStore\RealtimeApiAccessDataStore.cs" />
+    <Compile Include="DataStore\IDataContext.cs" />
+    <Compile Include="DataStore\IDataStore.cs" />
+    <Compile Include="DataStore\ObservableDataContext.cs" />
+    <Compile Include="DataStore\SqliteDataStore.cs" />
+    <Compile Include="DependencyResolution\ResolverModule.cs" />
+    <Compile Include="DependencyResolution\KernelResolver.cs" />
+    <Compile Include="DependencyResolution\ViewModelLocator.cs" />
+    <Compile Include="HubPage.xaml.cs">
+      <DependentUpon>HubPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ItemPage.xaml.cs">
+      <DependentUpon>ItemPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SectionPage.xaml.cs">
+      <DependentUpon>SectionPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SQLite.cs" />
+    <Compile Include="SQLiteAsync.cs" />
+    <Compile Include="ViewModel\Behaviors\WikiTextBoxProperties.cs" />
+    <Compile Include="ViewModel\Converter\BytesToImageConverter.cs" />
+    <Compile Include="ViewModel\DebugViewModel.cs" />
+    <Compile Include="ViewModel\DummyNavigationProvider.cs" />
+    <Compile Include="ViewModel\InfoViewModel.cs" />
+    <Compile Include="ViewModel\EventsViewModel.cs" />
+    <Compile Include="ViewModel\ILayoutPage.cs" />
+    <Compile Include="ViewModel\IOrderKeyProvider.cs" />
+    <Compile Include="ViewModel\LayoutViewModel.cs" />
+    <Compile Include="ViewModel\NavigationViewModel.cs" />
+    <Compile Include="Views\AboutPage.xaml.cs">
+      <DependentUpon>AboutPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BasicPage1.xaml.cs">
+      <DependentUpon>BasicPage1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DebugPage.xaml.cs">
+      <DependentUpon>DebugPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EventDetailPage.xaml.cs">
+      <DependentUpon>EventDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EventListPage.xaml.cs">
+      <DependentUpon>EventListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EventsByDayPage.xaml.cs">
+      <DependentUpon>EventsByDayPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EventsPage.xaml.cs">
+      <DependentUpon>EventsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\InfoGroupDetailPage.xaml.cs">
+      <DependentUpon>InfoGroupDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\InfoPage.xaml.cs">
+      <DependentUpon>InfoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LayoutPage.xaml.cs">
+      <DependentUpon>LayoutPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoadingPage.xaml.cs">
+      <DependentUpon>LoadingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\BadgeLogo24x24.scale-240.png" />
+    <Content Include="Assets\Eurofurence\aewin10.jpg" />
+    <Content Include="Assets\Eurofurence\Volatile\background.jpg" />
+    <Content Include="Assets\Eurofurence\Volatile\background_blur.jpg" />
+    <Content Include="Assets\Eurofurence\Volatile\logo_small.png" />
+    <Content Include="Assets\Eurofurence\WolfHead.svg" />
+    <Content Include="Assets\MediumGray.png" />
+    <Content Include="Assets\Logo.scale-240.png" />
+    <Content Include="Assets\PageBackground.jpg" />
+    <Content Include="Assets\Square150x150Logo.scale-240.png" />
+    <Content Include="Assets\Square71x71Logo.scale-240.png" />
+    <Content Include="Assets\LuchsAvatar.png" />
+    <Content Include="Assets\SquareLogo44x44.scale-240.png" />
+    <Content Include="Assets\StoreLogo120x120.scale-240.png" />
+    <Content Include="Assets\WideLogo.scale-240.png" />
+    <Content Include="Assets\SplashScreen.scale-240.png" />
+    <Content Include="Common\ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DataModel\SampleData.json" />
+    <PRIResource Include="Strings\en-US\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Assets\Resources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Controls\HeaderBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HubPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ItemPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SectionPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AboutPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BasicPage1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DebugPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EventDetailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EventListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EventsByDayPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EventsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InfoGroupDetailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InfoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LayoutPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoadingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0">
+      <Name>Behaviors SDK %28XAML%29</Name>
+    </SDKReference>
+    <SDKReference Include="Microsoft.VCLibs, version=12.0">
+      <Name>Microsoft Visual C++ 2013 Runtime Package for Windows Phone</Name>
+    </SDKReference>
+    <SDKReference Include="SQLite.WP81, Version=3.10.2">
+      <Name>SQLite for Windows Phone 8.1</Name>
+    </SDKReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DataModel\NavigationData.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="HockeyApp, Version=2.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HockeySDK.WINRT.2.2.3\lib\portable-wpa81\HockeyApp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="HockeyAppPCL, Version=2.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HockeySDK.Core.2.2.3\lib\portable-net45+win8+wp8+wpa81+win81\HockeyAppPCL.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\portable-net45+wp80+win8+wpa81+dnxcore50\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject, Version=3.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Portable.Ninject.3.3.1\lib\Wpa81\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DataModel\SampleData\EventEntries.json" />
+    <Content Include="Assets\Fonts\segmdl2.ttf" />
+    <None Include="Assets\DesignTimeData\Info.json" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\_NonIncluded\" />
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
+    <VisualStudioVersion>12.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetPlatformIdentifier)' == '' ">
+    <TargetPlatformIdentifier>WindowsPhoneApp</TargetPlatformIdentifier>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
