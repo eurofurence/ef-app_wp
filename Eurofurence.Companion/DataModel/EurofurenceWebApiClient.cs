@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Windows.Storage.Streams;
 using Windows.Web.Http;
 using Windows.Web.Http.Filters;
 
@@ -52,7 +53,7 @@ namespace Eurofurence.Companion.DataModel
             return GetAsync<List<T>>(uri, progressCallback);
         }
 
-        public async Task<string> GetContentAsync(string url, Action<HttpProgress> progressCallback = null)
+        private async Task<T> GetResponseAsync<T>(Func<HttpResponseMessage, Task<T>> selector,  string url, Action<HttpProgress> progressCallback = null)
         {
             HttpBaseProtocolFilter filter = new HttpBaseProtocolFilter();
             filter.AutomaticDecompression = true;
@@ -74,16 +75,27 @@ namespace Eurofurence.Companion.DataModel
                 var response = await responseOperation;
                 response.EnsureSuccessStatusCode();
 
-                var content = await response.Content.ReadAsStringAsync();
-                return content;
+
+                T result = await selector.Invoke(response);
+                return result;
             }
+        }
+
+        public Task<string> GetContentAsStringAsync(string url, Action<HttpProgress> progressCallback = null)
+        {
+            return GetResponseAsync(async (response) => { return await response.Content.ReadAsStringAsync(); }, url, progressCallback);
+        }
+
+        public Task<IBuffer> GetContentAsBufferAsync(string url, Action<HttpProgress> progressCallback = null)
+        {
+            return GetResponseAsync(async (response) => { return await response.Content.ReadAsBufferAsync(); }, url, progressCallback);
         }
 
 
         private async Task<T> GetAsync<T>(string resource, Action<HttpProgress> progressCallback = null)
         {
             var url = $"{_endpointUrl}/{resource}";
-            var content = await GetContentAsync(url, progressCallback).ConfigureAwait(false);
+            var content = await GetContentAsStringAsync(url, progressCallback).ConfigureAwait(false);
             return JsonConvert.DeserializeObject<T>(content, new JsonSerializerSettings() { DateTimeZoneHandling = DateTimeZoneHandling.Utc });
         }
 

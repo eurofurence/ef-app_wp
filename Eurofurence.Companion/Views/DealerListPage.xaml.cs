@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Navigation;
 namespace Eurofurence.Companion.Views
 {
 
-    public sealed partial class DealerListPage : Page
+    public sealed partial class DealerListPage : Page, IPageProperties
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
@@ -42,12 +42,15 @@ namespace Eurofurence.Companion.Views
         {
         }
 
+        public const string PAGE_ICON = "\uE13D";
+        public string Title => Translations.Dealers_Title;
+        public string Icon => PAGE_ICON;
+
         #region NavigationHelper registration
 
-
+        
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            ViewModelLocator.Current.LayoutViewModel.LayoutPage.EnterPage("", "Dealers", "", "" + (char)0xE13D);
             this.navigationHelper.OnNavigatedTo(e);
         }
 

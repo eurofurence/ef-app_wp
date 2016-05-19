@@ -9,6 +9,7 @@ using Windows.UI.Core;
 using System.Collections.Generic;
 using Windows.ApplicationModel;
 using Eurofurence.Companion.Common;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace Eurofurence.Companion.DataStore
 {
@@ -132,8 +133,10 @@ namespace Eurofurence.Companion.DataStore
 
             foreach (var imageEntity in imageList)
             {
-                var content = await _apiClient.GetContentAsync(imageEntity.Url.Replace("{Endpoint}", Consts.WEB_API_ENDPOINT_URL));
-                var bytes = content.ToCharArray().Select(a => (byte)a).ToArray();
+                //var content = await _apiClient.GetContentAsStringAsync(imageEntity.Url.Replace("{Endpoint}", Consts.WEB_API_ENDPOINT_URL));
+
+                var content = await _apiClient.GetContentAsBufferAsync(imageEntity.Url.Replace("{Endpoint}", Consts.WEB_API_ENDPOINT_URL));
+                var bytes = content.ToArray();
 
                 imageEntity.Content = bytes;
 

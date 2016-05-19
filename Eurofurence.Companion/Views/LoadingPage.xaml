@@ -22,8 +22,9 @@
 
             </TextBlock>
 
-            <ProgressRing IsActive="True">
-                
+            <ProgressRing IsActive="True" Background="Transparent"
+                          Foreground="{StaticResource EurofurenceThemeColorBrush}">
+
             </ProgressRing>
 
             <TextBlock>Current Status:</TextBlock>

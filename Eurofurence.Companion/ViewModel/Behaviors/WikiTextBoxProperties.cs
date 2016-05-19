@@ -42,9 +42,6 @@ namespace Eurofurence.Companion.ViewModel.Behaviors
 
             var lines = html.Split(new char[] { '\n' });
 
-            
-
-
             int i = 0;
             foreach (var line in lines)
             {

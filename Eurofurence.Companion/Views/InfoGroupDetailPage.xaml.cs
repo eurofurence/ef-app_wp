@@ -1,28 +1,17 @@
 ﻿using Eurofurence.Companion.Common;
 using Eurofurence.Companion.DataModel.Api;
-using Eurofurence.Companion.DependencyResolution;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Graphics.Display;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 
 namespace Eurofurence.Companion.Views
 {
-    public sealed partial class InfoGroupDetailPage : Page
+    public sealed partial class InfoGroupDetailPage : Page, IPageProperties
     {
         private NavigationHelper navigationHelper;
         private InfoGroup typedViewModel => (this.DataContext as InfoGroup);
@@ -36,6 +25,10 @@ namespace Eurofurence.Companion.Views
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
         }
 
+        public string Title => typedViewModel?.Name ?? "";
+        public string Icon => "" + (char)0xEC42;
+
+
         public NavigationHelper NavigationHelper
         {
             get { return this.navigationHelper; }
@@ -43,15 +36,10 @@ namespace Eurofurence.Companion.Views
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-
             if (e.NavigationParameter is InfoGroup)
             {
                 var t = (e.NavigationParameter as InfoGroup);
                 this.DataContext = t;
-
-                ViewModelLocator.Current.LayoutViewModel.LayoutPage.EnterPage("General Convention Information",
-                    typedViewModel.Name, typedViewModel.Description);
-
             }
         }
 

@@ -49,6 +49,7 @@ namespace Eurofurence.Companion
         /// </summary>
         public App()
         {
+        
             this.InitializeComponent();
             this.Suspending += this.OnSuspending;
 
@@ -79,6 +80,7 @@ namespace Eurofurence.Companion
             var layoutPage = new LayoutPage();
             KernelResolver.Current.Bind<ILayoutPage>().ToConstant(layoutPage);
             Window.Current.Content = layoutPage;
+            layoutPage.OnLayoutPageRendered();
 
 
             var firstTimeRunResult = await HandleFirstTimeRunAsync();
@@ -141,13 +143,13 @@ namespace Eurofurence.Companion
                 RootFrame.ContentTransitions = null;
                 RootFrame.Navigated += this.RootFrame_FirstNavigated;
                 
-                // When the navigation stack isn't restored navigate to the first page,
-                // configuring the new page by passing required information as a navigation
-                // parameter.
-                if (!layoutPage.Navigate(typeof(Views.DealerListPage), e.Arguments))
-                {
-                    throw new Exception("Failed to create initial page");
-                }
+                //// When the navigation stack isn't restored navigate to the first page,
+                //// configuring the new page by passing required information as a navigation
+                //// parameter.
+                //if (!layoutPage.Navigate(typeof(Views.MainPage), e.Arguments))
+                //{
+                //    throw new Exception("Failed to create initial page");
+                //}
 
                 if (firstTimeRunResult == FirstTimeRunResult.RunAndSynchronize)
                 {
@@ -174,6 +176,7 @@ namespace Eurofurence.Companion
 
             var statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
             statusBar.ForegroundColor = Windows.UI.Color.FromArgb(50, 0xff, 0xff, 0xff);
+            await statusBar.HideAsync();
 
 
             // Ensure the current window is active.
@@ -228,7 +231,7 @@ namespace Eurofurence.Companion
             var connectivityLevel = connectionProfile.GetNetworkConnectivityLevel();
             if (connectivityLevel != NetworkConnectivityLevel.InternetAccess)
             {
-                var dlg = new MessageDialog("\nBefore you can use this application, we need to download some data from the Eurofurence servers to your phone.\n\nYour phone indicates that it currently does not have any internet connectivity.\n\nPlease restart the application again when your phone has internet connectivity.\n\nThis is only required once. When the convention data has been synchronized to your phone, you can use the app offline.\n\nThe application will now close.",
+                var dlg = new MessageDialog("Before you can use this application, we need to download some data from the Eurofurence servers to your phone.\n\nYour phone indicates that it currently does not have any internet connectivity.\n\nPlease restart the application again when your phone has internet connectivity.\n\nThis is only required once. When the convention data has been synchronized to your phone, you can use the app offline.\n\nThe application will now close.",
                     "Welcome to the Eurofurence app for Windows Phone!");
                 {
     
@@ -242,7 +245,7 @@ namespace Eurofurence.Companion
             FirstTimeRunResult dialogResult = FirstTimeRunResult.Close;
 
             var messageDialog = new MessageDialog(
-                "\nBefore you can use this application, we need to download some data from the Eurofurence servers to your phone.\n\nThis will consume a few megabytes of traffic and can take anywhere from a few seconds up to a few minutes, depending on the speed of your connection.\n\nIs it okay to download the data now?\n\nChosing 'no' will close the application at this point.", "Welcome!");
+                "Before you can use this application, we need to download some data from the Eurofurence servers to your phone.\n\nThis will consume a few megabytes of traffic and can take anywhere from a few seconds up to a few minutes, depending on the speed of your connection.\n\nIs it okay to download the data now?\n\nChosing 'no' will close the application at this point.", "Welcome!");
             messageDialog.Commands.Add(new UICommand("Yes", new UICommandInvokedHandler((cmd) => { dialogResult = FirstTimeRunResult.RunAndSynchronize; })));
             messageDialog.Commands.Add(new UICommand("No", new UICommandInvokedHandler((cmd) => { dialogResult = FirstTimeRunResult.Close; })));
 

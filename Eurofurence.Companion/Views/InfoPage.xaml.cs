@@ -23,7 +23,7 @@ namespace Eurofurence.Companion.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class InfoPage : Page
+    public sealed partial class InfoPage : Page, IPageProperties
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
@@ -53,6 +53,12 @@ namespace Eurofurence.Companion.Views
         {
             get { return this.defaultViewModel; }
         }
+
+        public const string PAGE_ICON = "\uEC42";
+
+        public string Title => Translations.ConventionInformation_Title;
+        public string Icon => PAGE_ICON;
+        
 
         /// <summary>
         /// Populates the page with content passed during navigation.  Any saved state is also

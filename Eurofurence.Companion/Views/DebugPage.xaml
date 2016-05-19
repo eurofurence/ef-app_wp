@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    xmlns:behaviors="using:Eurofurence.Companion.ViewModel.Behaviors"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=DebugViewModel}"
     >
@@ -57,6 +58,15 @@
             <Button Command="{Binding ContextManager.ClearAllCommand}">
                 Clear All
             </Button>
+            <RichTextBlock 
+                
+                FontSize="20"
+                Foreground="White"
+                behaviors:RichTextBlockProperties.Html="a b &lt;b&gt;foo&lt;/b&gt; bar &lt;br&gt;&lt;br&gt;Yohoo! &lt;ul&gt; &lt;li&gt;Meep&lt;/li&gt;&lt;/ul&gt;">
+                
+                
+            </RichTextBlock>
+            
         </StackPanel>
 
 

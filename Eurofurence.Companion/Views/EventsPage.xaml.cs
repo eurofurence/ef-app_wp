@@ -21,7 +21,7 @@ using Windows.UI.Xaml.Navigation;
 namespace Eurofurence.Companion.Views
 {
 
-    public sealed partial class EventsPage : Page
+    public sealed partial class EventsPage : Page, IPageProperties
     {
         private const string STATE_EVENTPIVOT_INDEX = "eventPivot.Index";
 
@@ -50,11 +50,12 @@ namespace Eurofurence.Companion.Views
             get { return this.defaultViewModel; }
         }
 
+        public const string PAGE_ICON = "\uE163";
+        public string Title => Translations.EventSchedule_Title;
+        public string Icon => PAGE_ICON;
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            ViewModelLocator.Current.LayoutViewModel.LayoutPage.EnterPage("", "Event Schedule", "Find out what's going on!", "" + (char)0xE163);
-
             eventPivot.SelectedIndex = (int)(e.PageState?[STATE_EVENTPIVOT_INDEX] ?? 0);
         }
 

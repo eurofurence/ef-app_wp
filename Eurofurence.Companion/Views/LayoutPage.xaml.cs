@@ -1,102 +1,118 @@
-﻿using Eurofurence.Companion.ViewModel;
+﻿using Eurofurence.Companion.DependencyResolution;
+using Eurofurence.Companion.ViewModel;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
 namespace Eurofurence.Companion.Views
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
+
     public sealed partial class LayoutPage : Page, ILayoutPage
     {
         private ContinuumNavigationTransitionInfo _defaultTransition;
 
         public Frame RootFrame { get { return _rootFrame; } }
 
+
+        private Lazy<NavigationViewModel> _navigationViewModel = new Lazy<NavigationViewModel>(() => { return ViewModelLocator.Current.NavigationViewModel; });
+
+        private bool _isMenuVisible = false;
+        public bool IsMenuVisible { get { return _isMenuVisible; } set { SetIsMenuVisible(value); } }
+
+        private void SetIsMenuVisible(bool value)
+        {
+            if (_isMenuVisible == value) return;
+
+            _isMenuVisible = value;
+            if (_isMenuVisible)
+            {
+                foreach(var item in _navigationViewModel.Value.MainMenu)
+                {
+                    item.IsActive = item.ChildTypes?.Contains(RootFrame.Content?.GetType()) ?? false;
+                }
+                menuShow.Begin();
+            } else
+            {
+                menuHide.Begin();
+            }
+        }
+
         public LayoutPage()
         {
             this.InitializeComponent();
             _defaultTransition = new ContinuumNavigationTransitionInfo();
+            _menuCompositeRenderTransform.TranslateX = -300;
 
+            RootFrame.Navigated += RootFrame_Navigated;
         }
 
-  
-
-        public bool Navigate(Type sourcePageType)
+        private void RootFrame_Navigated(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
         {
-            return RootFrame.Navigate(sourcePageType, null, _defaultTransition);
-        }
-
-        public bool Navigate(Type sourcePageType, object parameter)
-        {
-            return RootFrame.Navigate(sourcePageType, parameter, _defaultTransition);
-        }
-
-        public bool Navigate(Type sourcePageType, object parameter, NavigationTransitionInfo infoOverride)
-        {
-            return RootFrame.Navigate(sourcePageType, parameter, infoOverride);
-        }
-
-        public void EnterPage(string area, string title, string subtitle, string icon = "")
-        {
-            //var noHeader = String.IsNullOrWhiteSpace(area) && String.IsNullOrWhiteSpace(title) && String.IsNullOrWhiteSpace(subtitle);
-            //if (noHeader && PanelTitle.ActualHeight > 0)
-            //{
-            //    headerOut.Begin();
-            //}
-
-            //if (!noHeader && PanelTitle.ActualHeight < 55)
-            //{
-            //    headerIn.Begin();
-            //}
+            var pageProperties = (e.Content as IPageProperties);
+            if (pageProperties == null) return;
 
             EventHandler<object> action = null;
-            action = (object sender, object e) =>
+            action = (_s, _e) =>
             {
-                //tbArea.Text = area;
-                tbTitle.Text = title.ToUpperInvariant();
-                tbIcon.Text = icon;
-                //tbSubtitle.Text = subtitle;
+                tbTitle.Text = pageProperties.Title;
+                tbIcon.Text = pageProperties.Icon;
 
                 transitionOut.Completed -= action;
                 transitionIn.Begin();
             };
-                       
 
             transitionOut.Completed += action;
             transitionOut.Begin();
         }
 
-
-        private void TransitionOut_Completed(object sender, object e)
+        public bool Navigate(Type sourcePageType, bool forceNewStack = false)
         {
-            throw new NotImplementedException();
+            if (forceNewStack && !_forceNewStack()) return false;
+            IsMenuVisible = false;
+            return RootFrame.Navigate(sourcePageType, null, _defaultTransition);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        public bool Navigate(Type sourcePageType, object parameter, bool forceNewStack = false)
         {
-            headerIn.Begin();
+            if (forceNewStack && !_forceNewStack()) return false;
+            IsMenuVisible = false;
+            return RootFrame.Navigate(sourcePageType, parameter, _defaultTransition);
+        }
+
+        public bool Navigate(Type sourcePageType, object parameter, NavigationTransitionInfo infoOverride, bool forceNewStack = false)
+        {
+            if (forceNewStack && !_forceNewStack()) return false;
+            IsMenuVisible = false;
+            return RootFrame.Navigate(sourcePageType, parameter, infoOverride);
+        }
+
+        [Obsolete]
+        public void EnterPage(string area, string title, string subtitle, string icon = "")
+        {
 
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private bool _forceNewStack()
         {
-            headerOut.Begin();
+            if (!RootFrame.Navigate(typeof(MainPage))) return false;
+
+            RootFrame.BackStack.Clear();
+            RootFrame.ForwardStack.Clear();
+
+            return true;
+        }
+
+        private void ContentPresenter_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            IsMenuVisible = !IsMenuVisible;
+        }
+
+        public void OnLayoutPageRendered()
+        {
+            _menuListView.DataContext = _navigationViewModel.Value.MainMenu;
         }
 
 

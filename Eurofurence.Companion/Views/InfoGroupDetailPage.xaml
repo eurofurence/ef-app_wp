@@ -13,9 +13,10 @@
         <Grid Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">
             <ScrollViewer x:Name="svMain">
                 <StackPanel>
-                    <TextBlock Foreground="{ThemeResource PhoneMidBrush}"
+                    <TextBlock Foreground="{ThemeResource PhoneAccentBrush}"
                         Style="{StaticResource BodyTextBlockStyle}"
-                               FontSize="{StaticResource TextStyleExtraLargeFontSize}"
+                        FontSize="{StaticResource TextStyleMediumFontSize}"
+                        FontWeight="Bold"
                         Text="Table of Contents" />
 
                     <ListView 
@@ -47,23 +48,29 @@
                             <DataTemplate>
                                 <StackPanel Margin="0 0 0 20">
                                     <Grid>
-                                        <TextBlock 
+                                        <TextBlock Foreground="{ThemeResource PhoneAccentBrush}"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        FontSize="{StaticResource TextStyleMediumFontSize}"
+                        FontWeight="Bold"
+                        Text="{Binding Title}" />
+                                        <!--<TextBlock 
                                             Margin="0 0 40 10"
                                             Foreground="{ThemeResource PhoneMidBrush}"
                                             Style="{StaticResource BodyTextBlockStyle}"
                                             FontSize="{StaticResource TextStyleExtraLargeFontSize}"
-                                                Text="{Binding Title}" />
+                                                Text="{Binding Title}" />-->
 
-                                        <TextBlock Margin="0 5 0 0"  Text="&#xE898;"
+                                        <TextBlock Margin="0 0 0 0"  Text="&#xE898;"
                                                      Tapped="TextBlock_Tapped"
                                             HorizontalAlignment="Right"
                                                      FontSize="{StaticResource TextStyleExtraLargeFontSize}"
                                             FontFamily="{StaticResource IconFontFamily}" />
                                         
                                     </Grid>
-                                    <Grid Background="{ThemeResource AppLowContrastTransparentBackgroundBrush}">
-                                        <TextBlock Margin="10" Text="{Binding Text}" 
-                               Style="{StaticResource BodyTextBlockStyle}" FontSize="14"
+                                    <Grid>
+                                        <TextBlock Text="{Binding Text}" 
+                               Style="{StaticResource BodyTextBlockStyle}" 
+                                            FontSize="{StaticResource TextStyleMediumFontSize}"
                                TextWrapping="WrapWholeWords"></TextBlock>
                                     </Grid>
                                     <!--<TextBlock Text="{Binding Text}" 
