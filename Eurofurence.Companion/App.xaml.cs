@@ -142,14 +142,14 @@ namespace Eurofurence.Companion
 
                 RootFrame.ContentTransitions = null;
                 RootFrame.Navigated += this.RootFrame_FirstNavigated;
-                
+
                 //// When the navigation stack isn't restored navigate to the first page,
                 //// configuring the new page by passing required information as a navigation
                 //// parameter.
-                //if (!layoutPage.Navigate(typeof(Views.MainPage), e.Arguments))
-                //{
-                //    throw new Exception("Failed to create initial page");
-                //}
+                if (!layoutPage.Navigate(typeof(Views.MainPage), e.Arguments))
+                {
+                    throw new Exception("Failed to create initial page");
+                }
 
                 if (firstTimeRunResult == FirstTimeRunResult.RunAndSynchronize)
                 {

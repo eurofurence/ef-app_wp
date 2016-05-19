@@ -21,7 +21,8 @@ namespace Eurofurence.Companion.ViewModel
         public RelayCommand NavigateToEventsByDayPage { get; set; }
         public RelayCommand NavigateToEventDetailPage { get; set; }
         public RelayCommand NavigateToLoadingPage { get; set; }
-        public RelayCommand NavigateToDealersListPage { get; set; }
+        public RelayCommand NavigateToDealerListPage { get; set; }
+        public RelayCommand NavigateToDealerDetailPage { get; set; }
         public RelayCommand NavigateToAboutPage { get; set; }
 
         public ObservableCollection<NavigationMenuItem> MainMenu => _navigationProvider.MainMenu;
@@ -40,7 +41,8 @@ namespace Eurofurence.Companion.ViewModel
             NavigateToEventsByDayPage = new RelayCommand(p => { _layoutPage.Navigate(typeof(Views.EventsByDayPage), p); });
             NavigateToEventDetailPage = new RelayCommand(p => { _layoutPage.Navigate(typeof(Views.EventDetailPage), p); });
             NavigateToLoadingPage = new RelayCommand(p => { _layoutPage.Navigate(typeof(Views.LoadingPage), p); });
-            NavigateToDealersListPage = new RelayCommand(p => { _layoutPage.Navigate(typeof(Views.DealerListPage), p); });
+            NavigateToDealerListPage = new RelayCommand(p => { _layoutPage.Navigate(typeof(Views.DealerListPage), p); });
+            NavigateToDealerDetailPage = new RelayCommand(p => { _layoutPage.Navigate(typeof(Views.DealerDetailPage), p); });
             NavigateToAboutPage = new RelayCommand(p => { _layoutPage.Navigate(typeof(Views.AboutPage), p); });
             
             

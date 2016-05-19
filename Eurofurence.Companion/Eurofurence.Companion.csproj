@@ -151,6 +151,9 @@
     <Compile Include="Views\BasicPage1.xaml.cs">
       <DependentUpon>BasicPage1.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\DealerDetailPage.xaml.cs">
+      <DependentUpon>DealerDetailPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DealerListPage.xaml.cs">
       <DependentUpon>DealerListPage.xaml</DependentUpon>
     </Compile>
@@ -250,6 +253,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BasicPage1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DealerDetailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

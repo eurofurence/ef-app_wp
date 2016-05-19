@@ -29,7 +29,14 @@ namespace Eurofurence.Companion.ViewModel
         private void UpdateSearchResults()
         {
             DealerSearchResults.Clear();
-            if (String.IsNullOrWhiteSpace(_searchText)) return;
+            if (String.IsNullOrWhiteSpace(_searchText))
+            {
+                foreach(var dealer in Dealers)
+                {
+                    DealerSearchResults.Add(dealer);
+                }
+                return;
+            }
 
             foreach (var result in Dealers.Where(e => e.DisplayName.ToLower().Contains(_searchText.ToLower())))
             {
@@ -42,7 +49,7 @@ namespace Eurofurence.Companion.ViewModel
             _dataContext = dataContext;
             DealerSearchResults = new ObservableCollection<Dealer>();
 
-            if (DesignMode.DesignModeEnabled) SearchText = "Hen";
+            //if (DesignMode.DesignModeEnabled) SearchText = "";
         }
     }
 }

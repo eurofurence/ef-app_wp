@@ -154,7 +154,10 @@ namespace Eurofurence.Companion.DataModel.Api
         public Guid? ArtPreviewImageId { get; set; }
 
         [SQLite.Ignore]
-        public object SortOrderKey => AttendeeNickname;
+        public string UIDisplayName => !string.IsNullOrWhiteSpace(DisplayName) ? DisplayName : AttendeeNickname;
+
+        [SQLite.Ignore]
+        public object SortOrderKey => UIDisplayName;
 
         [SQLite.Ignore]
         public virtual Image ArtistThumbnailImage { get; set; }
