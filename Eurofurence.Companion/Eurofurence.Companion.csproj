@@ -16,6 +16,7 @@
     <ProjectTypeGuids>{76F1466A-8B6D-4E39-A767-685A06062A39};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundlePlatforms>arm</AppxBundlePlatforms>
+    <AppxBundle>Auto</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -89,6 +90,7 @@
     <Compile Include="Common\Consts.cs" />
     <Compile Include="Common\INavigationProvider.cs" />
     <Compile Include="Common\NavigationHelper.cs" />
+    <Compile Include="Common\NavigationMenuItem.cs" />
     <Compile Include="Common\NavigationProvider.cs" />
     <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Common\RelayCommand.cs" />
@@ -102,6 +104,11 @@
     <Compile Include="DataModel\Api\Image.cs" />
     <Compile Include="DataModel\Api\Info.cs" />
     <Compile Include="DataModel\Api\InfoGroup.cs" />
+    <Compile Include="Translations.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Translations.tt</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\Behaviors\RichTextBlockProperties.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="Controls\HeaderBar.xaml.cs">
@@ -205,6 +212,10 @@
     <Content Include="Assets\SplashScreen.scale-240.png" />
     <Content Include="Assets\WideLogo310x150.scale-240.png" />
     <Content Include="Common\ReadMe.txt" />
+    <Content Include="Translations.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Translations.cs</LastGenOutput>
+    </Content>
     <Content Include="ViewModel\Behaviors\RichTextBlockHtml2Xaml.xslt" />
     <None Include="Package.StoreAssociation.xml" />
   </ItemGroup>
@@ -333,7 +344,6 @@
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Translations.resw">
-      <Generator>ReswFileCodeGenerator</Generator>
       <LastGenOutput>Translations.cs</LastGenOutput>
     </PRIResource>
   </ItemGroup>
