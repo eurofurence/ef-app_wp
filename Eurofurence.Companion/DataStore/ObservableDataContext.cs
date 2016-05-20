@@ -1,25 +1,17 @@
-﻿using Eurofurence.Companion.DataModel.Api;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
+using Eurofurence.Companion.DataModel.Api;
 using Eurofurence.Companion.ViewModel;
 
 namespace Eurofurence.Companion.DataStore
 {
     public class ObservableDataContext : BindableBase, IDataContext
     {
-        public ObservableCollection<EventEntry> EventEntries { get; private set; }
-        public ObservableCollection<EventConferenceDay> EventConferenceDays { get; private set; }
-        public ObservableCollection<EventConferenceRoom> EventConferenceRooms { get; private set; }
-        public ObservableCollection<EventConferenceTrack> EventConferenceTracks { get; private set; }
-        public ObservableCollection<Info> Infos { get; private set; }
-        public ObservableCollection<InfoGroup> InfoGroups { get; private set; }
-        public ObservableCollection<Image> Images { get; private set; }
-        public ObservableCollection<Dealer> Dealers { get; private set; }
-
-        private IDataStore _dataStore;
-        private INavigationResolver _navigationResolver;
+        private readonly IDataStore _dataStore;
+        private readonly INavigationResolver _navigationResolver;
 
         public ObservableDataContext(IDataStore dataStore, INavigationResolver navigationResolver)
         {
@@ -38,6 +30,15 @@ namespace Eurofurence.Companion.DataStore
             _navigationResolver.Resolve(this);
         }
 
+        public ObservableCollection<EventEntry> EventEntries { get; }
+        public ObservableCollection<EventConferenceDay> EventConferenceDays { get; }
+        public ObservableCollection<EventConferenceRoom> EventConferenceRooms { get; }
+        public ObservableCollection<EventConferenceTrack> EventConferenceTracks { get; }
+        public ObservableCollection<Info> Infos { get; }
+        public ObservableCollection<InfoGroup> InfoGroups { get; }
+        public ObservableCollection<Image> Images { get; }
+        public ObservableCollection<Dealer> Dealers { get; }
+
         public async Task RefreshAsync()
         {
             await LoadAsync(EventEntries, nameof(EventEntries));
@@ -51,16 +52,11 @@ namespace Eurofurence.Companion.DataStore
             _navigationResolver.Resolve(this);
         }
 
-        private Task BuildNavigation()
-        {
-            return Task.Delay(1);
-        }
-
-        private async Task LoadAsync<T>(ObservableCollection<T> target, string propertyName) where T : EntityBase, new()
+        private async Task LoadAsync<T>(ICollection<T> target, string propertyName) where T : EntityBase, new()
         {
             var entities = await _dataStore.GetAsync<T>();
 
-            if (typeof(ISortOrderKeyProvider).GetTypeInfo().IsAssignableFrom(typeof(T).GetTypeInfo()))
+            if (typeof (ISortOrderKeyProvider).GetTypeInfo().IsAssignableFrom(typeof (T).GetTypeInfo()))
             {
                 entities = entities.OrderBy(a => (a as ISortOrderKeyProvider).SortOrderKey).ToList();
             }

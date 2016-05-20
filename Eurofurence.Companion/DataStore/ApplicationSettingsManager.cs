@@ -1,5 +1,6 @@
 ﻿using System;
 using Windows.Storage;
+using Newtonsoft.Json;
 
 namespace Eurofurence.Companion.DataStore
 {
@@ -12,12 +13,10 @@ namespace Eurofurence.Companion.DataStore
                 var values = ApplicationData.Current.LocalSettings.Values;
                 if (values.ContainsKey(key) && values[key] is string)
                 {
-                    return Newtonsoft.Json.JsonConvert.DeserializeObject<T>((string)values[key]);
+                    return JsonConvert.DeserializeObject<T>((string) values[key]);
                 }
-                else
-                {
-                    return defaultValue;
-                }
+
+                return defaultValue;
             }
             catch (Exception)
             {
@@ -28,10 +27,8 @@ namespace Eurofurence.Companion.DataStore
         public void Set<T>(string key, T value)
         {
             var values = ApplicationData.Current.LocalSettings.Values;
-            values[key] = Newtonsoft.Json.JsonConvert.SerializeObject(value); 
+            values[key] = JsonConvert.SerializeObject(value);
             ApplicationData.Current.SignalDataChanged();
         }
     }
-
-
 }

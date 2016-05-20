@@ -111,9 +111,6 @@
     </Compile>
     <Compile Include="ViewModel\Behaviors\RichTextBlockProperties.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
-    <Compile Include="Controls\HeaderBar.xaml.cs">
-      <DependentUpon>HeaderBar.xaml</DependentUpon>
-    </Compile>
     <Compile Include="DataModel\StringFormatConverter.cs" />
     <Compile Include="DataStore\ApplicationSettingsContext.cs" />
     <Compile Include="DataStore\ContextManager.cs" />
@@ -139,6 +136,7 @@
     <Compile Include="SQLiteAsync.cs" />
     <Compile Include="ViewModel\Behaviors\WikiTextBoxProperties.cs" />
     <Compile Include="ViewModel\Converter\BytesToImageConverter.cs" />
+    <Compile Include="ViewModel\Converter\WikiTextConverter.cs" />
     <Compile Include="ViewModel\DealersViewModel.cs" />
     <Compile Include="ViewModel\DebugViewModel.cs" />
     <Compile Include="ViewModel\MockLayoutPage.cs" />
@@ -211,7 +209,6 @@
     <Content Include="Assets\StoreLogo120x120.scale-240.png" />
     <Content Include="Assets\SplashScreen.scale-240.png" />
     <Content Include="Assets\WideLogo310x150.scale-240.png" />
-    <Content Include="Common\ReadMe.txt" />
     <Content Include="Translations.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Translations.cs</LastGenOutput>
@@ -226,18 +223,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DataModel\SampleData.json" />
-    <PRIResource Include="Strings\en-US\Resources.resw" />
-  </ItemGroup>
-  <ItemGroup>
     <Page Include="Assets\Resources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Page>
-    <Page Include="Controls\HeaderBar.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -308,9 +297,6 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DataModel\NavigationData.json" />
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="HockeyApp, Version=2.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\HockeySDK.WINRT.2.2.3\lib\portable-wpa81\HockeyApp.dll</HintPath>
       <Private>True</Private>
@@ -333,7 +319,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DataModel\SampleData\EventEntries.json" />
     <Content Include="Assets\Fonts\segmdl2.ttf" />
     <None Include="Assets\DesignTimeData\Info.json" />
     <Content Include="Assets\Fonts\ef_app_icons.ttf" />

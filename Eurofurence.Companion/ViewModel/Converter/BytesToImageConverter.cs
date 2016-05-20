@@ -2,7 +2,6 @@
 using System.Text;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace Eurofurence.Companion.ViewModel.Converter
@@ -33,28 +32,6 @@ namespace Eurofurence.Companion.ViewModel.Converter
             return null;
         }
         
-        public object ConvertBack(object value, Type targetType, object parameter, string language)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    
-    public class WikiTextConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, string language)
-        {
-            if (value != null && value is string && targetType == typeof(InlineCollection))
-            {
-
-                
-                
-
-
-            }
-            return null;
-        }
-
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             throw new NotImplementedException();
