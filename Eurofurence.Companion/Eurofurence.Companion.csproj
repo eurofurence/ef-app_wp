@@ -92,6 +92,16 @@
     <Compile Include="Common\NavigationProvider.cs" />
     <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Common\RelayCommand.cs" />
+    <Compile Include="DataModel\Api\Dealer.cs" />
+    <Compile Include="DataModel\Api\Endpoint.cs" />
+    <Compile Include="DataModel\Api\EndpointConfiguration.cs" />
+    <Compile Include="DataModel\Api\EventConferenceDay.cs" />
+    <Compile Include="DataModel\Api\EventConferenceRoom.cs" />
+    <Compile Include="DataModel\Api\EventConferenceTrack.cs" />
+    <Compile Include="DataModel\Api\EventEntry.cs" />
+    <Compile Include="DataModel\Api\Image.cs" />
+    <Compile Include="DataModel\Api\Info.cs" />
+    <Compile Include="DataModel\Api\InfoGroup.cs" />
     <Compile Include="Translations.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -106,7 +116,7 @@
     <Compile Include="DataStore\ApplicationSettingsContext.cs" />
     <Compile Include="DataStore\ContextManager.cs" />
     <Compile Include="DataModel\EurofurenceWebApiClient.cs" />
-    <Compile Include="DataModel\Api\EndpointMetadataModel.cs" />
+    <Compile Include="DataModel\Api\EntityBase.cs" />
     <Compile Include="DataModel\NavigationDataSource.cs" />
     <Compile Include="DataModel\SampleDataSource.cs" />
     <Compile Include="DataStore\IApplicationSettingsManager.cs" />
@@ -287,8 +297,8 @@
     <SDKReference Include="Microsoft.VCLibs, version=12.0">
       <Name>Microsoft Visual C++ 2013 Runtime Package for Windows Phone</Name>
     </SDKReference>
-    <SDKReference Include="SQLite.WP81, Version=3.10.2">
-      <Name>SQLite for Windows Phone 8.1</Name>
+    <SDKReference Include="SQLite.WP81, Version=3.13.0">
+      <Name>SQLite for Windows Phone 8.1 %28SQLite.WP81, Version=3.13.0%29</Name>
     </SDKReference>
   </ItemGroup>
   <ItemGroup>

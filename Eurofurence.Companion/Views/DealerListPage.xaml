@@ -49,7 +49,7 @@
                                 </Border>
                                 <StackPanel Grid.Column="1">
 
-                                    <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="{Binding UIDisplayName}" />
+                                    <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="{Binding UiDisplayName}" />
                                     <!--<TextBlock Foreground="{ThemeResource EurofurenceThemeColorBrush}" Text="{Binding ShortDescription}" />-->
 
                                 </StackPanel>

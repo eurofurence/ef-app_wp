@@ -12,7 +12,7 @@ namespace Eurofurence.Companion.Views
         private Dealer _currentDealer;
 
         public string Icon => "";
-        public string Title => _currentDealer?.UIDisplayName;
+        public string Title => _currentDealer?.UiDisplayName;
 
         public DealerDetailPage()
         {
