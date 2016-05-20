@@ -102,11 +102,6 @@
     <Compile Include="DataModel\Api\Image.cs" />
     <Compile Include="DataModel\Api\Info.cs" />
     <Compile Include="DataModel\Api\InfoGroup.cs" />
-    <Compile Include="Translations.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Translations.resw</DependentUpon>
-    </Compile>
     <Compile Include="ViewModel\Behaviors\RichTextBlockProperties.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="Controls\HeaderBar.xaml.cs">
@@ -341,6 +336,9 @@
       <Generator>ReswFileCodeGenerator</Generator>
       <LastGenOutput>Translations.cs</LastGenOutput>
     </PRIResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
