@@ -20,15 +20,16 @@ namespace Eurofurence.Companion.DependencyResolution
             {
                 Bind<IDataContext>().To<MockDataContext>().InSingletonScope();
                 Bind<ILayoutPage>().To<MockLayoutPage>().InSingletonScope();
-                Bind<INavigationProvider>().To<MockNavigationProvider>().InSingletonScope();
                 Bind<IDataStore>().To<RealtimeApiAccessDataStore>().InSingletonScope();
            }
             else
             {
                 Bind<IDataContext>().To<ObservableDataContext>().InSingletonScope();
                 Bind<IDataStore>().To<SqliteDataStore>().InSingletonScope();
-                Bind<INavigationProvider>().To<NavigationProvider>().InSingletonScope();
+                
             }
+
+            Bind<INavigationProvider>().To<NavigationProvider>().InSingletonScope();
 
             Bind<DebugViewModel>().To<DebugViewModel>();
             Bind<EventsViewModel>().To<EventsViewModel>().InSingletonScope();

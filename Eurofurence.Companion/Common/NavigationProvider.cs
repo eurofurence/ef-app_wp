@@ -5,30 +5,6 @@ using System.Collections.ObjectModel;
 
 namespace Eurofurence.Companion.Common
 {
-    public class MockNavigationProvider: INavigationProvider
-    {
-        public ObservableCollection<NavigationMenuItem> MainMenu { get; private set; }
-
-        public MockNavigationProvider()
-        {
-            MainMenu = new ObservableCollection<NavigationMenuItem>()
-            {
-                new NavigationMenuItem {
-                    Title = "Item 1",
-                    Icon = "\uEC42"
-                },
-                new NavigationMenuItem {
-                    Title = "Item 2",
-                    Icon = "\uE163"
-                },
-                new NavigationMenuItem {
-                    Title = "Item 3",
-                    Icon = "\uE13D"
-                }
-            };
-        }
-
-    }
 
     public class NavigationProvider : INavigationProvider
     {
@@ -81,17 +57,5 @@ namespace Eurofurence.Companion.Common
                 }
             };
         }
-    }
-
-    public class NavigationMenuItem : BindableBase
-    {
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public string Icon { get; set; }
-        public RelayCommand NavigationCommand { get; set; }
-        public ICollection<Type> ChildTypes { get; set; }
-
-        private bool _isActive = false;
-        public bool IsActive { get { return _isActive; } set { SetProperty(ref _isActive, value); } }
     }
 }
