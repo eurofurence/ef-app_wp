@@ -129,4 +129,7 @@
   <data name="Info_Title" xml:space="preserve">
     <value>Convention Info</value>
   </data>
+  <data name="Main_Title" xml:space="preserve">
+    <value>Eurofurence</value>
+  </data>
 </root>

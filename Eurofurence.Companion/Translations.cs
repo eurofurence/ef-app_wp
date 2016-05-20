@@ -23,5 +23,8 @@ namespace Eurofurence.Companion
 
         public static string Info_Title 
 			=> _resourceLoader.GetString("Info_Title"); 
+
+        public static string Main_Title 
+			=> _resourceLoader.GetString("Main_Title"); 
     }
 }
