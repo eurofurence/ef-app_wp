@@ -13,8 +13,8 @@ namespace Eurofurence.Companion.DependencyResolution
             Bind<ContextManager>().To<ContextManager>().InSingletonScope();
             Bind<INavigationResolver>().To<NavigationResolver>().InSingletonScope();
             Bind<IApplicationSettingsManager>().To<ApplicationSettingsManager>();
+            Bind<INavigationMediator>().To<NavigationMediator>().InSingletonScope();
             Bind<ApplicationSettingsContext>().To<ApplicationSettingsContext>();
-
 
             if (DesignMode.DesignModeEnabled)
             {
@@ -26,7 +26,6 @@ namespace Eurofurence.Companion.DependencyResolution
             {
                 Bind<IDataContext>().To<ObservableDataContext>().InSingletonScope();
                 Bind<IDataStore>().To<SqliteDataStore>().InSingletonScope();
-                
             }
 
             Bind<INavigationProvider>().To<NavigationProvider>().InSingletonScope();

@@ -259,163 +259,163 @@
 
                     </ListView>
 
-                    <Border Grid.Row="1" 
+                    <Border Grid.Row="1"
                             BorderBrush="#30000000"
                             BorderThickness="0 5 0 0">
                         <ListView>
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                            </Style>
-                        </ListView.ItemContainerStyle>
-                        <ListView.Items>
-                            <ListViewItem>
-                                <ListViewItem.Content>
-                                    <Grid DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=DebugViewModel.ContextManager}">
-                                        <interactivity:Interaction.Behaviors>
-                                            <interactivity:BehaviorCollection>
-                                                <core:EventTriggerBehavior EventName="Tapped">
-                                                    <core:InvokeCommandAction Command="{Binding UpdateCommand}" />
-                                                </core:EventTriggerBehavior>
-                                                <core:DataTriggerBehavior Binding="{Binding UpdateStatus,
-                                                                                            Converter={StaticResource StringFormatConverter},
-                                                                                            ConverterParameter='\{0\}'}"
-                                                                          ComparisonCondition="Equal"
-                                                                          Value="Running">
-                                                    <core:ChangePropertyAction PropertyName="Visibility"
-                                                                               TargetObject="{Binding ElementName=_update_StatusGrid}"
-                                                                               Value="Visible" />
-                                                    <core:ChangePropertyAction PropertyName="Visibility"
-                                                                               TargetObject="{Binding ElementName=_update_TextBox_LastServerQuery}"
-                                                                               Value="Collapsed" />
-                                                    <core:ChangePropertyAction PropertyName="Opacity"
-                                                                               TargetObject="{Binding ElementName=_update_Icon}"
-                                                                               Value="0.7" />
-                                                </core:DataTriggerBehavior>
-                                                <core:DataTriggerBehavior Binding="{Binding UpdateStatus,
-                                                                                            Converter={StaticResource StringFormatConverter},
-                                                                                            ConverterParameter='\{0\}'}"
-                                                                          ComparisonCondition="NotEqual"
-                                                                          Value="Running">
-                                                    <core:ChangePropertyAction PropertyName="Visibility"
-                                                                               TargetObject="{Binding ElementName=_update_StatusGrid}"
-                                                                               Value="Collapsed" />
-                                                    <core:ChangePropertyAction PropertyName="Visibility"
-                                                                               TargetObject="{Binding ElementName=_update_TextBox_LastServerQuery}"
-                                                                               Value="Visible" />
-                                                    <core:ChangePropertyAction PropertyName="Opacity"
-                                                                               TargetObject="{Binding ElementName=_update_Icon}"
-                                                                               Value="1.0" />
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.Items>
+                                <ListViewItem>
+                                    <ListViewItem.Content>
+                                        <Grid DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=DebugViewModel.ContextManager}">
+                                            <interactivity:Interaction.Behaviors>
+                                                <interactivity:BehaviorCollection>
+                                                    <core:EventTriggerBehavior EventName="Tapped">
+                                                        <core:InvokeCommandAction Command="{Binding UpdateCommand}" />
+                                                    </core:EventTriggerBehavior>
+                                                    <core:DataTriggerBehavior Binding="{Binding UpdateStatus,
+                                                                                                Converter={StaticResource StringFormatConverter},
+                                                                                                ConverterParameter='\{0\}'}"
+                                                                              ComparisonCondition="Equal"
+                                                                              Value="Running">
+                                                        <core:ChangePropertyAction PropertyName="Visibility"
+                                                                                   TargetObject="{Binding ElementName=_update_StatusGrid}"
+                                                                                   Value="Visible" />
+                                                        <core:ChangePropertyAction PropertyName="Visibility"
+                                                                                   TargetObject="{Binding ElementName=_update_TextBox_LastServerQuery}"
+                                                                                   Value="Collapsed" />
+                                                        <core:ChangePropertyAction PropertyName="Opacity"
+                                                                                   TargetObject="{Binding ElementName=_update_Icon}"
+                                                                                   Value="0.7" />
+                                                    </core:DataTriggerBehavior>
+                                                    <core:DataTriggerBehavior Binding="{Binding UpdateStatus,
+                                                                                                Converter={StaticResource StringFormatConverter},
+                                                                                                ConverterParameter='\{0\}'}"
+                                                                              ComparisonCondition="NotEqual"
+                                                                              Value="Running">
+                                                        <core:ChangePropertyAction PropertyName="Visibility"
+                                                                                   TargetObject="{Binding ElementName=_update_StatusGrid}"
+                                                                                   Value="Collapsed" />
+                                                        <core:ChangePropertyAction PropertyName="Visibility"
+                                                                                   TargetObject="{Binding ElementName=_update_TextBox_LastServerQuery}"
+                                                                                   Value="Visible" />
+                                                        <core:ChangePropertyAction PropertyName="Opacity"
+                                                                                   TargetObject="{Binding ElementName=_update_Icon}"
+                                                                                   Value="1.0" />
 
 
 
-                                                </core:DataTriggerBehavior>
-                                            </interactivity:BehaviorCollection>
-                                        </interactivity:Interaction.Behaviors>
+                                                    </core:DataTriggerBehavior>
+                                                </interactivity:BehaviorCollection>
+                                            </interactivity:Interaction.Behaviors>
 
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="60" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="60" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
 
-                                        <Border Grid.Column="0"
-                                                Width="60"
-                                                Height="60"
-                                                HorizontalAlignment="Left"
-                                                VerticalAlignment="Top">
-                                            <Grid>
-                                                <TextBlock Name="_update_Icon"
-                                                           HorizontalAlignment="Center"
-                                                           VerticalAlignment="Center"
-                                                           FontFamily="{StaticResource IconFontFamily}"
-                                                           FontSize="25"
-                                                           Foreground="White"
-                                                           Text="&#xE149;" />
-                                                <ProgressRing Name="_update_ProgressRing"
-                                                              MinWidth="0"
-                                                              MinHeight="0"
-                                                              Margin="10"
-                                                              Background="Transparent"
-                                                              Foreground="White"
-                                                              IsActive="False" />
-                                            </Grid>
-                                        </Border>
+                                            <Border Grid.Column="0"
+                                                    Width="60"
+                                                    Height="60"
+                                                    HorizontalAlignment="Left"
+                                                    VerticalAlignment="Top">
+                                                <Grid>
+                                                    <TextBlock Name="_update_Icon"
+                                                               HorizontalAlignment="Center"
+                                                               VerticalAlignment="Center"
+                                                               FontFamily="{StaticResource IconFontFamily}"
+                                                               FontSize="25"
+                                                               Foreground="White"
+                                                               Text="&#xE149;" />
+                                                    <ProgressRing Name="_update_ProgressRing"
+                                                                  MinWidth="0"
+                                                                  MinHeight="0"
+                                                                  Margin="10"
+                                                                  Background="Transparent"
+                                                                  Foreground="White"
+                                                                  IsActive="False" />
+                                                </Grid>
+                                            </Border>
 
-                                        <StackPanel Grid.Column="1"
-                                                    Margin="10 0 0 0"
-                                                    VerticalAlignment="Center">
-                                            <TextBlock Style="{StaticResource AppLayoutMenuItemTextBlockStyle}" Text="Update" />
-                                            <TextBlock x:Name="_update_TextBox_LastServerQuery"
-                                                       Height="20"
-                                                       Style="{StaticResource AppLayoutMenuSubItemTextBlockStyle}">
-                                                <Run Text="Last Update:" />
-                                                <Run FontWeight="Bold" Text="{Binding LastServerQueryDateTimeUtc}" />
-                                            </TextBlock>
-                                            <Grid Name="_update_StatusGrid"
-                                                  Height="20"
-                                                  Visibility="Collapsed">
-                                                <ProgressBar Name="_update_ProgressBar"
-                                                             Height="5"
-                                                             Margin="0 0 20 0"
-                                                             VerticalAlignment="Bottom"
-                                                             Background="{StaticResource AppLowContrastTransparentBackgroundBrush}"
-                                                             Foreground="{StaticResource AppLowContrastTransparentBackgroundBrush}"
-                                                             Maximum="{Binding MainOperationMaxValue}"
-                                                             Value="{Binding MainOperationCurrentValue}" />
-                                                <TextBlock x:Name="_update_TextBox_Status"
-                                                           Style="{StaticResource AppLayoutMenuSubItemTextBlockStyle}"
-                                                           Text="{Binding MainOperationMessage}" />
-                                            </Grid>
-                                        </StackPanel>
-                                    </Grid>
-                                </ListViewItem.Content>
-                            </ListViewItem>
-                            <ListViewItem>
-                                <ListViewItem.Content>
-                                    <Grid>
-                                        <interactivity:Interaction.Behaviors>
-                                            <interactivity:BehaviorCollection>
-                                                <core:EventTriggerBehavior EventName="Tapped">
-                                                    <core:InvokeCommandAction Command="{Binding UpdateCommand}" />
-                                                </core:EventTriggerBehavior>
-                                            </interactivity:BehaviorCollection>
-                                        </interactivity:Interaction.Behaviors>
+                                            <StackPanel Grid.Column="1"
+                                                        Margin="10 0 0 0"
+                                                        VerticalAlignment="Center">
+                                                <TextBlock Style="{StaticResource AppLayoutMenuItemTextBlockStyle}" Text="Update" />
+                                                <TextBlock x:Name="_update_TextBox_LastServerQuery"
+                                                           Height="20"
+                                                           Style="{StaticResource AppLayoutMenuSubItemTextBlockStyle}">
+                                                    <Run Text="Last Update:" />
+                                                    <Run FontWeight="Bold" Text="{Binding LastServerQueryDateTimeUtc}" />
+                                                </TextBlock>
+                                                <Grid Name="_update_StatusGrid"
+                                                      Height="20"
+                                                      Visibility="Collapsed">
+                                                    <ProgressBar Name="_update_ProgressBar"
+                                                                 Height="5"
+                                                                 Margin="0 0 20 0"
+                                                                 VerticalAlignment="Bottom"
+                                                                 Background="{StaticResource AppLowContrastTransparentBackgroundBrush}"
+                                                                 Foreground="{StaticResource AppLowContrastTransparentBackgroundBrush}"
+                                                                 Maximum="{Binding MainOperationMaxValue}"
+                                                                 Value="{Binding MainOperationCurrentValue}" />
+                                                    <TextBlock x:Name="_update_TextBox_Status"
+                                                               Style="{StaticResource AppLayoutMenuSubItemTextBlockStyle}"
+                                                               Text="{Binding MainOperationMessage}" />
+                                                </Grid>
+                                            </StackPanel>
+                                        </Grid>
+                                    </ListViewItem.Content>
+                                </ListViewItem>
+                                <ListViewItem>
+                                    <ListViewItem.Content>
+                                        <Grid>
+                                            <interactivity:Interaction.Behaviors>
+                                                <interactivity:BehaviorCollection>
+                                                    <core:EventTriggerBehavior EventName="Tapped">
+                                                        <core:InvokeCommandAction Command="{Binding Source={StaticResource ViewModelLocator}, Path=NavigationViewModel.NavigateToAboutPage}" />
+                                                    </core:EventTriggerBehavior>
+                                                </interactivity:BehaviorCollection>
+                                            </interactivity:Interaction.Behaviors>
 
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="60" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="60" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
 
-                                        <Border Grid.Column="0"
-                                                Width="60"
-                                                Height="60"
-                                                HorizontalAlignment="Left"
-                                                VerticalAlignment="Top">
-                                            <Grid>
-                                                <TextBlock HorizontalAlignment="Center"
-                                                           VerticalAlignment="Center"
-                                                           FontFamily="{StaticResource IconFontFamily}"
-                                                           FontSize="25"
-                                                           Foreground="White"
-                                                           Text="&#xE76E;" />
+                                            <Border Grid.Column="0"
+                                                    Width="60"
+                                                    Height="60"
+                                                    HorizontalAlignment="Left"
+                                                    VerticalAlignment="Top">
+                                                <Grid>
+                                                    <TextBlock HorizontalAlignment="Center"
+                                                               VerticalAlignment="Center"
+                                                               FontFamily="{StaticResource IconFontFamily}"
+                                                               FontSize="25"
+                                                               Foreground="White"
+                                                               Text="&#xE76E;" />
 
-                                            </Grid>
-                                        </Border>
+                                                </Grid>
+                                            </Border>
 
-                                        <StackPanel Grid.Column="1"
-                                                    Margin="10 0 0 0"
-                                                    VerticalAlignment="Center">
-                                            <TextBlock Style="{StaticResource AppLayoutMenuItemTextBlockStyle}" Text="About" />
-                                            <TextBlock Height="20" Style="{StaticResource AppLayoutMenuSubItemTextBlockStyle}">
-                                                Version<Run Text="{Binding Source={StaticResource ViewModelLocator}, Path=DebugViewModel.AppVersion}" />
-                                            </TextBlock>
-                                        </StackPanel>
-                                    </Grid>
-                                </ListViewItem.Content>
-                            </ListViewItem>
+                                            <StackPanel Grid.Column="1"
+                                                        Margin="10 0 0 0"
+                                                        VerticalAlignment="Center">
+                                                <TextBlock Style="{StaticResource AppLayoutMenuItemTextBlockStyle}" Text="About" />
+                                                <TextBlock Height="20" Style="{StaticResource AppLayoutMenuSubItemTextBlockStyle}">
+                                                    Version<Run Text="{Binding Source={StaticResource ViewModelLocator}, Path=DebugViewModel.AppVersion}" />
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </Grid>
+                                    </ListViewItem.Content>
+                                </ListViewItem>
 
-                        </ListView.Items>
-                    </ListView>
+                            </ListView.Items>
+                        </ListView>
                     </Border>
                     <!--<TextBlock Grid.Row="2" VerticalAlignment="Bottom" />-->
                 </Grid>

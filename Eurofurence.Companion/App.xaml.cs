@@ -47,6 +47,7 @@ namespace Eurofurence.Companion
             if (_isInitialized) return;
 
             var contextManager = KernelResolver.Current.Get<ContextManager>();
+            var navigationMediator = KernelResolver.Current.Get<INavigationMediator>();
             await contextManager.InitializeAsync();
 
 #if DEBUG
@@ -55,7 +56,7 @@ namespace Eurofurence.Companion
                 //this.DebugSettings.EnableFrameRateCounter = true;
             }
 #endif
-            var layoutPage = new LayoutPage();
+            var layoutPage = new LayoutPage(navigationMediator);
             KernelResolver.Current.Bind<ILayoutPage>().ToConstant(layoutPage);
             Window.Current.Content = layoutPage;
             layoutPage.OnLayoutPageRendered();
@@ -123,14 +124,14 @@ namespace Eurofurence.Companion
                 //// When the navigation stack isn't restored navigate to the first page,
                 //// configuring the new page by passing required information as a navigation
                 //// parameter.
-                if (!layoutPage.Navigate(typeof (MainPage), e.Arguments))
+                if (!navigationMediator.Navigate(typeof (MainPage), e.Arguments))
                 {
                     throw new Exception("Failed to create initial page");
                 }
 
                 if (firstTimeRunResult == FirstTimeRunResult.RunAndSynchronize)
                 {
-                    layoutPage.Navigate(
+                    navigationMediator.Navigate(
                         typeof (LoadingPage),
                         new LoadingPage.LoadingPageOptions
                         {

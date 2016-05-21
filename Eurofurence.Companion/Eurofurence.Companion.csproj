@@ -89,7 +89,9 @@
     <Compile Include="BindableBase.cs" />
     <Compile Include="Common\Consts.cs" />
     <Compile Include="Common\INavigationProvider.cs" />
+    <Compile Include="Common\NavigationEvent.cs" />
     <Compile Include="Common\NavigationHelper.cs" />
+    <Compile Include="Common\NavigationMediator.cs" />
     <Compile Include="Common\NavigationMenuItem.cs" />
     <Compile Include="Common\NavigationProvider.cs" />
     <Compile Include="Common\ObservableDictionary.cs" />
@@ -139,6 +141,7 @@
     <Compile Include="ViewModel\Converter\WikiTextConverter.cs" />
     <Compile Include="ViewModel\DealersViewModel.cs" />
     <Compile Include="ViewModel\DebugViewModel.cs" />
+    <Compile Include="Common\INavigationMediator.cs" />
     <Compile Include="ViewModel\MockLayoutPage.cs" />
     <Compile Include="ViewModel\InfoViewModel.cs" />
     <Compile Include="ViewModel\EventsViewModel.cs" />

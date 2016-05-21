@@ -1,5 +1,4 @@
-﻿using Eurofurence.Companion.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -8,13 +7,13 @@ namespace Eurofurence.Companion.Common
 
     public class NavigationProvider : INavigationProvider
     {
-        private ILayoutPage _layoutPage;
+        private INavigationMediator _navigationMediator;
 
         public ObservableCollection<NavigationMenuItem> MainMenu { get; private set; }
 
-        public NavigationProvider(ILayoutPage layoutPage)
+        public NavigationProvider(INavigationMediator navigationMediator)
         {
-            _layoutPage = layoutPage;
+            _navigationMediator = navigationMediator;
             BuildMainMenu();
         }
 
@@ -27,7 +26,7 @@ namespace Eurofurence.Companion.Common
                     Icon = Views.InfoPage.PAGE_ICON,
                     Description = "Helpful information across all areas & departments",
                     NavigationCommand = new RelayCommand(p => {
-                        _layoutPage.Navigate(typeof(Views.InfoPage), forceNewStack: true);
+                        _navigationMediator.Navigate(typeof(Views.InfoPage), forceNewStack: true);
                     }),
                     ChildTypes = new List<Type>() {
                         typeof(Views.InfoPage),
@@ -39,7 +38,7 @@ namespace Eurofurence.Companion.Common
                     Icon = Views.EventsPage.PAGE_ICON,
                     Description = "What's happening, when & where",
                     NavigationCommand = new RelayCommand(p => {
-                        _layoutPage.Navigate(typeof(Views.EventsPage), forceNewStack: true);
+                        _navigationMediator.Navigate(typeof(Views.EventsPage), forceNewStack: true);
                     }),
                     ChildTypes = new List<Type>() {
                         typeof(Views.EventsPage),
@@ -52,7 +51,7 @@ namespace Eurofurence.Companion.Common
                     Icon = Views.DealerListPage.PAGE_ICON,
                     Description = "What's happening, when & where",
                     NavigationCommand = new RelayCommand(p => {
-                        _layoutPage.Navigate(typeof(Views.DealerListPage), forceNewStack: true);
+                        _navigationMediator.Navigate(typeof(Views.DealerListPage), forceNewStack: true);
                     })
                 }
             };

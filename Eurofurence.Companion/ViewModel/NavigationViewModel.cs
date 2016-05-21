@@ -1,16 +1,11 @@
 ﻿using Eurofurence.Companion.Common;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Eurofurence.Companion.ViewModel
 {
-
-
     public class NavigationViewModel : BindableBase
     {
-        private ILayoutPage _layoutPage;
+        private INavigationMediator _navigationMediator;
         private INavigationProvider _navigationProvider;
 
         public RelayCommand NavigateToMainPage { get; set; }
@@ -27,26 +22,22 @@ namespace Eurofurence.Companion.ViewModel
 
         public ObservableCollection<NavigationMenuItem> MainMenu => _navigationProvider.MainMenu;
 
-
-        public NavigationViewModel(ILayoutPage layoutPage, INavigationProvider navigationProvider)
+        public NavigationViewModel(INavigationMediator navigationMediator, INavigationProvider navigationProvider)
         {
-            _layoutPage = layoutPage;
+            _navigationMediator = navigationMediator;
             _navigationProvider = navigationProvider;
 
-            NavigateToMainPage = new RelayCommand(_ => { _layoutPage.Navigate(typeof(Views.MainPage)); });
-            NavigateToDebugPage = new RelayCommand(_ => { _layoutPage.Navigate(typeof(Views.DebugPage)); });
-            NavigateToInfoPage = new RelayCommand(_ => { _layoutPage.Navigate(typeof(Views.InfoPage)); });
-            NavigateToInfoGroupDetailPage = new RelayCommand(p => { _layoutPage.Navigate(typeof(Views.InfoGroupDetailPage), p); });
-            NavigateToEventsPage = new RelayCommand(_ => { _layoutPage.Navigate(typeof(Views.EventsPage)); });
-            NavigateToEventsByDayPage = new RelayCommand(p => { _layoutPage.Navigate(typeof(Views.EventsByDayPage), p); });
-            NavigateToEventDetailPage = new RelayCommand(p => { _layoutPage.Navigate(typeof(Views.EventDetailPage), p); });
-            NavigateToLoadingPage = new RelayCommand(p => { _layoutPage.Navigate(typeof(Views.LoadingPage), p); });
-            NavigateToDealerListPage = new RelayCommand(p => { _layoutPage.Navigate(typeof(Views.DealerListPage), p); });
-            NavigateToDealerDetailPage = new RelayCommand(p => { _layoutPage.Navigate(typeof(Views.DealerDetailPage), p); });
-            NavigateToAboutPage = new RelayCommand(p => { _layoutPage.Navigate(typeof(Views.AboutPage), p); });
-            
-            
+            NavigateToMainPage = new RelayCommand(_ => { _navigationMediator.Navigate(typeof(Views.MainPage)); });
+            NavigateToDebugPage = new RelayCommand(_ => { _navigationMediator.Navigate(typeof(Views.DebugPage)); });
+            NavigateToInfoPage = new RelayCommand(_ => { _navigationMediator.Navigate(typeof(Views.InfoPage)); });
+            NavigateToInfoGroupDetailPage = new RelayCommand(p => { _navigationMediator.Navigate(typeof(Views.InfoGroupDetailPage), p); });
+            NavigateToEventsPage = new RelayCommand(_ => { _navigationMediator.Navigate(typeof(Views.EventsPage)); });
+            NavigateToEventsByDayPage = new RelayCommand(p => { _navigationMediator.Navigate(typeof(Views.EventsByDayPage), p); });
+            NavigateToEventDetailPage = new RelayCommand(p => { _navigationMediator.Navigate(typeof(Views.EventDetailPage), p); });
+            NavigateToLoadingPage = new RelayCommand(p => { _navigationMediator.Navigate(typeof(Views.LoadingPage), p); });
+            NavigateToDealerListPage = new RelayCommand(p => { _navigationMediator.Navigate(typeof(Views.DealerListPage), p); });
+            NavigateToDealerDetailPage = new RelayCommand(p => { _navigationMediator.Navigate(typeof(Views.DealerDetailPage), p); });
+            NavigateToAboutPage = new RelayCommand(p => { _navigationMediator.Navigate(typeof(Views.AboutPage), p); });
         }
-
     }
 }

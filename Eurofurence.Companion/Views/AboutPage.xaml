@@ -1,43 +1,59 @@
-﻿<Page
-    x:Class="Eurofurence.Companion.Views.AboutPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Eurofurence.Companion.Views"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+﻿<Page x:Class="Eurofurence.Companion.Views.AboutPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:Eurofurence.Companion.Views"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+      mc:Ignorable="d">
 
     <Grid x:Name="LayoutRoot" Margin="19 0 19 0">
 
         <StackPanel>
 
 
-            <TextBlock Style="{StaticResource TitleTextBlockStyle}">Disclaimer:</TextBlock>
 
-            <TextBlock Style="{StaticResource BaseTextBlockStyle}" Foreground="{ThemeResource PhoneMidBrush}" FontSize="12" LineHeight="15"
-                       TextAlignment="Justify">
-                THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+            <TextBlock Margin="0 20 0 0" Style="{StaticResource SubheaderTextBlockStyle}">About</TextBlock>
+
+            <TextBlock>
+                Version<Run Text="{Binding Source={StaticResource ViewModelLocator}, Path=DebugViewModel.AppVersion}" />
             </TextBlock>
-            
-            <TextBlock Margin="0 20 0 0" Style="{StaticResource TitleTextBlockStyle}">Developed by:</TextBlock>
 
             <Grid>
-                <Image Source="ms-appx:///Assets/LuchsAvatar.png" VerticalAlignment="Bottom"
+                <Image Height="150"
+                       Margin="0 0 0 0"
                        HorizontalAlignment="Left"
-                       Height="200"
-                       Margin="-30 0 0 0" RenderTransformOrigin="0.5,0.5">
-                </Image>
+                       VerticalAlignment="Bottom"
+                       RenderTransformOrigin="0.5,0.5"
+                       Source="ms-appx:///Assets/LuchsAvatar.png" />
                 <StackPanel Margin="150 20 0 0">
+                    <TextBlock Foreground="{ThemeResource PhoneLowBrush}">Developed by:</TextBlock>
                     <TextBlock Style="{StaticResource BaseTextBlockStyle}">Luchs</TextBlock>
-                    <TextBlock Margin="20 0 0 0">
-                        Luchs @ <Hyperlink NavigateUri="https://www.furaffinity.net/user/luchs/"><Underline>Furaffinity</Underline></Hyperlink>
+                    <TextBlock Margin="20 0 0 0" FontSize="13">
                         <LineBreak />
-                        Luchs @ <Hyperlink NavigateUri="https://www.soundcloud.com/luchs/"><Underline>SoundCloud</Underline></Hyperlink>
+                        @
+                        <Hyperlink NavigateUri="https://www.furaffinity.net/user/luchs/">
+                            <Underline>Furaffinity</Underline>
+                        </Hyperlink>
+                        <LineBreak />
+                        @
+                        <Hyperlink NavigateUri="https://www.soundcloud.com/luchs/">
+                            <Underline>SoundCloud</Underline>
+                        </Hyperlink>
                         <LineBreak />
                     </TextBlock>
                 </StackPanel>
             </Grid>
+
+            <TextBlock Style="{StaticResource SubheaderTextBlockStyle}">Disclaimer</TextBlock>
+
+            <TextBlock FontSize="12"
+                       Foreground="{ThemeResource PhoneMidBrush}"
+                       LineHeight="15"
+                       Style="{StaticResource BaseTextBlockStyle}"
+                       TextAlignment="Justify">
+                THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+            </TextBlock>
 
         </StackPanel>
     </Grid>

@@ -1,11 +1,10 @@
 ﻿using Eurofurence.Companion.DependencyResolution;
 using Eurofurence.Companion.ViewModel;
 using System;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Animation;
-
+using Eurofurence.Companion.Common;
 
 namespace Eurofurence.Companion.Views
 {
@@ -16,10 +15,10 @@ namespace Eurofurence.Companion.Views
 
         public Frame RootFrame { get { return _rootFrame; } }
 
-
         private Lazy<NavigationViewModel> _navigationViewModel = new Lazy<NavigationViewModel>(() => { return ViewModelLocator.Current.NavigationViewModel; });
-
         private bool _isMenuVisible = false;
+        private INavigationMediator _navigationMediator;
+
         public bool IsMenuVisible { get { return _isMenuVisible; } set { SetIsMenuVisible(value); } }
 
         private void SetIsMenuVisible(bool value)
@@ -40,12 +39,14 @@ namespace Eurofurence.Companion.Views
             }
         }
 
-        public LayoutPage()
+        public LayoutPage(INavigationMediator navigationMediator)
         {
             this.InitializeComponent();
             _defaultTransition = new ContinuumNavigationTransitionInfo();
             _menuCompositeRenderTransform.TranslateX = -300;
+            _navigationMediator = navigationMediator;
 
+            _navigationMediator.OnNavigate += Navigate;
             RootFrame.Navigated += RootFrame_Navigated;
         }
 
@@ -68,25 +69,11 @@ namespace Eurofurence.Companion.Views
             transitionOut.Begin();
         }
 
-        public bool Navigate(Type sourcePageType, bool forceNewStack = false)
-        {
-            if (forceNewStack && !_forceNewStack()) return false;
-            IsMenuVisible = false;
-            return RootFrame.Navigate(sourcePageType, null, _defaultTransition);
-        }
-
-        public bool Navigate(Type sourcePageType, object parameter, bool forceNewStack = false)
-        {
-            if (forceNewStack && !_forceNewStack()) return false;
-            IsMenuVisible = false;
-            return RootFrame.Navigate(sourcePageType, parameter, _defaultTransition);
-        }
-
         public bool Navigate(Type sourcePageType, object parameter, NavigationTransitionInfo infoOverride, bool forceNewStack = false)
         {
             if (forceNewStack && !_forceNewStack()) return false;
             IsMenuVisible = false;
-            return RootFrame.Navigate(sourcePageType, parameter, infoOverride);
+            return RootFrame.Navigate(sourcePageType, parameter, infoOverride ?? _defaultTransition);
         }
 
         [Obsolete]
