@@ -1,9 +1,11 @@
 ﻿using System;
 using Windows.Storage;
 using Newtonsoft.Json;
+using Eurofurence.Companion.DependencyResolution;
 
 namespace Eurofurence.Companion.DataStore
 {
+    [IocBeacon(TargetType = typeof(IApplicationSettingsManager))]
     public class ApplicationSettingsManager : IApplicationSettingsManager
     {
         public T Get<T>(string key, T defaultValue)

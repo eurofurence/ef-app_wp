@@ -8,9 +8,11 @@ using Windows.UI.Core;
 using Eurofurence.Companion.Common;
 using Eurofurence.Companion.DataModel;
 using Eurofurence.Companion.DataModel.Api;
+using Eurofurence.Companion.DependencyResolution;
 
 namespace Eurofurence.Companion.DataStore
 {
+    [IocBeacon(TargetType = typeof(ContextManager), Scope = IocBeacon.ScopeEnum.Singleton)]
     public class ContextManager : BindableBase
     {
         private readonly EurofurenceWebApiClient _apiClient;

@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Eurofurence.Companion.DependencyResolution;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Eurofurence.Companion.Common
 {
 
+    [IocBeacon(TargetType = typeof(INavigationProvider), Scope = IocBeacon.ScopeEnum.Singleton)]
     public class NavigationProvider : INavigationProvider
     {
         private INavigationMediator _navigationMediator;

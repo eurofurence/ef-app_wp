@@ -1,15 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Eurofurence.Companion.DataModel.Api;
-using Windows.Storage;
-using System.IO;
-using Windows.UI.Core;
+using Eurofurence.Companion.DependencyResolution;
 
 namespace Eurofurence.Companion.DataStore
 {
+    [IocBeacon(TargetType = typeof(IDataContext), Scope = IocBeacon.ScopeEnum.Singleton, Environment = IocBeacon.EnvironmentEnum.DesignTimeOnly)]
     public class MockDataContext : IDataContext
     {
         public ObservableCollection<EventEntry> EventEntries { get; set; }

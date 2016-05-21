@@ -1,8 +1,10 @@
 ﻿using Eurofurence.Companion.Common;
+using Eurofurence.Companion.DependencyResolution;
 using System.Collections.ObjectModel;
 
 namespace Eurofurence.Companion.ViewModel
 {
+    [IocBeacon(Scope = IocBeacon.ScopeEnum.Singleton)]
     public class NavigationViewModel : BindableBase
     {
         private INavigationMediator _navigationMediator;

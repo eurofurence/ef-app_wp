@@ -4,6 +4,7 @@
              xmlns:Converter="using:Eurofurence.Companion.ViewModel.Converter"
              xmlns:DataModel="using:Eurofurence.Companion.DataModel"
              xmlns:DependencyResolution="using:Eurofurence.Companion.DependencyResolution"
+             xmlns:ViewModel="using:Eurofurence.Companion.ViewModel"
              xmlns:local="using:Eurofurence.Companion">
 
     <Application.Resources>
@@ -74,9 +75,7 @@
             <DependencyResolution:ViewModelLocator x:Key="ViewModelLocator" />
             <DataModel:StringFormatConverter x:Key="StringFormatConverter" />
             <Converter:BytesToImageConverter x:Key="BytesToImageConverter" />
-
-
-
+            <ViewModel:TranslationViewModel x:Key="Translations" />
 
             <Style x:Key="FactBoxIcon" TargetType="TextBlock">
                 <Setter Property="FontFamily" Value="{StaticResource IconFontFamily}" />

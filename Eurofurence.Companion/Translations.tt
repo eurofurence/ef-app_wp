@@ -32,6 +32,9 @@ namespace <#= GetNamespace() #>
         {
             _resourceLoader = ResourceLoader.GetForViewIndependentUse("Translations");
         }
+
+		public static string GetString(string index) => _resourceLoader.GetString(index);
+
 <#
         foreach (string name in GetResourceKeys(reswPath).Where(n => !n.Contains(".")))
         {

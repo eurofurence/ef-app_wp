@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Eurofurence.Companion.DependencyResolution;
+using System;
 
 namespace Eurofurence.Companion.DataStore
 {
+    [IocBeacon(TargetType = typeof(ApplicationSettingsContext))]
     public class ApplicationSettingsContext
     {
         private readonly IApplicationSettingsManager _applicationSettingsManager;

@@ -5,9 +5,11 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Eurofurence.Companion.DataModel.Api;
 using Eurofurence.Companion.ViewModel;
+using Eurofurence.Companion.DependencyResolution;
 
 namespace Eurofurence.Companion.DataStore
 {
+    [IocBeacon(TargetType = typeof(IDataContext), Scope = IocBeacon.ScopeEnum.Singleton, Environment = IocBeacon.EnvironmentEnum.RunTimeOnly)]
     public class ObservableDataContext : BindableBase, IDataContext
     {
         private readonly IDataStore _dataStore;

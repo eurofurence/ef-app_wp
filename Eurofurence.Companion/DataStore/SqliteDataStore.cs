@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Eurofurence.Companion.DataModel.Api;
 using SQLite;
+using Eurofurence.Companion.DependencyResolution;
 
 namespace Eurofurence.Companion.DataStore
 {
+    [IocBeacon(TargetType = typeof(IDataStore), Scope = IocBeacon.ScopeEnum.Singleton, Environment = IocBeacon.EnvironmentEnum.RunTimeOnly)]
     public class SqliteDataStore : IDataStore
     {
         private readonly List<Type> _entityTypes = new List<Type>

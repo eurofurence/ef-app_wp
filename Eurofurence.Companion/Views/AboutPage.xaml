@@ -16,8 +16,10 @@
             <TextBlock Margin="0 20 0 0" Style="{StaticResource SubheaderTextBlockStyle}">About</TextBlock>
 
             <TextBlock>
-                Version<Run Text="{Binding Source={StaticResource ViewModelLocator}, Path=DebugViewModel.AppVersion}" />
+                Version&#160;<Run Text="{Binding Source={StaticResource ViewModelLocator}, Path=DebugViewModel.AppVersion}" />
             </TextBlock>
+
+            <Button Click="Button_Click" Content="{Binding Source={StaticResource Translations}, Path=[About_Title]}" />
 
             <Grid>
                 <Image Height="150"
@@ -45,15 +47,15 @@
                 </StackPanel>
             </Grid>
 
-            <TextBlock Style="{StaticResource SubheaderTextBlockStyle}">Disclaimer</TextBlock>
+            <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="{Binding Source={StaticResource Translations}, Path=[About_Disclaimer_Title]}" />
 
             <TextBlock FontSize="12"
                        Foreground="{ThemeResource PhoneMidBrush}"
                        LineHeight="15"
                        Style="{StaticResource BaseTextBlockStyle}"
-                       TextAlignment="Justify">
-                THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-            </TextBlock>
+                       Text="{Binding Source={StaticResource Translations},
+                                      Path=[About_Disclaimer_Content]}"
+                       TextAlignment="Justify" />
 
         </StackPanel>
     </Grid>

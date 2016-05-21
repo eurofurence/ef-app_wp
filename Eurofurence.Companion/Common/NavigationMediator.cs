@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Eurofurence.Companion.DependencyResolution;
+using System;
 using Windows.UI.Xaml.Media.Animation;
 
 namespace Eurofurence.Companion.Common
 {
+    [IocBeacon(TargetType = typeof(INavigationMediator), Scope = IocBeacon.ScopeEnum.Singleton)]
     public class NavigationMediator : INavigationMediator
     {
         public event NavigationEvent OnNavigate;

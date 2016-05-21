@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using Eurofurence.Companion.DependencyResolution;
+using System.Linq;
 
 namespace Eurofurence.Companion.DataStore
 {
+    [IocBeacon(TargetType = typeof(INavigationResolver), Scope = IocBeacon.ScopeEnum.Singleton)]
     public class NavigationResolver : INavigationResolver
     {
         public void Resolve(IDataContext dataContext)

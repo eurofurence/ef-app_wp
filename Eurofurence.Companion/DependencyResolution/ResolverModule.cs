@@ -1,7 +1,5 @@
-﻿using Eurofurence.Companion.Common;
-using Eurofurence.Companion.DataStore;
-using Eurofurence.Companion.ViewModel;
-using Ninject.Modules;
+﻿using Ninject.Modules;
+using System.Reflection;
 using Windows.ApplicationModel;
 
 namespace Eurofurence.Companion.DependencyResolution
@@ -10,33 +8,31 @@ namespace Eurofurence.Companion.DependencyResolution
     {
         public override void Load()
         {
-            Bind<ContextManager>().To<ContextManager>().InSingletonScope();
-            Bind<INavigationResolver>().To<NavigationResolver>().InSingletonScope();
-            Bind<IApplicationSettingsManager>().To<ApplicationSettingsManager>();
-            Bind<INavigationMediator>().To<NavigationMediator>().InSingletonScope();
-            Bind<ApplicationSettingsContext>().To<ApplicationSettingsContext>();
+            var self = GetType().GetTypeInfo().Assembly;
 
-            if (DesignMode.DesignModeEnabled)
+            foreach(var @type in self.DefinedTypes)
             {
-                Bind<IDataContext>().To<MockDataContext>().InSingletonScope();
-                Bind<ILayoutPage>().To<MockLayoutPage>().InSingletonScope();
-                Bind<IDataStore>().To<RealtimeApiAccessDataStore>().InSingletonScope();
-           }
-            else
-            {
-                Bind<IDataContext>().To<ObservableDataContext>().InSingletonScope();
-                Bind<IDataStore>().To<SqliteDataStore>().InSingletonScope();
+                var beacon = @type.GetCustomAttribute<IocBeacon>(true);
+                if (beacon == null) continue;
+
+                if (beacon.Environment == IocBeacon.EnvironmentEnum.RunTimeOnly 
+                    && DesignMode.DesignModeEnabled) continue;
+                if (beacon.Environment == IocBeacon.EnvironmentEnum.DesignTimeOnly 
+                    && !DesignMode.DesignModeEnabled) continue;
+
+                var binder = Bind(beacon.TargetType ?? @type.AsType()).To(@type.AsType());
+
+                switch (beacon.Scope)
+                {
+                    case IocBeacon.ScopeEnum.Singleton:
+                        binder.InSingletonScope();
+                        break;
+                    case IocBeacon.ScopeEnum.Transient:
+                        binder.InTransientScope();
+                        break;
+
+                }
             }
-
-            Bind<INavigationProvider>().To<NavigationProvider>().InSingletonScope();
-
-            Bind<DebugViewModel>().To<DebugViewModel>();
-            Bind<EventsViewModel>().To<EventsViewModel>().InSingletonScope();
-
-            Bind<NavigationViewModel>().To<NavigationViewModel>().InSingletonScope();
-            Bind<LayoutViewModel>().To<LayoutViewModel>();
-            Bind<InfoViewModel>().To<InfoViewModel>();
-            Bind<DealersViewModel>().To<DealersViewModel>();
         }
     }
 }

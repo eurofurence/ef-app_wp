@@ -4,9 +4,11 @@ using System.Threading.Tasks;
 using Eurofurence.Companion.Common;
 using Eurofurence.Companion.DataModel;
 using Eurofurence.Companion.DataModel.Api;
+using Eurofurence.Companion.DependencyResolution;
 
 namespace Eurofurence.Companion.DataStore
 {
+    [IocBeacon(TargetType = typeof(IDataStore), Scope = IocBeacon.ScopeEnum.Singleton, Environment = IocBeacon.EnvironmentEnum.DesignTimeOnly)]
     public class RealtimeApiAccessDataStore : IDataStore
     {
         private readonly EurofurenceWebApiClient _apiClient;

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Eurofurence.Companion.DependencyResolution;
+using System;
 using Windows.UI.Xaml.Media.Animation;
 
 namespace Eurofurence.Companion.ViewModel
 {
+    [IocBeacon(TargetType = typeof(ILayoutPage), Scope = IocBeacon.ScopeEnum.Singleton, Environment = IocBeacon.EnvironmentEnum.DesignTimeOnly)]
     public class MockLayoutPage : ILayoutPage
     {
         public void EnterPage(string area, string title, string subtitle, string icon = "")

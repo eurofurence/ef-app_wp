@@ -1,8 +1,10 @@
 ﻿using Eurofurence.Companion.DataStore;
+using Eurofurence.Companion.DependencyResolution;
 using Windows.ApplicationModel;
 
 namespace Eurofurence.Companion.ViewModel
 {
+    [IocBeacon]
     public class DebugViewModel : BindableBase
     {
         public ContextManager ContextManager { get; private set; }

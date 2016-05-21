@@ -1,5 +1,8 @@
-﻿namespace Eurofurence.Companion.ViewModel
+﻿using Eurofurence.Companion.DependencyResolution;
+
+namespace Eurofurence.Companion.ViewModel
 {
+    [IocBeacon]
     public class LayoutViewModel
     {
         private ILayoutPage _layoutPage;

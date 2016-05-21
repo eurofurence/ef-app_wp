@@ -1,6 +1,7 @@
 ﻿using Eurofurence.Companion.Common;
 using Eurofurence.Companion.DataModel.Api;
 using Eurofurence.Companion.DataStore;
+using Eurofurence.Companion.DependencyResolution;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -10,6 +11,7 @@ using Windows.ApplicationModel.Appointments;
 
 namespace Eurofurence.Companion.ViewModel
 {
+    [IocBeacon]
     public class InfoViewModel : BindableBase
     {
         private readonly IDataContext _dataContext;

@@ -12,6 +12,9 @@ namespace Eurofurence.Companion
             _resourceLoader = ResourceLoader.GetForViewIndependentUse("Translations");
         }
 
+		public static string GetString(string index) => _resourceLoader.GetString(index);
+
+
         public static string EventSchedule_Title 
 			=> _resourceLoader.GetString("EventSchedule_Title"); 
 
@@ -26,5 +29,14 @@ namespace Eurofurence.Companion
 
         public static string Main_Title 
 			=> _resourceLoader.GetString("Main_Title"); 
+
+        public static string About_Title 
+			=> _resourceLoader.GetString("About_Title"); 
+
+        public static string About_Disclaimer_Content 
+			=> _resourceLoader.GetString("About_Disclaimer_Content"); 
+
+        public static string About_Disclaimer_Title 
+			=> _resourceLoader.GetString("About_Disclaimer_Title"); 
     }
 }
