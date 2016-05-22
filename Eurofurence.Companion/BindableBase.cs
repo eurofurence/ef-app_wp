@@ -1,15 +1,26 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Windows.UI.Core;
 
 namespace Eurofurence.Companion
 {
     public abstract class BindableBase : INotifyPropertyChanged
     {
+        protected CoreDispatcher Dispatcher;
+
+        protected void InitializeDispatcherFromCurrentThread()
+        {
+            Dispatcher = CoreWindow.GetForCurrentThread()?.Dispatcher;
+        }
+
         /// <summary>
         ///     Multicast event for property change notifications.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+
+        
         /// <summary>
         ///     Checks if a property already matches a desired value.  Sets the property and
         ///     notifies listeners only when necessary.
@@ -46,9 +57,18 @@ namespace Eurofurence.Companion
         ///     value is optional and can be provided automatically when invoked from compilers
         ///     that support <see cref="CallerMemberNameAttribute" />.
         /// </param>
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected async void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (Dispatcher != null)
+            {
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
+                    this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                });
+            }
+            else
+            {
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
     }
 }

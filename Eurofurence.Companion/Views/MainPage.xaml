@@ -7,6 +7,8 @@
       xmlns:local="using:Eurofurence.Companion.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+      DataContext="{Binding Source={StaticResource ViewModelLocator},
+                            Path=MainViewModel}"
       mc:Ignorable="d">
 
     <!--<Page.BottomAppBar>
@@ -31,11 +33,47 @@
         <ScrollViewer>
             <Grid x:Name="ContentRoot" Margin="19,9.5,19,0">
                 <StackPanel>
-                    <TextBlock>Placeholder - Upcoming Events:</TextBlock>
+                    <TextBlock Text="{Binding CurrentDateTimeLocal}" />
 
 
+                    <TextBlock Style="{StaticResource GroupHeaderTextBlockStyle}">
+                        Upcoming Events:
+                    </TextBlock>
 
 
+                    <ListView ItemsSource="{Binding UpcomingEvents}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="70" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="{Binding StartTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:hh\\:mm}'}" />
+                                        <TextBlock Foreground="{ThemeResource PhoneMidBrush}">
+                                            <Run FontFamily="{StaticResource IconFontFamily}" Text="&#xE741;" />
+                                            <Run Text="{Binding EndTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:hh\\:mm}'}" />
+                                        </TextBlock>
+                                    </StackPanel>
+
+
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock MaxHeight="60"
+                                                   Style="{StaticResource TitleTextBlockStyle}"
+                                                   Text="{Binding Title}"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   TextWrapping="Wrap" />
+                                        <TextBlock Foreground="{ThemeResource PhoneMidBrush}"
+                                                   Text="{Binding ConferenceRoom.Name}"
+                                                   TextWrapping="Wrap" />
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+
+                    </ListView>
 
 
                 </StackPanel>

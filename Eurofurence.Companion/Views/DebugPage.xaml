@@ -1,15 +1,14 @@
-﻿<Page
-    x:Class="Eurofurence.Companion.Views.DebugPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Eurofurence.Companion.Views"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    xmlns:behaviors="using:Eurofurence.Companion.ViewModel.Behaviors"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=DebugViewModel}"
-    >
+﻿<Page x:Class="Eurofurence.Companion.Views.DebugPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:behaviors="using:Eurofurence.Companion.ViewModel.Behaviors"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:Eurofurence.Companion.Views"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+      DataContext="{Binding Source={StaticResource ViewModelLocator},
+                            Path=DebugViewModel}"
+      mc:Ignorable="d">
 
     <Grid x:Name="LayoutRoot">
 
@@ -17,33 +16,53 @@
         <StackPanel>
 
 
+            <TextBlock Text="{Binding Source={StaticResource ViewModelLocator}, Path=MainViewModel.CurrentDateTimeLocal}" />
+            <DatePicker x:Name="_tpOffsetDatePicker" />
+            <TimePicker x:Name="_tpOffsetTimePicker" />
+            <Button x:Name="_btnSetTimeProviderOffset"
+                    Click="_btnSetTimeProviderOffset_Click"
+                    Content="Assume local time" />
 
-            <TextBlock Style="{StaticResource GroupHeaderTextBlockStyle}"
-                       Text="Context Manager"></TextBlock>
+
+            <TextBlock Style="{StaticResource GroupHeaderTextBlockStyle}" Text="Context Manager" />
             <Grid Height="80">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="3*"/>
-                    <RowDefinition Height="3*"/>
-                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="3*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*"/>
-                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition Width="5*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="Status:"></TextBlock>
-                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Path=ContextManager.Status}"></TextBlock>
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="Last Server Query:"></TextBlock>
-                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Path=ContextManager.LastServerQueryDateTimeUtc}"></TextBlock>
-                <ProgressBar Grid.Row="2" Grid.Column="0" Height="20" Margin="5" 
-                        Maximum="{Binding Path=ContextManager.SubOperationMaxValue}"
-                        Value="{Binding Path=ContextManager.SubOperationCurrentValue}"></ProgressBar>
-                
-                <ProgressBar Grid.Row="2" Grid.Column="1" Height="30" Margin="5" 
-                            Maximum="{Binding Path=ContextManager.MainOperationMaxValue}"
-                         Value="{Binding Path=ContextManager.MainOperationCurrentValue}"></ProgressBar>
+                <TextBlock Grid.Row="0"
+                           Grid.Column="0"
+                           Text="Status:" />
+                <TextBlock Grid.Row="0"
+                           Grid.Column="1"
+                           Text="{Binding Path=ContextManager.Status}" />
+                <TextBlock Grid.Row="1"
+                           Grid.Column="0"
+                           Text="Last Server Query:" />
+                <TextBlock Grid.Row="1"
+                           Grid.Column="1"
+                           Text="{Binding Path=ContextManager.LastServerQueryDateTimeUtc}" />
+                <ProgressBar Grid.Row="2"
+                             Grid.Column="0"
+                             Height="20"
+                             Margin="5"
+                             Maximum="{Binding Path=ContextManager.SubOperationMaxValue}"
+                             Value="{Binding Path=ContextManager.SubOperationCurrentValue}" />
 
-                
+                <ProgressBar Grid.Row="2"
+                             Grid.Column="1"
+                             Height="30"
+                             Margin="5"
+                             Maximum="{Binding Path=ContextManager.MainOperationMaxValue}"
+                             Value="{Binding Path=ContextManager.MainOperationCurrentValue}" />
+
+
             </Grid>
             <StackPanel>
                 <TextBlock Text="{Binding Path=ContextManager.SubOperationCurrentValue}" />
@@ -58,15 +77,10 @@
             <Button Command="{Binding ContextManager.ClearAllCommand}">
                 Clear All
             </Button>
-            <RichTextBlock 
-                
-                FontSize="20"
-                Foreground="White"
-                behaviors:RichTextBlockProperties.Html="a b &lt;b&gt;foo&lt;/b&gt; bar &lt;br&gt;&lt;br&gt;Yohoo! &lt;ul&gt; &lt;li&gt;Meep&lt;/li&gt;&lt;/ul&gt;">
-                
-                
-            </RichTextBlock>
-            
+            <RichTextBlock behaviors:RichTextBlockProperties.Html="a b &lt;b&gt;foo&lt;/b&gt; bar &lt;br&gt;&lt;br&gt;Yohoo! &lt;ul&gt; &lt;li&gt;Meep&lt;/li&gt;&lt;/ul&gt;"
+                           FontSize="20"
+                           Foreground="White" />
+
         </StackPanel>
 
 

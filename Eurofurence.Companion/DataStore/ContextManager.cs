@@ -20,9 +20,7 @@ namespace Eurofurence.Companion.DataStore
         private readonly IDataContext _dataContext;
         private readonly IDataStore _dataStore;
 
-        private readonly CoreDispatcher _dispatcher;
         private ulong _mainOperationCurrentValue;
-
         private ulong _mainOperationMaxValue = 100;
 
         private string _mainOperationMessage = "";
@@ -35,7 +33,8 @@ namespace Eurofurence.Companion.DataStore
         public ContextManager(IDataStore dataStore, IDataContext dataContext,
             ApplicationSettingsContext applicationSettingsContext)
         {
-            _dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
+            InitializeDispatcherFromCurrentThread();
+
             _apiClient = new EurofurenceWebApiClient(Consts.WEB_API_ENDPOINT_URL);
             _dataStore = dataStore;
             _dataContext = dataContext;
@@ -140,11 +139,8 @@ namespace Eurofurence.Companion.DataStore
             MainOperationMessage = "Synchronizing...";
             await _dataStore.ApplyDeltaAsync(entities, async (current, max, id) =>
             {
-                await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    SubOperationMaxValue = (ulong) max;
-                    SubOperationCurrentValue = (ulong) current;
-                });
+                SubOperationMaxValue = (ulong) max;
+                SubOperationCurrentValue = (ulong) current;
             });
 
             _applicationSettingsContext.LastServerQueryDateTimeUtc = metadata.CurrentDateTimeUtc;
@@ -161,12 +157,9 @@ namespace Eurofurence.Companion.DataStore
         {
             var imageList = images.ToList();
 
-            await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            {
-                MainOperationMessage = "Downloading Image Content...";
-                SubOperationMaxValue = (ulong) imageList.Count;
-                SubOperationCurrentValue = 0;
-            });
+            MainOperationMessage = "Downloading Image Content...";
+            SubOperationMaxValue = (ulong) imageList.Count;
+            SubOperationCurrentValue = 0;
 
             foreach (var imageEntity in imageList)
             {
@@ -178,20 +171,18 @@ namespace Eurofurence.Companion.DataStore
 
                 imageEntity.Content = bytes;
 
-                await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { SubOperationCurrentValue++; });
+                SubOperationCurrentValue++; 
             }
 
-            await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { MainOperationCurrentValue++; });
+            MainOperationCurrentValue++;
         }
 
         private async Task<IList<T>> UpdateEntitiesAsync<T>(string entityName, DateTime? since)
         {
-            await
-                _dispatcher.RunAsync(CoreDispatcherPriority.Normal,
-                    () => { MainOperationMessage = $"Downloading {entityName}..."; });
+            MainOperationMessage = $"Downloading {entityName}..."; 
             var entities = await _apiClient.GetEntitiesAsync<T>(since);
 
-            await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { MainOperationCurrentValue++; });
+            MainOperationCurrentValue++;
             return entities;
         }
     }

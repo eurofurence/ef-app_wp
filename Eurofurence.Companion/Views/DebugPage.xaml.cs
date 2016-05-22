@@ -1,4 +1,6 @@
 ﻿using Eurofurence.Companion.Common;
+using Eurofurence.Companion.DependencyResolution;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -35,6 +37,9 @@ namespace Eurofurence.Companion.Views
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+
+            _tpOffsetDatePicker.Date = new DateTime(2015, 08, 19);
+            _tpOffsetTimePicker.Time = new TimeSpan(16, 45, 0);
         }
 
         /// <summary>
@@ -109,5 +114,11 @@ namespace Eurofurence.Companion.Views
         }
 
         #endregion
+
+        private void _btnSetTimeProviderOffset_Click(object sender, RoutedEventArgs e)
+        {
+            KernelResolver.Current.Get<TimeProvider>().ForcedOffset =
+                (_tpOffsetDatePicker.Date + _tpOffsetTimePicker.Time) - DateTime.Now;
+        }
     }
 }

@@ -19,6 +19,8 @@
                 Version&#160;<Run Text="{Binding Source={StaticResource ViewModelLocator}, Path=DebugViewModel.AppVersion}" />
             </TextBlock>
 
+            <Button Command="{Binding Source={StaticResource ViewModelLocator}, Path=NavigationViewModel.NavigateToDebugPage}" Content="Debug" />
+
             <Grid>
                 <Image Height="150"
                        Margin="0 0 0 0"

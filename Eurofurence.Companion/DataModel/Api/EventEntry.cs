@@ -22,6 +22,10 @@ namespace Eurofurence.Companion.DataModel.Api
 
 
         [Ignore]
+        public DateTime? StartTimeAndDay
+            => ConferenceDay == null ? (DateTime?)null : (ConferenceDay.Date + StartTime);
+
+        [Ignore]
         public virtual EventConferenceTrack ConferenceTrack { get; set; }
 
         [Ignore]

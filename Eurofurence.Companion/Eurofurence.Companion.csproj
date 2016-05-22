@@ -98,6 +98,7 @@
     <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\TelemetryClientProvider.cs" />
+    <Compile Include="Common\TimeProvider.cs" />
     <Compile Include="DataModel\Api\Dealer.cs" />
     <Compile Include="DataModel\Api\Endpoint.cs" />
     <Compile Include="DataModel\Api\EndpointConfiguration.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="ViewModel\DealersViewModel.cs" />
     <Compile Include="ViewModel\DebugViewModel.cs" />
     <Compile Include="Common\INavigationMediator.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MockLayoutPage.cs" />
     <Compile Include="ViewModel\InfoViewModel.cs" />
     <Compile Include="ViewModel\EventsViewModel.cs" />
