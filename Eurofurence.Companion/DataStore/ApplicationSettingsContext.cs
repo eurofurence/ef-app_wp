@@ -20,5 +20,21 @@ namespace Eurofurence.Companion.DataStore
             get { return _applicationSettingsManager.Get<DateTime?>("LastServerQueryDateTimeUtc", null); }
             set { _applicationSettingsManager.Set("LastServerQueryDateTimeUtc", value); }
         }
+
+        public Guid UniqueRandomUserId
+        {
+            get
+            {
+                Guid? id = _applicationSettingsManager.Get<Guid?>("UniqueRandomUserId", null);
+                if (!id.HasValue)
+                {
+                    id = Guid.NewGuid();
+                    _applicationSettingsManager.Set("UniqueRandomUserId", id);
+                }
+
+                return id.Value;
+            }
+
+        }
     }
 }

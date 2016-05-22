@@ -21,6 +21,8 @@ using Eurofurence.Companion.ViewModel;
 using Eurofurence.Companion.Views;
 using HockeyApp;
 using Ninject;
+using System.Collections.Generic;
+using Microsoft.ApplicationInsights.DataContracts;
 
 namespace Eurofurence.Companion
 {
@@ -32,6 +34,7 @@ namespace Eurofurence.Companion
         private bool _isInitialized;
         private Frame _rootFrame;
         private TransitionCollection _transitions;
+        private ITelemetryClientProvider _telemetryClientProvider;
 
         public App()
         {
@@ -39,8 +42,18 @@ namespace Eurofurence.Companion
             Suspending += OnSuspending;
 
             HockeyClient.Current.Configure("790c6dfa20ff4523834501fcea150ec1");
+
+            _telemetryClientProvider = KernelResolver.Current.Get<ITelemetryClientProvider>();
+            _telemetryClientProvider.Client.TrackEvent("Application started");
+
+            UnhandledException += App_UnhandledException;
         }
 
+        private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            _telemetryClientProvider.Client.TrackException(e.Exception);
+            _telemetryClientProvider.Client.Flush();
+        }
 
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
@@ -56,7 +69,7 @@ namespace Eurofurence.Companion
                 //this.DebugSettings.EnableFrameRateCounter = true;
             }
 #endif
-            var layoutPage = new LayoutPage(navigationMediator);
+            var layoutPage = new LayoutPage(navigationMediator, _telemetryClientProvider);
             KernelResolver.Current.Bind<ILayoutPage>().ToConstant(layoutPage);
             Window.Current.Content = layoutPage;
             layoutPage.OnLayoutPageRendered();
@@ -169,6 +182,9 @@ namespace Eurofurence.Companion
 
         private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
+            _telemetryClientProvider.Client.TrackEvent("Application suspended");
+            _telemetryClientProvider.Client.Flush();
+
             var deferral = e.SuspendingOperation.GetDeferral();
             await SuspensionManager.SaveAsync();
             deferral.Complete();

@@ -18,6 +18,7 @@ namespace Eurofurence.Companion.Views
         private Lazy<NavigationViewModel> _navigationViewModel = new Lazy<NavigationViewModel>(() => { return ViewModelLocator.Current.NavigationViewModel; });
         private bool _isMenuVisible = false;
         private INavigationMediator _navigationMediator;
+        private ITelemetryClientProvider _telemetryClientProvider;
 
         public bool IsMenuVisible { get { return _isMenuVisible; } set { SetIsMenuVisible(value); } }
 
@@ -39,12 +40,14 @@ namespace Eurofurence.Companion.Views
             }
         }
 
-        public LayoutPage(INavigationMediator navigationMediator)
+        public LayoutPage(INavigationMediator navigationMediator, ITelemetryClientProvider telemetryClientProvider)
         {
             this.InitializeComponent();
             _defaultTransition = new ContinuumNavigationTransitionInfo();
             _menuCompositeRenderTransform.TranslateX = -300;
             _navigationMediator = navigationMediator;
+            _telemetryClientProvider = telemetryClientProvider;
+
 
             _navigationMediator.OnNavigate += Navigate;
             RootFrame.Navigated += RootFrame_Navigated;
@@ -73,6 +76,8 @@ namespace Eurofurence.Companion.Views
         {
             if (forceNewStack && !_forceNewStack()) return false;
             IsMenuVisible = false;
+            _telemetryClientProvider.Client.TrackPageView(sourcePageType.FullName);
+
             return RootFrame.Navigate(sourcePageType, parameter, infoOverride ?? _defaultTransition);
         }
 

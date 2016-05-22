@@ -19,8 +19,6 @@
                 Version&#160;<Run Text="{Binding Source={StaticResource ViewModelLocator}, Path=DebugViewModel.AppVersion}" />
             </TextBlock>
 
-            <Button Click="Button_Click" Content="{Binding Source={StaticResource Translations}, Path=[About_Title]}" />
-
             <Grid>
                 <Image Height="150"
                        Margin="0 0 0 0"
@@ -47,7 +45,10 @@
                 </StackPanel>
             </Grid>
 
-            <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="{Binding Source={StaticResource Translations}, Path=[About_Disclaimer_Title]}" />
+            <TextBlock Margin="0 50 0 0"
+                       Style="{StaticResource SubheaderTextBlockStyle}"
+                       Text="{Binding Source={StaticResource Translations},
+                                      Path=[About_Disclaimer_Title]}" />
 
             <TextBlock FontSize="12"
                        Foreground="{ThemeResource PhoneMidBrush}"

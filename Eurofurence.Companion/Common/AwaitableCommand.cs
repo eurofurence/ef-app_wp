@@ -54,7 +54,7 @@ namespace Eurofurence.Companion.Common
         public async void Execute(object parameter)
         {
             await ExecuteAsync((T)parameter);
-        }
+        }        
 
         public void RaiseCanExecuteChanged()
         {

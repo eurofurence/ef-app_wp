@@ -50,6 +50,7 @@ namespace Eurofurence.Companion.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+
         }
 
         private void TextBlock_ContextMenuOpening(object sender, ContextMenuEventArgs e)
