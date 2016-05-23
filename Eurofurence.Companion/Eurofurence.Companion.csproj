@@ -109,6 +109,9 @@
     <Compile Include="DataModel\Api\Image.cs" />
     <Compile Include="DataModel\Api\Info.cs" />
     <Compile Include="DataModel\Api\InfoGroup.cs" />
+    <Compile Include="DataModel\ExtensionProxy.cs" />
+    <Compile Include="DataModel\Local\EventEntryAttributes.cs" />
+    <Compile Include="DataModel\IEntityExtension.cs" />
     <Compile Include="DependencyResolution\IocBeacon.cs" />
     <Compile Include="Translations.cs">
       <AutoGen>True</AutoGen>
@@ -121,7 +124,7 @@
     <Compile Include="DataStore\ApplicationSettingsContext.cs" />
     <Compile Include="DataStore\ContextManager.cs" />
     <Compile Include="DataModel\EurofurenceWebApiClient.cs" />
-    <Compile Include="DataModel\Api\EntityBase.cs" />
+    <Compile Include="DataModel\EntityBase.cs" />
     <Compile Include="DataModel\NavigationDataSource.cs" />
     <Compile Include="DataModel\SampleDataSource.cs" />
     <Compile Include="DataStore\IApplicationSettingsManager.cs" />

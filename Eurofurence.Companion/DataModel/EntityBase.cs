@@ -1,7 +1,7 @@
 ﻿using System;
 using SQLite;
 
-namespace Eurofurence.Companion.DataModel.Api
+namespace Eurofurence.Companion.DataModel
 {
     public abstract class EntityBase
     {

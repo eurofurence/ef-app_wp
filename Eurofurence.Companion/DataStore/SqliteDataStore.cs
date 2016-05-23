@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Eurofurence.Companion.DataModel.Api;
 using SQLite;
 using Eurofurence.Companion.DependencyResolution;
+using Eurofurence.Companion.DataModel;
 
 namespace Eurofurence.Companion.DataStore
 {
@@ -13,14 +13,15 @@ namespace Eurofurence.Companion.DataStore
     {
         private readonly List<Type> _entityTypes = new List<Type>
         {
-            typeof (EventEntry),
-            typeof (EventConferenceDay),
-            typeof (EventConferenceRoom),
-            typeof (EventConferenceTrack),
-            typeof (Info),
-            typeof (InfoGroup),
-            typeof (Image),
-            typeof (Dealer)
+            typeof (DataModel.Api.EventEntry),
+            typeof (DataModel.Api.EventConferenceDay),
+            typeof (DataModel.Api.EventConferenceRoom),
+            typeof (DataModel.Api.EventConferenceTrack),
+            typeof (DataModel.Api.Info),
+            typeof (DataModel.Api.InfoGroup),
+            typeof (DataModel.Api.Image),
+            typeof (DataModel.Api.Dealer),
+            typeof (DataModel.Local.EventEntryAttributes)
         };
 
         private readonly SQLiteAsyncConnection _sqliteAsyncConnection;

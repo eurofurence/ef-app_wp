@@ -1,6 +1,7 @@
 using System;
 using Eurofurence.Companion.ViewModel;
 using SQLite;
+using Eurofurence.Companion.DataModel.Local;
 
 namespace Eurofurence.Companion.DataModel.Api
 {
@@ -20,6 +21,9 @@ namespace Eurofurence.Companion.DataModel.Api
         public Guid ConferenceRoomId { get; set; }
         public string PanelHosts { get; set; }
 
+
+        [Ignore]
+        public ExtensionProxy<EventEntry, EventEntryAttributes> AttributesProxy { get; set; }
 
         [Ignore]
         public DateTime? StartTimeAndDay

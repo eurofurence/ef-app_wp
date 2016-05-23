@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Eurofurence.Companion.DataModel.Api;
 using Eurofurence.Companion.ViewModel;
 using Eurofurence.Companion.DependencyResolution;
+using Eurofurence.Companion.DataModel.Local;
+using Eurofurence.Companion.DataModel;
 
 namespace Eurofurence.Companion.DataStore
 {
@@ -41,6 +43,9 @@ namespace Eurofurence.Companion.DataStore
         public ObservableCollection<Image> Images { get; }
         public ObservableCollection<Dealer> Dealers { get; }
 
+        public ObservableCollection<EventEntryAttributes> EventEntryAttributes { get; }
+
+
         public async Task RefreshAsync()
         {
             await LoadAsync(EventEntries, nameof(EventEntries));
@@ -51,6 +56,7 @@ namespace Eurofurence.Companion.DataStore
             await LoadAsync(InfoGroups, nameof(InfoGroups));
             await LoadAsync(Images, nameof(Images));
             await LoadAsync(Dealers, nameof(Dealers));
+            await LoadAsync(EventEntryAttributes, nameof(EventEntryAttributes));
             _navigationResolver.Resolve(this);
         }
 

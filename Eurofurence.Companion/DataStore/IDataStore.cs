@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Eurofurence.Companion.DataModel.Api;
+using Eurofurence.Companion.DataModel;
 
 namespace Eurofurence.Companion.DataStore
 {

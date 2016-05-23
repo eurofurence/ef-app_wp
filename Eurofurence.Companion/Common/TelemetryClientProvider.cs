@@ -23,7 +23,7 @@ namespace Eurofurence.Companion.Common
 
             _persistenceChannel = new PersistenceChannel
             {
-                DeveloperMode = Debugger.IsAttached,
+                DeveloperMode = false, // Debugger.IsAttached,
                 SendingInterval = TimeSpan.FromSeconds(10)
             };
 

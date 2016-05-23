@@ -21,11 +21,16 @@
     </Page.Resources>
     <Page.BottomAppBar>
         <CommandBar>
+            <AppBarToggleButton Command="{Binding Source={StaticResource ViewModelLocator},
+                                                  Path=EventsViewModel.AddEventToCalendarCommand}"
+                                CommandParameter="{Binding}"
+                                Icon="Favorite"
+                                Label="Favorite" />
+
             <AppBarButton Command="{Binding Source={StaticResource ViewModelLocator},
                                             Path=EventsViewModel.AddEventToCalendarCommand}"
                           CommandParameter="{Binding}"
                           Icon="Calendar"
-                          IsCompact="True"
                           Label="Import" />
         </CommandBar>
     </Page.BottomAppBar>

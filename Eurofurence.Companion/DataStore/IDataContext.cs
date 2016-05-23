@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Eurofurence.Companion.DataModel.Api;
+using Eurofurence.Companion.DataModel.Local;
 
 namespace Eurofurence.Companion.DataStore
 {
@@ -14,6 +15,8 @@ namespace Eurofurence.Companion.DataStore
         ObservableCollection<InfoGroup> InfoGroups { get; }
         ObservableCollection<Image> Images { get; }
         ObservableCollection<Dealer> Dealers { get; }
+
+        ObservableCollection<EventEntryAttributes> EventEntryAttributes { get; }
 
         Task RefreshAsync();
     }
