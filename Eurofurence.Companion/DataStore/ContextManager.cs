@@ -110,6 +110,8 @@ namespace Eurofurence.Companion.DataStore
             UpdateStatus = TaskStatus.Running;
             MainOperationMessage = "Initializing...";
 
+            await _dataContext.SaveAsync().ConfigureAwait(false);
+
             var metadata = await _apiClient.GetEndpointMetadataAsync();
 
             var entities = new List<EntityBase>();
@@ -161,17 +163,27 @@ namespace Eurofurence.Companion.DataStore
             SubOperationMaxValue = (ulong) imageList.Count;
             SubOperationCurrentValue = 0;
 
+            var tasks = new List<Task>();
+
             foreach (var imageEntity in imageList)
             {
-                var content =
-                    await
-                        _apiClient.GetContentAsBufferAsync(imageEntity.Url.Replace("{Endpoint}",
-                            Consts.WEB_API_ENDPOINT_URL));
-                var bytes = content.ToArray();
+                tasks.Add(Task.Run(async () =>
+                {
+                    var content =
+                        await
+                            _apiClient.GetContentAsBufferAsync(imageEntity.Url.Replace("{Endpoint}",
+                                Consts.WEB_API_ENDPOINT_URL)).ConfigureAwait(false);
+                    var bytes = content.ToArray();
 
-                imageEntity.Content = bytes;
+                    imageEntity.Content = bytes;
 
-                SubOperationCurrentValue++; 
+                    SubOperationCurrentValue++;
+                }));
+            }
+
+            foreach(var task in tasks)
+            {
+                await task.ConfigureAwait(false);
             }
 
             MainOperationCurrentValue++;

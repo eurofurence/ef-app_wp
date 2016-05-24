@@ -1,12 +1,10 @@
-﻿using System;
-
-namespace Eurofurence.Companion.DataModel.Local
+﻿namespace Eurofurence.Companion.DataModel.Local
 {
     public class EventEntryAttributes : EntityBase, IEntityExtension
     {
-        public Guid Id { get; set; }
 
-        public bool IsFavorite { get; set; }
+        private bool _isFavorite = false;
+        public bool IsFavorite { get { return _isFavorite; } set { SetProperty(ref _isFavorite, value); } } 
 
         public bool IsPersistent
         {

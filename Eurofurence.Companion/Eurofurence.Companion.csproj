@@ -144,6 +144,7 @@
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
     <Compile Include="ViewModel\Behaviors\WikiTextBoxProperties.cs" />
+    <Compile Include="ViewModel\Converter\BooleanToVisibilityConverter.cs" />
     <Compile Include="ViewModel\Converter\BytesToImageConverter.cs" />
     <Compile Include="ViewModel\Converter\WikiTextConverter.cs" />
     <Compile Include="ViewModel\DealersViewModel.cs" />

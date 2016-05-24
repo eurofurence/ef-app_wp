@@ -58,6 +58,9 @@ namespace Eurofurence.Companion.DataStore
             return Task.Delay(1);
         }
 
-
+        public Task SaveAsync()
+        {
+            return Task.Delay(1);
+        }
     }
 }

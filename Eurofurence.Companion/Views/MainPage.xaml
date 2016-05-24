@@ -42,15 +42,39 @@
 
 
                     <ListView ItemsSource="{Binding UpcomingEvents}">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Grid>
+                                    <interactivity:Interaction.Behaviors>
+                                        <interactivity:BehaviorCollection>
+                                            <core:EventTriggerBehavior EventName="Tapped">
+                                                <core:InvokeCommandAction Command="{Binding Source={StaticResource ViewModelLocator}, Path=NavigationViewModel.NavigateToEventDetailPage}" CommandParameter="{Binding}" />
+                                            </core:EventTriggerBehavior>
+                                        </interactivity:BehaviorCollection>
+                                    </interactivity:Interaction.Behaviors>
+
 
                                     <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="40" />
                                         <ColumnDefinition Width="70" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
+
                                     <StackPanel Grid.Column="0">
+                                        <TextBlock Name="_ue_icon_favorite"
+                                                   FontFamily="{StaticResource IconFontFamily}"
+                                                   FontSize="24"
+                                                   Text="&#xE1CE;"
+                                                   Visibility="{Binding AttributesProxy.Extension.IsFavorite,
+                                                                        Converter={StaticResource TrueToVisibleConverter}}" />
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1">
                                         <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="{Binding StartTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:hh\\:mm}'}" />
                                         <TextBlock Foreground="{ThemeResource PhoneMidBrush}">
                                             <Run FontFamily="{StaticResource IconFontFamily}" Text="&#xE741;" />
@@ -59,7 +83,7 @@
                                     </StackPanel>
 
 
-                                    <StackPanel Grid.Column="1">
+                                    <StackPanel Grid.Column="2">
                                         <TextBlock MaxHeight="60"
                                                    Style="{StaticResource TitleTextBlockStyle}"
                                                    Text="{Binding Title}"
@@ -74,7 +98,6 @@
                         </ListView.ItemTemplate>
 
                     </ListView>
-
 
                 </StackPanel>
 

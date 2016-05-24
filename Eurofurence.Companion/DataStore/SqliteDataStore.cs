@@ -5,48 +5,50 @@ using System.Threading.Tasks;
 using SQLite;
 using Eurofurence.Companion.DependencyResolution;
 using Eurofurence.Companion.DataModel;
+using System.Reflection;
 
 namespace Eurofurence.Companion.DataStore
 {
     [IocBeacon(TargetType = typeof(IDataStore), Scope = IocBeacon.ScopeEnum.Singleton, Environment = IocBeacon.EnvironmentEnum.RunTimeOnly)]
     public class SqliteDataStore : IDataStore
     {
-        private readonly List<Type> _entityTypes = new List<Type>
+        private class TableInfo
         {
-            typeof (DataModel.Api.EventEntry),
-            typeof (DataModel.Api.EventConferenceDay),
-            typeof (DataModel.Api.EventConferenceRoom),
-            typeof (DataModel.Api.EventConferenceTrack),
-            typeof (DataModel.Api.Info),
-            typeof (DataModel.Api.InfoGroup),
-            typeof (DataModel.Api.Image),
-            typeof (DataModel.Api.Dealer),
-            typeof (DataModel.Local.EventEntryAttributes)
-        };
+            [Column("name")]
+            public string Name { get; set; }
+        }
+
+        private readonly Dictionary<TypeInfo, string> _existingTypeTables = new Dictionary<TypeInfo, string>();
 
         private readonly SQLiteAsyncConnection _sqliteAsyncConnection;
+        private Assembly _localAssembly;
 
         public SqliteDataStore()
         {
+            _localAssembly = GetType().GetTypeInfo().Assembly;
             _sqliteAsyncConnection = new SQLiteAsyncConnection(App.DatabaseStoragePath);
-            CreateTablesAsync().Wait();
+
+            ScanTablesAsync().Wait();
         }
 
         public async Task<IList<T>> GetAsync<T>() where T : EntityBase, new()
         {
-            return await _sqliteAsyncConnection.Table<T>().ToListAsync();
+            return _existingTypeTables.ContainsKey(typeof(T).GetTypeInfo()) ?
+                await _sqliteAsyncConnection.Table<T>().ToListAsync() : new List<T>();
         }
 
         public async Task ApplyDeltaAsync(IEnumerable<EntityBase> entities,
             Action<int, int, string> progressCallback = null)
         {
-            await _sqliteAsyncConnection.RunInTransactionAsync(connection =>
+            await _sqliteAsyncConnection.RunInTransactionAsync(async (connection) =>
             {
                 var i = 0;
                 var total = entities.Count();
 
                 foreach (var entity in entities)
                 {
+                    await EnsureTableAsync(entity.GetType().GetTypeInfo()).ConfigureAwait(false);
+
                     if (entity.IsDeleted == 1)
                     {
                         connection.Delete(entity);
@@ -70,24 +72,49 @@ namespace Eurofurence.Companion.DataStore
             });
         }
 
-        public Task ClearAllAsync()
+        public async Task ClearAllAsync()
         {
-            return TruncateTablesAsync();
+            await ClearAllTablesAsync().ConfigureAwait(false);
         }
 
-        private async Task TruncateTablesAsync()
+        private async Task ClearAllTablesAsync()
         {
-            foreach (var t in _entityTypes)
+            foreach (var t in _existingTypeTables)
             {
-                await _sqliteAsyncConnection.ExecuteAsync($"delete from {t.Name};");
+                await _sqliteAsyncConnection.ExecuteAsync($"delete from {t.Value};")
+                    .ConfigureAwait(false);
             }
 
-            await _sqliteAsyncConnection.ExecuteAsync("vacuum;");
+            await _sqliteAsyncConnection.ExecuteAsync("vacuum;")
+                .ConfigureAwait(false); 
         }
 
-        private Task CreateTablesAsync()
+
+        private async Task EnsureTableAsync(TypeInfo typeInfo)
         {
-            return _sqliteAsyncConnection.CreateTablesAsync(_entityTypes.ToArray());
+            if (_existingTypeTables.ContainsKey(typeInfo)) return;
+            await _sqliteAsyncConnection.CreateTablesAsync(typeInfo.AsType()).ConfigureAwait(false);
+            _existingTypeTables.Add(typeInfo, typeInfo.Name);
+        }
+
+        private async Task ScanTablesAsync()
+        {
+            var tables = await _sqliteAsyncConnection.QueryAsync<TableInfo>
+                ("SELECT * FROM sqlite_master WHERE type = 'table'")
+                .ConfigureAwait(false);
+
+            var _localAssemblyEntityTypes = _localAssembly.DefinedTypes
+                .Where(typeInfo => typeof(EntityBase).GetTypeInfo().IsAssignableFrom(typeInfo)).ToList();
+
+            foreach (var table in tables)
+            {
+                var localEntityType = _localAssemblyEntityTypes.SingleOrDefault(typeInfo => typeInfo.Name == table.Name);
+                System.Diagnostics.Debug.WriteLine($"{table.Name} -> {localEntityType}");
+                if (localEntityType != null)
+                {
+                    _existingTypeTables.Add(localEntityType, table.Name);
+                }
+            }
         }
     }
 }

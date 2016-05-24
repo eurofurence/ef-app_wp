@@ -50,5 +50,10 @@ namespace Eurofurence.Companion.Views
         }
 
         #endregion
+
+        private void AppBarToggleButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            _currentEventEntry.AttributesProxy.Extension.IsFavorite = !_currentEventEntry.AttributesProxy.Extension.IsFavorite;
+        }
     }
 }

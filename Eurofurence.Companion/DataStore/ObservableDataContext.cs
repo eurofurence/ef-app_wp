@@ -8,6 +8,7 @@ using Eurofurence.Companion.ViewModel;
 using Eurofurence.Companion.DependencyResolution;
 using Eurofurence.Companion.DataModel.Local;
 using Eurofurence.Companion.DataModel;
+using System;
 
 namespace Eurofurence.Companion.DataStore
 {
@@ -30,6 +31,8 @@ namespace Eurofurence.Companion.DataStore
             InfoGroups = new ObservableCollection<InfoGroup>();
             Images = new ObservableCollection<Image>();
             Dealers = new ObservableCollection<Dealer>();
+
+            EventEntryAttributes = new ObservableCollection<EventEntryAttributes>();
 
             _navigationResolver.Resolve(this);
         }
@@ -60,6 +63,19 @@ namespace Eurofurence.Companion.DataStore
             _navigationResolver.Resolve(this);
         }
 
+
+        public async Task SaveAsync()
+        {
+            foreach(var entity in EventEntryAttributes)
+            {
+                entity.IsDeleted = entity.IsPersistent ? (byte)0 : (byte)1;
+            }
+
+            await _dataStore.ApplyDeltaAsync(EventEntryAttributes)
+                .ConfigureAwait(false);
+        }
+
+
         private async Task LoadAsync<T>(ICollection<T> target, string propertyName) where T : EntityBase, new()
         {
             var entities = await _dataStore.GetAsync<T>();
@@ -75,5 +91,7 @@ namespace Eurofurence.Companion.DataStore
                 target.Add(entity);
             }
         }
+
+
     }
 }

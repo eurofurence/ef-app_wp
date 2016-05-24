@@ -182,6 +182,8 @@ namespace Eurofurence.Companion
 
         private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
+            await KernelResolver.Current.Get<IDataContext>().SaveAsync();
+
             _telemetryClientProvider.Client.TrackEvent("Application suspended");
             _telemetryClientProvider.Client.Flush();
 

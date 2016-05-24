@@ -75,6 +75,8 @@
             <DependencyResolution:ViewModelLocator x:Key="ViewModelLocator" />
             <DataModel:StringFormatConverter x:Key="StringFormatConverter" />
             <Converter:BytesToImageConverter x:Key="BytesToImageConverter" />
+            <Converter:BooleanToVisibilityConverter x:Key="TrueToVisibleConverter" />
+            <Converter:BooleanToVisibilityConverter x:Key="FalseToVisibleConverter" IsReversed="True" />
             <ViewModel:TranslationViewModel x:Key="Translations" />
 
             <Style x:Key="FactBoxIcon" TargetType="TextBlock">

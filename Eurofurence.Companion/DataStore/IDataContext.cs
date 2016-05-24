@@ -19,5 +19,6 @@ namespace Eurofurence.Companion.DataStore
         ObservableCollection<EventEntryAttributes> EventEntryAttributes { get; }
 
         Task RefreshAsync();
+        Task SaveAsync();
     }
 }

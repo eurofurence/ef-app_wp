@@ -3,7 +3,7 @@ using SQLite;
 
 namespace Eurofurence.Companion.DataModel
 {
-    public abstract class EntityBase
+    public abstract class EntityBase : BindableBase
     {
         [PrimaryKey]
         public Guid Id { get; set; }

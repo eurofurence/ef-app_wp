@@ -21,6 +21,11 @@
             <ListView x:Name="EventList"
                       IsItemClickEnabled="True"
                       ItemsSource="{Binding}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid>

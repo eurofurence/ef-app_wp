@@ -21,10 +21,9 @@
     </Page.Resources>
     <Page.BottomAppBar>
         <CommandBar>
-            <AppBarToggleButton Command="{Binding Source={StaticResource ViewModelLocator},
-                                                  Path=EventsViewModel.AddEventToCalendarCommand}"
-                                CommandParameter="{Binding}"
+            <AppBarToggleButton Click="AppBarToggleButton_Click"
                                 Icon="Favorite"
+                                IsChecked="{Binding AttributesProxy.Extension.IsFavorite}"
                                 Label="Favorite" />
 
             <AppBarButton Command="{Binding Source={StaticResource ViewModelLocator},

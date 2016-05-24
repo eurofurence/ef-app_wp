@@ -1,4 +1,5 @@
 ﻿using Eurofurence.Companion.DependencyResolution;
+using Eurofurence.Companion.DataModel;
 using System.Linq;
 
 namespace Eurofurence.Companion.DataStore
@@ -23,6 +24,8 @@ namespace Eurofurence.Companion.DataStore
                 e.ConferenceDay?.Entries.Add(e);
                 e.ConferenceRoom?.Entries.Add(e);
                 e.ConferenceTrack?.Entries.Add(e);
+
+                e.AttributesProxy = new ExtensionProxy<DataModel.Api.EventEntry, DataModel.Local.EventEntryAttributes>(dataContext.EventEntryAttributes, e);
             }
 
             foreach (var e in dataContext.InfoGroups) e.Entries.Clear();
