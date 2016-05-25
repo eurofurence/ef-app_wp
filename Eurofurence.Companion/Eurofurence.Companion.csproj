@@ -88,14 +88,17 @@
     <Compile Include="Common\AwaitableCommand.cs" />
     <Compile Include="BindableBase.cs" />
     <Compile Include="Common\Consts.cs" />
+    <Compile Include="Common\DependencyObjectExtensions.cs" />
     <Compile Include="Common\INavigationProvider.cs" />
     <Compile Include="Common\ITelemetryClientProvider.cs" />
+    <Compile Include="Common\ITimeProvider.cs" />
     <Compile Include="Common\NavigationEvent.cs" />
     <Compile Include="Common\NavigationHelper.cs" />
     <Compile Include="Common\NavigationMediator.cs" />
     <Compile Include="Common\NavigationMenuItem.cs" />
     <Compile Include="Common\NavigationProvider.cs" />
     <Compile Include="Common\ObservableDictionary.cs" />
+    <Compile Include="Common\PropertyWatcherExtensions.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\TelemetryClientProvider.cs" />
     <Compile Include="Common\TimeProvider.cs" />
@@ -113,6 +116,7 @@
     <Compile Include="DataModel\Local\EventEntryAttributes.cs" />
     <Compile Include="DataModel\IEntityExtension.cs" />
     <Compile Include="DependencyResolution\IocBeacon.cs" />
+    <Compile Include="DependencyResolution\ServiceLocator.cs" />
     <Compile Include="Translations.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -4,11 +4,13 @@
       xmlns:core="using:Microsoft.Xaml.Interactions.Core"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-      xmlns:local="using:Eurofurence.Companion.Views"
+      xmlns:i="using:Microsoft.Xaml.Interactivity"
+      xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:im="using:Microsoft.Xaml.Interactions.Media"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-      DataContext="{Binding Source={StaticResource ViewModelLocator},
-                            Path=MainViewModel}"
+        DataContext="{Binding Source={StaticResource ViewModelLocator},
+                                    Path=MainViewModel}"      
       mc:Ignorable="d">
 
     <!--<Page.BottomAppBar>
@@ -29,14 +31,17 @@
     <Grid x:Name="LayoutRoot">
 
 
-
         <ScrollViewer>
-            <Grid x:Name="ContentRoot" Margin="19,9.5,19,0">
+            <StackPanel>
+                <Grid>
+                <Image Source="ms-appx:///Assets/Eurofurence/Volatile/background.jpg" Height="150" Stretch="UniformToFill" />
+                    <Image Source="ms-appx:///Assets/Eurofurence/Volatile/logo_small.png" Height="100" 
+                           HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20"/>
+                </Grid>
+                <Grid x:Name="ContentRoot" Margin="19,9.5,19,0">
                 <StackPanel>
-                    <TextBlock Text="{Binding CurrentDateTimeLocal}" />
-
-
-                    <TextBlock Style="{StaticResource GroupHeaderTextBlockStyle}">
+                        <TextBlock Text="{Binding CurrentDateTimeLocal}" />
+                        <TextBlock Style="{StaticResource GroupHeaderTextBlockStyle}">
                         Upcoming Events:
                     </TextBlock>
 
@@ -49,12 +54,48 @@
                         </ListView.ItemContainerStyle>
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <Grid>
+                                <Grid Name="_ue_grid" Background="Transparent">
+
+                                    <Grid.Resources>
+                                            <Storyboard x:Name="_ue_pulseItemStoryboard">
+                                            <ColorAnimation
+                                                Storyboard.TargetName="_ue_grid"
+                                                Storyboard.TargetProperty="(Grid.Background).(SolidColorBrush.Color)"
+                                                RepeatBehavior="Forever"
+                                                From="{StaticResource EurofurenceThemeColorTransparent}"
+                                                To="{StaticResource EurofurenceThemeColor}"
+                                                AutoReverse="True"
+                                                Duration="0:0:1.00" />
+                                        </Storyboard>
+                                    </Grid.Resources>
                                     <interactivity:Interaction.Behaviors>
                                         <interactivity:BehaviorCollection>
                                             <core:EventTriggerBehavior EventName="Tapped">
-                                                <core:InvokeCommandAction Command="{Binding Source={StaticResource ViewModelLocator}, Path=NavigationViewModel.NavigateToEventDetailPage}" CommandParameter="{Binding}" />
+                                                <core:InvokeCommandAction
+                                                    Command="{Binding Source={StaticResource ViewModelLocator}, Path=NavigationViewModel.NavigateToEventDetailPage}"
+                                                    CommandParameter="{Binding Entity}" />
                                             </core:EventTriggerBehavior>
+                                            <core:DataTriggerBehavior
+                                                Binding="{Binding IsStartingSoon}"
+                                                Value="True">
+                                                <im:ControlStoryboardAction
+                                                    Storyboard="{StaticResource _ue_pulseItemStoryboard}"
+                                                    ControlStoryboardOption="Play" />
+                                            </core:DataTriggerBehavior>
+                                            <core:DataTriggerBehavior
+                                                Binding="{Binding Entity.AttributesProxy.Extension.IsFavorite}"
+                                                Value="True">
+                                                <core:ChangePropertyAction PropertyName="Visibility"
+                                                                           TargetObject="{Binding ElementName=_ue_icon_favorite}"
+                                                                           Value="Visible" />
+                                            </core:DataTriggerBehavior>
+                                            <core:DataTriggerBehavior
+                                                Binding="{Binding Entity.AttributesProxy.Extension.IsFavorite}"
+                                                Value="False">
+                                                <core:ChangePropertyAction PropertyName="Visibility"
+                                                                           TargetObject="{Binding ElementName=_ue_icon_favorite}"
+                                                                           Value="Collapsed" />
+                                            </core:DataTriggerBehavior>
                                         </interactivity:BehaviorCollection>
                                     </interactivity:Interaction.Behaviors>
 
@@ -68,17 +109,19 @@
                                     <StackPanel Grid.Column="0">
                                         <TextBlock Name="_ue_icon_favorite"
                                                    FontFamily="{StaticResource IconFontFamily}"
-                                                   FontSize="24"
-                                                   Text="&#xE1CE;"
-                                                   Visibility="{Binding AttributesProxy.Extension.IsFavorite,
-                                                                        Converter={StaticResource TrueToVisibleConverter}}" />
+                                                   FontSize="24" Margin="5 5 0 0"
+                                                   Text="&#xE1CE;" />
+                                        <!--Visibility="{Binding AttributesProxy.Extension.IsFavorite,
+                                                                        Converter={StaticResource TrueToVisibleConverter}}"-->
                                     </StackPanel>
 
                                     <StackPanel Grid.Column="1">
-                                        <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="{Binding StartTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:hh\\:mm}'}" />
+                                        <TextBlock Style="{StaticResource TitleTextBlockStyle}"
+                                                   Text="{Binding Entity.StartTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:hh\\:mm}'}" />
                                         <TextBlock Foreground="{ThemeResource PhoneMidBrush}">
                                             <Run FontFamily="{StaticResource IconFontFamily}" Text="&#xE741;" />
-                                            <Run Text="{Binding EndTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:hh\\:mm}'}" />
+                                            <Run
+                                                Text="{Binding Entity.EndTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:hh\\:mm}'}" />
                                         </TextBlock>
                                     </StackPanel>
 
@@ -86,11 +129,11 @@
                                     <StackPanel Grid.Column="2">
                                         <TextBlock MaxHeight="60"
                                                    Style="{StaticResource TitleTextBlockStyle}"
-                                                   Text="{Binding Title}"
+                                                   Text="{Binding Entity.Title}"
                                                    TextTrimming="CharacterEllipsis"
                                                    TextWrapping="Wrap" />
                                         <TextBlock Foreground="{ThemeResource PhoneMidBrush}"
-                                                   Text="{Binding ConferenceRoom.Name}"
+                                                   Text="{Binding Entity.ConferenceRoom.Name}"
                                                    TextWrapping="Wrap" />
                                     </StackPanel>
                                 </Grid>
@@ -102,7 +145,7 @@
                 </StackPanel>
 
             </Grid>
+            </StackPanel>
         </ScrollViewer>
     </Grid>
 </Page>
-

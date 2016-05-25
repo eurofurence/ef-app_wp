@@ -11,10 +11,9 @@
 
         <ResourceDictionary>
             <Color x:Key="EurofurenceThemeColor">#006357</Color>
+            <Color x:Key="EurofurenceThemeColorTransparent">#00006357</Color>
             <Color x:Key="EurofurenceThemeColorLight">#90d3c7</Color>
             <SolidColorBrush x:Key="EurofurenceThemeColorBrush" Color="{StaticResource EurofurenceThemeColor}" />
-
-
 
 
             <SolidColorBrush x:Key="AppPageBackgroundBrush" Color="{StaticResource EurofurenceThemeColor}" />
@@ -73,6 +72,8 @@
             <FontFamily x:Key="EurofurenceAppIconsFontFamily">/Assets/Fonts/ef_app_icons.ttf#ef_app_icons</FontFamily>
 
             <DependencyResolution:ViewModelLocator x:Key="ViewModelLocator" />
+            <DependencyResolution:ServiceLocator x:Key="ServiceLocator" />
+            
             <DataModel:StringFormatConverter x:Key="StringFormatConverter" />
             <Converter:BytesToImageConverter x:Key="BytesToImageConverter" />
             <Converter:BooleanToVisibilityConverter x:Key="TrueToVisibleConverter" />

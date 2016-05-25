@@ -5,9 +5,11 @@ using Eurofurence.Companion.DependencyResolution;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Windows.Input;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Appointments;
+using Windows.Devices.Bluetooth.GenericAttributeProfile;
 
 namespace Eurofurence.Companion.ViewModel
 {
@@ -15,11 +17,13 @@ namespace Eurofurence.Companion.ViewModel
     public class EventsViewModel : BindableBase
     {
         private readonly IDataContext _dataContext;
+        private readonly ITimeProvider _timeProvider;
 
         public ObservableCollection<EventEntry> EventEntries => _dataContext.EventEntries;
         public ObservableCollection<EventConferenceDay> EventConferenceDays => _dataContext.EventConferenceDays;
         public ObservableCollection<EventConferenceRoom> EventConferenceRooms => _dataContext.EventConferenceRooms;
         public ObservableCollection<EventConferenceTrack> EventConferenceTracks => _dataContext.EventConferenceTracks;
+
         public ICommand AddEventToCalendarCommand { get; set; }
 
         public ObservableCollection<EventEntry> EventEntrySearchResults { get; set; }
@@ -48,9 +52,10 @@ namespace Eurofurence.Companion.ViewModel
             }
         }
 
-        public EventsViewModel(IDataContext dataContext)
+        public EventsViewModel(IDataContext dataContext, ITimeProvider timeProvider)
         {
             _dataContext = dataContext;
+            _timeProvider = timeProvider;
             EventEntrySearchResults = new ObservableCollection<EventEntry>();
 
             if (DesignMode.DesignModeEnabled) SearchText = "Furry";
@@ -77,5 +82,6 @@ namespace Eurofurence.Companion.ViewModel
                 await store.ShowEditNewAppointmentAsync(appointment);
             });
         }
+
     }
 }

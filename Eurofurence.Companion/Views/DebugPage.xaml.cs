@@ -117,7 +117,7 @@ namespace Eurofurence.Companion.Views
 
         private void _btnSetTimeProviderOffset_Click(object sender, RoutedEventArgs e)
         {
-            KernelResolver.Current.Get<TimeProvider>().ForcedOffset =
+            KernelResolver.Current.Get<ITimeProvider>().ForcedOffset =
                 (_tpOffsetDatePicker.Date + _tpOffsetTimePicker.Time) - DateTime.Now;
         }
     }

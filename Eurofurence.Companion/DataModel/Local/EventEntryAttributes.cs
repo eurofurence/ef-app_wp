@@ -1,4 +1,7 @@
-﻿namespace Eurofurence.Companion.DataModel.Local
+﻿using System;
+using SQLite;
+
+namespace Eurofurence.Companion.DataModel.Local
 {
     public class EventEntryAttributes : EntityBase, IEntityExtension
     {

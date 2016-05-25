@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:Eurofurence.Companion.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:vm="using:Eurofurence.Companion.ViewModel"
       d:DataContext="{Binding Source={StaticResource ViewModelLocator},
                               Path=EventsViewModel.EventEntries[0]}"
       mc:Ignorable="d">
@@ -12,12 +13,12 @@
         <Style x:Name="EurofurencePageHeader" TargetType="Border">
             <Setter Property="Background" Value="{StaticResource EurofurenceThemeColorBrush}" />
         </Style>
+        
+        
 
         <!--<TextBlock Text="Event Schedule" Style="{ThemeResource TitleTextBlockStyle}" Foreground="White"/>
         <TextBlock Text="{Binding WeekdayFullname}" Margin="0" Style="{ThemeResource HeaderTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}" FontSize="{ThemeResource TextStyleExtraLargePlusFontSize}" Foreground="White"/>
         <TextBlock Text="{Binding Name}" Style="{ThemeResource TitleTextBlockStyle}" FontSize="{ThemeResource TextStyleMediumFontSize}" FontWeight="Normal" Foreground="White"/>-->
-
-
     </Page.Resources>
     <Page.BottomAppBar>
         <CommandBar>
@@ -34,6 +35,19 @@
         </CommandBar>
     </Page.BottomAppBar>
     <Grid x:Name="LayoutRoot">
+    <Grid.Resources>
+        <!--<vm:EventEntryViewModelProxy 
+            x:Key="Bar"
+            EventEntry="{Binding}"
+            />-->
+    </Grid.Resources>
+        <TextBlock Text="{Binding Source={StaticResource ServiceLocator}, Path=TimeProvider.CurrentDateTimeLocal}"></TextBlock>
+        <vm:EventEntryViewModelProxy x:Name="ViewModelProxy" 
+                                     TimeProvider="{Binding Source={StaticResource ServiceLocator}, Path=TimeProvider}"
+                                     
+                                     ></vm:EventEntryViewModelProxy>
+        <!--EventEntry="{Binding}"-->
+        <TextBlock Text="{Binding ElementName=ViewModelProxy, Path=ViewModel.TimeToStart.TotalSeconds}"></TextBlock>
 
 
         <Grid x:Name="ContentRoot" Margin="19 20 19 0">

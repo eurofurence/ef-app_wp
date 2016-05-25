@@ -4,11 +4,11 @@ using Windows.UI.Xaml;
 
 namespace Eurofurence.Companion.Common
 {
-    [IocBeacon(TargetType = typeof(TimeProvider), Scope = IocBeacon.ScopeEnum.Singleton)]
-    public class TimeProvider : BindableBase
+    [IocBeacon(TargetType = typeof(ITimeProvider), Scope = IocBeacon.ScopeEnum.Singleton)]
+    public class TimeProvider : BindableBase, ITimeProvider
     {
         private DateTime _currentDateTimeLocal = DateTime.Now;
-        private DispatcherTimer _updateTimer;
+        private DateTime _currentDateTimeMinuteLocal = DateTime.Now;
 
         public DateTime CurrentDateTimeLocal
         {
@@ -19,6 +19,20 @@ namespace Eurofurence.Companion.Common
             private set
             {
                 SetProperty(ref _currentDateTimeLocal, value);
+                CurrentDateTimeMinuteLocal = CurrentDateTimeLocal.
+                    AddTicks(-(CurrentDateTimeLocal.Ticks % TimeSpan.TicksPerMinute));
+            }
+        }
+
+        public DateTime CurrentDateTimeMinuteLocal
+        {
+            get
+            {
+                return _currentDateTimeMinuteLocal + ForcedOffset;
+            }
+            private set
+            {
+                SetProperty(ref _currentDateTimeMinuteLocal, value);
             }
         }
 
@@ -32,9 +46,9 @@ namespace Eurofurence.Companion.Common
             ForcedOffset = TimeSpan.Zero;
             ForcedOffset = new DateTime(2015, 08, 19, 16, 45, 00) - DateTime.Now;
 
-            _updateTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
-            _updateTimer.Tick += _updateTimer_Tick;
-            _updateTimer.Start();
+            var updateTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+            updateTimer.Tick += _updateTimer_Tick;
+            updateTimer.Start();
         }
 
         private void _updateTimer_Tick(object sender, object e)
