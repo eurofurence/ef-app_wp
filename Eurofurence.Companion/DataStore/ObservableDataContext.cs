@@ -18,6 +18,8 @@ namespace Eurofurence.Companion.DataStore
         private readonly IDataStore _dataStore;
         private readonly INavigationResolver _navigationResolver;
 
+        public event EventHandler Refreshed;
+
         public ObservableDataContext(IDataStore dataStore, INavigationResolver navigationResolver)
         {
             _dataStore = dataStore;
@@ -61,6 +63,8 @@ namespace Eurofurence.Companion.DataStore
             await LoadAsync(Dealers, nameof(Dealers));
             await LoadAsync(EventEntryAttributes, nameof(EventEntryAttributes));
             _navigationResolver.Resolve(this);
+
+            Refreshed?.Invoke(this, null);
         }
 
 

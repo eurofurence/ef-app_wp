@@ -1,5 +1,6 @@
 ﻿using Eurofurence.Companion.Common;
 using Ninject;
+using Windows.UI.Xaml;
 
 namespace Eurofurence.Companion.DependencyResolution
 {

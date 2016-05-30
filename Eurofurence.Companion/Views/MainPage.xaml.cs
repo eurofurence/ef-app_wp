@@ -1,6 +1,9 @@
-﻿using Eurofurence.Companion.Common;
+﻿using Ninject;
+using Eurofurence.Companion.Common;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Eurofurence.Companion.DependencyResolution;
+using Eurofurence.Companion.DataStore;
 
 namespace Eurofurence.Companion.Views
 {
@@ -19,7 +22,10 @@ namespace Eurofurence.Companion.Views
             _navigationHelper = new NavigationHelper(this);
             _navigationHelper.LoadState += this.NavigationHelper_LoadState;
             _navigationHelper.SaveState += this.NavigationHelper_SaveState;
-            _navigationHelper.GoBackCommand = new RelayCommand((obj) => { App.Current.Exit(); });
+            _navigationHelper.GoBackCommand = new RelayCommand(async (obj) => {
+                await KernelResolver.Current.Get<IDataContext>().SaveAsync();
+                App.Current.Exit();
+            });
         }
 
         public NavigationHelper NavigationHelper => this._navigationHelper; 

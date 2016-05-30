@@ -4,9 +4,11 @@
       xmlns:behaviors="using:Eurofurence.Companion.ViewModel.Behaviors"
       xmlns:core="using:Microsoft.Xaml.Interactions.Core"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:im="using:Microsoft.Xaml.Interactions.Media"
       xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
       xmlns:local="using:Eurofurence.Companion.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:vm="using:Eurofurence.Companion.ViewModel"
       Background="{StaticResource AppPageBackgroundBrush}"
       RequestedTheme="Dark"
       mc:Ignorable="d">
@@ -33,6 +35,31 @@
                     <PowerEase EasingMode="EaseOut" />
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
+        </Storyboard>
+
+        <Storyboard x:Name="showSearchBox" AutoReverse="False">
+            <DoubleAnimation Duration="0:0:0.15"
+                             From="0"
+                             Storyboard.TargetName="_textBox_searchBox"
+                             Storyboard.TargetProperty="Opacity"
+                             To="1" />
+            <DoubleAnimation Duration="0:0:0.15"
+                             From="1"
+                             Storyboard.TargetName="tbTitle"
+                             Storyboard.TargetProperty="Opacity"
+                             To="0" />
+        </Storyboard>
+        <Storyboard x:Name="hideSearchBox" AutoReverse="False">
+            <DoubleAnimation Duration="0:0:0.15"
+                             From="1"
+                             Storyboard.TargetName="_textBox_searchBox"
+                             Storyboard.TargetProperty="Opacity"
+                             To="0" />
+            <DoubleAnimation Duration="0:0:0.15"
+                             From="0"
+                             Storyboard.TargetName="tbTitle"
+                             Storyboard.TargetProperty="Opacity"
+                             To="1" />
         </Storyboard>
 
 
@@ -105,7 +132,7 @@
 
     <Grid Background="#FF1C1C1C">
         <Grid.RowDefinitions>
-            <RowDefinition Height="60" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -125,7 +152,8 @@
 
         <Grid Name="PanelTitle"
               Grid.Row="0"
-              Grid.Column="0">
+              Grid.Column="0"
+              Height="60">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="60" />
                 <ColumnDefinition Width="*" />
@@ -171,7 +199,101 @@
                         </TextBlock.RenderTransform>
 
                     </TextBlock>
+
                 </StackPanel>
+
+                <Grid x:Name="_grid_searchBar" Visibility="{Binding IsSearchAvailable, Converter={StaticResource TrueToVisibleConverter}}">
+                    <Grid.DataContext>
+                        <vm:SearchBarViewModel />
+                    </Grid.DataContext>
+
+
+
+                    <TextBox x:Name="_textBox_searchBox"
+                             Margin="10 10 50 10"
+                             Text="{Binding SearchText,
+                                            Mode=TwoWay,
+                                            UpdateSourceTrigger=PropertyChanged}"
+                             Visibility="{Binding IsSearchExpanded,
+                                                  Converter={StaticResource TrueToVisibleConverter}}">
+                        <TextBox.Resources>
+
+                            <Style x:Key="SearchTextBoxStyle" TargetType="TextBox">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="TextBox">
+                                            <Grid Background="Transparent">
+
+                                                <Border x:Name="BorderElement"
+                                                        Background="#C0FFFFFF"
+                                                        BorderBrush="White"
+                                                        BorderThickness="{TemplateBinding BorderThickness}" />
+                                                <ContentControl x:Name="PlaceholderTextContentPresenter"
+                                                                Margin="{TemplateBinding BorderThickness}"
+                                                                Content="{TemplateBinding PlaceholderText}"
+                                                                FontSize="{ThemeResource ContentControlFontSize}"
+                                                                Foreground="{ThemeResource TextBoxPlaceholderTextThemeBrush}"
+                                                                IsTabStop="False"
+                                                                Padding="{TemplateBinding Padding}" />
+                                                <ScrollViewer x:Name="ContentElement"
+                                                              MinHeight="{ThemeResource TextControlThemeMinHeight}"
+                                                              Margin="{TemplateBinding BorderThickness}"
+                                                              AutomationProperties.AccessibilityView="Raw"
+                                                              HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                                              HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
+                                                              IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
+                                                              IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}"
+                                                              IsTabStop="False"
+                                                              IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}"
+                                                              Padding="{TemplateBinding Padding}"
+                                                              VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+                                                              VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
+                                                              ZoomMode="Disabled" />
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </TextBox.Resources>
+                        <TextBox.Style>
+                            <StaticResource ResourceKey="SearchTextBoxStyle" />
+                        </TextBox.Style>
+                    </TextBox>
+
+                    <Border Name="_b_search"
+                            Width="60"
+                            HorizontalAlignment="Right"
+                            Background="#00000000">
+                        <interactivity:Interaction.Behaviors>
+                            <interactivity:BehaviorCollection>
+                                <core:EventTriggerBehavior EventName="Tapped">
+                                    <core:InvokeCommandAction Command="{Binding ToggleSearchBarExpansion}" />
+                                </core:EventTriggerBehavior>
+                                <core:DataTriggerBehavior Binding="{Binding IsSearchExpanded}" Value="True">
+                                    <!--<core:ChangePropertyAction PropertyName="Opacity"
+                                                               TargetObject="{Binding ElementName=tbTitle}"
+                                                               Value="0" />-->
+                                    <im:ControlStoryboardAction ControlStoryboardOption="Play" Storyboard="{StaticResource showSearchBox}" />
+
+                                </core:DataTriggerBehavior>
+                                <core:DataTriggerBehavior Binding="{Binding IsSearchExpanded}" Value="False">
+                                    <!--<core:ChangePropertyAction PropertyName="Opacity"
+                                                               TargetObject="{Binding ElementName=tbTitle}"
+                                                               Value="1" />-->
+                                    <im:ControlStoryboardAction ControlStoryboardOption="Play" Storyboard="{StaticResource hideSearchBox}" />
+                                </core:DataTriggerBehavior>
+                            </interactivity:BehaviorCollection>
+                        </interactivity:Interaction.Behaviors>
+
+                        <TextBlock HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontFamily="{StaticResource IconFontFamily}"
+                                   FontSize="25"
+                                   FontWeight="ExtraBlack"
+                                   Text="&#xE1A3;" />
+
+                    </Border>
+                </Grid>
             </Grid>
 
         </Grid>

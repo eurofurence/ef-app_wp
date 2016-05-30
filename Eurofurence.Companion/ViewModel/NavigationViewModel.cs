@@ -29,17 +29,17 @@ namespace Eurofurence.Companion.ViewModel
             _navigationMediator = navigationMediator;
             _navigationProvider = navigationProvider;
 
-            NavigateToMainPage = new RelayCommand(_ => { _navigationMediator.Navigate(typeof(Views.MainPage)); });
-            NavigateToDebugPage = new RelayCommand(_ => { _navigationMediator.Navigate(typeof(Views.DebugPage)); });
-            NavigateToInfoPage = new RelayCommand(_ => { _navigationMediator.Navigate(typeof(Views.InfoPage)); });
-            NavigateToInfoGroupDetailPage = new RelayCommand(p => { _navigationMediator.Navigate(typeof(Views.InfoGroupDetailPage), p); });
-            NavigateToEventsPage = new RelayCommand(_ => { _navigationMediator.Navigate(typeof(Views.EventsPage)); });
-            NavigateToEventsByDayPage = new RelayCommand(p => { _navigationMediator.Navigate(typeof(Views.EventsByDayPage), p); });
-            NavigateToEventDetailPage = new RelayCommand(p => { _navigationMediator.Navigate(typeof(Views.EventDetailPage), p); });
-            NavigateToLoadingPage = new RelayCommand(p => { _navigationMediator.Navigate(typeof(Views.LoadingPage), p); });
-            NavigateToDealerListPage = new RelayCommand(p => { _navigationMediator.Navigate(typeof(Views.DealerListPage), p); });
-            NavigateToDealerDetailPage = new RelayCommand(p => { _navigationMediator.Navigate(typeof(Views.DealerDetailPage), p); });
-            NavigateToAboutPage = new RelayCommand(p => { _navigationMediator.Navigate(typeof(Views.AboutPage), p); });
+            NavigateToMainPage = new RelayCommand(_ => { _navigationMediator.NavigateAsync(typeof(Views.MainPage)); });
+            NavigateToDebugPage = new RelayCommand(_ => { _navigationMediator.NavigateAsync(typeof(Views.DebugPage)); });
+            NavigateToInfoPage = new RelayCommand(_ => { _navigationMediator.NavigateAsync(typeof(Views.InfoPage)); });
+            NavigateToInfoGroupDetailPage = new RelayCommand(p => { _navigationMediator.NavigateAsync(typeof(Views.InfoGroupDetailPage), p); });
+            NavigateToEventsPage = new RelayCommand(_ => { _navigationMediator.NavigateAsync(typeof(Views.EventsPage)); });
+            NavigateToEventsByDayPage = new RelayCommand(p => { _navigationMediator.NavigateAsync(typeof(Views.EventsByDayPage), p); });
+            NavigateToEventDetailPage = new RelayCommand(p => { _navigationMediator.NavigateAsync(typeof(Views.EventDetailPage), p); });
+            NavigateToLoadingPage = new RelayCommand(p => { _navigationMediator.NavigateAsync(typeof(Views.LoadingPage), p); });
+            NavigateToDealerListPage = new RelayCommand(p => { _navigationMediator.NavigateAsync(typeof(Views.DealerListPage), p); });
+            NavigateToDealerDetailPage = new RelayCommand(p => { _navigationMediator.NavigateAsync(typeof(Views.DealerDetailPage), p); });
+            NavigateToAboutPage = new RelayCommand(p => { _navigationMediator.NavigateAsync(typeof(Views.AboutPage), p); });
         }
     }
 }

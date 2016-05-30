@@ -23,6 +23,7 @@ using HockeyApp;
 using Ninject;
 using System.Collections.Generic;
 using Microsoft.ApplicationInsights.DataContracts;
+using Windows.UI.Xaml.Media;
 
 namespace Eurofurence.Companion
 {
@@ -49,15 +50,20 @@ namespace Eurofurence.Companion
             UnhandledException += App_UnhandledException;
         }
 
-        private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        private async void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             _telemetryClientProvider.Client.TrackException(e.Exception);
             _telemetryClientProvider.Client.Flush();
+
+            await new MessageDialog(e.Exception.Message).ShowAsync();
         }
 
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
             if (_isInitialized) return;
+
+            ThemeManager.SetThemeColor((Color)Resources["EurofurenceThemeColor"]);
+
 
             var contextManager = KernelResolver.Current.Get<ContextManager>();
             var navigationMediator = KernelResolver.Current.Get<INavigationMediator>();
@@ -137,14 +143,17 @@ namespace Eurofurence.Companion
                 //// When the navigation stack isn't restored navigate to the first page,
                 //// configuring the new page by passing required information as a navigation
                 //// parameter.
-                if (!navigationMediator.Navigate(typeof (MainPage), e.Arguments))
+                if (!(await navigationMediator.NavigateAsync(typeof (MainPage), e.Arguments)))
                 {
                     throw new Exception("Failed to create initial page");
                 }
 
+                //navigationMediator.Navigate(typeof(WelcomeGuidePage));
+                //navigationMediator.Navigate(typeof(LoadingPage));
+
                 if (firstTimeRunResult == FirstTimeRunResult.RunAndSynchronize)
                 {
-                    navigationMediator.Navigate(
+                    await navigationMediator.NavigateAsync(
                         typeof (LoadingPage),
                         new LoadingPage.LoadingPageOptions
                         {
@@ -152,7 +161,7 @@ namespace Eurofurence.Companion
                             AutoNavigateBackOnSuccess = true,
                             AutoStartUpdateOnNavigatedTo = true
                         });
-                }
+                } 
             }
 
 
@@ -187,8 +196,9 @@ namespace Eurofurence.Companion
             _telemetryClientProvider.Client.TrackEvent("Application suspended");
             _telemetryClientProvider.Client.Flush();
 
-            var deferral = e.SuspendingOperation.GetDeferral();
             await SuspensionManager.SaveAsync();
+
+            var deferral = e.SuspendingOperation.GetDeferral();
             deferral.Complete();
         }
 

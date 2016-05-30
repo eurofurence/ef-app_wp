@@ -1,8 +1,21 @@
-﻿namespace Eurofurence.Companion.Views
+﻿using Eurofurence.Companion.ViewModel;
+using System;
+
+namespace Eurofurence.Companion.Views
 {
-    interface IPageProperties
+    public interface IPageProperties
     {
         string Title { get; }
         string Icon { get; }
+    }
+
+    public interface ILayoutProperties
+    {
+        bool IsHeaderVisible { get; }
+    }
+
+    public interface ISearchInteraction
+    {
+        SearchBarViewModel SearchBarViewModel { get; set; }
     }
 }

@@ -110,7 +110,7 @@ namespace Eurofurence.Companion.DataStore
             UpdateStatus = TaskStatus.Running;
             MainOperationMessage = "Initializing...";
 
-            await _dataContext.SaveAsync().ConfigureAwait(false);
+            await _dataContext.SaveAsync();
 
             var metadata = await _apiClient.GetEndpointMetadataAsync();
 
@@ -149,6 +149,7 @@ namespace Eurofurence.Companion.DataStore
             OnPropertyChanged(nameof(LastServerQueryDateTimeUtc));
 
             await _dataContext.RefreshAsync();
+            await _dataContext.SaveAsync();
 
             MainOperationMessage = "Done!";
             UpdateStatus = TaskStatus.RanToCompletion;

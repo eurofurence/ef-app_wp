@@ -13,8 +13,8 @@
         <Style x:Name="EurofurencePageHeader" TargetType="Border">
             <Setter Property="Background" Value="{StaticResource EurofurenceThemeColorBrush}" />
         </Style>
-        
-        
+
+
 
         <!--<TextBlock Text="Event Schedule" Style="{ThemeResource TitleTextBlockStyle}" Foreground="White"/>
         <TextBlock Text="{Binding WeekdayFullname}" Margin="0" Style="{ThemeResource HeaderTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}" FontSize="{ThemeResource TextStyleExtraLargePlusFontSize}" Foreground="White"/>
@@ -24,7 +24,7 @@
         <CommandBar>
             <AppBarToggleButton Click="AppBarToggleButton_Click"
                                 Icon="Favorite"
-                                IsChecked="{Binding AttributesProxy.Extension.IsFavorite}"
+                                IsChecked="{Binding Entity.AttributesProxy.Extension.IsFavorite}"
                                 Label="Favorite" />
 
             <AppBarButton Command="{Binding Source={StaticResource ViewModelLocator},
@@ -35,21 +35,6 @@
         </CommandBar>
     </Page.BottomAppBar>
     <Grid x:Name="LayoutRoot">
-    <Grid.Resources>
-        <!--<vm:EventEntryViewModelProxy 
-            x:Key="Bar"
-            EventEntry="{Binding}"
-            />-->
-    </Grid.Resources>
-        <TextBlock Text="{Binding Source={StaticResource ServiceLocator}, Path=TimeProvider.CurrentDateTimeLocal}"></TextBlock>
-        <vm:EventEntryViewModelProxy x:Name="ViewModelProxy" 
-                                     TimeProvider="{Binding Source={StaticResource ServiceLocator}, Path=TimeProvider}"
-                                     
-                                     ></vm:EventEntryViewModelProxy>
-        <!--EventEntry="{Binding}"-->
-        <TextBlock Text="{Binding ElementName=ViewModelProxy, Path=ViewModel.TimeToStart.TotalSeconds}"></TextBlock>
-
-
         <Grid x:Name="ContentRoot" Margin="19 20 19 0">
             <ScrollViewer>
                 <StackPanel>
@@ -63,7 +48,7 @@
                     <TextBlock Margin="0 0 0 15"
                                FontWeight="SemiBold"
                                Style="{StaticResource SubheaderTextBlockStyle}"
-                               Text="{Binding Title}" />
+                               Text="{Binding Entity.Title}" />
 
 
                     <Grid>
@@ -88,9 +73,9 @@
                         <StackPanel Grid.Row="0" Grid.Column="1">
                             <!--<TextBlock Text="Location:" Style="{StaticResource FactBoxLabel}" />-->
                             <TextBlock Style="{StaticResource FactBoxValue}">
-                                <Run Text="{Binding StartTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:hh\\:mm}'}" />
+                                <Run Text="{Binding Entity.StartTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:hh\\:mm}'}" />
                                 <Run Text="to" />
-                                <Run Text="{Binding EndTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:hh\\:mm}'}" />
+                                <Run Text="{Binding Entity.EndTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:hh\\:mm}'}" />
                             </TextBlock>
                         </StackPanel>
                         <TextBlock Grid.Row="1"
@@ -100,7 +85,7 @@
 
                         <StackPanel Grid.Row="1" Grid.Column="1">
                             <!--<TextBlock Text="Location:" Style="{StaticResource FactBoxLabel}" />-->
-                            <TextBlock Style="{StaticResource FactBoxValue}" Text="{Binding ConferenceRoom.Name}" />
+                            <TextBlock Style="{StaticResource FactBoxValue}" Text="{Binding ConferenceRoom.Entity.Name}" />
                         </StackPanel>
                         <TextBlock Grid.Row="2"
                                    Grid.Column="0"
@@ -109,7 +94,7 @@
 
                         <StackPanel Grid.Row="2" Grid.Column="1">
                             <!--<TextBlock Text="Category:" Style="{StaticResource FactBoxLabel}" />-->
-                            <TextBlock Style="{StaticResource FactBoxValue}" Text="{Binding ConferenceTrack.Name}" />
+                            <TextBlock Style="{StaticResource FactBoxValue}" Text="{Binding ConferenceTrack.Entity.Name}" />
                         </StackPanel>
                         <TextBlock Grid.Row="3"
                                    Grid.Column="0"
@@ -117,14 +102,14 @@
                                    Text="&#xE77B;" />
                         <StackPanel Grid.Row="3" Grid.Column="1">
                             <!--<TextBlock Text="Panel Host(s):" Style="{StaticResource FactBoxLabel}" />-->
-                            <TextBlock Style="{StaticResource FactBoxValue}" Text="{Binding PanelHosts}" />
+                            <TextBlock Style="{StaticResource FactBoxValue}" Text="{Binding Entity.PanelHosts}" />
                         </StackPanel>
                     </Grid>
 
 
                     <Grid Background="{ThemeResource AppLowContrastTransparentBackgroundBrush}">
                         <TextBlock Margin="10"
-                                   behaviors:WikiTextBoxProperties.WikiText="{Binding Description}"
+                                   behaviors:WikiTextBoxProperties.WikiText="{Binding Entity.Description}"
                                    FontSize="14"
                                    Style="{StaticResource BodyTextBlockStyle}"
                                    TextWrapping="WrapWholeWords" />

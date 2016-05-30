@@ -1,5 +1,6 @@
 ﻿using Eurofurence.Companion.Common;
 using Eurofurence.Companion.DataModel.Api;
+using Eurofurence.Companion.ViewModel;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -11,9 +12,9 @@ namespace Eurofurence.Companion.Views
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
-        private EventConferenceDay _currentConferenceDay;
+        private EventConferenceDayViewModel _currentConferenceDay;
 
-        public string Title => _currentConferenceDay?.WeekdayFullname;
+        public string Title => _currentConferenceDay?.Entity.WeekdayFullname;
         public string Icon => "\uE163";
 
         public EventsByDayPage()
@@ -31,10 +32,10 @@ namespace Eurofurence.Companion.Views
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            if (e.NavigationParameter is EventConferenceDay)
+            if (e.NavigationParameter is EventConferenceDayViewModel)
             {
-                _currentConferenceDay = (e.NavigationParameter as EventConferenceDay);
-                EventList.ItemsSource = _currentConferenceDay?.Entries;
+                _currentConferenceDay = (e.NavigationParameter as EventConferenceDayViewModel);
+                EventList.ItemsSource = _currentConferenceDay?.EventEntries;
             }
         }
 

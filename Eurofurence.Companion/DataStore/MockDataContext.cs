@@ -33,6 +33,8 @@ namespace Eurofurence.Companion.DataStore
 
         private INavigationResolver _navigationResolver;
 
+        public event EventHandler Refreshed;
+
         public MockDataContext(INavigationResolver navigationResolver)
         {
             _navigationResolver = navigationResolver;
@@ -55,6 +57,7 @@ namespace Eurofurence.Companion.DataStore
 
         public Task RefreshAsync()
         {
+            Refreshed?.Invoke(this, null);
             return Task.Delay(1);
         }
 

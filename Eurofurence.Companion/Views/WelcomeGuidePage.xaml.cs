@@ -1,6 +1,4 @@
 ﻿using Eurofurence.Companion.Common;
-using Eurofurence.Companion.DependencyResolution;
-using Ninject;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,7 +7,6 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Graphics.Display;
-using Windows.UI.Notifications;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -26,21 +23,18 @@ namespace Eurofurence.Companion.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class DebugPage : Page
+    public sealed partial class WelcomeGuidePage : Page, ILayoutProperties, IPageProperties
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
-        public DebugPage()
+        public WelcomeGuidePage()
         {
             this.InitializeComponent();
 
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
-
-            _tpOffsetDatePicker.Date = new DateTime(2015, 08, 19);
-            _tpOffsetTimePicker.Time = new TimeSpan(16, 45, 0);
         }
 
         /// <summary>
@@ -60,6 +54,10 @@ namespace Eurofurence.Companion.Views
             get { return this.defaultViewModel; }
         }
 
+        public bool IsHeaderVisible => false;
+        public string Title => string.Empty;
+        public string Icon => string.Empty;
+
         /// <summary>
         /// Populates the page with content passed during navigation.  Any saved state is also
         /// provided when recreating a page from a prior session.
@@ -73,8 +71,6 @@ namespace Eurofurence.Companion.Views
         /// session.  The state will be null the first time a page is visited.</param>
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            DependencyResolution.ViewModelLocator.Current.LayoutViewModel.LayoutPage.EnterPage(
-                   "Debug", "Debug", "");
         }
 
         /// <summary>
@@ -115,36 +111,5 @@ namespace Eurofurence.Companion.Views
         }
 
         #endregion
-
-        private void _btnSetTimeProviderOffset_Click(object sender, RoutedEventArgs e)
-        {
-            KernelResolver.Current.Get<ITimeProvider>().ForcedOffset =
-                (_tpOffsetDatePicker.Date + _tpOffsetTimePicker.Time) - DateTime.Now;
-        }
-
-        private void E_Button_ToggleFrameRateCounter_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            Application.Current.DebugSettings.EnableFrameRateCounter = !Application.Current.DebugSettings.EnableFrameRateCounter;
-        }
-
-        private void E_Button_ToastTest_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            var toastXml = Windows.UI.Notifications.ToastNotificationManager.GetTemplateContent(Windows.UI.Notifications.ToastTemplateType.ToastText02);
-
-            var dueTime = DateTime.Now.AddSeconds(5);
-                
-            var strings = toastXml.GetElementsByTagName("text");
-            strings[0].AppendChild(toastXml.CreateTextNode("This is a scheduled toast notification"));
-            strings[1].AppendChild(toastXml.CreateTextNode("Received: " + dueTime.ToString()));
-
-            // Create the toast notification object.
-
-            var toast = new ScheduledToastNotification(toastXml, dueTime);
-
-            toast.Id = Math.Floor(new Random().NextDouble() * 100000000).ToString();
-
-            // Add to the schedule.
-            ToastNotificationManager.CreateToastNotifier().AddToSchedule(toast);
-        }
     }
 }

@@ -2,11 +2,14 @@
 using System.Threading.Tasks;
 using Eurofurence.Companion.DataModel.Api;
 using Eurofurence.Companion.DataModel.Local;
+using System;
 
 namespace Eurofurence.Companion.DataStore
 {
     public interface IDataContext
     {
+        event EventHandler Refreshed;
+
         ObservableCollection<EventEntry> EventEntries { get; }
         ObservableCollection<EventConferenceDay> EventConferenceDays { get; }
         ObservableCollection<EventConferenceRoom> EventConferenceRooms { get; }

@@ -1,5 +1,6 @@
 ﻿using Eurofurence.Companion.DependencyResolution;
 using System;
+using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Animation;
 
 namespace Eurofurence.Companion.Common
@@ -7,15 +8,15 @@ namespace Eurofurence.Companion.Common
     [IocBeacon(TargetType = typeof(INavigationMediator), Scope = IocBeacon.ScopeEnum.Singleton)]
     public class NavigationMediator : INavigationMediator
     {
-        public event NavigationEvent OnNavigate;
+        public event AsyncNavigationEvent OnNavigateAsync;
 
-        public bool Navigate(Type sourcePageType, bool forceNewStack = false) 
-            => OnNavigate?.Invoke(sourcePageType, null, null, forceNewStack) ?? false;
+        public Task<bool> NavigateAsync(Type sourcePageType, bool forceNewStack = false)
+            => OnNavigateAsync?.Invoke(sourcePageType, null, null, forceNewStack);
 
-        public bool Navigate(Type sourcePageType, object parameter, bool forceNewStack = false) 
-            => OnNavigate?.Invoke(sourcePageType, parameter, null, forceNewStack) ?? false;
+        public Task<bool> NavigateAsync(Type sourcePageType, object parameter, bool forceNewStack = false)
+            => OnNavigateAsync?.Invoke(sourcePageType, parameter, null, forceNewStack);
 
-        public bool Navigate(Type sourcePageType, object parameter, NavigationTransitionInfo infoOverride, bool forceNewStack = false)
-            => OnNavigate?.Invoke(sourcePageType, parameter, infoOverride, forceNewStack) ?? false;
+        public Task<bool> NavigateAsync(Type sourcePageType, object parameter, NavigationTransitionInfo infoOverride, bool forceNewStack = false)
+            => OnNavigateAsync?.Invoke(sourcePageType, parameter, infoOverride, forceNewStack);
     }
 }

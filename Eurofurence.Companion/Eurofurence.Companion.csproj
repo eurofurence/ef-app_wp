@@ -92,7 +92,7 @@
     <Compile Include="Common\INavigationProvider.cs" />
     <Compile Include="Common\ITelemetryClientProvider.cs" />
     <Compile Include="Common\ITimeProvider.cs" />
-    <Compile Include="Common\NavigationEvent.cs" />
+    <Compile Include="Common\AsyncNavigationEvent.cs" />
     <Compile Include="Common\NavigationHelper.cs" />
     <Compile Include="Common\NavigationMediator.cs" />
     <Compile Include="Common\NavigationMenuItem.cs" />
@@ -101,6 +101,7 @@
     <Compile Include="Common\PropertyWatcherExtensions.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\TelemetryClientProvider.cs" />
+    <Compile Include="Common\ThemeManager.cs" />
     <Compile Include="Common\TimeProvider.cs" />
     <Compile Include="DataModel\Api\Dealer.cs" />
     <Compile Include="DataModel\Api\Endpoint.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="ViewModel\IOrderKeyProvider.cs" />
     <Compile Include="ViewModel\LayoutViewModel.cs" />
     <Compile Include="ViewModel\NavigationViewModel.cs" />
+    <Compile Include="ViewModel\SearchBarViewModel.cs" />
     <Compile Include="ViewModel\TranslationViewModel.cs" />
     <Compile Include="Views\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
@@ -203,6 +205,9 @@
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\WelcomeGuidePage.xaml.cs">
+      <DependentUpon>WelcomeGuidePage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -231,6 +236,7 @@
       <LastGenOutput>Translations.cs</LastGenOutput>
     </Content>
     <Content Include="ViewModel\Behaviors\RichTextBlockHtml2Xaml.xslt" />
+    <Content Include="Assets\Fonts\ef_app_icons.ttf" />
     <None Include="Package.StoreAssociation.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -301,6 +307,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\WelcomeGuidePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0">
@@ -346,7 +356,6 @@
   <ItemGroup>
     <Content Include="Assets\Fonts\segmdl2.ttf" />
     <None Include="Assets\DesignTimeData\Info.json" />
-    <Content Include="Assets\Fonts\ef_app_icons.ttf" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

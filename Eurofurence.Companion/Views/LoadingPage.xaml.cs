@@ -20,14 +20,10 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.Web.Http;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
 namespace Eurofurence.Companion.Views
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class LoadingPage : Page
+    public sealed partial class LoadingPage : Page, ILayoutProperties, IPageProperties
     {
         public class LoadingPageOptions
         {
@@ -39,16 +35,20 @@ namespace Eurofurence.Companion.Views
         private LoadingPageOptions _options = null;
         private ContextManager _contextManager => DependencyResolution.ViewModelLocator.Current.DebugViewModel.ContextManager;
 
-        private NavigationHelper navigationHelper;
+        private NavigationHelper _navigationHelper;
+
+        public bool IsHeaderVisible => false;
+        public string Title => string.Empty;
+        public string Icon => string.Empty;
 
         public LoadingPage()
         {
             this.InitializeComponent();
 
-            this.navigationHelper = new NavigationHelper(this);
-            this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
-            this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
-            this.navigationHelper.GoBackCommand = new RelayCommand((obj) => this.CanGoBack());
+            this._navigationHelper = new NavigationHelper(this);
+            this._navigationHelper.LoadState += this.NavigationHelper_LoadState;
+            this._navigationHelper.SaveState += this.NavigationHelper_SaveState;
+            this._navigationHelper.GoBackCommand = new RelayCommand((obj) => this.CanGoBack());
         }
 
         private void _contextManager_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -58,7 +58,7 @@ namespace Eurofurence.Companion.Views
                 if (_options?.AutoNavigateBackOnSuccess == true &&
                     _contextManager.UpdateStatus == TaskStatus.RanToCompletion)
                 {
-                    this.navigationHelper.GoBack();
+                    this._navigationHelper.GoBack();
                 }
             }
         }
@@ -72,12 +72,12 @@ namespace Eurofurence.Companion.Views
                 return;
             }
 
-            this.navigationHelper.GoBack();
+            this._navigationHelper.GoBack();
         }
 
         public NavigationHelper NavigationHelper
         {
-            get { return this.navigationHelper; }
+            get { return this._navigationHelper; }
         }
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
@@ -100,14 +100,14 @@ namespace Eurofurence.Companion.Views
                 _contextManager.UpdateCommand.Execute(null);
             }
 
-            this.navigationHelper.OnNavigatedTo(e);
+            this._navigationHelper.OnNavigatedTo(e);
         }
 
         
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             _contextManager.PropertyChanged -= _contextManager_PropertyChanged;
-            this.navigationHelper.OnNavigatedFrom(e);
+            this._navigationHelper.OnNavigatedFrom(e);
         }
 
         #endregion

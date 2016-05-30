@@ -7,7 +7,7 @@ namespace Eurofurence.Companion
 {
     public abstract class BindableBase : INotifyPropertyChanged
     {
-        protected CoreDispatcher Dispatcher;
+        public CoreDispatcher Dispatcher;
 
         protected void InitializeDispatcherFromCurrentThread()
         {

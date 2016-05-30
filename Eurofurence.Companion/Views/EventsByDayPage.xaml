@@ -42,20 +42,20 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="0">
-                                <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="{Binding StartTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:hh\\:mm}'}" />
-                                <TextBlock Foreground="{ThemeResource PhoneMidBrush}" Text="{Binding EndTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='until \{0:hh\\:mm}'}" />
+                                <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="{Binding Entity.StartTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:hh\\:mm}'}" />
+                                <TextBlock Foreground="{ThemeResource PhoneMidBrush}" Text="{Binding Entity.EndTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='until \{0:hh\\:mm}'}" />
                                 <!--<TextBlock Text="{Binding EndTime}"  Foreground="{ThemeResource PhoneMidBrush}"/>-->
                             </StackPanel>
 
 
                             <StackPanel Grid.Column="1">
                                 <TextBlock Style="{StaticResource TitleTextBlockStyle}"
-                                           Text="{Binding Title}"
+                                           Text="{Binding Entity.Title}"
                                            TextWrapping="Wrap" />
                                 <TextBlock Foreground="{ThemeResource PhoneMidBrush}"
-                                           Text="{Binding ConferenceRoom.Name}"
+                                           Text="{Binding ConferenceRoom.Entity.Name}"
                                            TextWrapping="Wrap" />
-                                <Image Source="{Binding Image.Content, Converter={StaticResource BytesToImageConverter}}" />
+                                <Image Source="{Binding Entity.Image.Content, Converter={StaticResource BytesToImageConverter}}" />
                                 <!--<TextBlock Text="{Binding Abstract}" TextAlignment="Justify" TextWrapping="Wrap" Foreground="{ThemeResource PhoneMidBrush}"></TextBlock>-->
                             </StackPanel>
                         </Grid>

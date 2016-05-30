@@ -15,7 +15,9 @@
 
         <StackPanel>
 
-
+            <Button x:Name="E_Button_ToggleFrameRateCounter" Tapped="E_Button_ToggleFrameRateCounter_Tapped"
+                    Content="Toggle Frame Rate Counter"/>
+            <Button x:Name="E_Button_ToastTest" Tapped="E_Button_ToastTest_Tapped" Content="Toast Test" />
             <TextBlock Text="{Binding Source={StaticResource ViewModelLocator}, Path=MainViewModel.CurrentDateTimeLocal}" />
             <DatePicker x:Name="_tpOffsetDatePicker" />
             <TimePicker x:Name="_tpOffsetTimePicker" />

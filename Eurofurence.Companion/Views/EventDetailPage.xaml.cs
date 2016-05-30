@@ -1,5 +1,6 @@
 ﻿using Eurofurence.Companion.Common;
 using Eurofurence.Companion.DataModel.Api;
+using Eurofurence.Companion.ViewModel;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -9,9 +10,9 @@ namespace Eurofurence.Companion.Views
     public sealed partial class EventDetailPage : Page, IPageProperties
     {
         private NavigationHelper _navigationHelper;
-        private EventEntry _currentEventEntry;
+        private EventEntryViewModel _currentEventEntry;
 
-        public string Title => _currentEventEntry?.ConferenceDay?.WeekdayFullname;
+        public string Title => _currentEventEntry?.ConferenceDay?.Entity.WeekdayFullname;
         public string Icon => "\uE184";
 
         public EventDetailPage()
@@ -28,7 +29,7 @@ namespace Eurofurence.Companion.Views
         
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            _currentEventEntry = (e.NavigationParameter as EventEntry);
+            _currentEventEntry = (e.NavigationParameter as EventEntryViewModel);
             this.DataContext = _currentEventEntry;
         }
 
@@ -53,7 +54,7 @@ namespace Eurofurence.Companion.Views
 
         private void AppBarToggleButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            _currentEventEntry.AttributesProxy.Extension.IsFavorite = !_currentEventEntry.AttributesProxy.Extension.IsFavorite;
+            _currentEventEntry.Entity.AttributesProxy.Extension.IsFavorite = !_currentEventEntry.Entity.AttributesProxy.Extension.IsFavorite;
         }
     }
 }

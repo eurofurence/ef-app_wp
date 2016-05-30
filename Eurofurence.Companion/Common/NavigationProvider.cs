@@ -28,7 +28,7 @@ namespace Eurofurence.Companion.Common
                     Icon = Views.InfoPage.PAGE_ICON,
                     Description = "Helpful information across all areas & departments",
                     NavigationCommand = new RelayCommand(p => {
-                        _navigationMediator.Navigate(typeof(Views.InfoPage), forceNewStack: true);
+                        _navigationMediator.NavigateAsync(typeof(Views.InfoPage), forceNewStack: true);
                     }),
                     ChildTypes = new List<Type>() {
                         typeof(Views.InfoPage),
@@ -40,7 +40,7 @@ namespace Eurofurence.Companion.Common
                     Icon = Views.EventsPage.PAGE_ICON,
                     Description = "What's happening, when & where",
                     NavigationCommand = new RelayCommand(p => {
-                        _navigationMediator.Navigate(typeof(Views.EventsPage), forceNewStack: true);
+                        _navigationMediator.NavigateAsync(typeof(Views.EventsPage), forceNewStack: true);
                     }),
                     ChildTypes = new List<Type>() {
                         typeof(Views.EventsPage),
@@ -53,7 +53,7 @@ namespace Eurofurence.Companion.Common
                     Icon = Views.DealerListPage.PAGE_ICON,
                     Description = "What's happening, when & where",
                     NavigationCommand = new RelayCommand(p => {
-                        _navigationMediator.Navigate(typeof(Views.DealerListPage), forceNewStack: true);
+                        _navigationMediator.NavigateAsync(typeof(Views.DealerListPage), forceNewStack: true);
                     })
                 }
             };

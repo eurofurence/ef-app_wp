@@ -18,98 +18,101 @@
 
     <Grid x:Name="LayoutRoot">
         <Border>
-            <Pivot x:Name="eventPivot"
-                   Margin="0 0 0 0"
-                   HeaderTemplate="{StaticResource EventsHeaderTemplate}">
+            <FlipView x:Name="FlipViewMain" ManipulationMode="None">
+                <FlipViewItem x:Name="FlipViewItemEventPivot" ManipulationMode="None">
+                    <Pivot x:Name="eventPivot"
+                           Margin="0 0 0 0"
+                           HeaderTemplate="{StaticResource EventsHeaderTemplate}">
 
-                <PivotItem Margin="20 0 20 0" Header="Day">
-                    <Grid>
-                        <ListView HorizontalContentAlignment="Stretch"
-                                  IsItemClickEnabled="True"
-                                  ItemClick="ViewByDay_ItemClick"
-                                  ItemsSource="{Binding Path=EventConferenceDays}"
-                                  ScrollViewer.HorizontalScrollBarVisibility="Hidden">
-                            <ListView.ItemContainerStyle>
-                                <Style TargetType="ListViewItem">
-                                    <Setter Property="HorizontalAlignment" Value="Stretch" />
-                                </Style>
-                            </ListView.ItemContainerStyle>
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
+                        <PivotItem Margin="20 0 20 0" Header="Day">
+                            <Grid>
+                                <ListView HorizontalContentAlignment="Stretch"
+                                          IsItemClickEnabled="True"
+                                          ItemClick="ViewByDay_ItemClick"
+                                          ItemsSource="{Binding Path=EventConferenceDays}"
+                                          ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
 
-                                        <Border Grid.Column="0"
-                                                Margin="0,9.5,0,0"
-                                                HorizontalAlignment="Left"
-                                                Background="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}">
-                                            <Border Width="60"
-                                                    Height="60"
-                                                    Background="{ThemeResource EurofurenceThemeColorBrush}"
-                                                    CornerRadius="0">
-                                                <StackPanel VerticalAlignment="Center">
-                                                    <TextBlock FontSize="24"
-                                                               Foreground="{ThemeResource PhoneForegroundBrush}"
-                                                               Text="{Binding Date,
-                                                                              Converter={StaticResource StringFormatConverter},
-                                                                              ConverterParameter='\{0:dd}'}"
-                                                               TextAlignment="Center" />
+                                                <Border Grid.Column="0"
+                                                        Margin="0,9.5,0,0"
+                                                        HorizontalAlignment="Left"
+                                                        Background="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}">
+                                                    <Border Width="60"
+                                                            Height="60"
+                                                            Background="{ThemeResource EurofurenceThemeColorBrush}"
+                                                            CornerRadius="0">
+                                                        <StackPanel VerticalAlignment="Center">
+                                                            <TextBlock FontSize="24"
+                                                                       Foreground="{ThemeResource PhoneForegroundBrush}"
+                                                                       Text="{Binding Entity.Date,
+                                                                                      Converter={StaticResource StringFormatConverter},
+                                                                                      ConverterParameter='\{0:dd}'}"
+                                                                       TextAlignment="Center" />
+                                                            <TextBlock Foreground="{ThemeResource PhoneMidBrush}"
+                                                                       Text="{Binding Entity.Date,
+                                                                                      Converter={StaticResource StringFormatConverter},
+                                                                                      ConverterParameter='\{0:MMM}'}"
+                                                                       TextAlignment="Center" />
+                                                        </StackPanel>
+                                                    </Border>
+                                                </Border>
+                                                <StackPanel Grid.Column="1" Margin="14.5,5,0,0">
+                                                    <TextBlock Style="{ThemeResource ListViewItemTextBlockStyle}" Text="{Binding Entity.WeekdayFullname}" />
                                                     <TextBlock Foreground="{ThemeResource PhoneMidBrush}"
-                                                               Text="{Binding Date,
-                                                                              Converter={StaticResource StringFormatConverter},
-                                                                              ConverterParameter='\{0:MMM}'}"
-                                                               TextAlignment="Center" />
+                                                               Style="{ThemeResource ListViewItemContentTextBlockStyle}"
+                                                               Text="{Binding Entity.Name}" />
+                                                    <!--<TextBlock Text="{Binding Date}" Style="{ThemeResource ListViewItemContentTextBlockStyle}" Foreground="{ThemeResource PhoneMidBrush}" />-->
                                                 </StackPanel>
-                                            </Border>
-                                        </Border>
-                                        <StackPanel Grid.Column="1" Margin="14.5,5,0,0">
-                                            <TextBlock Style="{ThemeResource ListViewItemTextBlockStyle}" Text="{Binding WeekdayFullname}" />
-                                            <TextBlock Foreground="{ThemeResource PhoneMidBrush}"
-                                                       Style="{ThemeResource ListViewItemContentTextBlockStyle}"
-                                                       Text="{Binding Name}" />
-                                            <!--<TextBlock Text="{Binding Date}" Style="{ThemeResource ListViewItemContentTextBlockStyle}" Foreground="{ThemeResource PhoneMidBrush}" />-->
-                                        </StackPanel>
 
-                                    </Grid>
+                                            </Grid>
 
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </Grid>
-                </PivotItem>
-                <PivotItem Header="Topic">
-                    <Grid>
-                        <ListView ItemsSource="{Binding Path=EventConferenceTracks}">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="{Binding Name}" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </Grid>
-                </PivotItem>
-                <PivotItem Header="Room">
-                    <Grid>
-                        <ListView ItemsSource="{Binding Path=EventConferenceRooms}">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="{Binding Name}" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </Grid>
-                </PivotItem>
-                <PivotItem Margin="20 0 20 0" Header="Search">
-                    <Grid>
-                        <TextBox PlaceholderText="Type search keywords here" Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <ListView Margin="0 60 0 0" ItemsSource="{Binding EventEntrySearchResults}">
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </Grid>
+                        </PivotItem>
+                        <PivotItem Header="Topic">
+                            <Grid>
+                                <ListView ItemsSource="{Binding Path=EventConferenceTracks}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="{Binding Entity.Name}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </Grid>
+                        </PivotItem>
+                        <PivotItem Header="Room">
+                            <Grid>
+                                <ListView ItemsSource="{Binding Path=EventConferenceRooms}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="{Binding Entity.Name}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </Grid>
+                        </PivotItem>
+                    </Pivot>
+                </FlipViewItem>
+                <FlipViewItem x:Name="FlipViewItemSearch" ManipulationMode="None">
+                    <Grid Margin="20">
+                        <ListView ItemsSource="{Binding EventEntrySearchResults}">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
@@ -123,12 +126,12 @@
 
                                         <StackPanel Grid.Column="1" Margin="0 0 0 5">
                                             <TextBlock Style="{StaticResource TitleTextBlockStyle}"
-                                                       Text="{Binding Title}"
+                                                       Text="{Binding Entity.Title}"
                                                        TextWrapping="Wrap" />
                                             <TextBlock Foreground="{ThemeResource PhoneMidBrush}">
-                                                <Run Text="{Binding ConferenceDay.WeekdayFullname}" />
-                                                ,<Run Text="{Binding StartTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:hh\\:mm}'}" />
-                                                -<Run Text="{Binding EndTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:hh\\:mm}'}" />
+                                                <Run Text="{Binding ConferenceDay.Entity.WeekdayFullname}" />
+                                                ,<Run Text="{Binding Entity.StartTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:hh\\:mm}'}" />
+                                                -<Run Text="{Binding Entity.EndTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:hh\\:mm}'}" />
                                             </TextBlock>
                                         </StackPanel>
                                     </Grid>
@@ -137,9 +140,8 @@
                             </ListView.ItemTemplate>
                         </ListView>
                     </Grid>
-                </PivotItem>
-
-            </Pivot>
+                </FlipViewItem>
+            </FlipView>
         </Border>
 
     </Grid>

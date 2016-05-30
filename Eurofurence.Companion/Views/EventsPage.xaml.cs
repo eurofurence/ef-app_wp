@@ -3,17 +3,21 @@ using Eurofurence.Companion.Common;
 using Eurofurence.Companion.DependencyResolution;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using System;
+using Eurofurence.Companion.ViewModel;
 
 namespace Eurofurence.Companion.Views
 {
 
-    public sealed partial class EventsPage : Page, IPageProperties
+    public sealed partial class EventsPage : Page, IPageProperties, ISearchInteraction
+
     {
         private const string STATE_EVENTPIVOT_INDEX = "eventPivot.Index";
+        private const string STATE_SEARCHTEXT = "searchText";
 
         private NavigationHelper navigationHelper;
-        private ObservableDictionary defaultViewModel = new ObservableDictionary();
-        
+
+        private EventsViewModel ViewModel => (EventsViewModel)DataContext;
 
         public EventsPage()
         {
@@ -30,26 +34,49 @@ namespace Eurofurence.Companion.Views
             get { return this.navigationHelper; }
         }
 
-
-        public ObservableDictionary DefaultViewModel
-        {
-            get { return this.defaultViewModel; }
-        }
-
         public const string PAGE_ICON = "\uE163";
+
+
         public string Title => Translations.EventSchedule_Title;
         public string Icon => PAGE_ICON;
 
+        public string PlaceholderText => "Search for events";
+        public string DefaultSearchText => "";
+
+        public bool IsSearchAvailable => true;
+
+        public SearchBarViewModel SearchBarViewModel { get; set; }
+
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            eventPivot.SelectedIndex = (int)(e.PageState?[STATE_EVENTPIVOT_INDEX] ?? 0);
+            SearchBarViewModel.IsSearchAvailable = true;
+            SearchBarViewModel.PropertyChanged += (s, a) =>
+            {
+                switch (a.PropertyName)
+                {
+                    case nameof(SearchBarViewModel.SearchText):
+                        ViewModel.SearchText = SearchBarViewModel.SearchText;
+                        break;
+                }
+
+                FlipViewMain.SelectedItem = SearchBarViewModel.IsSearchExpanded && !string.IsNullOrEmpty(ViewModel.SearchText) ? 
+                    FlipViewItemSearch : FlipViewItemEventPivot;
+            };
+
+
+            var previousSearchText = (string)(e.PageState?[STATE_SEARCHTEXT] ?? "");
+            if (!string.IsNullOrWhiteSpace(previousSearchText))
+            {
+                SearchBarViewModel.IsSearchExpanded = true;
+                SearchBarViewModel.SearchText = previousSearchText;
+            }
         }
 
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
 
-            e.PageState.Add(STATE_EVENTPIVOT_INDEX, eventPivot.SelectedIndex);
+            e.PageState.Add(STATE_SEARCHTEXT, ViewModel.SearchText);
         }
 
         #region NavigationHelper registration
@@ -72,5 +99,6 @@ namespace Eurofurence.Companion.Views
             KernelResolver.Current.Get<ViewModelLocator>()
                 .NavigationViewModel.NavigateToEventsByDayPage.Execute(e.ClickedItem);
         }
+
     }
 }
