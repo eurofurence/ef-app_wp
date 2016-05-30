@@ -1,20 +1,15 @@
 ﻿using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
 using Windows.Data.Xml.Xsl;
-using Windows.Foundation;
-using Windows.Storage;
-using Windows.Storage.Streams;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
-using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Shapes;
@@ -295,12 +290,12 @@ namespace Eurofurence.Companion.ViewModel.Behaviors
                 if (bimg.PixelWidth > 800)
                 {
                     img.Width = 800;
-                    img.Height = (800.0 / (double)bimg.PixelWidth) * bimg.PixelHeight;
+                    img.Height = 800.0 / (double)bimg.PixelWidth * bimg.PixelHeight;
                 }
                 if (img.Height > 600)
                 {
                     img.Height = 600;
-                    img.Width = (600.0 / (double)img.Height) * img.Width;
+                    img.Width = 600.0 / (double)img.Height * img.Width;
                 }
             }
             else

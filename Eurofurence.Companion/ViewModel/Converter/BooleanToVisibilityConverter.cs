@@ -15,7 +15,7 @@ namespace Eurofurence.Companion.ViewModel.Converter
             if (DesignMode.DesignModeEnabled) return Visibility.Visible;
 
             var val = System.Convert.ToBoolean(value);
-            if (this.IsReversed)
+            if (IsReversed)
             {
                 val = !val;
             }

@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.ApplicationModel;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml;
@@ -22,8 +19,6 @@ namespace Eurofurence.Companion.Common
     /// </summary>
     internal sealed class SuspensionManager
     {
-        private static Dictionary<string, object> _sessionState = new Dictionary<string, object>();
-        private static List<Type> _knownTypes = new List<Type>();
         private const string sessionStateFilename = "_sessionState.xml";
 
         /// <summary>
@@ -33,20 +28,14 @@ namespace Eurofurence.Companion.Common
         /// <see cref="DataContractSerializer"/> and should be as compact as possible.  Strings
         /// and other self-contained data types are strongly recommended.
         /// </summary>
-        public static Dictionary<string, object> SessionState
-        {
-            get { return _sessionState; }
-        }
+        public static Dictionary<string, object> SessionState { get; private set; } = new Dictionary<string, object>();
 
         /// <summary>
         /// List of custom types provided to the <see cref="DataContractSerializer"/> when
         /// reading and writing session state.  Initially empty, additional types may be
         /// added to customize the serialization process.
         /// </summary>
-        public static List<Type> KnownTypes
-        {
-            get { return _knownTypes; }
-        }
+        public static List<Type> KnownTypes { get; } = new List<Type>();
 
         /// <summary>
         /// Save the current <see cref="SessionState"/>.  Any <see cref="Frame"/> instances
@@ -72,8 +61,8 @@ namespace Eurofurence.Companion.Common
                 // Serialize the session state synchronously to avoid asynchronous access to shared
                 // state
                 MemoryStream sessionData = new MemoryStream();
-                DataContractSerializer serializer = new DataContractSerializer(typeof(Dictionary<string, object>), _knownTypes);
-                serializer.WriteObject(sessionData, _sessionState);
+                DataContractSerializer serializer = new DataContractSerializer(typeof(Dictionary<string, object>), KnownTypes);
+                serializer.WriteObject(sessionData, SessionState);
 
                 // Get an output stream for the SessionState file and write the state asynchronously
                 StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync(sessionStateFilename, CreationCollisionOption.ReplaceExisting);
@@ -102,7 +91,7 @@ namespace Eurofurence.Companion.Common
         /// completes.</returns>
         public static async Task RestoreAsync(String sessionBaseKey = null)
         {
-            _sessionState = new Dictionary<String, Object>();
+            SessionState = new Dictionary<String, Object>();
 
             try
             {
@@ -111,8 +100,8 @@ namespace Eurofurence.Companion.Common
                 using (IInputStream inStream = await file.OpenSequentialReadAsync())
                 {
                     // Deserialize the Session State
-                    DataContractSerializer serializer = new DataContractSerializer(typeof(Dictionary<string, object>), _knownTypes);
-                    _sessionState = (Dictionary<string, object>)serializer.ReadObject(inStream.AsStreamForRead());
+                    DataContractSerializer serializer = new DataContractSerializer(typeof(Dictionary<string, object>), KnownTypes);
+                    SessionState = (Dictionary<string, object>)serializer.ReadObject(inStream.AsStreamForRead());
                 }
 
                 // Restore any registered frames to their saved state
@@ -132,13 +121,13 @@ namespace Eurofurence.Companion.Common
             }
         }
 
-        private static DependencyProperty FrameSessionStateKeyProperty =
+        private static readonly DependencyProperty FrameSessionStateKeyProperty =
             DependencyProperty.RegisterAttached("_FrameSessionStateKey", typeof(String), typeof(SuspensionManager), null);
-        private static DependencyProperty FrameSessionBaseKeyProperty =
+        private static readonly DependencyProperty FrameSessionBaseKeyProperty =
             DependencyProperty.RegisterAttached("_FrameSessionBaseKeyParams", typeof(String), typeof(SuspensionManager), null);
-        private static DependencyProperty FrameSessionStateProperty =
+        private static readonly DependencyProperty FrameSessionStateProperty =
             DependencyProperty.RegisterAttached("_FrameSessionState", typeof(Dictionary<String, Object>), typeof(SuspensionManager), null);
-        private static List<WeakReference<Frame>> _registeredFrames = new List<WeakReference<Frame>>();
+        private static readonly List<WeakReference<Frame>> _registeredFrames = new List<WeakReference<Frame>>();
 
         /// <summary>
         /// Registers a <see cref="Frame"/> instance to allow its navigation history to be saved to
@@ -193,7 +182,7 @@ namespace Eurofurence.Companion.Common
             // Remove session state and remove the frame from the list of frames whose navigation
             // state will be saved (along with any weak references that are no longer reachable)
             SessionState.Remove((String)frame.GetValue(FrameSessionStateKeyProperty));
-            _registeredFrames.RemoveAll((weakFrameReference) =>
+            _registeredFrames.RemoveAll(weakFrameReference =>
             {
                 Frame testFrame;
                 return !weakFrameReference.TryGetTarget(out testFrame) || testFrame == frame;
@@ -223,11 +212,11 @@ namespace Eurofurence.Companion.Common
                 if (frameSessionKey != null)
                 {
                     // Registered frames reflect the corresponding session state
-                    if (!_sessionState.ContainsKey(frameSessionKey))
+                    if (!SessionState.ContainsKey(frameSessionKey))
                     {
-                        _sessionState[frameSessionKey] = new Dictionary<String, Object>();
+                        SessionState[frameSessionKey] = new Dictionary<String, Object>();
                     }
-                    frameState = (Dictionary<String, Object>)_sessionState[frameSessionKey];
+                    frameState = (Dictionary<String, Object>)SessionState[frameSessionKey];
                 }
                 else
                 {

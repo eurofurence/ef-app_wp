@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using Eurofurence.Companion.Common;
 using Eurofurence.Companion.Common.Abstractions;
 using Eurofurence.Companion.DependencyResolution;
+// ReSharper disable ExplicitCallerInfoArgument
 
 namespace Eurofurence.Companion.ViewModel
 {
@@ -38,14 +38,13 @@ namespace Eurofurence.Companion.ViewModel
         private void UpdateUpcomingEventsData()
         {
             var allUpcomingEvents = _eventsViewModel.EventEntries
-                .Where(a => a.Entity.EventDateTimeUtc.HasValue
-                            && a.Entity.EventDateTimeUtc.Value >= CurrentDateTimeLocal
-                            && a.Entity.EventDateTimeUtc.Value.Day == CurrentDateTimeLocal.Day)
-                .OrderBy(a => a.Entity.EventDateTimeUtc.Value)
+                .Where(a => a.Entity.EventDateTimeUtc >= CurrentDateTimeLocal
+                            && a.Entity.EventDateTimeUtc.Day == CurrentDateTimeLocal.Day)
+                .OrderBy(a => a.Entity.EventDateTimeUtc)
                 .ToList();
 
             var allUpcomingEventsDistinctStartingTimes =
-                allUpcomingEvents.Select(a => a.Entity.EventDateTimeUtc.Value).Distinct().ToList();
+                allUpcomingEvents.Select(a => a.Entity.EventDateTimeUtc).Distinct().ToList();
 
             var eventsToDisplay = new List<EventEntryViewModel>();
 
@@ -55,7 +54,7 @@ namespace Eurofurence.Companion.ViewModel
                     allUpcomingEventsDistinctStartingTimes.Where(
                         time => (time - CurrentDateTimeLocal).TotalMinutes <= 30).ToList())
             {
-                eventsToDisplay.AddRange(allUpcomingEvents.Where(a => a.Entity.EventDateTimeUtc.Value == startTime));
+                eventsToDisplay.AddRange(allUpcomingEvents.Where(a => a.Entity.EventDateTimeUtc == startTime));
                 allUpcomingEventsDistinctStartingTimes.Remove(startTime);
             }
 
@@ -63,7 +62,7 @@ namespace Eurofurence.Companion.ViewModel
             while (eventsToDisplay.Count < 4 && allUpcomingEventsDistinctStartingTimes.Count > 0)
             {
                 var startTime = allUpcomingEventsDistinctStartingTimes[0];
-                eventsToDisplay.AddRange(allUpcomingEvents.Where(a => a.Entity.EventDateTimeUtc.Value == startTime));
+                eventsToDisplay.AddRange(allUpcomingEvents.Where(a => a.Entity.EventDateTimeUtc == startTime));
                 allUpcomingEventsDistinctStartingTimes.Remove(startTime);
             }
 

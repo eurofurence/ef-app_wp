@@ -1,6 +1,5 @@
 ﻿using Eurofurence.Companion.Common;
 using Eurofurence.Companion.DataModel.Api;
-using Eurofurence.Companion.DataStore;
 using Eurofurence.Companion.DependencyResolution;
 using System;
 using System.Collections.ObjectModel;
@@ -19,10 +18,10 @@ namespace Eurofurence.Companion.ViewModel
         private readonly IDataContext _dataContext;
         private readonly ITimeProvider _timeProvider;
 
-        public ObservableCollection<EventEntryViewModel> EventEntries { get; private set; }
-        public ObservableCollection<EventConferenceDayViewModel> EventConferenceDays { get; private set; }
-        public ObservableCollection<EventConferenceRoomViewModel> EventConferenceRooms { get; private set; }
-        public ObservableCollection<EventConferenceTrackViewModel> EventConferenceTracks { get; private set; }
+        public ObservableCollection<EventEntryViewModel> EventEntries { get; }
+        public ObservableCollection<EventConferenceDayViewModel> EventConferenceDays { get; }
+        public ObservableCollection<EventConferenceRoomViewModel> EventConferenceRooms { get; }
+        public ObservableCollection<EventConferenceTrackViewModel> EventConferenceTracks { get; }
 
         public event EventHandler Invalidated;
 
@@ -47,8 +46,9 @@ namespace Eurofurence.Companion.ViewModel
 
             foreach (var result in EventEntries
                 .Where(e => e.Entity.Title.ToLower().Contains(_searchText.ToLower()))
-                .OrderBy(e => e.Entity.StartTime)
-                .OrderBy(e => e.ConferenceDay.Entity.Date))
+                .OrderBy(e => e.ConferenceDay.Entity.Date)
+                .ThenBy(e => e.Entity.StartTime)
+                )
             {
                 EventEntrySearchResults.Add(result);
             }
@@ -126,93 +126,5 @@ namespace Eurofurence.Companion.ViewModel
 
             Invalidated?.Invoke(this, null);
         }
-    }
-
-    public class EventConferenceRoomViewModel : BindableBase
-    {
-        private EventConferenceRoom _entity;
-        public EventConferenceRoom Entity => _entity;
-
-        public ObservableCollection<EventEntryViewModel> EventEntries { get; set; }
-
-        public EventConferenceRoomViewModel(EventConferenceRoom entity)
-        {
-            _entity = entity;
-
-            EventEntries = new ObservableCollection<EventEntryViewModel>();
-        }
-    }
-
-    public class EventConferenceTrackViewModel : BindableBase
-    {
-        private EventConferenceTrack _entity;
-        public EventConferenceTrack Entity => _entity;
-
-        public ObservableCollection<EventEntryViewModel> EventEntries { get; set; }
-
-        public EventConferenceTrackViewModel(EventConferenceTrack entity)
-        {
-            _entity = entity;
-
-            EventEntries = new ObservableCollection<EventEntryViewModel>();
-        }
-    }
-
-    public class EventConferenceDayViewModel : BindableBase
-    {
-        private readonly EventConferenceDay _entity;
-        private readonly ITimeProvider _timeProvider;
-        public EventConferenceDay Entity => _entity;
-
-        public ObservableCollection<EventEntryViewModel> EventEntries { get; set; }
-
-        public EventConferenceDayViewModel(EventConferenceDay entity, ITimeProvider timeProvider)
-        {
-            _entity = entity;
-            _timeProvider = timeProvider;
-
-            EventEntries = new ObservableCollection<EventEntryViewModel>();
-        }
-    }
-
-    public class EventEntryViewModel : BindableBase
-    {
-        private readonly EventEntry _entity;
-        private readonly ITimeProvider _timeProvider;
-        public EventEntry Entity => _entity;
-
-        public EventConferenceDayViewModel ConferenceDay { get; set; }
-        public EventConferenceTrackViewModel ConferenceTrack { get; set; }
-        public EventConferenceRoomViewModel ConferenceRoom { get; set; }
-
-        public EventEntryViewModel(EventEntry entity, ITimeProvider timeProvider)
-        {
-            InitializeDispatcherFromCurrentThread();
-
-            _entity = entity;
-            _timeProvider = timeProvider;
-
-            _entity.AttributesProxy.Extension.WatchProperty(
-                nameof(_entity.AttributesProxy.Extension.IsFavorite),
-                _ => Invalidate());
-
-            _timeProvider.WatchProperty(
-                nameof(_timeProvider.CurrentDateTimeUtc),
-                _ => Invalidate());
-
-            Invalidate();
-        }
-
-        private void Invalidate()
-        {
-            TimeToStart = _entity.EventDateTimeUtc.Value - _timeProvider.CurrentDateTimeUtc;
-            IsStartingSoon = _entity.AttributesProxy.Extension.IsFavorite && TimeToStart.TotalMinutes <= 30;
-        }
-
-        private TimeSpan _timeToStart = TimeSpan.Zero;
-        public TimeSpan TimeToStart { get { return _timeToStart; } set { SetProperty(ref _timeToStart, value); } }
-
-        private bool _isStartingSoon = false;
-        public bool IsStartingSoon { get { return _isStartingSoon; } set { SetProperty(ref _isStartingSoon, value); } }
     }
 }

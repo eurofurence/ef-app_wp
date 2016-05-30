@@ -4,12 +4,12 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Windows.UI.Core;
 using Eurofurence.Companion.Common;
 using Eurofurence.Companion.DataModel;
 using Eurofurence.Companion.DataModel.Api;
 using Eurofurence.Companion.DataStore.Abstractions;
 using Eurofurence.Companion.DependencyResolution;
+// ReSharper disable ExplicitCallerInfoArgument
 
 namespace Eurofurence.Companion.DataStore
 {
@@ -165,23 +165,15 @@ namespace Eurofurence.Companion.DataStore
             SubOperationMaxValue = (ulong) imageList.Count;
             SubOperationCurrentValue = 0;
 
-            var tasks = new List<Task>();
-
-            foreach (var imageEntity in imageList)
+            var tasks = imageList.Select(imageEntity => Task.Run(async () =>
             {
-                tasks.Add(Task.Run(async () =>
-                {
-                    var content =
-                        await
-                            _apiClient.GetContentAsBufferAsync(imageEntity.Url.Replace("{Endpoint}",
-                                Consts.WEB_API_ENDPOINT_URL)).ConfigureAwait(false);
-                    var bytes = content.ToArray();
+                var content = await _apiClient.GetContentAsBufferAsync(imageEntity.Url.Replace("{Endpoint}", Consts.WEB_API_ENDPOINT_URL)).ConfigureAwait(false);
+                var bytes = content.ToArray();
 
-                    imageEntity.Content = bytes;
+                imageEntity.Content = bytes;
 
-                    SubOperationCurrentValue++;
-                }));
-            }
+                SubOperationCurrentValue++;
+            })).ToList();
 
             foreach(var task in tasks)
             {

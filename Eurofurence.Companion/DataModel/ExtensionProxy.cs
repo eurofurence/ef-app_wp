@@ -8,8 +8,8 @@ namespace Eurofurence.Companion.DataModel
             where TApi : EntityBase
             where TLocal : EntityBase, IEntityExtension, new()
     {
-        private TApi _apiEntity;
-        private ICollection<TLocal> _extensionStore;
+        private readonly TApi _apiEntity;
+        private readonly ICollection<TLocal> _extensionStore;
 
         public ExtensionProxy(ICollection<TLocal> extensionStore, TApi apiEntity)
         {

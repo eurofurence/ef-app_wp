@@ -7,7 +7,6 @@ namespace Eurofurence.Companion.Views
 {
     public sealed partial class DealerDetailPage : Page, IPageProperties
     {
-        private NavigationHelper _navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private Dealer _currentDealer;
 
@@ -16,19 +15,19 @@ namespace Eurofurence.Companion.Views
 
         public DealerDetailPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
-            this._navigationHelper = new NavigationHelper(this);
-            this._navigationHelper.LoadState += this.NavigationHelper_LoadState;
-            this._navigationHelper.SaveState += this.NavigationHelper_SaveState;
+            NavigationHelper = new NavigationHelper(this);
+            NavigationHelper.LoadState += NavigationHelper_LoadState;
+            NavigationHelper.SaveState += NavigationHelper_SaveState;
         }
 
-        public NavigationHelper NavigationHelper => this._navigationHelper; 
+        public NavigationHelper NavigationHelper { get; }
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            _currentDealer = (e.NavigationParameter as Dealer);
-            this.DataContext = _currentDealer;        
+            _currentDealer = e.NavigationParameter as Dealer;
+            DataContext = _currentDealer;        
         }
 
    
@@ -40,12 +39,12 @@ namespace Eurofurence.Companion.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            this._navigationHelper.OnNavigatedTo(e);
+            NavigationHelper.OnNavigatedTo(e);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            this._navigationHelper.OnNavigatedFrom(e);
+            NavigationHelper.OnNavigatedFrom(e);
         }
 
         #endregion

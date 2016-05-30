@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Eurofurence.Companion.DataModel.Api;
-using Eurofurence.Companion.ViewModel;
 using Eurofurence.Companion.DependencyResolution;
 using Eurofurence.Companion.DataModel.Local;
 using Eurofurence.Companion.DataModel;

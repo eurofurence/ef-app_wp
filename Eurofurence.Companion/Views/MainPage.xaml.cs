@@ -1,16 +1,15 @@
-﻿using Ninject;
+﻿using Windows.UI.Xaml;
+using Ninject;
 using Eurofurence.Companion.Common;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Eurofurence.Companion.DependencyResolution;
-using Eurofurence.Companion.DataStore;
 using Eurofurence.Companion.DataStore.Abstractions;
 
 namespace Eurofurence.Companion.Views
 {
     public sealed partial class MainPage : Page, IPageProperties
     {
-        private NavigationHelper _navigationHelper;
         private ObservableDictionary _defaultViewModel = new ObservableDictionary();
 
         public string Title => Translations.Main_Title;
@@ -20,18 +19,18 @@ namespace Eurofurence.Companion.Views
         {
             InitializeComponent();
 
-            _navigationHelper = new NavigationHelper(this);
-            _navigationHelper.LoadState += this.NavigationHelper_LoadState;
-            _navigationHelper.SaveState += this.NavigationHelper_SaveState;
-            _navigationHelper.GoBackCommand = new RelayCommand(async (obj) => {
+            NavigationHelper = new NavigationHelper(this);
+            NavigationHelper.LoadState += NavigationHelper_LoadState;
+            NavigationHelper.SaveState += NavigationHelper_SaveState;
+            NavigationHelper.GoBackCommand = new RelayCommand(async obj => {
                 await KernelResolver.Current.Get<IDataContext>().SaveAsync();
-                App.Current.Exit();
+                Application.Current.Exit();
             });
         }
 
-        public NavigationHelper NavigationHelper => this._navigationHelper; 
+        public NavigationHelper NavigationHelper { get; }
 
-        
+
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
         }
@@ -44,12 +43,12 @@ namespace Eurofurence.Companion.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            this._navigationHelper.OnNavigatedTo(e);
+            NavigationHelper.OnNavigatedTo(e);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            this._navigationHelper.OnNavigatedFrom(e);
+            NavigationHelper.OnNavigatedFrom(e);
         }
 
         #endregion

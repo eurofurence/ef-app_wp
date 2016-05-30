@@ -1,6 +1,5 @@
 using System;
 using Eurofurence.Companion.DataModel.Abstractions;
-using Eurofurence.Companion.ViewModel;
 using SQLite;
 using Eurofurence.Companion.DataModel.Local;
 
@@ -27,9 +26,9 @@ namespace Eurofurence.Companion.DataModel.Api
         public ExtensionProxy<EventEntry, EventEntryAttributes> AttributesProxy { get; set; }
 
         [Ignore]
-        public DateTime? EventDateTimeUtc
+        public DateTime EventDateTimeUtc
             => ConferenceDay == null
-                ? (DateTime?) null
+                ? DateTime.MinValue
                 : new DateTime((ConferenceDay.Date + StartTime - TimeSpan.FromHours(2)).Ticks, DateTimeKind.Utc);
 
         [Ignore]

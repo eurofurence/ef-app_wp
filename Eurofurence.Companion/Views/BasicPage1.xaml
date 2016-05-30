@@ -14,13 +14,13 @@
     <Grid x:Name="LayoutRoot">
 
         <StackPanel>
-            <TextBlock Text="{Binding Path=ContextManager.Status}"></TextBlock>
-            <TextBlock Text="{Binding Path=ContextManager.LastServerQuery}"></TextBlock>
-            <Button Click="Button_Click" Command="{Binding Path=ContextManager.UpdateCommand}" Content="Update"></Button>
+            <TextBlock Text="{Binding Path=ContextManager.Status}" />
+            <TextBlock Text="{Binding Path=ContextManager.LastServerQuery}" />
+            <Button Click="Button_Click" Command="{Binding Path=ContextManager.UpdateCommand}" Content="Update" />
             <ProgressBar Height="50" Maximum="{Binding Path=ContextManager.SubOperationMaxValue}"
-                         Value="{Binding Path=ContextManager.SubOperationCurrentValue}"></ProgressBar>
+                         Value="{Binding Path=ContextManager.SubOperationCurrentValue}" />
             <ProgressBar Height="50" Maximum="{Binding Path=ContextManager.MainOperationMaxValue}"
-                         Value="{Binding Path=ContextManager.MainOperationCurrentValue}"></ProgressBar>
+                         Value="{Binding Path=ContextManager.MainOperationCurrentValue}" />
 
             <StackPanel>
                 <TextBlock Text="Last Update" Style="{StaticResource BaseTextBlockStyle}" />
@@ -30,3 +30,34 @@
         </StackPanel>
     </Grid>
 </Page>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

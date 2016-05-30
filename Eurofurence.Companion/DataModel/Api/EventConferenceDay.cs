@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Eurofurence.Companion.DataModel.Abstractions;
-using Eurofurence.Companion.ViewModel;
 using SQLite;
 
 namespace Eurofurence.Companion.DataModel.Api
@@ -18,7 +17,7 @@ namespace Eurofurence.Companion.DataModel.Api
         public DateTime Date { get; set; }
 
         [Ignore]
-        public virtual ICollection<EventEntry> Entries { get; set; }
+        public ICollection<EventEntry> Entries { get; set; }
 
         [Ignore]
         public string WeekdayAbbreviated => Date.ToString("ddd");

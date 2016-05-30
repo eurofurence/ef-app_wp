@@ -7,6 +7,7 @@ using Eurofurence.Companion.DependencyResolution;
 using Eurofurence.Companion.DataModel;
 using System.Reflection;
 using Eurofurence.Companion.DataStore.Abstractions;
+// ReSharper disable UnusedAutoPropertyAccessor.Local
 
 namespace Eurofurence.Companion.DataStore
 {
@@ -22,7 +23,7 @@ namespace Eurofurence.Companion.DataStore
         private readonly Dictionary<TypeInfo, string> _existingTypeTables = new Dictionary<TypeInfo, string>();
 
         private readonly SQLiteAsyncConnection _sqliteAsyncConnection;
-        private Assembly _localAssembly;
+        private readonly Assembly _localAssembly;
 
         public SqliteDataStore()
         {
@@ -41,12 +42,13 @@ namespace Eurofurence.Companion.DataStore
         public async Task ApplyDeltaAsync(IEnumerable<EntityBase> entities,
             Action<int, int, string> progressCallback = null)
         {
-            await _sqliteAsyncConnection.RunInTransactionAsync(async (connection) =>
+            await _sqliteAsyncConnection.RunInTransactionAsync(async connection =>
             {
                 var i = 0;
-                var total = entities.Count();
+                var entitiesList = entities as IList<EntityBase> ?? entities.ToList();
+                var total = entitiesList.Count;
 
-                foreach (var entity in entities)
+                foreach (var entity in entitiesList)
                 {
                     await EnsureTableAsync(entity.GetType().GetTypeInfo()).ConfigureAwait(false);
 

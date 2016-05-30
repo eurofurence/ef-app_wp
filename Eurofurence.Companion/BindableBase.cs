@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.UI.Core;
+// ReSharper disable ExplicitCallerInfoArgument
 
 namespace Eurofurence.Companion
 {
@@ -45,7 +46,7 @@ namespace Eurofurence.Companion
             }
 
             storage = value;
-            this.OnPropertyChanged(propertyName);
+            OnPropertyChanged(propertyName);
             return true;
         }
 
@@ -62,12 +63,12 @@ namespace Eurofurence.Companion
             if (Dispatcher != null)
             {
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
-                    this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
                 });
             }
             else
             {
-                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
         }
     }

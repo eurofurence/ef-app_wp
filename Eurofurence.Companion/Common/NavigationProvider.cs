@@ -10,7 +10,7 @@ namespace Eurofurence.Companion.Common
     [IocBeacon(TargetType = typeof(INavigationProvider), Scope = IocBeacon.ScopeEnum.Singleton)]
     public class NavigationProvider : INavigationProvider
     {
-        private INavigationMediator _navigationMediator;
+        private readonly INavigationMediator _navigationMediator;
 
         public ObservableCollection<NavigationMenuItem> MainMenu { get; private set; }
 

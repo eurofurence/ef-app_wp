@@ -3,7 +3,6 @@ using Eurofurence.Companion.Common;
 using Eurofurence.Companion.DependencyResolution;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using System;
 using Eurofurence.Companion.ViewModel;
 
 namespace Eurofurence.Companion.Views
@@ -15,24 +14,19 @@ namespace Eurofurence.Companion.Views
         private const string STATE_EVENTPIVOT_INDEX = "eventPivot.Index";
         private const string STATE_SEARCHTEXT = "searchText";
 
-        private NavigationHelper navigationHelper;
-
         private EventsViewModel ViewModel => (EventsViewModel)DataContext;
 
         public EventsPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
-            this.navigationHelper = new NavigationHelper(this);
-            this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
-            this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+            NavigationHelper = new NavigationHelper(this);
+            NavigationHelper.LoadState += NavigationHelper_LoadState;
+            NavigationHelper.SaveState += NavigationHelper_SaveState;
         }
 
 
-        public NavigationHelper NavigationHelper
-        {
-            get { return this.navigationHelper; }
-        }
+        public NavigationHelper NavigationHelper { get; }
 
         public const string PAGE_ICON = "\uE163";
 
@@ -83,12 +77,12 @@ namespace Eurofurence.Companion.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            this.navigationHelper.OnNavigatedTo(e);
+            NavigationHelper.OnNavigatedTo(e);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            this.navigationHelper.OnNavigatedFrom(e);
+            NavigationHelper.OnNavigatedFrom(e);
         }
 
         #endregion

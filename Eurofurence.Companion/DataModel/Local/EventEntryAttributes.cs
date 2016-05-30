@@ -10,7 +10,7 @@ namespace Eurofurence.Companion.DataModel.Local
 
         public bool GetPersistence()
         {
-            return IsFavorite != false;
+            return IsFavorite;
         }
     }
 }

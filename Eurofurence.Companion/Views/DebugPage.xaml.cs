@@ -2,21 +2,10 @@
 using Eurofurence.Companion.DependencyResolution;
 using Ninject;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Graphics.Display;
 using Windows.UI.Notifications;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Eurofurence.Companion.Common.Abstractions;
 
@@ -29,16 +18,13 @@ namespace Eurofurence.Companion.Views
     /// </summary>
     public sealed partial class DebugPage : Page
     {
-        private NavigationHelper navigationHelper;
-        private ObservableDictionary defaultViewModel = new ObservableDictionary();
-
         public DebugPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
-            this.navigationHelper = new NavigationHelper(this);
-            this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
-            this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+            NavigationHelper = new NavigationHelper(this);
+            NavigationHelper.LoadState += NavigationHelper_LoadState;
+            NavigationHelper.SaveState += NavigationHelper_SaveState;
 
             _tpOffsetDatePicker.Date = new DateTime(2015, 08, 19);
             _tpOffsetTimePicker.Time = new TimeSpan(16, 45, 0);
@@ -47,19 +33,13 @@ namespace Eurofurence.Companion.Views
         /// <summary>
         /// Gets the <see cref="NavigationHelper"/> associated with this <see cref="Page"/>.
         /// </summary>
-        public NavigationHelper NavigationHelper
-        {
-            get { return this.navigationHelper; }
-        }
+        public NavigationHelper NavigationHelper { get; }
 
         /// <summary>
         /// Gets the view model for this <see cref="Page"/>.
         /// This can be changed to a strongly typed view model.
         /// </summary>
-        public ObservableDictionary DefaultViewModel
-        {
-            get { return this.defaultViewModel; }
-        }
+        public ObservableDictionary DefaultViewModel { get; } = new ObservableDictionary();
 
         /// <summary>
         /// Populates the page with content passed during navigation.  Any saved state is also
@@ -74,7 +54,7 @@ namespace Eurofurence.Companion.Views
         /// session.  The state will be null the first time a page is visited.</param>
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            DependencyResolution.ViewModelLocator.Current.LayoutViewModel.LayoutPage.EnterPage(
+            ViewModelLocator.Current.LayoutViewModel.LayoutPage.EnterPage(
                    "Debug", "Debug", "");
         }
 
@@ -107,12 +87,12 @@ namespace Eurofurence.Companion.Views
         /// handlers that cannot cancel the navigation request.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            this.navigationHelper.OnNavigatedTo(e);
+            NavigationHelper.OnNavigatedTo(e);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            this.navigationHelper.OnNavigatedFrom(e);
+            NavigationHelper.OnNavigatedFrom(e);
         }
 
         #endregion
@@ -120,7 +100,7 @@ namespace Eurofurence.Companion.Views
         private void _btnSetTimeProviderOffset_Click(object sender, RoutedEventArgs e)
         {
             KernelResolver.Current.Get<ITimeProvider>().ForcedOffset =
-                (_tpOffsetDatePicker.Date + _tpOffsetTimePicker.Time) - DateTime.Now;
+                _tpOffsetDatePicker.Date + _tpOffsetTimePicker.Time - DateTime.Now;
         }
 
         private void E_Button_ToggleFrameRateCounter_Tapped(object sender, TappedRoutedEventArgs e)
@@ -130,7 +110,7 @@ namespace Eurofurence.Companion.Views
 
         private void E_Button_ToastTest_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            var toastXml = Windows.UI.Notifications.ToastNotificationManager.GetTemplateContent(Windows.UI.Notifications.ToastTemplateType.ToastText02);
+            var toastXml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText02);
 
 
             var dueTime = DateTime.Now.AddSeconds(5);
@@ -141,9 +121,11 @@ namespace Eurofurence.Companion.Views
 
             // Create the toast notification object.
 
-            var toast = new ScheduledToastNotification(toastXml, dueTime);
+            var toast = new ScheduledToastNotification(toastXml, dueTime)
+            {
+                Id = Math.Floor(new Random().NextDouble()*1000000).ToString()
+            };
 
-            toast.Id = Math.Floor(new Random().NextDouble() * 1000000).ToString();
 
 
             // Add to the schedule.

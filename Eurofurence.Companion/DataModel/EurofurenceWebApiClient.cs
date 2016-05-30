@@ -11,7 +11,7 @@ namespace Eurofurence.Companion.DataModel
 {
     public class EurofurenceWebApiClient
     {
-        private string _endpointUrl;
+        private readonly string _endpointUrl;
 
         public EurofurenceWebApiClient(string endpointUrl)
         {
@@ -55,8 +55,7 @@ namespace Eurofurence.Companion.DataModel
 
         private async Task<T> GetResponseAsync<T>(Func<HttpResponseMessage, Task<T>> selector,  string url, Action<HttpProgress> progressCallback = null)
         {
-            HttpBaseProtocolFilter filter = new HttpBaseProtocolFilter();
-            filter.AutomaticDecompression = true;
+            var filter = new HttpBaseProtocolFilter {AutomaticDecompression = true};
             filter.CacheControl.ReadBehavior = HttpCacheReadBehavior.MostRecent;
 
             using (var client = new HttpClient(filter))
@@ -83,12 +82,12 @@ namespace Eurofurence.Companion.DataModel
 
         public Task<string> GetContentAsStringAsync(string url, Action<HttpProgress> progressCallback = null)
         {
-            return GetResponseAsync(async (response) => { return await response.Content.ReadAsStringAsync(); }, url, progressCallback);
+            return GetResponseAsync(async response => await response.Content.ReadAsStringAsync(), url, progressCallback);
         }
 
         public Task<IBuffer> GetContentAsBufferAsync(string url, Action<HttpProgress> progressCallback = null)
         {
-            return GetResponseAsync(async (response) => { return await response.Content.ReadAsBufferAsync(); }, url, progressCallback);
+            return GetResponseAsync(async response => await response.Content.ReadAsBufferAsync(), url, progressCallback);
         }
 
 

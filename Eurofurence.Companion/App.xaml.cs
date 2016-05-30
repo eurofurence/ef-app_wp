@@ -21,9 +21,6 @@ using Eurofurence.Companion.ViewModel;
 using Eurofurence.Companion.Views;
 using HockeyApp;
 using Ninject;
-using System.Collections.Generic;
-using Microsoft.ApplicationInsights.DataContracts;
-using Windows.UI.Xaml.Media;
 using Eurofurence.Companion.Common.Abstractions;
 using Eurofurence.Companion.DataStore.Abstractions;
 
@@ -37,7 +34,7 @@ namespace Eurofurence.Companion
         private bool _isInitialized;
         private Frame _rootFrame;
         private TransitionCollection _transitions;
-        private ITelemetryClientProvider _telemetryClientProvider;
+        private readonly ITelemetryClientProvider _telemetryClientProvider;
 
         public App()
         {
@@ -90,7 +87,7 @@ namespace Eurofurence.Companion
                 return;
             }
 
-            _rootFrame = (Window.Current.Content as LayoutPage)?.RootFrame;
+            _rootFrame = ((LayoutPage) Window.Current.Content)?.RootFrame;
 
 
             // Do not repeat app initialization when the Window already has content,
@@ -145,7 +142,7 @@ namespace Eurofurence.Companion
                 //// When the navigation stack isn't restored navigate to the first page,
                 //// configuring the new page by passing required information as a navigation
                 //// parameter.
-                if (!(await navigationMediator.NavigateAsync(typeof (MainPage), e.Arguments)))
+                if (!await navigationMediator.NavigateAsync(typeof (MainPage), e.Arguments))
                 {
                     throw new Exception("Failed to create initial page");
                 }
@@ -228,7 +225,6 @@ namespace Eurofurence.Companion
                         "Welcome to the Eurofurence app for Windows Phone!");
                 {
                 }
-                ;
 
                 await dlg.ShowAsync();
                 return FirstTimeRunResult.Close;

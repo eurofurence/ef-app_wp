@@ -8,8 +8,8 @@ namespace Eurofurence.Companion.ViewModel
     [IocBeacon(Scope = IocBeacon.ScopeEnum.Singleton)]
     public class NavigationViewModel : BindableBase
     {
-        private INavigationMediator _navigationMediator;
-        private INavigationProvider _navigationProvider;
+        private readonly INavigationMediator _navigationMediator;
+        private readonly INavigationProvider _navigationProvider;
 
         public RelayCommand NavigateToMainPage { get; set; }
         public RelayCommand NavigateToDebugPage { get; set; }

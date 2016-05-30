@@ -10,9 +10,9 @@ namespace Eurofurence.Companion.ViewModel.Converter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value != null && value is byte[] || value is string)
+            if (value is byte[] || value is string)
             {
-                byte[] bytes = (value is byte[] ? value as byte[] : Encoding.UTF8.GetBytes((string)value));
+                byte[] bytes = value is byte[] ? value as byte[] : Encoding.UTF8.GetBytes((string)value);
 
                 using (InMemoryRandomAccessStream ms = new InMemoryRandomAccessStream())
                 {

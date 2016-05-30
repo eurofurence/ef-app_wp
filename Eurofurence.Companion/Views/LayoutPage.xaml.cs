@@ -4,7 +4,6 @@ using System;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Animation;
-using Eurofurence.Companion.Common;
 using Windows.UI.Xaml;
 using Windows.UI.Core;
 using System.Threading.Tasks;
@@ -15,11 +14,11 @@ namespace Eurofurence.Companion.Views
 
     public sealed partial class LayoutPage : Page, ILayoutPage
     {
-        private ContinuumNavigationTransitionInfo _defaultTransition;
+        private readonly ContinuumNavigationTransitionInfo _defaultTransition;
 
-        public Frame RootFrame { get { return _rootFrame; } }
+        public Frame RootFrame => _rootFrame;
 
-        private Lazy<NavigationViewModel> _navigationViewModel = new Lazy<NavigationViewModel>(() => { return ViewModelLocator.Current.NavigationViewModel; });
+        private readonly Lazy<NavigationViewModel> _navigationViewModel = new Lazy<NavigationViewModel>(() => ViewModelLocator.Current.NavigationViewModel);
         private bool _isMenuVisible = false;
         private bool _isHeaderVisible = true;
         private SearchBarViewModel _searchBarViewModel;
@@ -28,7 +27,7 @@ namespace Eurofurence.Companion.Views
         private readonly ITelemetryClientProvider _telemetryClientProvider;
         private readonly CoreDispatcher _dispatcher;
 
-        private ISearchInteraction CurrentPageSearchInteraction => (RootFrame.Content as ISearchInteraction);
+        private ISearchInteraction CurrentPageSearchInteraction => RootFrame.Content as ISearchInteraction;
 
         public bool IsMenuVisible { get { return _isMenuVisible; } set { SetIsMenuVisible(value); } }
         public bool IsHeaderVisible { get { return _isHeaderVisible; } set { SetIsHeaderVisible(value); } }
@@ -90,7 +89,7 @@ namespace Eurofurence.Companion.Views
 
             if (CurrentPageSearchInteraction != null) CurrentPageSearchInteraction.SearchBarViewModel = _searchBarViewModel;
        
-            var layoutProperties = (e.Content as ILayoutProperties);
+            var layoutProperties = e.Content as ILayoutProperties;
             IsHeaderVisible = layoutProperties?.IsHeaderVisible ?? true;
 
             //_textBox_searchBox.PlaceholderText = CurrentPageSearchInteraction?.PlaceholderText ?? string.Empty;
@@ -100,7 +99,7 @@ namespace Eurofurence.Companion.Views
             //IsSearchBoxExpanded = false;
 
 
-            var pageProperties = (e.Content as IPageProperties);
+            var pageProperties = e.Content as IPageProperties;
             if (pageProperties == null) return;
 
             EventHandler<object> action = null;

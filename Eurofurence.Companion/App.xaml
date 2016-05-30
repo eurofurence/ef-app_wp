@@ -1,10 +1,10 @@
 ﻿<Application x:Class="Eurofurence.Companion.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:Converter="using:Eurofurence.Companion.ViewModel.Converter"
-             xmlns:DataModel="using:Eurofurence.Companion.DataModel"
-             xmlns:DependencyResolution="using:Eurofurence.Companion.DependencyResolution"
-             xmlns:ViewModel="using:Eurofurence.Companion.ViewModel"
+             xmlns:converter="using:Eurofurence.Companion.ViewModel.Converter"
+             xmlns:dataModel="using:Eurofurence.Companion.DataModel"
+             xmlns:dependencyResolution="using:Eurofurence.Companion.DependencyResolution"
+             xmlns:viewModel="using:Eurofurence.Companion.ViewModel"
              xmlns:local="using:Eurofurence.Companion">
 
     <Application.Resources>
@@ -72,14 +72,14 @@
             <FontFamily x:Key="IconFontFamily">/Assets/Fonts/segmdl2.ttf#Segoe MDL2 Assets</FontFamily>
             <FontFamily x:Key="EurofurenceAppIconsFontFamily">/Assets/Fonts/ef_app_icons.ttf#ef_app_icons</FontFamily>
 
-            <DependencyResolution:ViewModelLocator x:Key="ViewModelLocator" />
-            <DependencyResolution:ServiceLocator x:Key="ServiceLocator" />
+            <dependencyResolution:ViewModelLocator x:Key="ViewModelLocator" />
+            <dependencyResolution:ServiceLocator x:Key="ServiceLocator" />
 
-            <DataModel:StringFormatConverter x:Key="StringFormatConverter" />
-            <Converter:BytesToImageConverter x:Key="BytesToImageConverter" />
-            <Converter:BooleanToVisibilityConverter x:Key="TrueToVisibleConverter" />
-            <Converter:BooleanToVisibilityConverter x:Key="FalseToVisibleConverter" IsReversed="True" />
-            <ViewModel:TranslationViewModel x:Key="Translations" />
+            <dataModel:StringFormatConverter x:Key="StringFormatConverter" />
+            <converter:BytesToImageConverter x:Key="BytesToImageConverter" />
+            <converter:BooleanToVisibilityConverter x:Key="TrueToVisibleConverter" />
+            <converter:BooleanToVisibilityConverter x:Key="FalseToVisibleConverter" IsReversed="True" />
+            <viewModel:TranslationViewModel x:Key="Translations" />
 
             <Style x:Key="FactBoxIcon" TargetType="TextBlock">
                 <Setter Property="FontFamily" Value="{StaticResource IconFontFamily}" />

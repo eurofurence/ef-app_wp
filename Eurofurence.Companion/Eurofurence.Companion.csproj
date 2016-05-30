@@ -130,8 +130,6 @@
     <Compile Include="DataStore\ContextManager.cs" />
     <Compile Include="DataModel\EurofurenceWebApiClient.cs" />
     <Compile Include="DataModel\EntityBase.cs" />
-    <Compile Include="DataModel\NavigationDataSource.cs" />
-    <Compile Include="DataModel\SampleDataSource.cs" />
     <Compile Include="DataStore\Abstractions\IApplicationSettingsManager.cs" />
     <Compile Include="DataStore\Abstractions\INavigationResolver.cs" />
     <Compile Include="DataStore\ApplicationSettingsManager.cs" />
@@ -155,6 +153,10 @@
     <Compile Include="ViewModel\DealersViewModel.cs" />
     <Compile Include="ViewModel\DebugViewModel.cs" />
     <Compile Include="Common\Abstractions\INavigationMediator.cs" />
+    <Compile Include="ViewModel\EventConferenceDayViewModel.cs" />
+    <Compile Include="ViewModel\EventConferenceRoomViewModel.cs" />
+    <Compile Include="ViewModel\EventConferenceTrackViewModel.cs" />
+    <Compile Include="ViewModel\EventEntryViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MockLayoutPage.cs" />
     <Compile Include="ViewModel\InfoViewModel.cs" />

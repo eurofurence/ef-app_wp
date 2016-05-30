@@ -1,5 +1,4 @@
 ﻿using Eurofurence.Companion.ViewModel;
-using System;
 
 namespace Eurofurence.Companion.Views
 {

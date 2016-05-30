@@ -8,8 +8,6 @@ namespace Eurofurence.Companion.Views
 {
     public sealed partial class AboutPage : Page, IPageProperties
     {
-        private NavigationHelper _navigationHelper;
-
         public string Title => Translations.About_Title;
         public string Icon => "";
 
@@ -17,12 +15,12 @@ namespace Eurofurence.Companion.Views
         {
             InitializeComponent();
 
-            _navigationHelper = new NavigationHelper(this);
-            _navigationHelper.LoadState += NavigationHelper_LoadState;
-            _navigationHelper.SaveState += NavigationHelper_SaveState;
+            NavigationHelper = new NavigationHelper(this);
+            NavigationHelper.LoadState += NavigationHelper_LoadState;
+            NavigationHelper.SaveState += NavigationHelper_SaveState;
         }
 
-        public NavigationHelper NavigationHelper => _navigationHelper; 
+        public NavigationHelper NavigationHelper { get; }
 
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
@@ -38,12 +36,12 @@ namespace Eurofurence.Companion.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            this._navigationHelper.OnNavigatedTo(e);
+            NavigationHelper.OnNavigatedTo(e);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            this._navigationHelper.OnNavigatedFrom(e);
+            NavigationHelper.OnNavigatedFrom(e);
         }
 
         #endregion
