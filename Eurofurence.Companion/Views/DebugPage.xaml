@@ -15,73 +15,72 @@
 
         <StackPanel>
 
-            <Button x:Name="E_Button_ToggleFrameRateCounter" Tapped="E_Button_ToggleFrameRateCounter_Tapped"
-                    Content="Toggle Frame Rate Counter"/>
-            <Button x:Name="E_Button_ToastTest" Tapped="E_Button_ToastTest_Tapped" Content="Toast Test" />
-            <TextBlock Text="{Binding Source={StaticResource ViewModelLocator}, Path=MainViewModel.CurrentDateTimeLocal}" />
-            <DatePicker x:Name="_tpOffsetDatePicker" />
-            <TimePicker x:Name="_tpOffsetTimePicker" />
-            <Button x:Name="_btnSetTimeProviderOffset"
-                    Click="_btnSetTimeProviderOffset_Click"
-                    Content="Assume local time" />
+            <TextBlock Style="{StaticResource SubheaderTextBlockStyle}">
+                Debug
+            </TextBlock>
 
-
-            <TextBlock Style="{StaticResource GroupHeaderTextBlockStyle}" Text="Context Manager" />
-            <Grid Height="80">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="3*" />
-                    <RowDefinition Height="3*" />
-                    <RowDefinition Height="3*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*" />
-                    <ColumnDefinition Width="5*" />
-                </Grid.ColumnDefinitions>
-
-                <TextBlock Grid.Row="0"
-                           Grid.Column="0"
-                           Text="Status:" />
-                <TextBlock Grid.Row="0"
-                           Grid.Column="1"
-                           Text="{Binding Path=ContextManager.Status}" />
-                <TextBlock Grid.Row="1"
-                           Grid.Column="0"
-                           Text="Last Server Query:" />
-                <TextBlock Grid.Row="1"
-                           Grid.Column="1"
-                           Text="{Binding Path=ContextManager.LastServerQueryDateTimeUtc}" />
-                <ProgressBar Grid.Row="2"
-                             Grid.Column="0"
-                             Height="20"
-                             Margin="5"
-                             Maximum="{Binding Path=ContextManager.SubOperationMaxValue}"
-                             Value="{Binding Path=ContextManager.SubOperationCurrentValue}" />
-
-                <ProgressBar Grid.Row="2"
-                             Grid.Column="1"
-                             Height="30"
-                             Margin="5"
-                             Maximum="{Binding Path=ContextManager.MainOperationMaxValue}"
-                             Value="{Binding Path=ContextManager.MainOperationCurrentValue}" />
-
-
-            </Grid>
-            <StackPanel>
-                <TextBlock Text="{Binding Path=ContextManager.SubOperationCurrentValue}" />
-                <TextBlock Text="{Binding Path=ContextManager.SubOperationMaxValue}" />
-                <TextBlock Text="{Binding Path=ContextManager.MainOperationCurrentValue}" />
-                <TextBlock Text="{Binding Path=ContextManager.MainOperationMaxValue}" />
+            <StackPanel Margin="20">
+                <Button x:Name="E_Button_ToggleFrameRateCounter"
+                        HorizontalAlignment="Stretch"
+                        Content="Toggle Frame Rate Counter"
+                        Tapped="E_Button_ToggleFrameRateCounter_Tapped" />
+                <Button x:Name="E_Button_ToastTest"
+                        HorizontalAlignment="Stretch"
+                        Content="Toast Test"
+                        Tapped="E_Button_ToastTest_Tapped" />
             </StackPanel>
 
-            <Button Command="{Binding ContextManager.UpdateCommand}">
-                Update
-            </Button>
-            <Button Command="{Binding ContextManager.ClearAllCommand}">
-                Clear All
-            </Button>
-            <RichTextBlock behaviors:RichTextBlockProperties.Html="a b &lt;b&gt;foo&lt;/b&gt; bar &lt;br&gt;&lt;br&gt;Yohoo! &lt;ul&gt; &lt;li&gt;Meep&lt;/li&gt;&lt;/ul&gt;"
-                           FontSize="20"
-                           Foreground="White" />
+            <TextBlock Style="{StaticResource SubheaderTextBlockStyle}">
+                Time Settings
+            </TextBlock>
+            <StackPanel Margin="20">
+                <TextBlock Style="{StaticResource ControlHeaderTextBlockStyle}">
+                    <Run Text="App kernel time (UTC): " />
+                    <Run Text="{Binding Source={StaticResource ViewModelLocator}, Path=MainViewModel.CurrentDateTimeUtc}" />
+                </TextBlock>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <DatePicker x:Name="_tpOffsetDatePicker" Grid.Column="0" />
+                    <TimePicker x:Name="_tpOffsetTimePicker" Grid.Column="1" />
+                    <Button x:Name="_btnSetTimeProviderOffset"
+                            Grid.Column="2"
+                            HorizontalAlignment="Stretch"
+                            Click="_btnSetTimeProviderOffset_Click"
+                            Content="Set (UTC)" />
+                </Grid>
+            </StackPanel>
+
+
+
+
+            <TextBlock Style="{StaticResource SubheaderTextBlockStyle}">
+                Context Manager
+            </TextBlock>
+
+            <StackPanel Margin="20">
+                <TextBlock Style="{StaticResource ControlHeaderTextBlockStyle}">
+                    <Run Text="Last update (UTC): " />
+                    <Run Text="{Binding Path=ContextManager.LastServerQueryDateTimeUtc}" />
+                </TextBlock>
+                <TextBlock Style="{StaticResource ControlHeaderTextBlockStyle}">
+                    <Run Text="Sc, Sm, Mc, Mm: " />
+                    <Run Text="{Binding Path=ContextManager.SubOperationCurrentValue}" />
+                    ,<Run Text="{Binding Path=ContextManager.SubOperationMaxValue}" />
+                    ,<Run Text="{Binding Path=ContextManager.MainOperationCurrentValue}" />
+                    ,<Run Text="{Binding Path=ContextManager.MainOperationMaxValue}" />
+                </TextBlock>
+
+                <Button HorizontalAlignment="Stretch" Command="{Binding ContextManager.UpdateCommand}">
+                    Force Update
+                </Button>
+                <Button HorizontalAlignment="Stretch" Command="{Binding ContextManager.ClearAllCommand}">
+                    Clear All Local Data
+                </Button>
+            </StackPanel>
 
         </StackPanel>
 

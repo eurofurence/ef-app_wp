@@ -9,63 +9,37 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using Eurofurence.Companion.Common.Abstractions;
 
-// The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
 namespace Eurofurence.Companion.Views
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class DebugPage : Page
     {
+        private ITimeProvider _timeProvider;
+
         public DebugPage()
         {
             InitializeComponent();
+
+            _timeProvider = KernelResolver.Current.Get<ITimeProvider>();
 
             NavigationHelper = new NavigationHelper(this);
             NavigationHelper.LoadState += NavigationHelper_LoadState;
             NavigationHelper.SaveState += NavigationHelper_SaveState;
 
-            _tpOffsetDatePicker.Date = new DateTime(2015, 08, 19);
-            _tpOffsetTimePicker.Time = new TimeSpan(16, 45, 0);
+
+
+            _tpOffsetDatePicker.Date = _timeProvider.CurrentDateTimeUtc.Date;
+            _tpOffsetTimePicker.Time = _timeProvider.CurrentDateTimeUtc.TimeOfDay;
         }
 
-        /// <summary>
-        /// Gets the <see cref="NavigationHelper"/> associated with this <see cref="Page"/>.
-        /// </summary>
         public NavigationHelper NavigationHelper { get; }
 
-        /// <summary>
-        /// Gets the view model for this <see cref="Page"/>.
-        /// This can be changed to a strongly typed view model.
-        /// </summary>
         public ObservableDictionary DefaultViewModel { get; } = new ObservableDictionary();
 
-        /// <summary>
-        /// Populates the page with content passed during navigation.  Any saved state is also
-        /// provided when recreating a page from a prior session.
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event; typically <see cref="NavigationHelper"/>
-        /// </param>
-        /// <param name="e">Event data that provides both the navigation parameter passed to
-        /// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested and
-        /// a dictionary of state preserved by this page during an earlier
-        /// session.  The state will be null the first time a page is visited.</param>
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            ViewModelLocator.Current.LayoutViewModel.LayoutPage.EnterPage(
-                   "Debug", "Debug", "");
         }
 
-        /// <summary>
-        /// Preserves state associated with this page in case the application is suspended or the
-        /// page is discarded from the navigation cache.  Values must conform to the serialization
-        /// requirements of <see cref="SuspensionManager.SessionState"/>.
-        /// </summary>
-        /// <param name="sender">The source of the event; typically <see cref="NavigationHelper"/></param>
-        /// <param name="e">Event data that provides an empty dictionary to be populated with
-        /// serializable state.</param>
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
         }
@@ -99,8 +73,8 @@ namespace Eurofurence.Companion.Views
 
         private void _btnSetTimeProviderOffset_Click(object sender, RoutedEventArgs e)
         {
-            KernelResolver.Current.Get<ITimeProvider>().ForcedOffset =
-                _tpOffsetDatePicker.Date + _tpOffsetTimePicker.Time - DateTime.Now;
+            _timeProvider.ForcedOffset =
+                _tpOffsetDatePicker.Date + _tpOffsetTimePicker.Time - DateTime.UtcNow;
         }
 
         private void E_Button_ToggleFrameRateCounter_Tapped(object sender, TappedRoutedEventArgs e)

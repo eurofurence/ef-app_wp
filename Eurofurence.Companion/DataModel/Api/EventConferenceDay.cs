@@ -16,6 +16,7 @@ namespace Eurofurence.Companion.DataModel.Api
         public string Name { get; set; }
         public DateTime Date { get; set; }
 
+
         [Ignore]
         public ICollection<EventEntry> Entries { get; set; }
 
@@ -27,5 +28,12 @@ namespace Eurofurence.Companion.DataModel.Api
 
         [Ignore]
         public object SortOrderKey => Date.Ticks;
+
+        [Ignore]
+        public DateTime DayStartDateTimeUtc => new DateTime((Date - TimeSpan.FromHours(2)).Ticks, DateTimeKind.Utc);
+
+        [Ignore]
+        public DateTime DayEndDateTimeUtc => DayStartDateTimeUtc.AddHours(24);
+
     }
 }

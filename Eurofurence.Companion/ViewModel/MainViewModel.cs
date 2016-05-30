@@ -31,16 +31,18 @@ namespace Eurofurence.Companion.ViewModel
             UpdateUpcomingEventsData();
         }
 
-        public DateTime CurrentDateTimeLocal => _timeProvider.CurrentDateTimeUtc;
+        public DateTime CurrentDateTimeUtc => _timeProvider.CurrentDateTimeUtc;
+
+        private EventConferenceDayViewModel _upcomingEventsConferenceDay;
+        public EventConferenceDayViewModel UpcomingEventsConferenceDay { get { return _upcomingEventsConferenceDay; } set { SetProperty(ref _upcomingEventsConferenceDay, value); } }
 
         public ObservableCollection<EventEntryViewModel> UpcomingEvents { get; }
 
         private void UpdateUpcomingEventsData()
         {
             var allUpcomingEvents = _eventsViewModel.EventEntries
-                .Where(a => a.Entity.EventDateTimeUtc >= CurrentDateTimeLocal
-                            && a.Entity.EventDateTimeUtc.Day == CurrentDateTimeLocal.Day)
-                .OrderBy(a => a.Entity.EventDateTimeUtc)
+                .Where(a => a.Entity.EventDateTimeUtc >= CurrentDateTimeUtc) // && a.Entity.EventDateTimeUtc.Day == CurrentDateTimeUtc.Day
+                .OrderBy(a => a.Entity.ConferenceDay.Date)
                 .ToList();
 
             var allUpcomingEventsDistinctStartingTimes =
@@ -52,7 +54,7 @@ namespace Eurofurence.Companion.ViewModel
             foreach (
                 var startTime in
                     allUpcomingEventsDistinctStartingTimes.Where(
-                        time => (time - CurrentDateTimeLocal).TotalMinutes <= 30).ToList())
+                        time => (time - CurrentDateTimeUtc).TotalMinutes <= 30).ToList())
             {
                 eventsToDisplay.AddRange(allUpcomingEvents.Where(a => a.Entity.EventDateTimeUtc == startTime));
                 allUpcomingEventsDistinctStartingTimes.Remove(startTime);
@@ -65,6 +67,8 @@ namespace Eurofurence.Companion.ViewModel
                 eventsToDisplay.AddRange(allUpcomingEvents.Where(a => a.Entity.EventDateTimeUtc == startTime));
                 allUpcomingEventsDistinctStartingTimes.Remove(startTime);
             }
+
+            UpcomingEventsConferenceDay = eventsToDisplay.First().ConferenceDay;
 
             foreach (var @event in UpcomingEvents.Where(a => !eventsToDisplay.Contains(a)).ToList())
             {

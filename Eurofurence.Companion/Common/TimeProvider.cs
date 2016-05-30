@@ -8,19 +8,20 @@ namespace Eurofurence.Companion.Common
     [IocBeacon(TargetType = typeof(ITimeProvider), Scope = IocBeacon.ScopeEnum.Singleton)]
     public class TimeProvider : BindableBase, ITimeProvider
     {
-        private DateTime _currentDateTimeLocal = DateTime.Now;
-        private DateTime _currentDateTimeMinuteLocal = DateTime.Now;
+        private DateTime _currentDateTimeUtc = DateTime.UtcNow;
+        private DateTime _currentDateTimeMinuteUtc = DateTime.UtcNow;
+        private TimeSpan _forcedOffset;
 
         public DateTime CurrentDateTimeUtc
         {
             get
             {
-                return _currentDateTimeLocal + ForcedOffset;
+                return _currentDateTimeUtc + ForcedOffset;
             }
             private set
             {
-                SetProperty(ref _currentDateTimeLocal, value);
-                CurrentDateTimeMinuteUtc = CurrentDateTimeUtc.
+                SetProperty(ref _currentDateTimeUtc, value);
+                CurrentDateTimeMinuteUtc = _currentDateTimeUtc.
                     AddTicks(-(CurrentDateTimeUtc.Ticks % TimeSpan.TicksPerMinute));
             }
         }
@@ -29,23 +30,33 @@ namespace Eurofurence.Companion.Common
         {
             get
             {
-                return _currentDateTimeMinuteLocal + ForcedOffset;
+                return _currentDateTimeMinuteUtc + ForcedOffset;
             }
             private set
             {
-                SetProperty(ref _currentDateTimeMinuteLocal, value);
+                SetProperty(ref _currentDateTimeMinuteUtc, value);
             }
         }
 
-        public TimeSpan ForcedOffset { get; set; }
-        
+        public TimeSpan ForcedOffset
+        {
+            get { return _forcedOffset; }
+            set {
+                _forcedOffset = value;
+                OnPropertyChanged(nameof(CurrentDateTimeUtc));
+                OnPropertyChanged(nameof(CurrentDateTimeMinuteUtc));
+            }
+        }
+
 
         public TimeProvider()
         {
             InitializeDispatcherFromCurrentThread();
 
             ForcedOffset = TimeSpan.Zero;
-            ForcedOffset = new DateTime(2015, 08, 19, 16, 45, 00) - DateTime.UtcNow;
+            //ForcedOffset = new DateTime(2015, 08, 19, 16, 45, 00) - DateTime.UtcNow;
+            ForcedOffset = new DateTime(2015, 08, 19, 16, 59, 45, DateTimeKind.Utc) - DateTime.UtcNow;
+            //ForcedOffset = new DateTime(2015, 08, 20, 06, 59, 45, DateTimeKind.Utc) - DateTime.UtcNow;
 
             var updateTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
             updateTimer.Tick += _updateTimer_Tick;

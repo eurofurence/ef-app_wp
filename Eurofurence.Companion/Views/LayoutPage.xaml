@@ -30,7 +30,7 @@
                              From="-300"
                              Storyboard.TargetName="_menu"
                              Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)"
-                             To="1">
+                             To="0">
                 <DoubleAnimation.EasingFunction>
                     <PowerEase EasingMode="EaseOut" />
                 </DoubleAnimation.EasingFunction>

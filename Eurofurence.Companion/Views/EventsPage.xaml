@@ -33,12 +33,27 @@
                                           ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                                     <ListView.ItemContainerStyle>
                                         <Style TargetType="ListViewItem">
-                                            <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                                         </Style>
                                     </ListView.ItemContainerStyle>
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
-                                            <Grid>
+                                            <Grid x:Name="E_Grid_ListViewItem_ConferenceDay" Background="Transparent">
+                                                <interactivity:Interaction.Behaviors>
+                                                    <interactivity:BehaviorCollection>
+                                                        <core:DataTriggerBehavior Binding="{Binding IsCurrentDay}" Value="True">
+                                                            <core:ChangePropertyAction PropertyName="Background"
+                                                                                       TargetObject="{Binding ElementName=E_Grid_ListViewItem_ConferenceDay}"
+                                                                                       Value="{StaticResource AppLowContrastTransparentBackgroundBrush}" />
+                                                        </core:DataTriggerBehavior>
+                                                        <core:DataTriggerBehavior Binding="{Binding IsCurrentDay}" Value="False">
+                                                            <core:ChangePropertyAction PropertyName="Background"
+                                                                                       TargetObject="{Binding ElementName=E_Grid_ListViewItem_ConferenceDay}"
+                                                                                       Value="Transparent" />
+                                                        </core:DataTriggerBehavior>
+                                                    </interactivity:BehaviorCollection>
+                                                </interactivity:Interaction.Behaviors>
+
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="Auto" />
                                                     <ColumnDefinition Width="*" />
@@ -46,8 +61,7 @@
 
                                                 <Border Grid.Column="0"
                                                         Margin="0,9.5,0,0"
-                                                        HorizontalAlignment="Left"
-                                                        Background="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}">
+                                                        HorizontalAlignment="Left">
                                                     <Border Width="60"
                                                             Height="60"
                                                             Background="{ThemeResource EurofurenceThemeColorBrush}"
@@ -72,7 +86,6 @@
                                                     <TextBlock Foreground="{ThemeResource PhoneMidBrush}"
                                                                Style="{ThemeResource ListViewItemContentTextBlockStyle}"
                                                                Text="{Binding Entity.Name}" />
-                                                    <!--<TextBlock Text="{Binding Date}" Style="{ThemeResource ListViewItemContentTextBlockStyle}" Foreground="{ThemeResource PhoneMidBrush}" />-->
                                                 </StackPanel>
 
                                             </Grid>
