@@ -1,4 +1,4 @@
-﻿namespace Eurofurence.Companion.DataStore
+﻿namespace Eurofurence.Companion.DataStore.Abstractions
 {
     public interface INavigationResolver
     {

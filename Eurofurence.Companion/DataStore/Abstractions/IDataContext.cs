@@ -1,10 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Eurofurence.Companion.DataModel.Api;
 using Eurofurence.Companion.DataModel.Local;
-using System;
 
-namespace Eurofurence.Companion.DataStore
+namespace Eurofurence.Companion.DataStore.Abstractions
 {
     public interface IDataContext
     {

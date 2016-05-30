@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Eurofurence.Companion.DataModel.Api;
 using Eurofurence.Companion.DataModel.Local;
+using Eurofurence.Companion.DataStore.Abstractions;
 using Eurofurence.Companion.DependencyResolution;
 
 namespace Eurofurence.Companion.DataStore

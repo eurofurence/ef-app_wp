@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace Eurofurence.Companion.Common
+namespace Eurofurence.Companion.Common.Abstractions
 {
     public interface INavigationProvider
     {

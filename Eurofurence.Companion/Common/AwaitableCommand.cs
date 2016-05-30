@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -42,7 +39,7 @@ namespace Eurofurence.Companion.Common
             }
         }
 
-        public ICommand Command { get { return this; } }
+        public ICommand Command => this;
 
         public bool CanExecute(object parameter)
         {

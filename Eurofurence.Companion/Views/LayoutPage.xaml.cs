@@ -8,6 +8,7 @@ using Eurofurence.Companion.Common;
 using Windows.UI.Xaml;
 using Windows.UI.Core;
 using System.Threading.Tasks;
+using Eurofurence.Companion.Common.Abstractions;
 
 namespace Eurofurence.Companion.Views
 {

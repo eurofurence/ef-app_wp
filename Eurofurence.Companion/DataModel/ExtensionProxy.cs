@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Eurofurence.Companion.DataModel.Abstractions;
 
 namespace Eurofurence.Companion.DataModel
 {

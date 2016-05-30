@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Animation;
 
-namespace Eurofurence.Companion.Common
+namespace Eurofurence.Companion.Common.Abstractions
 {
     public interface INavigationMediator
     {

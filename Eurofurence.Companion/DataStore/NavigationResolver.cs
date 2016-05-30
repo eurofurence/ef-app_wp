@@ -1,6 +1,7 @@
 ﻿using Eurofurence.Companion.DependencyResolution;
 using Eurofurence.Companion.DataModel;
 using System.Linq;
+using Eurofurence.Companion.DataStore.Abstractions;
 
 namespace Eurofurence.Companion.DataStore
 {

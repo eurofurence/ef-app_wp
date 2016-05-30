@@ -1,6 +1,7 @@
 ﻿using System;
-using Windows.Storage;
 using Newtonsoft.Json;
+using Windows.Storage;
+using Eurofurence.Companion.DataStore.Abstractions;
 using Eurofurence.Companion.DependencyResolution;
 
 namespace Eurofurence.Companion.DataStore

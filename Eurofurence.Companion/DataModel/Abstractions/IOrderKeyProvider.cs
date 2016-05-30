@@ -1,4 +1,4 @@
-﻿namespace Eurofurence.Companion.ViewModel
+﻿namespace Eurofurence.Companion.DataModel.Abstractions
 {
     public interface ISortOrderKeyProvider
     {

@@ -24,6 +24,8 @@ using Ninject;
 using System.Collections.Generic;
 using Microsoft.ApplicationInsights.DataContracts;
 using Windows.UI.Xaml.Media;
+using Eurofurence.Companion.Common.Abstractions;
+using Eurofurence.Companion.DataStore.Abstractions;
 
 namespace Eurofurence.Companion
 {

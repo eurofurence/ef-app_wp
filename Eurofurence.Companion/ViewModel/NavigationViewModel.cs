@@ -1,6 +1,7 @@
 ﻿using Eurofurence.Companion.Common;
 using Eurofurence.Companion.DependencyResolution;
 using System.Collections.ObjectModel;
+using Eurofurence.Companion.Common.Abstractions;
 
 namespace Eurofurence.Companion.ViewModel
 {

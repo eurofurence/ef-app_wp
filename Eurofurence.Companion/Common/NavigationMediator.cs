@@ -2,6 +2,7 @@
 using System;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Animation;
+using Eurofurence.Companion.Common.Abstractions;
 
 namespace Eurofurence.Companion.Common
 {

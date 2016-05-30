@@ -60,7 +60,7 @@ namespace Eurofurence.Companion.Common
     public class NavigationHelper : DependencyObject
     {
         private Page Page { get; set; }
-        private Frame Frame { get { return this.Page.Frame; } }
+        private Frame Frame => this.Page.Frame;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NavigationHelper"/> class.
@@ -124,13 +124,9 @@ namespace Eurofurence.Companion.Common
         {
             get
             {
-                if (_goBackCommand == null)
-                {
-                    _goBackCommand = new RelayCommand(
-                        _ => this.GoBack(),
-                        () => this.CanGoBack());
-                }
-                return _goBackCommand;
+                return _goBackCommand ?? (_goBackCommand = new RelayCommand(
+                    _ => this.GoBack(),
+                    this.CanGoBack));
             }
             set
             {
@@ -148,13 +144,9 @@ namespace Eurofurence.Companion.Common
         {
             get
             {
-                if (_goForwardCommand == null)
-                {
-                    _goForwardCommand = new RelayCommand(
-                        _ => this.GoForward(),
-                        () => this.CanGoForward());
-                }
-                return _goForwardCommand;
+                return _goForwardCommand ?? (_goForwardCommand = new RelayCommand(
+                    _ => this.GoForward(),
+                    this.CanGoForward));
             }
         }
 
@@ -291,7 +283,7 @@ namespace Eurofurence.Companion.Common
 
         #region Process lifetime management
 
-        private String _pageKey;
+        private string _pageKey;
 
         /// <summary>
         /// Register this event on the current page to populate the page
@@ -332,20 +324,14 @@ namespace Eurofurence.Companion.Common
                 }
 
                 // Pass the navigation parameter to the new page
-                if (this.LoadState != null)
-                {
-                    this.LoadState(this, new LoadStateEventArgs(e.Parameter, null));
-                }
+                this.LoadState?.Invoke(this, new LoadStateEventArgs(e.Parameter, null));
             }
             else
             {
                 // Pass the navigation parameter and preserved page state to the page, using
                 // the same strategy for loading suspended state and recreating pages discarded
                 // from cache
-                if (this.LoadState != null)
-                {
-                    this.LoadState(this, new LoadStateEventArgs(e.Parameter, (Dictionary<String, Object>)frameState[this._pageKey]));
-                }
+                this.LoadState?.Invoke(this, new LoadStateEventArgs(e.Parameter, (Dictionary<string, object>)frameState[this._pageKey]));
             }
         }
 
@@ -359,7 +345,7 @@ namespace Eurofurence.Companion.Common
         public void OnNavigatedFrom(NavigationEventArgs e)
         {
             var frameState = SuspensionManager.SessionStateForFrame(this.Frame);
-            var pageState = new Dictionary<String, Object>();
+            var pageState = new Dictionary<string, object>();
             if (this.SaveState != null)
             {
                 this.SaveState(this, new SaveStateEventArgs(pageState));
@@ -388,12 +374,12 @@ namespace Eurofurence.Companion.Common
         /// The parameter value passed to <see cref="Frame.Navigate(Type, Object)"/> 
         /// when this page was initially requested.
         /// </summary>
-        public Object NavigationParameter { get; private set; }
+        public object NavigationParameter { get; private set; }
         /// <summary>
         /// A dictionary of state preserved by this page during an earlier
         /// session.  This will be null the first time a page is visited.
         /// </summary>
-        public Dictionary<string, Object> PageState { get; private set; }
+        public Dictionary<string, object> PageState { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LoadStateEventArgs"/> class.
@@ -406,7 +392,7 @@ namespace Eurofurence.Companion.Common
         /// A dictionary of state preserved by this page during an earlier
         /// session.  This will be null the first time a page is visited.
         /// </param>
-        public LoadStateEventArgs(Object navigationParameter, Dictionary<string, Object> pageState)
+        public LoadStateEventArgs(object navigationParameter, Dictionary<string, object> pageState)
             : base()
         {
             this.NavigationParameter = navigationParameter;
@@ -421,13 +407,13 @@ namespace Eurofurence.Companion.Common
         /// <summary>
         /// An empty dictionary to be populated with serializable state.
         /// </summary>
-        public Dictionary<string, Object> PageState { get; private set; }
+        public Dictionary<string, object> PageState { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SaveStateEventArgs"/> class.
         /// </summary>
         /// <param name="pageState">An empty dictionary to be populated with serializable state.</param>
-        public SaveStateEventArgs(Dictionary<string, Object> pageState)
+        public SaveStateEventArgs(Dictionary<string, object> pageState)
             : base()
         {
             this.PageState = pageState;

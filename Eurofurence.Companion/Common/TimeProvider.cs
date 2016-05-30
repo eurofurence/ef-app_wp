@@ -1,6 +1,7 @@
 ﻿using Eurofurence.Companion.DependencyResolution;
 using System;
 using Windows.UI.Xaml;
+using Eurofurence.Companion.Common.Abstractions;
 
 namespace Eurofurence.Companion.Common
 {
@@ -10,7 +11,7 @@ namespace Eurofurence.Companion.Common
         private DateTime _currentDateTimeLocal = DateTime.Now;
         private DateTime _currentDateTimeMinuteLocal = DateTime.Now;
 
-        public DateTime CurrentDateTimeLocal
+        public DateTime CurrentDateTimeUtc
         {
             get
             {
@@ -19,12 +20,12 @@ namespace Eurofurence.Companion.Common
             private set
             {
                 SetProperty(ref _currentDateTimeLocal, value);
-                CurrentDateTimeMinuteLocal = CurrentDateTimeLocal.
-                    AddTicks(-(CurrentDateTimeLocal.Ticks % TimeSpan.TicksPerMinute));
+                CurrentDateTimeMinuteUtc = CurrentDateTimeUtc.
+                    AddTicks(-(CurrentDateTimeUtc.Ticks % TimeSpan.TicksPerMinute));
             }
         }
 
-        public DateTime CurrentDateTimeMinuteLocal
+        public DateTime CurrentDateTimeMinuteUtc
         {
             get
             {
@@ -44,7 +45,7 @@ namespace Eurofurence.Companion.Common
             InitializeDispatcherFromCurrentThread();
 
             ForcedOffset = TimeSpan.Zero;
-            ForcedOffset = new DateTime(2015, 08, 19, 16, 45, 00) - DateTime.Now;
+            ForcedOffset = new DateTime(2015, 08, 19, 16, 45, 00) - DateTime.UtcNow;
 
             var updateTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
             updateTimer.Tick += _updateTimer_Tick;
@@ -53,7 +54,7 @@ namespace Eurofurence.Companion.Common
 
         private void _updateTimer_Tick(object sender, object e)
         {
-            CurrentDateTimeLocal = DateTime.Now;
+            CurrentDateTimeUtc = DateTime.UtcNow;
         }
     }
 }

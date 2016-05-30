@@ -8,6 +8,8 @@ using System.Linq;
 using System.Windows.Input;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Appointments;
+using Eurofurence.Companion.Common.Abstractions;
+using Eurofurence.Companion.DataStore.Abstractions;
 
 namespace Eurofurence.Companion.ViewModel
 {
@@ -195,7 +197,7 @@ namespace Eurofurence.Companion.ViewModel
                 _ => Invalidate());
 
             _timeProvider.WatchProperty(
-                nameof(_timeProvider.CurrentDateTimeLocal),
+                nameof(_timeProvider.CurrentDateTimeUtc),
                 _ => Invalidate());
 
             Invalidate();
@@ -203,7 +205,7 @@ namespace Eurofurence.Companion.ViewModel
 
         private void Invalidate()
         {
-            TimeToStart = _entity.StartTimeAndDay.Value - _timeProvider.CurrentDateTimeLocal;
+            TimeToStart = _entity.EventDateTimeUtc.Value - _timeProvider.CurrentDateTimeUtc;
             IsStartingSoon = _entity.AttributesProxy.Extension.IsFavorite && TimeToStart.TotalMinutes <= 30;
         }
 

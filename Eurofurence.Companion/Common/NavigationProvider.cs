@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Eurofurence.Companion.Common.Abstractions;
 
 namespace Eurofurence.Companion.Common
 {

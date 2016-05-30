@@ -1,5 +1,4 @@
-﻿using System;
-using SQLite;
+﻿using Eurofurence.Companion.DataModel.Abstractions;
 
 namespace Eurofurence.Companion.DataModel.Local
 {
@@ -9,12 +8,9 @@ namespace Eurofurence.Companion.DataModel.Local
         private bool _isFavorite = false;
         public bool IsFavorite { get { return _isFavorite; } set { SetProperty(ref _isFavorite, value); } } 
 
-        public bool IsPersistent
+        public bool GetPersistence()
         {
-            get
-            {
-                return IsFavorite != false;
-            }
+            return IsFavorite != false;
         }
     }
 }

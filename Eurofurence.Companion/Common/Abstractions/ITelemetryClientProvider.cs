@@ -1,6 +1,6 @@
 ﻿using Microsoft.ApplicationInsights;
 
-namespace Eurofurence.Companion.Common
+namespace Eurofurence.Companion.Common.Abstractions
 {
     public interface ITelemetryClientProvider
     {

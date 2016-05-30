@@ -1,5 +1,6 @@
-﻿using Eurofurence.Companion.DependencyResolution;
-using System;
+﻿using System;
+using Eurofurence.Companion.DependencyResolution;
+using Eurofurence.Companion.DataStore.Abstractions;
 
 namespace Eurofurence.Companion.DataStore
 {

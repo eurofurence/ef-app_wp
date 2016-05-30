@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
@@ -25,9 +21,9 @@ namespace Eurofurence.Companion.Common
                                              string propertyPath,
                                              DependencyPropertyChangedEventHandler handler)
             {
-                if (target == null) throw new ArgumentNullException("target");
-                if (propertyPath == null) throw new ArgumentNullException("propertyPath");
-                if (handler == null) throw new ArgumentNullException("handler");
+                if (target == null) throw new ArgumentNullException(nameof(target));
+                if (propertyPath == null) throw new ArgumentNullException(nameof(propertyPath));
+                if (handler == null) throw new ArgumentNullException(nameof(handler));
 
                 _handler = handler;
 
@@ -50,17 +46,13 @@ namespace Eurofurence.Companion.Common
             private static void ValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
             {
                 var watcher = d as DependencyPropertyWatcher;
-                if (watcher == null)
-                    return;
-
-                watcher.OnValueChanged(e);
+                watcher?.OnValueChanged(e);
             }
 
             private void OnValueChanged(DependencyPropertyChangedEventArgs e)
             {
                 var handler = _handler;
-                if (handler != null)
-                    handler(this, e);
+                handler?.Invoke(this, e);
             }
 
             public void Dispose()

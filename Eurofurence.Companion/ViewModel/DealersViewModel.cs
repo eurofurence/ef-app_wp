@@ -5,6 +5,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.ApplicationModel;
+using Eurofurence.Companion.DataStore.Abstractions;
 
 namespace Eurofurence.Companion.ViewModel
 {

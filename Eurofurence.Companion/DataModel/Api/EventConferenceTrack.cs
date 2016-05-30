@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Eurofurence.Companion.DataModel.Abstractions;
 using Eurofurence.Companion.ViewModel;
 using SQLite;
 

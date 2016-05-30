@@ -9,6 +9,8 @@ using Eurofurence.Companion.DependencyResolution;
 using Eurofurence.Companion.DataModel.Local;
 using Eurofurence.Companion.DataModel;
 using System;
+using Eurofurence.Companion.DataModel.Abstractions;
+using Eurofurence.Companion.DataStore.Abstractions;
 
 namespace Eurofurence.Companion.DataStore
 {
@@ -72,7 +74,7 @@ namespace Eurofurence.Companion.DataStore
         {
             foreach(var entity in EventEntryAttributes)
             {
-                entity.IsDeleted = entity.IsPersistent ? (byte)0 : (byte)1;
+                entity.IsDeleted = entity.GetPersistence() ? (byte)0 : (byte)1;
             }
 
             await _dataStore.ApplyDeltaAsync(EventEntryAttributes)

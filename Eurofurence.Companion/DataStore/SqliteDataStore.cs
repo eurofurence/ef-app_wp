@@ -6,6 +6,7 @@ using SQLite;
 using Eurofurence.Companion.DependencyResolution;
 using Eurofurence.Companion.DataModel;
 using System.Reflection;
+using Eurofurence.Companion.DataStore.Abstractions;
 
 namespace Eurofurence.Companion.DataStore
 {

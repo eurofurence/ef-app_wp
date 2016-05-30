@@ -8,6 +8,7 @@ using System.Linq;
 using System.Windows.Input;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Appointments;
+using Eurofurence.Companion.DataStore.Abstractions;
 
 namespace Eurofurence.Companion.ViewModel
 {

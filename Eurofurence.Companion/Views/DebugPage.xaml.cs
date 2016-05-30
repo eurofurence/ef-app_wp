@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Eurofurence.Companion.Common.Abstractions;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -131,6 +132,7 @@ namespace Eurofurence.Companion.Views
         {
             var toastXml = Windows.UI.Notifications.ToastNotificationManager.GetTemplateContent(Windows.UI.Notifications.ToastTemplateType.ToastText02);
 
+
             var dueTime = DateTime.Now.AddSeconds(5);
                 
             var strings = toastXml.GetElementsByTagName("text");
@@ -141,10 +143,20 @@ namespace Eurofurence.Companion.Views
 
             var toast = new ScheduledToastNotification(toastXml, dueTime);
 
-            toast.Id = Math.Floor(new Random().NextDouble() * 100000000).ToString();
+            toast.Id = Math.Floor(new Random().NextDouble() * 1000000).ToString();
+
 
             // Add to the schedule.
+            var foo = ToastNotificationManager.CreateToastNotifier().GetScheduledToastNotifications();
+
+            if (foo.Count > 0)
+            {
+                
+            }
+
             ToastNotificationManager.CreateToastNotifier().AddToSchedule(toast);
+
+            var foo2 = ToastNotificationManager.CreateToastNotifier().GetScheduledToastNotifications();
         }
     }
 }

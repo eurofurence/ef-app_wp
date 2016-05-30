@@ -5,6 +5,7 @@ using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.Extensibility;
 using System;
 using System.Diagnostics;
+using Eurofurence.Companion.Common.Abstractions;
 
 namespace Eurofurence.Companion.Common
 {

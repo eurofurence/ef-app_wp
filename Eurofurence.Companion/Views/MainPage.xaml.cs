@@ -4,6 +4,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Eurofurence.Companion.DependencyResolution;
 using Eurofurence.Companion.DataStore;
+using Eurofurence.Companion.DataStore.Abstractions;
 
 namespace Eurofurence.Companion.Views
 {
