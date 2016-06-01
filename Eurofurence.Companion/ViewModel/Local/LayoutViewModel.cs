@@ -1,6 +1,6 @@
 ﻿using Eurofurence.Companion.DependencyResolution;
 
-namespace Eurofurence.Companion.ViewModel
+namespace Eurofurence.Companion.ViewModel.Local
 {
     [IocBeacon]
     public class LayoutViewModel

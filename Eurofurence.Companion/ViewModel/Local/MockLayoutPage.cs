@@ -1,8 +1,8 @@
-﻿using Eurofurence.Companion.DependencyResolution;
-using System;
+﻿using System;
 using Windows.UI.Xaml.Media.Animation;
+using Eurofurence.Companion.DependencyResolution;
 
-namespace Eurofurence.Companion.ViewModel
+namespace Eurofurence.Companion.ViewModel.Local
 {
     [IocBeacon(TargetType = typeof(ILayoutPage), Scope = IocBeacon.ScopeEnum.Singleton, Environment = IocBeacon.EnvironmentEnum.DesignTimeOnly)]
     public class MockLayoutPage : ILayoutPage

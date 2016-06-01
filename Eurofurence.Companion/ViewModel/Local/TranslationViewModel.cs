@@ -1,4 +1,4 @@
-﻿namespace Eurofurence.Companion.ViewModel
+﻿namespace Eurofurence.Companion.ViewModel.Local
 {
     public class TranslationViewModel
     {

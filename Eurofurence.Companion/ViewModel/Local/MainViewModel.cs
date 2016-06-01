@@ -5,29 +5,58 @@ using System.ComponentModel;
 using System.Linq;
 using Eurofurence.Companion.Common.Abstractions;
 using Eurofurence.Companion.DependencyResolution;
+using Eurofurence.Companion.ViewModel.Abstractions;
+
 // ReSharper disable ExplicitCallerInfoArgument
 
-namespace Eurofurence.Companion.ViewModel
+namespace Eurofurence.Companion.ViewModel.Local
 {
-
     [IocBeacon(TargetType = typeof (MainViewModel), Scope = IocBeacon.ScopeEnum.Singleton)]
     public class MainViewModel : BindableBase
     {
-        private readonly EventsViewModel _eventsViewModel;
+        public enum ConventionStateEnum
+        {
+            Ahead,
+            Ongoing,
+            Over
+        }
+
+        private string _conventionStateText;
+        public string ConventionStateText
+        {
+            get { return _conventionStateText; }
+            set
+            {
+                SetProperty(ref _conventionStateText, value);
+            }
+        }
+
+
+        private ConventionStateEnum _conventionState = ConventionStateEnum.Ahead;
+        public ConventionStateEnum ConventionState {  get {  return _conventionState;} set
+        {
+            SetProperty(ref _conventionState, value);
+        } }
+
+
         private readonly ITimeProvider _timeProvider;
+        private readonly IEventsViewModelContext _eventsViewModelContext;
+
         private DateTime _lastFullMinute = DateTime.MinValue;
 
-        public MainViewModel(ITimeProvider timeProvider, EventsViewModel eventsViewModel)
+        public MainViewModel(ITimeProvider timeProvider, IEventsViewModelContext eventsViewModelContext)
         {
             InitializeDispatcherFromCurrentThread();
-            _eventsViewModel = eventsViewModel;
-            _eventsViewModel.Invalidated += (sender, args) => UpdateUpcomingEventsData();
 
-            UpcomingEvents = new ObservableCollection<EventEntryViewModel>();
+            _eventsViewModelContext = eventsViewModelContext;
+            _eventsViewModelContext.Invalidated += (sender, args) => UpdateUpcomingEventsData();
 
             _timeProvider = timeProvider;
             _timeProvider.PropertyChanged += _timeProvider_PropertyChanged;
 
+            UpcomingEvents = new ObservableCollection<EventEntryViewModel>();
+
+            UpdateConventionState();
             UpdateUpcomingEventsData();
         }
 
@@ -40,7 +69,7 @@ namespace Eurofurence.Companion.ViewModel
 
         private void UpdateUpcomingEventsData()
         {
-            var allUpcomingEvents = _eventsViewModel.EventEntries
+            var allUpcomingEvents = _eventsViewModelContext.EventEntries
                 .Where(a => a.Entity.EventDateTimeUtc >= CurrentDateTimeUtc) // && a.Entity.EventDateTimeUtc.Day == CurrentDateTimeUtc.Day
                 .OrderBy(a => a.Entity.ConferenceDay.Date)
                 .ToList();
@@ -68,7 +97,7 @@ namespace Eurofurence.Companion.ViewModel
                 allUpcomingEventsDistinctStartingTimes.Remove(startTime);
             }
 
-            UpcomingEventsConferenceDay = eventsToDisplay.First().ConferenceDay;
+            UpcomingEventsConferenceDay = eventsToDisplay.FirstOrDefault()?.ConferenceDay;
 
             foreach (var @event in UpcomingEvents.Where(a => !eventsToDisplay.Contains(a)).ToList())
             {
@@ -90,9 +119,32 @@ namespace Eurofurence.Companion.ViewModel
                     break;
 
                 case nameof(_timeProvider.CurrentDateTimeMinuteUtc):
+                    UpdateConventionState();
                     UpdateUpcomingEventsData();
                     break;
             }
+        }
+
+        private void UpdateConventionState()
+        {
+            if (!_eventsViewModelContext.EventConferenceDays.Any()) return;
+
+            var timeFrameStartUtc = _eventsViewModelContext.EventConferenceDays.Min(a => a.Entity.DayStartDateTimeUtc);
+            var timeFrameEndUtc = _eventsViewModelContext.EventConferenceDays.Max(a => a.Entity.DayEndDateTimeUtc);
+
+            if (_timeProvider.CurrentDateTimeUtc < timeFrameStartUtc)
+            {
+                ConventionState = ConventionStateEnum.Ahead;
+            }
+            else if (_timeProvider.CurrentDateTimeUtc > timeFrameEndUtc)
+            {
+                ConventionState = ConventionStateEnum.Over;
+            }
+            else
+            {
+                ConventionState = ConventionStateEnum.Ongoing;
+            }
+            ConventionStateText = ConventionState.ToString();
         }
     }
 }

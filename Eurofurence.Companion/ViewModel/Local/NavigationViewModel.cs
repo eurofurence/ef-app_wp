@@ -1,9 +1,9 @@
-﻿using Eurofurence.Companion.Common;
-using Eurofurence.Companion.DependencyResolution;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using Eurofurence.Companion.Common;
 using Eurofurence.Companion.Common.Abstractions;
+using Eurofurence.Companion.DependencyResolution;
 
-namespace Eurofurence.Companion.ViewModel
+namespace Eurofurence.Companion.ViewModel.Local
 {
     [IocBeacon(Scope = IocBeacon.ScopeEnum.Singleton)]
     public class NavigationViewModel : BindableBase

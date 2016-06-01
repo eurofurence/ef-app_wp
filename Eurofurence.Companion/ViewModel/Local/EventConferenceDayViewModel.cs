@@ -1,29 +1,32 @@
-using System.Collections.ObjectModel;
+using System;
+using System.Collections.Generic;
+using Eurofurence.Companion.Common;
 using Eurofurence.Companion.Common.Abstractions;
 using Eurofurence.Companion.DataModel.Api;
-using Eurofurence.Companion.Common;
-using System;
 
-namespace Eurofurence.Companion.ViewModel
+namespace Eurofurence.Companion.ViewModel.Local
 {
     public class EventConferenceDayViewModel : BindableBase
     {
         private readonly ITimeProvider _timeProvider;
+        private readonly Func<ICollection<EventEntryViewModel>> _eventEntryViewModelSelector;
         public EventConferenceDay Entity { get; }
 
         private bool _isCurrentDay = false;
         public bool IsCurrentDay { get { return _isCurrentDay; } set { SetProperty(ref _isCurrentDay, value); } }
 
-        public ObservableCollection<EventEntryViewModel> EventEntries { get; set; }
+        public ICollection<EventEntryViewModel> EventEntries => _eventEntryViewModelSelector();
         
 
-        public EventConferenceDayViewModel(EventConferenceDay entity, ITimeProvider timeProvider)
+        public EventConferenceDayViewModel(
+            EventConferenceDay entity, 
+            ITimeProvider timeProvider,
+            Func<ICollection<EventEntryViewModel>> eventEntryViewModelSelector)
         {
             Entity = entity;
+            _eventEntryViewModelSelector = eventEntryViewModelSelector;
+
             _timeProvider = timeProvider;
-
-            EventEntries = new ObservableCollection<EventEntryViewModel>();
-
             _timeProvider.WatchProperty(
                 nameof(_timeProvider.CurrentDateTimeMinuteUtc),
                 _ => Invalidate());

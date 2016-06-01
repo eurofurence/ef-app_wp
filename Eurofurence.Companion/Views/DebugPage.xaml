@@ -20,6 +20,13 @@
             </TextBlock>
 
             <StackPanel Margin="20">
+                <Button x:Name="E_Button_ToggleDebugMode"
+                        HorizontalAlignment="Stretch"
+                        Content="Toggle Debug Mode"
+                        Tapped="E_Button_ToggleDebugMode_Tapped" />
+                <TextBlock Text="{Binding IsDebugMode}" />
+
+
                 <Button x:Name="E_Button_ToggleFrameRateCounter"
                         HorizontalAlignment="Stretch"
                         Content="Toggle Frame Rate Counter"

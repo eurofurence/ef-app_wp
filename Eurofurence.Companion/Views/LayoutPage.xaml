@@ -7,8 +7,10 @@
       xmlns:im="using:Microsoft.Xaml.Interactions.Media"
       xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
       xmlns:local="using:Eurofurence.Companion.Views"
+      xmlns:controls="using:Eurofurence.Companion.Views.Controls"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:Eurofurence.Companion.ViewModel"
+      xmlns:local1="using:Eurofurence.Companion.ViewModel.Local"
       Background="{StaticResource AppPageBackgroundBrush}"
       RequestedTheme="Dark"
       mc:Ignorable="d">
@@ -204,7 +206,7 @@
 
                 <Grid x:Name="_grid_searchBar" Visibility="{Binding IsSearchAvailable, Converter={StaticResource TrueToVisibleConverter}}">
                     <Grid.DataContext>
-                        <vm:SearchBarViewModel />
+                        <local1:SearchBarViewModel />
                     </Grid.DataContext>
 
 
@@ -302,15 +304,34 @@
                Grid.Row="1"
                Background="Transparent" />
 
+        <Border 
+            Grid.Row="1"
+            Width="65" HorizontalAlignment="Right" x:Name="PanelDebug"
+            Visibility="{Binding Source={StaticResource ViewModelLocator}, Path=DebugViewModel.IsDebugMode,
+                Converter={StaticResource TrueToVisibleConverter}}" Background="#600000">
+            <StackPanel>
+                <TextBlock Text="UTC:" />
+                <TextBlock Text="{Binding Source={StaticResource ServiceLocator}, Path=TimeProvider.CurrentDateTimeUtc}"
+                           TextWrapping="Wrap"></TextBlock>
+                <TextBlock Text="Local:" />
+                <TextBlock Text="{Binding Source={StaticResource ServiceLocator}, Path=TimeProvider.CurrentDateTimeLocal}"
+                           TextWrapping="Wrap"></TextBlock>
+                <controls:DebugControl />
+            </StackPanel>
+        </Border>
+
         <Grid x:Name="_menu"
               Grid.Row="1"
-              HorizontalAlignment="Left">
+              HorizontalAlignment="Stretch">
             <Grid.RenderTransform>
                 <CompositeTransform x:Name="_menuCompositeRenderTransform"
                                     TranslateX="0"
                                     TranslateY="0" />
             </Grid.RenderTransform>
-            <Border Width="300"
+            
+
+            
+            <Border Width="300" HorizontalAlignment="Left"
                     Background="#101010"
                     BorderThickness="0">
                 <Grid>

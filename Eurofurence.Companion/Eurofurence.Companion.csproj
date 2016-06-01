@@ -123,6 +123,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Translations.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\Abstractions\IEventsViewModelContext.cs" />
     <Compile Include="ViewModel\Behaviors\RichTextBlockProperties.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="DataModel\StringFormatConverter.cs" />
@@ -150,28 +151,35 @@
     <Compile Include="ViewModel\Converter\BooleanToVisibilityConverter.cs" />
     <Compile Include="ViewModel\Converter\BytesToImageConverter.cs" />
     <Compile Include="ViewModel\Converter\WikiTextConverter.cs" />
-    <Compile Include="ViewModel\DealersViewModel.cs" />
-    <Compile Include="ViewModel\DebugViewModel.cs" />
+    <Compile Include="ViewModel\Local\DealersViewModel.cs" />
+    <Compile Include="ViewModel\Local\DebugViewModel.cs" />
     <Compile Include="Common\Abstractions\INavigationMediator.cs" />
-    <Compile Include="ViewModel\EventConferenceDayViewModel.cs" />
-    <Compile Include="ViewModel\EventConferenceRoomViewModel.cs" />
-    <Compile Include="ViewModel\EventConferenceTrackViewModel.cs" />
-    <Compile Include="ViewModel\EventEntryViewModel.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\MockLayoutPage.cs" />
-    <Compile Include="ViewModel\InfoViewModel.cs" />
-    <Compile Include="ViewModel\EventsViewModel.cs" />
+    <Compile Include="ViewModel\Local\EventConferenceDayViewModel.cs" />
+    <Compile Include="ViewModel\Local\EventConferenceRoomViewModel.cs" />
+    <Compile Include="ViewModel\Local\EventConferenceTrackViewModel.cs" />
+    <Compile Include="ViewModel\Local\EventEntryViewModel.cs" />
+    <Compile Include="ViewModel\EventsViewModelContext.cs" />
+    <Compile Include="ViewModel\Local\MainViewModel.cs" />
+    <Compile Include="ViewModel\Local\MockLayoutPage.cs" />
+    <Compile Include="ViewModel\Local\InfoViewModel.cs" />
+    <Compile Include="ViewModel\Local\EventsViewModel.cs" />
     <Compile Include="ViewModel\ILayoutPage.cs" />
     <Compile Include="DataModel\Abstractions\IOrderKeyProvider.cs" />
-    <Compile Include="ViewModel\LayoutViewModel.cs" />
-    <Compile Include="ViewModel\NavigationViewModel.cs" />
-    <Compile Include="ViewModel\SearchBarViewModel.cs" />
-    <Compile Include="ViewModel\TranslationViewModel.cs" />
+    <Compile Include="ViewModel\Local\LayoutViewModel.cs" />
+    <Compile Include="ViewModel\Local\NavigationViewModel.cs" />
+    <Compile Include="ViewModel\Local\SearchBarViewModel.cs" />
+    <Compile Include="ViewModel\Local\TranslationViewModel.cs" />
     <Compile Include="Views\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BasicPage1.xaml.cs">
       <DependentUpon>BasicPage1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\DebugControl.xaml.cs">
+      <DependentUpon>DebugControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\UpcomingEventsControl.xaml.cs">
+      <DependentUpon>UpcomingEventsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DealerDetailPage.xaml.cs">
       <DependentUpon>DealerDetailPage.xaml</DependentUpon>
@@ -262,6 +270,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BasicPage1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\DebugControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\UpcomingEventsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

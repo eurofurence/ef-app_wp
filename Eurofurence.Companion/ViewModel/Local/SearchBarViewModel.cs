@@ -1,6 +1,6 @@
 ﻿using Eurofurence.Companion.Common;
 
-namespace Eurofurence.Companion.ViewModel
+namespace Eurofurence.Companion.ViewModel.Local
 {
     public class SearchBarViewModel : BindableBase
     {

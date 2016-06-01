@@ -1,11 +1,11 @@
-﻿using Eurofurence.Companion.DataModel.Api;
-using Eurofurence.Companion.DependencyResolution;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Eurofurence.Companion.DataModel.Api;
 using Eurofurence.Companion.DataStore.Abstractions;
+using Eurofurence.Companion.DependencyResolution;
 
-namespace Eurofurence.Companion.ViewModel
+namespace Eurofurence.Companion.ViewModel.Local
 {
     [IocBeacon]
     public class DealersViewModel : BindableBase

@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Windows.Security.Cryptography.Certificates;
 using Windows.Storage.Streams;
 using Windows.Web.Http;
 using Windows.Web.Http.Filters;
@@ -57,6 +58,8 @@ namespace Eurofurence.Companion.DataModel
         {
             var filter = new HttpBaseProtocolFilter {AutomaticDecompression = true};
             filter.CacheControl.ReadBehavior = HttpCacheReadBehavior.MostRecent;
+            filter.IgnorableServerCertificateErrors.Add(ChainValidationResult.Untrusted);
+            filter.IgnorableServerCertificateErrors.Add(ChainValidationResult.InvalidName);
 
             using (var client = new HttpClient(filter))
             {

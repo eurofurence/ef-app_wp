@@ -2,6 +2,7 @@
 using Eurofurence.Companion.ViewModel;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Eurofurence.Companion.ViewModel.Local;
 
 
 namespace Eurofurence.Companion.Views
@@ -33,6 +34,10 @@ namespace Eurofurence.Companion.Views
             {
                 _currentConferenceDay = e.NavigationParameter as EventConferenceDayViewModel;
                 EventList.ItemsSource = _currentConferenceDay?.EventEntries;
+            }
+            else
+            {
+                NavigationHelper.GoBack();
             }
         }
 

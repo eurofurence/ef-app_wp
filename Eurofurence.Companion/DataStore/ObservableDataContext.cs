@@ -76,8 +76,7 @@ namespace Eurofurence.Companion.DataStore
                 entity.IsDeleted = entity.GetPersistence() ? (byte)0 : (byte)1;
             }
 
-            await _dataStore.ApplyDeltaAsync(EventEntryAttributes)
-                .ConfigureAwait(false);
+            await _dataStore.ApplyDeltaAsync(EventEntryAttributes);
         }
 
 

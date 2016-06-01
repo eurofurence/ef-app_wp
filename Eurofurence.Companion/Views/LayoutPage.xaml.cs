@@ -1,6 +1,7 @@
 ﻿using Eurofurence.Companion.DependencyResolution;
 using Eurofurence.Companion.ViewModel;
 using System;
+using System.Diagnostics;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Animation;
@@ -8,6 +9,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Core;
 using System.Threading.Tasks;
 using Eurofurence.Companion.Common.Abstractions;
+using Eurofurence.Companion.ViewModel.Local;
 
 namespace Eurofurence.Companion.Views
 {
@@ -64,7 +66,9 @@ namespace Eurofurence.Companion.Views
             _dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
             
             _defaultTransition = new ContinuumNavigationTransitionInfo();
+
             _menuCompositeRenderTransform.TranslateX = -300;
+
             _navigationMediator = navigationMediator;
             _telemetryClientProvider = telemetryClientProvider;
 
@@ -105,8 +109,8 @@ namespace Eurofurence.Companion.Views
             EventHandler<object> action = null;
             action = (_s, _e) =>
             {
-                tbTitle.Text = pageProperties.Title;
-                tbIcon.Text = pageProperties.Icon;
+                tbTitle.Text = pageProperties.Title ?? string.Empty;
+                tbIcon.Text = pageProperties.Icon ?? string.Empty;
 
                 transitionOut.Completed -= action;
                 transitionIn.Begin();

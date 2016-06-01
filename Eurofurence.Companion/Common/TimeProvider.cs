@@ -2,6 +2,7 @@
 using System;
 using Windows.UI.Xaml;
 using Eurofurence.Companion.Common.Abstractions;
+// ReSharper disable ExplicitCallerInfoArgument
 
 namespace Eurofurence.Companion.Common
 {
@@ -12,6 +13,11 @@ namespace Eurofurence.Companion.Common
         private DateTime _currentDateTimeMinuteUtc = DateTime.UtcNow;
         private TimeSpan _forcedOffset;
 
+
+        public DateTime CurrentDateTimeLocal => CurrentDateTimeUtc.ToLocalTime();
+        public DateTime CurrentDateTimeMinuteLocal => CurrentDateTimeUtc.ToLocalTime();
+
+
         public DateTime CurrentDateTimeUtc
         {
             get
@@ -20,9 +26,11 @@ namespace Eurofurence.Companion.Common
             }
             private set
             {
-                SetProperty(ref _currentDateTimeUtc, value);
+                if (!SetProperty(ref _currentDateTimeUtc, value)) return;
+
+                OnPropertyChanged(nameof(CurrentDateTimeLocal));
                 CurrentDateTimeMinuteUtc = _currentDateTimeUtc.
-                    AddTicks(-(CurrentDateTimeUtc.Ticks % TimeSpan.TicksPerMinute));
+                    AddTicks(-(CurrentDateTimeUtc.Ticks%TimeSpan.TicksPerMinute));
             }
         }
 
@@ -34,7 +42,9 @@ namespace Eurofurence.Companion.Common
             }
             private set
             {
-                SetProperty(ref _currentDateTimeMinuteUtc, value);
+                if (!SetProperty(ref _currentDateTimeMinuteUtc, value)) return;
+                
+                OnPropertyChanged(nameof(CurrentDateTimeMinuteLocal));
             }
         }
 
@@ -45,6 +55,8 @@ namespace Eurofurence.Companion.Common
                 _forcedOffset = value;
                 OnPropertyChanged(nameof(CurrentDateTimeUtc));
                 OnPropertyChanged(nameof(CurrentDateTimeMinuteUtc));
+                OnPropertyChanged(nameof(CurrentDateTimeLocal));
+                OnPropertyChanged(nameof(CurrentDateTimeMinuteLocal));
             }
         }
 
@@ -55,7 +67,7 @@ namespace Eurofurence.Companion.Common
 
             ForcedOffset = TimeSpan.Zero;
             //ForcedOffset = new DateTime(2015, 08, 19, 16, 45, 00) - DateTime.UtcNow;
-            ForcedOffset = new DateTime(2015, 08, 19, 16, 59, 45, DateTimeKind.Utc) - DateTime.UtcNow;
+            ForcedOffset = new DateTime(2015, 08, 19, 16, 55, 00, DateTimeKind.Utc) - DateTime.UtcNow;
             //ForcedOffset = new DateTime(2015, 08, 20, 06, 59, 45, DateTimeKind.Utc) - DateTime.UtcNow;
 
             var updateTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };

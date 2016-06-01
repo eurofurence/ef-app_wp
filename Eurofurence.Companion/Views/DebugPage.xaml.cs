@@ -8,6 +8,8 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using Eurofurence.Companion.Common.Abstractions;
+using Eurofurence.Companion.ViewModel;
+using Eurofurence.Companion.ViewModel.Local;
 
 
 namespace Eurofurence.Companion.Views
@@ -113,6 +115,12 @@ namespace Eurofurence.Companion.Views
             ToastNotificationManager.CreateToastNotifier().AddToSchedule(toast);
 
             var foo2 = ToastNotificationManager.CreateToastNotifier().GetScheduledToastNotifications();
+        }
+
+        private void E_Button_ToggleDebugMode_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            var m = KernelResolver.Current.Get<DebugViewModel>();
+            m.IsDebugMode = !m.IsDebugMode;
         }
     }
 }
