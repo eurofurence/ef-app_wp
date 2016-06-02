@@ -18,7 +18,7 @@ namespace Eurofurence.Companion.ViewModel.Converter
                     .Replace("\n\n", "<br><br>");
 
                 // Preceed first item of a list with 2 linebreaks.
-                text = (new Regex("^([^ ]+.*$)(\\n^)(  \\*)", RegexOptions.Multiline))
+                text = (new Regex("^(?!  \\* )([^\\n]+)(\\n^)(  \\*)", RegexOptions.Multiline))
                     .Replace(text, "$1<br><br>$2$3");
                 // Append last item of a list with 2 linebreaks.
                 text = (new Regex("(^  \\*[^\\n]+$\\n^)(?!  \\* )", RegexOptions.Multiline))

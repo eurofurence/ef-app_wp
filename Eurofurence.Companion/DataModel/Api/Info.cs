@@ -1,9 +1,10 @@
 using System;
 using SQLite;
+using Eurofurence.Companion.DataModel.Abstractions;
 
 namespace Eurofurence.Companion.DataModel.Api
 {
-    public class Info : EntityBase
+    public class Info : EntityBase, ISortOrderKeyProvider
     {
         public string Title { get; set; }
         public string Text { get; set; }
@@ -13,5 +14,8 @@ namespace Eurofurence.Companion.DataModel.Api
 
         [Ignore]
         public virtual InfoGroup Group { get; set; }
+
+        [Ignore]
+        public object SortOrderKey => Position;
     }
 }
