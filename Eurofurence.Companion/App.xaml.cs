@@ -173,9 +173,6 @@ namespace Eurofurence.Companion
             _isInitialized = true;
 
             await HockeyClient.Current.SendCrashesAsync();
-#if WINDOWS_PHONE_APP
-            await HockeyClient.Current.CheckForAppUpdateAsync();
-#endif
         }
 
         private void RootFrame_FirstNavigated(object sender, NavigationEventArgs e)

@@ -38,5 +38,20 @@ namespace Eurofurence.Companion
 
         public static string About_Disclaimer_Title 
 			=> _resourceLoader.GetString("About_Disclaimer_Title"); 
+
+        public static string ContextManager_Update_Initializing 
+			=> _resourceLoader.GetString("ContextManager_Update_Initializing"); 
+
+        public static string ContextManager_Update_Synchronizing 
+			=> _resourceLoader.GetString("ContextManager_Update_Synchronizing"); 
+
+        public static string ContextManager_Update_Done 
+			=> _resourceLoader.GetString("ContextManager_Update_Done"); 
+
+        public static string ContextManager_Update_DownloadingImageContent 
+			=> _resourceLoader.GetString("ContextManager_Update_DownloadingImageContent"); 
+
+        public static string ContextManager_Update_Downloading_arg0 
+			=> _resourceLoader.GetString("ContextManager_Update_Downloading_arg0"); 
     }
 }

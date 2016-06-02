@@ -7,5 +7,7 @@ namespace Eurofurence.Companion.DataModel.Api
     {
         public DateTime CurrentDateTimeUtc { get; set; }
         public List<EndpointConfiguration> Configuration { get; set; }
+
+        public List<EndpointEntity> Entities { get; set; } 
     }
 }

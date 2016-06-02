@@ -12,85 +12,84 @@
 
     <Grid x:Name="LayoutRoot">
 
+        <ScrollViewer>
+            <StackPanel>
 
-        <StackPanel>
-
-            <TextBlock Style="{StaticResource SubheaderTextBlockStyle}">
-                Debug
-            </TextBlock>
-
-            <StackPanel Margin="20">
-                <Button x:Name="E_Button_ToggleDebugMode"
-                        HorizontalAlignment="Stretch"
-                        Content="Toggle Debug Mode"
-                        Tapped="E_Button_ToggleDebugMode_Tapped" />
-                <TextBlock Text="{Binding IsDebugMode}" />
-
-
-                <Button x:Name="E_Button_ToggleFrameRateCounter"
-                        HorizontalAlignment="Stretch"
-                        Content="Toggle Frame Rate Counter"
-                        Tapped="E_Button_ToggleFrameRateCounter_Tapped" />
-                <Button x:Name="E_Button_ToastTest"
-                        HorizontalAlignment="Stretch"
-                        Content="Toast Test"
-                        Tapped="E_Button_ToastTest_Tapped" />
-            </StackPanel>
-
-            <TextBlock Style="{StaticResource SubheaderTextBlockStyle}">
-                Time Settings
-            </TextBlock>
-            <StackPanel Margin="20">
-                <TextBlock Style="{StaticResource ControlHeaderTextBlockStyle}">
-                    <Run Text="App kernel time (UTC): " />
-                    <Run Text="{Binding Source={StaticResource ViewModelLocator}, Path=MainViewModel.CurrentDateTimeUtc}" />
+                <TextBlock Style="{StaticResource SubheaderTextBlockStyle}">
+                    Debug
                 </TextBlock>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="1*" />
-                    </Grid.ColumnDefinitions>
-                    <DatePicker x:Name="_tpOffsetDatePicker" Grid.Column="0" />
-                    <TimePicker x:Name="_tpOffsetTimePicker" Grid.Column="1" />
-                    <Button x:Name="_btnSetTimeProviderOffset"
-                            Grid.Column="2"
+
+                <StackPanel Margin="20">
+                    <Button x:Name="E_Button_ToggleDebugMode"
                             HorizontalAlignment="Stretch"
-                            Click="_btnSetTimeProviderOffset_Click"
-                            Content="Set (UTC)" />
-                </Grid>
-            </StackPanel>
+                            Content="Toggle Debug Mode"
+                            Tapped="E_Button_ToggleDebugMode_Tapped" />
+                    <TextBlock Text="{Binding IsDebugMode}" />
 
 
+                    <Button x:Name="E_Button_ToggleFrameRateCounter"
+                            HorizontalAlignment="Stretch"
+                            Content="Toggle Frame Rate Counter"
+                            Tapped="E_Button_ToggleFrameRateCounter_Tapped" />
+                    <Button x:Name="E_Button_ToastTest"
+                            HorizontalAlignment="Stretch"
+                            Content="Toast Test"
+                            Tapped="E_Button_ToastTest_Tapped" />
+                </StackPanel>
 
-
-            <TextBlock Style="{StaticResource SubheaderTextBlockStyle}">
-                Context Manager
-            </TextBlock>
-
-            <StackPanel Margin="20">
-                <TextBlock Style="{StaticResource ControlHeaderTextBlockStyle}">
-                    <Run Text="Last update (UTC): " />
-                    <Run Text="{Binding Path=ContextManager.LastServerQueryDateTimeUtc}" />
+                <TextBlock Style="{StaticResource SubheaderTextBlockStyle}">
+                    Time Settings
                 </TextBlock>
-                <TextBlock Style="{StaticResource ControlHeaderTextBlockStyle}">
-                    <Run Text="Sc, Sm, Mc, Mm: " />
-                    <Run Text="{Binding Path=ContextManager.SubOperationCurrentValue}" />
-                    ,<Run Text="{Binding Path=ContextManager.SubOperationMaxValue}" />
-                    ,<Run Text="{Binding Path=ContextManager.MainOperationCurrentValue}" />
-                    ,<Run Text="{Binding Path=ContextManager.MainOperationMaxValue}" />
+                <StackPanel Margin="20">
+                    <TextBlock Style="{StaticResource ControlHeaderTextBlockStyle}">
+                        <Run Text="App kernel time (UTC): " />
+                        <Run Text="{Binding Source={StaticResource ViewModelLocator}, Path=MainViewModel.CurrentDateTimeUtc}" />
+                    </TextBlock>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <DatePicker x:Name="_tpOffsetDatePicker" Grid.Column="0" />
+                        <TimePicker x:Name="_tpOffsetTimePicker" Grid.Column="1" />
+                        <Button x:Name="_btnSetTimeProviderOffset"
+                                Grid.Column="2"
+                                HorizontalAlignment="Stretch"
+                                Click="_btnSetTimeProviderOffset_Click"
+                                Content="Set (UTC)" />
+                    </Grid>
+                </StackPanel>
+
+
+
+
+                <TextBlock Style="{StaticResource SubheaderTextBlockStyle}">
+                    Context Manager
                 </TextBlock>
 
-                <Button HorizontalAlignment="Stretch" Command="{Binding ContextManager.UpdateCommand}">
-                    Force Update
-                </Button>
-                <Button HorizontalAlignment="Stretch" Command="{Binding ContextManager.ClearAllCommand}">
-                    Clear All Local Data
-                </Button>
+                <StackPanel Margin="20">
+                    <TextBlock Style="{StaticResource ControlHeaderTextBlockStyle}">
+                        <Run Text="Last update (UTC): " />
+                        <Run Text="{Binding Path=ContextManager.LastServerQueryDateTimeUtc}" />
+                    </TextBlock>
+                    <TextBlock Style="{StaticResource ControlHeaderTextBlockStyle}">
+                        <Run Text="Sc, Sm, Mc, Mm: " />
+                        <Run Text="{Binding Path=ContextManager.SubOperationCurrentValue}" />
+                        ,<Run Text="{Binding Path=ContextManager.SubOperationMaxValue}" />
+                        ,<Run Text="{Binding Path=ContextManager.MainOperationCurrentValue}" />
+                        ,<Run Text="{Binding Path=ContextManager.MainOperationMaxValue}" />
+                    </TextBlock>
+
+                    <Button HorizontalAlignment="Stretch" Command="{Binding ContextManager.UpdateCommand}">
+                        Force Update
+                    </Button>
+                    <Button HorizontalAlignment="Stretch" Command="{Binding ContextManager.ClearAllCommand}">
+                        Clear All Local Data
+                    </Button>
+                </StackPanel>
+
             </StackPanel>
-
-        </StackPanel>
-
-
+        </ScrollViewer>
     </Grid>
 </Page>

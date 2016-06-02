@@ -80,6 +80,15 @@ namespace Eurofurence.Companion.DataStore
             await ClearAllTablesAsync().ConfigureAwait(false);
         }
 
+        public async Task ClearAsync(Type entityType)
+        {
+            var tableName = _existingTypeTables.SingleOrDefault(a => a.Key.AsType() == entityType).Value;
+            if (string.IsNullOrEmpty(tableName)) return;
+
+            await _sqliteAsyncConnection.ExecuteAsync($"delete from {tableName};")
+                .ConfigureAwait(false);
+        }
+
         private async Task ClearAllTablesAsync()
         {
             foreach (var t in _existingTypeTables)

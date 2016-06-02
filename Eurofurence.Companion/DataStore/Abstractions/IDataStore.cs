@@ -10,5 +10,6 @@ namespace Eurofurence.Companion.DataStore.Abstractions
         Task ApplyDeltaAsync(IEnumerable<EntityBase> entities, Action<int, int, string> progressCallback = null);
         Task<IList<T>> GetAsync<T>() where T : EntityBase, new();
         Task ClearAllAsync();
+        Task ClearAsync(Type entityType);
     }
 }

@@ -29,6 +29,11 @@ namespace Eurofurence.Companion.DataStore
             throw new InvalidOperationException();
         }
 
+        public Task ClearAsync(Type entityType)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IList<T>> GetAsync<T>() where T : EntityBase, new()
         {
             var result = await _apiClient.GetEntitiesAsync<T>().ConfigureAwait(false);

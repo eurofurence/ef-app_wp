@@ -9,11 +9,12 @@ using Eurofurence.Companion.DataModel;
 using Eurofurence.Companion.DataModel.Api;
 using Eurofurence.Companion.DataStore.Abstractions;
 using Eurofurence.Companion.DependencyResolution;
+
 // ReSharper disable ExplicitCallerInfoArgument
 
 namespace Eurofurence.Companion.DataStore
 {
-    [IocBeacon(TargetType = typeof(ContextManager), Scope = IocBeacon.ScopeEnum.Singleton)]
+    [IocBeacon(TargetType = typeof (ContextManager), Scope = IocBeacon.ScopeEnum.Singleton)]
     public class ContextManager : BindableBase
     {
         private readonly EurofurenceWebApiClient _apiClient;
@@ -30,26 +31,6 @@ namespace Eurofurence.Companion.DataStore
 
         private TaskStatus _updateStatus = TaskStatus.WaitingForActivation;
 
-
-        public ContextManager(IDataStore dataStore, IDataContext dataContext,
-            ApplicationSettingsContext applicationSettingsContext)
-        {
-            InitializeDispatcherFromCurrentThread();
-
-            _apiClient = new EurofurenceWebApiClient(Consts.WEB_API_ENDPOINT_URL);
-            _dataStore = dataStore;
-            _dataContext = dataContext;
-            _applicationSettingsContext = applicationSettingsContext;
-
-            MainOperationMessage = "";
-
-            UpdateStatus = _applicationSettingsContext.LastServerQueryDateTimeUtc.HasValue
-                ? TaskStatus.RanToCompletion
-                : TaskStatus.WaitingToRun;
-
-            UpdateCommand = new AwaitableCommand(Update);
-            ClearAllCommand = new AwaitableCommand(ClearAll);
-        }
 
         public ulong SubOperationMaxValue
         {
@@ -92,6 +73,34 @@ namespace Eurofurence.Companion.DataStore
 
         public DateTime? LastServerQueryDateTimeUtc => _applicationSettingsContext.LastServerQueryDateTimeUtc;
 
+
+        public ContextManager(IDataStore dataStore, IDataContext dataContext,
+            ApplicationSettingsContext applicationSettingsContext)
+        {
+            InitializeDispatcherFromCurrentThread();
+
+            _apiClient = new EurofurenceWebApiClient(Consts.WEB_API_ENDPOINT_URL);
+            _dataStore = dataStore;
+            _dataContext = dataContext;
+            _applicationSettingsContext = applicationSettingsContext;
+
+            MainOperationMessage = "";
+
+            UpdateStatus = _applicationSettingsContext.LastServerQueryDateTimeUtc.HasValue
+                ? TaskStatus.RanToCompletion
+                : TaskStatus.WaitingToRun;
+
+            UpdateCommand = new AwaitableCommand(Update);
+            ClearAllCommand = new AwaitableCommand(ClearAll);
+        }
+
+        private class EntityUpdateResult
+        {
+            public Type EntityType { get; set; }
+            public bool TruncateBeforeProcessing { get; set; }
+            public List<EntityBase> Entities { get; set; }
+        }
+
         public async Task InitializeAsync()
         {
             await _dataContext.RefreshAsync();
@@ -106,41 +115,39 @@ namespace Eurofurence.Companion.DataStore
             OnPropertyChanged(nameof(LastServerQueryDateTimeUtc));
         }
 
+
         public async Task Update()
         {
             UpdateStatus = TaskStatus.Running;
-            MainOperationMessage = "Initializing...";
+            MainOperationMessage = $"{Translations.ContextManager_Update_Initializing}...";
 
             await _dataContext.SaveAsync();
 
             var metadata = await _apiClient.GetEndpointMetadataAsync();
-
-            var entities = new List<EntityBase>();
+            var updateResults = new List<EntityUpdateResult>();
 
             MainOperationMaxValue = 9;
             MainOperationCurrentValue = 0;
 
-            entities.AddRange(
-                await UpdateEntitiesAsync<EventEntry>("Events", LastServerQueryDateTimeUtc));
-            entities.AddRange(
-                await UpdateEntitiesAsync<EventConferenceDay>("Event Conference Days", LastServerQueryDateTimeUtc));
-            entities.AddRange(
-                await UpdateEntitiesAsync<EventConferenceRoom>("Event Conference Rooms", LastServerQueryDateTimeUtc));
-            entities.AddRange(
-                await UpdateEntitiesAsync<EventConferenceTrack>("Event Conference Tracks", LastServerQueryDateTimeUtc));
-            entities.AddRange(
-                await UpdateEntitiesAsync<Info>("Info", LastServerQueryDateTimeUtc));
-            entities.AddRange(
-                await UpdateEntitiesAsync<InfoGroup>("Info Group", LastServerQueryDateTimeUtc));
-            entities.AddRange(
-                await UpdateEntitiesAsync<Image>("Images Metadata", LastServerQueryDateTimeUtc));
-            entities.AddRange(
-                await UpdateEntitiesAsync<Dealer>("Dealers", LastServerQueryDateTimeUtc));
+            updateResults.Add(await UpdateEntitiesAsync<EventEntry>(metadata));
+            updateResults.Add(await UpdateEntitiesAsync<EventConferenceDay>(metadata));
+            updateResults.Add(await UpdateEntitiesAsync<EventConferenceRoom>(metadata));
+            updateResults.Add(await UpdateEntitiesAsync<EventConferenceTrack>(metadata));
+            updateResults.Add(await UpdateEntitiesAsync<Info>(metadata));
+            updateResults.Add(await UpdateEntitiesAsync<InfoGroup>(metadata));
+            updateResults.Add(await UpdateEntitiesAsync<Image>(metadata));
+            updateResults.Add(await UpdateEntitiesAsync<Dealer>(metadata));
 
-            await UpdateImageDataAsync(entities.Where(a => a is Image).Cast<Image>());
+            await UpdateImageDataAsync(updateResults.Single(a => a.EntityType == typeof (Image)).Entities.Cast<Image>());
 
-            MainOperationMessage = "Synchronizing...";
-            await _dataStore.ApplyDeltaAsync(entities, async (current, max, id) =>
+            MainOperationMessage = Translations.ContextManager_Update_Initializing;
+
+            foreach (var entity in updateResults.Where(a => a.TruncateBeforeProcessing).Select(b => b.EntityType))
+            {
+                await _dataStore.ClearAsync(entity);
+            }
+
+            await _dataStore.ApplyDeltaAsync(updateResults.SelectMany(a => a.Entities), (current, max, id) =>
             {
                 SubOperationMaxValue = (ulong) max;
                 SubOperationCurrentValue = (ulong) current;
@@ -152,7 +159,7 @@ namespace Eurofurence.Companion.DataStore
             await _dataContext.RefreshAsync();
             await _dataContext.SaveAsync();
 
-            MainOperationMessage = "Done!";
+            MainOperationMessage = $"{Translations.ContextManager_Update_Done}!";
             UpdateStatus = TaskStatus.RanToCompletion;
         }
 
@@ -161,13 +168,20 @@ namespace Eurofurence.Companion.DataStore
         {
             var imageList = images.ToList();
 
-            MainOperationMessage = "Downloading Image Content...";
+            MainOperationMessage = $"{Translations.ContextManager_Update_DownloadingImageContent}...";
+
             SubOperationMaxValue = (ulong) imageList.Count;
             SubOperationCurrentValue = 0;
 
             var tasks = imageList.Select(imageEntity => Task.Run(async () =>
             {
-                var content = await _apiClient.GetContentAsBufferAsync(imageEntity.Url.Replace("{Endpoint}", Consts.WEB_API_ENDPOINT_URL)).ConfigureAwait(false);
+                var content =
+                    await
+                        _apiClient.GetContentAsBufferAsync(
+                            imageEntity.Url
+                                .Replace("{Endpoint}", Consts.WEB_API_ENDPOINT_URL)
+                                .Replace("{EndpointUrl}", Consts.WEB_API_ENDPOINT_URL)
+                            ).ConfigureAwait(false);
                 var bytes = content.ToArray();
 
                 imageEntity.Content = bytes;
@@ -175,7 +189,7 @@ namespace Eurofurence.Companion.DataStore
                 SubOperationCurrentValue++;
             })).ToList();
 
-            foreach(var task in tasks)
+            foreach (var task in tasks)
             {
                 await task.ConfigureAwait(false);
             }
@@ -183,13 +197,26 @@ namespace Eurofurence.Companion.DataStore
             MainOperationCurrentValue++;
         }
 
-        private async Task<IList<T>> UpdateEntitiesAsync<T>(string entityName, DateTime? since)
+        private async Task<EntityUpdateResult> UpdateEntitiesAsync<T>(Endpoint metadata) where T : EntityBase
         {
-            MainOperationMessage = $"Downloading {entityName}..."; 
-            var entities = await _apiClient.GetEntitiesAsync<T>(since);
+            var result = new EntityUpdateResult {EntityType = typeof (T), Entities = new List<EntityBase>()};
+            var endpointEntityInformation =
+                metadata.Entities.Single(a => _apiClient.GetTypeForEntity(a.Name) == typeof (T));
+
+            MainOperationMessage = string.Format(Translations.ContextManager_Update_Downloading_arg0, typeof (T).Name);
+
+            if (!LastServerQueryDateTimeUtc.HasValue ||
+                endpointEntityInformation.LastChangeDateTimeUtc > LastServerQueryDateTimeUtc)
+            {
+                result.Entities.AddRange(await _apiClient.GetEntitiesAsync<T>(LastServerQueryDateTimeUtc));
+            }
+
+            result.TruncateBeforeProcessing = LastServerQueryDateTimeUtc.HasValue &&
+                                              LastServerQueryDateTimeUtc.Value <
+                                              endpointEntityInformation.DeltaStartDateTimeUtc;
 
             MainOperationCurrentValue++;
-            return entities;
+            return result;
         }
     }
 }

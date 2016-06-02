@@ -141,4 +141,19 @@
   <data name="About_Disclaimer_Title" xml:space="preserve">
     <value>Disclaimer</value>
   </data>
+  <data name="ContextManager_Update_Initializing" xml:space="preserve">
+    <value>Initializing</value>
+  </data>
+  <data name="ContextManager_Update_Synchronizing" xml:space="preserve">
+    <value>Synchronizing</value>
+  </data>
+  <data name="ContextManager_Update_Done" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="ContextManager_Update_DownloadingImageContent" xml:space="preserve">
+    <value>Downloading Image Content</value>
+  </data>
+  <data name="ContextManager_Update_Downloading_arg0" xml:space="preserve">
+    <value>Downloading %0</value>
+  </data>
 </root>

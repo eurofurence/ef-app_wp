@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.Security.Cryptography.Certificates;
 using Windows.Storage.Streams;
@@ -14,6 +15,18 @@ namespace Eurofurence.Companion.DataModel
     {
         private readonly string _endpointUrl;
 
+        private static readonly Dictionary<Type, string> _resourcePathMap = new Dictionary<Type, string>()
+        {
+            { typeof(EventEntry), "EventEntry" },
+            { typeof(EventConferenceDay), "EventConferenceDay" },
+            { typeof(EventConferenceRoom), "EventConferenceRoom" },
+            { typeof(EventConferenceTrack), "EventConferenceTrack" },
+            { typeof(Info), "Info" },
+            { typeof(InfoGroup), "InfoGroup" },
+            { typeof(Image), "Image" },
+            { typeof(Dealer), "Dealer" },
+        };
+     
         public EurofurenceWebApiClient(string endpointUrl)
         {
             _endpointUrl = endpointUrl;
@@ -24,20 +37,17 @@ namespace Eurofurence.Companion.DataModel
             return GetAsync<Endpoint>("Endpoint");
         }
 
+        public Type GetTypeForEntity(string name)
+        {
+            if (_resourcePathMap.ContainsValue(name))
+                return _resourcePathMap.Single(a => a.Value == name).Key;
+
+            return null;
+        }
+
         private string GetResourcePath(Type type)
         {
-            switch (type.Name)
-            {
-                case "EventEntry":
-                case "EventConferenceDay":
-                case "EventConferenceRoom":
-                case "EventConferenceTrack":
-                case "Info":
-                case "InfoGroup":
-                case "Image":
-                case "Dealer":
-                    return type.Name;
-            }
+            if (_resourcePathMap.ContainsKey(type)) return _resourcePathMap[type];
 
             throw new NotSupportedException();
         }
