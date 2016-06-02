@@ -4,9 +4,8 @@
              xmlns:converter="using:Eurofurence.Companion.ViewModel.Converter"
              xmlns:dataModel="using:Eurofurence.Companion.DataModel"
              xmlns:dependencyResolution="using:Eurofurence.Companion.DependencyResolution"
-             xmlns:viewModel="using:Eurofurence.Companion.ViewModel"
              xmlns:local="using:Eurofurence.Companion"
-             xmlns:local1="using:Eurofurence.Companion.ViewModel.Local">
+             xmlns:viewModelLocal="using:Eurofurence.Companion.ViewModel.Local">
 
     <Application.Resources>
 
@@ -80,7 +79,8 @@
             <converter:BytesToImageConverter x:Key="BytesToImageConverter" />
             <converter:BooleanToVisibilityConverter x:Key="TrueToVisibleConverter" />
             <converter:BooleanToVisibilityConverter x:Key="FalseToVisibleConverter" IsReversed="True" />
-            <local1:TranslationViewModel x:Key="Translations" />
+            <converter:WikiTextToHtmlConverter x:Key="WikiTextToHtmlConverter" />
+            <viewModelLocal:TranslationViewModel x:Key="Translations" />
 
             <Style x:Key="FactBoxIcon" TargetType="TextBlock">
                 <Setter Property="FontFamily" Value="{StaticResource IconFontFamily}" />

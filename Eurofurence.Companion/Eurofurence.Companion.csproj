@@ -151,7 +151,7 @@
     <Compile Include="ViewModel\Behaviors\WikiTextBoxProperties.cs" />
     <Compile Include="ViewModel\Converter\BooleanToVisibilityConverter.cs" />
     <Compile Include="ViewModel\Converter\BytesToImageConverter.cs" />
-    <Compile Include="ViewModel\Converter\WikiTextConverter.cs" />
+    <Compile Include="ViewModel\Converter\WikiTextToHtmlConverter.cs" />
     <Compile Include="ViewModel\Local\DealersViewModel.cs" />
     <Compile Include="ViewModel\Local\DebugViewModel.cs" />
     <Compile Include="Common\Abstractions\INavigationMediator.cs" />

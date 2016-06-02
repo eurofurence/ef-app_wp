@@ -1,6 +1,7 @@
 ﻿<Page x:Class="Eurofurence.Companion.Views.InfoGroupDetailPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:behaviors="using:Eurofurence.Companion.ViewModel.Behaviors"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:Eurofurence.Companion.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -52,13 +53,6 @@
                                         <TextBlock Foreground="{ThemeResource EurofurenceThemeColorBrush}"
                                                    Style="{StaticResource GroupHeaderTextBlockStyle}"
                                                    Text="{Binding Title}" />
-                                        <!--<TextBlock
-                                            Margin="0 0 40 10"
-                                            Foreground="{ThemeResource PhoneMidBrush}"
-                                            Style="{StaticResource BodyTextBlockStyle}"
-                                            FontSize="{StaticResource TextStyleExtraLargeFontSize}"
-                                                Text="{Binding Title}" />-->
-
                                         <TextBlock Margin="0 0 0 0"
                                                    HorizontalAlignment="Right"
                                                    FontFamily="{StaticResource IconFontFamily}"
@@ -68,15 +62,12 @@
 
                                     </Grid>
                                     <Grid>
-                                        <TextBlock FontSize="{StaticResource TextStyleMediumFontSize}"
-                                                   Style="{StaticResource BodyTextBlockStyle}"
-                                                   Text="{Binding Text}"
-                                                   TextWrapping="WrapWholeWords" />
+                                        <RichTextBlock Margin="15"
+                                                       behaviors:RichTextBlockProperties.Html="{Binding Text,
+                                                                                                        Converter={StaticResource WikiTextToHtmlConverter}}"
+                                                       FontSize="{StaticResource TextStyleMediumFontSize}"
+                                                       TextWrapping="WrapWholeWords" />
                                     </Grid>
-                                    <!--<TextBlock Text="{Binding Text}"
-                                               Style="{StaticResource BodyTextBlockStyle}" FontSize="14"
-                                               TextWrapping="Wrap"
-                                               />-->
                                 </StackPanel>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>

@@ -240,10 +240,10 @@ namespace Eurofurence.Companion.ViewModel.Behaviors
             Span s = new Span();
             InlineUIContainer iui = new InlineUIContainer();
             Ellipse ellipse = new Ellipse();
-            ellipse.Fill = new SolidColorBrush(Colors.Black);
+            ellipse.Fill = new SolidColorBrush(Colors.White);
             ellipse.Width = 6;
             ellipse.Height = 6;
-            ellipse.Margin = new Thickness(-30, 0, 0, 1);
+            ellipse.Margin = new Thickness(-20, 0, 0, 1);
             iui.Child = ellipse;
             s.Inlines.Add(iui);
             AddChildren(s, node);
