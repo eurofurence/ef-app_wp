@@ -1,12 +1,12 @@
 ﻿<Page x:Class="Eurofurence.Companion.Views.MainPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:controls="using:Eurofurence.Companion.Views.Controls"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:i="using:Microsoft.Xaml.Interactivity"
       xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
       xmlns:im="using:Microsoft.Xaml.Interactions.Media"
       xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-      xmlns:controls="using:Eurofurence.Companion.Views.Controls"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
       DataContext="{Binding Source={StaticResource ViewModelLocator},
@@ -32,21 +32,25 @@
                     <StackPanel>
                         <interactivity:Interaction.Behaviors>
                             <interactivity:BehaviorCollection>
-                                <ic:DataTriggerBehavior Binding="{Binding ConventionStateText}" Value="Ongoing" ComparisonCondition="Equal" >
+                                <ic:DataTriggerBehavior Binding="{Binding ConventionStateText}"
+                                                        ComparisonCondition="Equal"
+                                                        Value="Ongoing">
                                     <ic:ChangePropertyAction PropertyName="Visibility"
-                                                            TargetObject="{Binding ElementName=E_StackPanel_UpcomingEvents}"
-                                                            Value="Visible" />
+                                                             TargetObject="{Binding ElementName=E_StackPanel_UpcomingEvents}"
+                                                             Value="Visible" />
                                 </ic:DataTriggerBehavior>
-                                <ic:DataTriggerBehavior Binding="{Binding ConventionStateText}" Value="Ongoing" ComparisonCondition="NotEqual" >
+                                <ic:DataTriggerBehavior Binding="{Binding ConventionStateText}"
+                                                        ComparisonCondition="NotEqual"
+                                                        Value="Ongoing">
                                     <ic:ChangePropertyAction PropertyName="Visibility"
-                                                            TargetObject="{Binding ElementName=E_StackPanel_UpcomingEvents}"
-                                                            Value="Collapsed" />
+                                                             TargetObject="{Binding ElementName=E_StackPanel_UpcomingEvents}"
+                                                             Value="Collapsed" />
                                 </ic:DataTriggerBehavior>
                             </interactivity:BehaviorCollection>
                         </interactivity:Interaction.Behaviors>
-                        
+
                         <StackPanel Name="E_StackPanel_UpcomingEvents">
-                           <controls:UpcomingEventsControl DataContext="{Binding}"></controls:UpcomingEventsControl>
+                            <controls:UpcomingEventsControl DataContext="{Binding}" />
                         </StackPanel>
 
                     </StackPanel>

@@ -8,6 +8,8 @@ namespace Eurofurence.Companion.ViewModel
         void EnterPage(string area, string title, string subtitle, string icon ="");
 
         void OnLayoutPageRendered();
+
+        bool AcknowledgeNavigateBackRequest();
     }
 }
     

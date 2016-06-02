@@ -7,6 +7,11 @@ namespace Eurofurence.Companion.ViewModel.Local
     [IocBeacon(TargetType = typeof(ILayoutPage), Scope = IocBeacon.ScopeEnum.Singleton, Environment = IocBeacon.EnvironmentEnum.DesignTimeOnly)]
     public class MockLayoutPage : ILayoutPage
     {
+        public bool AcknowledgeNavigateBackRequest()
+        {
+            throw new NotImplementedException();
+        }
+
         public void EnterPage(string area, string title, string subtitle, string icon = "")
         {
             throw new NotImplementedException();

@@ -1,7 +1,6 @@
 ﻿using Eurofurence.Companion.DependencyResolution;
 using Eurofurence.Companion.ViewModel;
 using System;
-using System.Diagnostics;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Animation;
@@ -10,6 +9,7 @@ using Windows.UI.Core;
 using System.Threading.Tasks;
 using Eurofurence.Companion.Common.Abstractions;
 using Eurofurence.Companion.ViewModel.Local;
+using Eurofurence.Companion.Common;
 
 namespace Eurofurence.Companion.Views
 {
@@ -28,6 +28,7 @@ namespace Eurofurence.Companion.Views
         private readonly INavigationMediator _navigationMediator;
         private readonly ITelemetryClientProvider _telemetryClientProvider;
         private readonly CoreDispatcher _dispatcher;
+        private NavigationHelper _navigationHelper;
 
         private ISearchInteraction CurrentPageSearchInteraction => RootFrame.Content as ISearchInteraction;
 
@@ -64,17 +65,17 @@ namespace Eurofurence.Companion.Views
         {
             InitializeComponent();
             _dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
-            
-            _defaultTransition = new ContinuumNavigationTransitionInfo();
-
-            _menuCompositeRenderTransform.TranslateX = -300;
-
             _navigationMediator = navigationMediator;
             _telemetryClientProvider = telemetryClientProvider;
+
+            _defaultTransition = new ContinuumNavigationTransitionInfo();
+            _menuCompositeRenderTransform.TranslateX = -300;
+
 
             _navigationMediator.OnNavigateAsync += NavigateAsync;
             RootFrame.Navigated += RootFrame_NavigatedAsync;
         }
+
 
         private async void RootFrame_NavigatedAsync(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
         {
@@ -95,12 +96,6 @@ namespace Eurofurence.Companion.Views
        
             var layoutProperties = e.Content as ILayoutProperties;
             IsHeaderVisible = layoutProperties?.IsHeaderVisible ?? true;
-
-            //_textBox_searchBox.PlaceholderText = CurrentPageSearchInteraction?.PlaceholderText ?? string.Empty;
-            //_textBox_searchBox.Text = CurrentPageSearchInteraction?.DefaultSearchText ?? string.Empty;
-                
-            //_b_search.Visibility = CurrentPageSearchInteraction != null ? Visibility.Visible : Visibility.Collapsed;
-            //IsSearchBoxExpanded = false;
 
 
             var pageProperties = e.Content as IPageProperties;
@@ -159,6 +154,18 @@ namespace Eurofurence.Companion.Views
         public void OnLayoutPageRendered()
         {
             _menuListView.DataContext = _navigationViewModel.Value.MainMenu;
+        }
+
+        public bool AcknowledgeNavigateBackRequest()
+        {
+            if (!IsMenuVisible) return true;
+            IsMenuVisible = false;
+            return false;
+        }
+
+        private void E_Grid_MenuSurface_Background_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            IsMenuVisible = false;
         }
     }
 }

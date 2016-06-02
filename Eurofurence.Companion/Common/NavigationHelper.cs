@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using Ninject;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Eurofurence.Companion.DependencyResolution;
+using Eurofurence.Companion.ViewModel;
 
 namespace Eurofurence.Companion.Common
 {
@@ -194,6 +197,12 @@ namespace Eurofurence.Companion.Common
         /// <param name="e">Event data describing the conditions that led to the event.</param>
         private void HardwareButtons_BackPressed(object sender, Windows.Phone.UI.Input.BackPressedEventArgs e)
         {
+            if (!KernelResolver.Current.Get<ILayoutPage>().AcknowledgeNavigateBackRequest())
+            {
+                e.Handled = true;
+                return;
+            }
+
             if (GoBackCommand.CanExecute(null))
             {
                 e.Handled = true;

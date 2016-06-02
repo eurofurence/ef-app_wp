@@ -2,15 +2,15 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:behaviors="using:Eurofurence.Companion.ViewModel.Behaviors"
+      xmlns:controls="using:Eurofurence.Companion.Views.Controls"
       xmlns:core="using:Microsoft.Xaml.Interactions.Core"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:im="using:Microsoft.Xaml.Interactions.Media"
       xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
       xmlns:local="using:Eurofurence.Companion.Views"
-      xmlns:controls="using:Eurofurence.Companion.Views.Controls"
+      xmlns:local1="using:Eurofurence.Companion.ViewModel.Local"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:Eurofurence.Companion.ViewModel"
-      xmlns:local1="using:Eurofurence.Companion.ViewModel.Local"
       Background="{StaticResource AppPageBackgroundBrush}"
       RequestedTheme="Dark"
       mc:Ignorable="d">
@@ -19,7 +19,7 @@
         <Storyboard x:Name="menuHide" AutoReverse="False">
             <DoubleAnimation Duration="0:0:0.15"
                              From="0"
-                             Storyboard.TargetName="_menu"
+                             Storyboard.TargetName="E_Grid_MenuSurface"
                              Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)"
                              To="-300">
                 <DoubleAnimation.EasingFunction>
@@ -30,7 +30,7 @@
         <Storyboard x:Name="menuShow" AutoReverse="False">
             <DoubleAnimation Duration="0:0:0.15"
                              From="-300"
-                             Storyboard.TargetName="_menu"
+                             Storyboard.TargetName="E_Grid_MenuSurface"
                              Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)"
                              To="0">
                 <DoubleAnimation.EasingFunction>
@@ -304,23 +304,24 @@
                Grid.Row="1"
                Background="Transparent" />
 
-        <Border 
-            Grid.Row="1"
-            Width="65" HorizontalAlignment="Right" x:Name="PanelDebug"
-            Visibility="{Binding Source={StaticResource ViewModelLocator}, Path=DebugViewModel.IsDebugMode,
-                Converter={StaticResource TrueToVisibleConverter}}" Background="#600000">
+        <Border x:Name="PanelDebug"
+                Grid.Row="1"
+                Width="65"
+                HorizontalAlignment="Right"
+                Background="#600000"
+                Visibility="{Binding Source={StaticResource ViewModelLocator},
+                                     Path=DebugViewModel.IsDebugMode,
+                                     Converter={StaticResource TrueToVisibleConverter}}">
             <StackPanel>
                 <TextBlock Text="UTC:" />
-                <TextBlock Text="{Binding Source={StaticResource ServiceLocator}, Path=TimeProvider.CurrentDateTimeUtc}"
-                           TextWrapping="Wrap"></TextBlock>
+                <TextBlock Text="{Binding Source={StaticResource ServiceLocator}, Path=TimeProvider.CurrentDateTimeUtc}" TextWrapping="Wrap" />
                 <TextBlock Text="Local:" />
-                <TextBlock Text="{Binding Source={StaticResource ServiceLocator}, Path=TimeProvider.CurrentDateTimeLocal}"
-                           TextWrapping="Wrap"></TextBlock>
+                <TextBlock Text="{Binding Source={StaticResource ServiceLocator}, Path=TimeProvider.CurrentDateTimeLocal}" TextWrapping="Wrap" />
                 <controls:DebugControl />
             </StackPanel>
         </Border>
 
-        <Grid x:Name="_menu"
+        <Grid x:Name="E_Grid_MenuSurface"
               Grid.Row="1"
               HorizontalAlignment="Stretch">
             <Grid.RenderTransform>
@@ -328,10 +329,11 @@
                                     TranslateX="0"
                                     TranslateY="0" />
             </Grid.RenderTransform>
-            
 
-            
-            <Border Width="300" HorizontalAlignment="Left"
+            <Border Background="Transparent" Tapped="E_Grid_MenuSurface_Background_Tapped" />
+
+            <Border Width="300"
+                    HorizontalAlignment="Left"
                     Background="#101010"
                     BorderThickness="0">
                 <Grid>
