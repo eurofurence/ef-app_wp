@@ -6,6 +6,13 @@ namespace Eurofurence.Companion.ViewModel.Converter
 {
     public class WikiTextToHtmlConverter : IValueConverter
     {
+
+        private static Regex _regexPreceedFirstListItemWithLineBreaks = new Regex("^(?!  \\* )([^\\n]+)(\\n^)(  \\*)", RegexOptions.Multiline);
+        private static Regex _regexSucceedLastListItemWithLineBreaks = new Regex("(^  \\*[^\\n]+$\\n^)(?!  \\* )", RegexOptions.Multiline);
+        private static Regex _regexParseListItems = new Regex("^  \\* (.*)$", RegexOptions.Multiline);
+        private static Regex _regexBoldItems = new Regex("\\*\\*([^\\*]*)\\*\\*");
+        private static Regex _regexItalics = new Regex("\\*([^\\*]*)\\*");
+
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value != null && value is string && targetType == typeof(string))
@@ -17,25 +24,15 @@ namespace Eurofurence.Companion.ViewModel.Converter
                     .Replace("\\\\", "<br>")
                     .Replace("\n\n", "<br><br>");
 
-                // Preceed first item of a list with 2 linebreaks.
-                text = (new Regex("^(?!  \\* )([^\\n]+)(\\n^)(  \\*)", RegexOptions.Multiline))
-                    .Replace(text, "$1<br><br>$2$3");
-                // Append last item of a list with 2 linebreaks.
-                text = (new Regex("(^  \\*[^\\n]+$\\n^)(?!  \\* )", RegexOptions.Multiline))
-                    .Replace(text, "$1<br><br>");
-                // List item.
-                text = (new Regex("^  \\* (.*)$", RegexOptions.Multiline))
-                    .Replace(text, "<li>$1</li>");
-                // Bold Items
-                text = (new Regex("\\*\\*([^\\*]*)\\*\\*"))
-                    .Replace(text, "<b>$1</b>");
-                // Italics
-                text = (new Regex("\\*([^\\*]*)\\*"))
-                    .Replace(text, "<i>$1</i>");
+                text = _regexPreceedFirstListItemWithLineBreaks.Replace(text, "$1<br><br>$2$3");
+                text = _regexSucceedLastListItemWithLineBreaks.Replace(text, "$1<br><br>");
+                text = _regexParseListItems.Replace(text, "<li>$1</li>");
+                text = _regexBoldItems.Replace(text, "<b>$1</b>");
+                text = _regexItalics.Replace(text, "<i>$1</i>");
 
                 return text;
-
             }
+
             return null;
         }
 

@@ -11,70 +11,66 @@
       mc:Ignorable="d">
 
     <Grid x:Name="LayoutRoot">
-        <Grid x:Name="ContentRoot"
-              Grid.Row="1"
-              Margin="19,9.5,19,0">
-            <ScrollViewer x:Name="svMain">
-                <StackPanel>
-                    <TextBlock Foreground="{ThemeResource EurofurenceThemeColorBrush}"
-                               Style="{StaticResource GroupHeaderTextBlockStyle}"
-                               Text="Table of Contents" />
+        <ScrollViewer x:Name="svMain">
+            <StackPanel Margin="19,9.5,19,0">
+                <TextBlock Foreground="{ThemeResource EurofurenceThemeColorBrush}"
+                           Style="{StaticResource GroupHeaderTextBlockStyle}"
+                           Text="Table of Contents" />
 
-                    <ListView Name="lvToc"
-                              Margin="0 0 0 30"
-                              IsItemClickEnabled="True"
-                              ItemClick="lvToc_ItemClick"
-                              ItemsSource="{Binding Entries}">
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="Height" Value="35" />
-                            </Style>
-                        </ListView.ItemContainerStyle>
+                <ListView Name="lvToc"
+                          Margin="0 0 0 30"
+                          IsItemClickEnabled="True"
+                          ItemClick="lvToc_ItemClick"
+                          ItemsSource="{Binding Entries}">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Height" Value="35" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
 
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock Grid.Column="1"
-                                               Margin="0"
-                                               Foreground="White"
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Grid.Column="1"
+                                           Margin="0"
+                                           Foreground="White"
+                                           Style="{StaticResource GroupHeaderTextBlockStyle}"
+                                           Text="{Binding Title}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+
+                <ItemsControl Name="icDetail" ItemsSource="{Binding Entries}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0 0 0 20">
+                                <Grid>
+                                    <TextBlock Foreground="{ThemeResource EurofurenceThemeColorBrush}"
                                                Style="{StaticResource GroupHeaderTextBlockStyle}"
                                                Text="{Binding Title}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                                    <TextBlock Margin="0 0 0 0"
+                                               HorizontalAlignment="Right"
+                                               FontFamily="{StaticResource IconFontFamily}"
+                                               FontSize="{StaticResource TextStyleExtraLargeFontSize}"
+                                               Tapped="TextBlock_Tapped"
+                                               Text="&#xE898;" />
 
+                                </Grid>
+                                <Grid>
+                                    <RichTextBlock Margin="15"
+                                                   behaviors:RichTextBlockProperties.Html="{Binding Text,
+                                                                                                    Converter={StaticResource WikiTextToHtmlConverter}}"
+                                                   FontSize="{StaticResource TextStyleMediumFontSize}"
+                                                   TextWrapping="WrapWholeWords" />
+                                </Grid>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
 
-                    <ItemsControl Name="icDetail" ItemsSource="{Binding Entries}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Margin="0 0 0 20">
-                                    <Grid>
-                                        <TextBlock Foreground="{ThemeResource EurofurenceThemeColorBrush}"
-                                                   Style="{StaticResource GroupHeaderTextBlockStyle}"
-                                                   Text="{Binding Title}" />
-                                        <TextBlock Margin="0 0 0 0"
-                                                   HorizontalAlignment="Right"
-                                                   FontFamily="{StaticResource IconFontFamily}"
-                                                   FontSize="{StaticResource TextStyleExtraLargeFontSize}"
-                                                   Tapped="TextBlock_Tapped"
-                                                   Text="&#xE898;" />
-
-                                    </Grid>
-                                    <Grid>
-                                        <RichTextBlock Margin="15"
-                                                       behaviors:RichTextBlockProperties.Html="{Binding Text,
-                                                                                                        Converter={StaticResource WikiTextToHtmlConverter}}"
-                                                       FontSize="{StaticResource TextStyleMediumFontSize}"
-                                                       TextWrapping="WrapWholeWords" />
-                                    </Grid>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-
-                </StackPanel>
-            </ScrollViewer>
-        </Grid>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>
