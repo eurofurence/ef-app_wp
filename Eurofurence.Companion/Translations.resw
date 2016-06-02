@@ -154,6 +154,6 @@
     <value>Downloading Image Content</value>
   </data>
   <data name="ContextManager_Update_Downloading_arg0" xml:space="preserve">
-    <value>Downloading %0</value>
+    <value>Downloading {0}</value>
   </data>
 </root>
