@@ -1,5 +1,6 @@
 ﻿using Eurofurence.Companion.ViewModel;
 using Eurofurence.Companion.ViewModel.Local;
+using Eurofurence.Companion.Views;
 using Ninject;
 
 namespace Eurofurence.Companion.DependencyResolution
@@ -15,5 +16,6 @@ namespace Eurofurence.Companion.DependencyResolution
         public InfoViewModel InfoViewModel => KernelResolver.Current.Get<InfoViewModel>();
         public DealersViewModel DealersViewModel => KernelResolver.Current.Get<DealersViewModel>();
         public MainViewModel MainViewModel => KernelResolver.Current.Get<MainViewModel>();
+        public MenuViewModel MenuViewModel => KernelResolver.Current.Get<MenuViewModel>();
     }
 }

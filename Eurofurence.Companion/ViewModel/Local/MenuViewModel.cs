@@ -1,33 +1,57 @@
-﻿using Eurofurence.Companion.DependencyResolution;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using Windows.UI.Xaml.Media.Animation;
+using Eurofurence.Companion.Common;
 using Eurofurence.Companion.Common.Abstractions;
+using Eurofurence.Companion.DependencyResolution;
 
-namespace Eurofurence.Companion.Common
+namespace Eurofurence.Companion.ViewModel.Local
 {
-
-    [IocBeacon(TargetType = typeof(INavigationProvider), Scope = IocBeacon.ScopeEnum.Singleton)]
-    public class NavigationProvider : INavigationProvider
+    [IocBeacon(Scope = IocBeacon.ScopeEnum.Singleton)]
+    public class MenuViewModel : BindableBase
     {
         private readonly INavigationMediator _navigationMediator;
+        private bool _isMenuVisible = false;
+        public bool IsMenuVisible {  get { return _isMenuVisible; } set { SetProperty(ref _isMenuVisible, value); } }
 
-        public ObservableCollection<NavigationMenuItem> MainMenu { get; private set; }
 
-        public NavigationProvider(INavigationMediator navigationMediator)
+
+        public RelayCommand ToggleMenuCommand => new RelayCommand(p => IsMenuVisible = !IsMenuVisible);
+        public RelayCommand OpenMenuCommand => new RelayCommand(p => IsMenuVisible = true);
+        public RelayCommand CloseMenuCommand => new RelayCommand(p => IsMenuVisible = false);
+
+
+        public MenuViewModel(INavigationMediator navigationMediator)
         {
+            InitializeDispatcherFromCurrentThread();
+
             _navigationMediator = navigationMediator;
+            _navigationMediator.OnNavigateAsync += NavigationMediatorOnOnNavigateAsync;
+
             BuildMainMenu();
+        }
+
+        private async Task<bool> NavigationMediatorOnOnNavigateAsync(Type sourcePageType, object parameter, NavigationTransitionInfo infoOverride, bool forceNewStack)
+        {
+            foreach (var item in Items)
+            {
+                item.IsActive = item.ChildTypes?.Contains(sourcePageType) ?? false;
+            }
+
+            await Task.Delay(1);
+            return true;
         }
 
         private void BuildMainMenu()
         {
-            MainMenu = new ObservableCollection<NavigationMenuItem>()
+            Items = new ObservableCollection<MenuItemViewModel>()
             {
-                new NavigationMenuItem {
+                new MenuItemViewModel {
                     Title = Translations.Info_Title,
                     Icon = Views.InfoPage.PAGE_ICON,
-                    Description = "Helpful information across all areas & departments",
+                    Description = "Information across all areas & departments",
                     NavigationCommand = new RelayCommand(p => {
                         _navigationMediator.NavigateAsync(typeof(Views.InfoPage), forceNewStack: true);
                     }),
@@ -36,7 +60,7 @@ namespace Eurofurence.Companion.Common
                         typeof(Views.InfoGroupDetailPage)
                     }
                 },
-                new NavigationMenuItem {
+                new MenuItemViewModel {
                     Title = Translations.EventSchedule_Title,
                     Icon = Views.EventsPage.PAGE_ICON,
                     Description = "What's happening, when & where",
@@ -49,15 +73,18 @@ namespace Eurofurence.Companion.Common
                         typeof(Views.EventDetailPage)
                     }
                 },
-                new NavigationMenuItem{
+                new MenuItemViewModel{
                     Title = Translations.Dealers_Title,
                     Icon = Views.DealerListPage.PAGE_ICON,
-                    Description = "What's happening, when & where",
+                    Description = "List of dealers and their merchandise",
                     NavigationCommand = new RelayCommand(p => {
                         _navigationMediator.NavigateAsync(typeof(Views.DealerListPage), forceNewStack: true);
                     })
                 }
             };
         }
+
+        public ObservableCollection<MenuItemViewModel> Items { get; set; }
     }
+
 }

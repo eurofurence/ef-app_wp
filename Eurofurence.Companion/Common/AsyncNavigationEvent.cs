@@ -7,6 +7,6 @@ namespace Eurofurence.Companion.Common
     public delegate Task<bool> AsyncNavigationEvent(
         Type sourcePageType, 
         object parameter, 
-        NavigationTransitionInfo infoOverride,
+        NavigationTransitionInfo transitionInfo,
         bool forceNewStack = false);
 }

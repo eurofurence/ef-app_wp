@@ -19,7 +19,7 @@
         <Storyboard x:Name="menuHide" AutoReverse="False">
             <DoubleAnimation Duration="0:0:0.15"
                              From="0"
-                             Storyboard.TargetName="E_Grid_MenuSurface"
+                             Storyboard.TargetName="E_Border_MenuPanel"
                              Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)"
                              To="-300">
                 <DoubleAnimation.EasingFunction>
@@ -30,7 +30,7 @@
         <Storyboard x:Name="menuShow" AutoReverse="False">
             <DoubleAnimation Duration="0:0:0.15"
                              From="-300"
-                             Storyboard.TargetName="E_Grid_MenuSurface"
+                             Storyboard.TargetName="E_Border_MenuPanel"
                              Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)"
                              To="0">
                 <DoubleAnimation.EasingFunction>
@@ -163,8 +163,39 @@
             </Grid.ColumnDefinitions>
 
             <Border Grid.Column="0"
-                    Background="#40000000"
-                    Tapped="ContentPresenter_Tapped">
+                    Background="#40000000">
+                <interactivity:Interaction.Behaviors>
+                    <interactivity:BehaviorCollection>
+                        <core:EventTriggerBehavior EventName="Tapped">
+                            <core:InvokeCommandAction Command="{Binding Source={StaticResource ViewModelLocator},
+                                Path=MenuViewModel.ToggleMenuCommand}" />
+                        </core:EventTriggerBehavior>
+                        <core:DataTriggerBehavior 
+                           
+                            Binding="{Binding Source={StaticResource ViewModelLocator},
+                                Path=MenuViewModel.IsMenuVisible}"
+                            Value="True"
+                            ComparisonCondition="Equal">
+                            <im:ControlStoryboardAction 
+                                Storyboard="{Binding ElementName=menuShow}" 
+                                ControlStoryboardOption="Play"
+                                />
+
+                        </core:DataTriggerBehavior>
+                        <core:DataTriggerBehavior 
+                           
+                            Binding="{Binding Source={StaticResource ViewModelLocator},
+                                Path=MenuViewModel.IsMenuVisible}"
+                            Value="False"
+                            ComparisonCondition="Equal">
+                            <im:ControlStoryboardAction 
+                                Storyboard="{Binding ElementName=menuHide}" 
+                                ControlStoryboardOption="Play"
+                                />
+
+                        </core:DataTriggerBehavior>
+                    </interactivity:BehaviorCollection>
+                </interactivity:Interaction.Behaviors>
                 <TextBlock HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            FontFamily="{StaticResource IconFontFamily}"
@@ -321,21 +352,35 @@
             </StackPanel>
         </Border>
 
-        <Grid x:Name="E_Grid_MenuSurface"
+        <Grid 
+            DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=MenuViewModel}"
+            x:Name="E_Grid_MenuSurface"
               Grid.Row="1"
               HorizontalAlignment="Stretch">
-            <Grid.RenderTransform>
-                <CompositeTransform x:Name="_menuCompositeRenderTransform"
-                                    TranslateX="0"
-                                    TranslateY="0" />
-            </Grid.RenderTransform>
 
-            <Border Background="Transparent" Tapped="E_Grid_MenuSurface_Background_Tapped" />
+            <Border 
+                Visibility="{Binding IsMenuVisible, Converter={StaticResource TrueToVisibleConverter}}"
+                Background="Transparent">
+                <interactivity:Interaction.Behaviors>
+                    <interactivity:BehaviorCollection>
+                        <core:EventTriggerBehavior EventName="Tapped">
+                            <core:InvokeCommandAction Command="{Binding CloseMenuCommand}" />
+                        </core:EventTriggerBehavior>
+                    </interactivity:BehaviorCollection>
+                </interactivity:Interaction.Behaviors>
+                
+            </Border>
 
             <Border Width="300"
+                    x:Name="E_Border_MenuPanel"
                     HorizontalAlignment="Left"
                     Background="#101010"
                     BorderThickness="0">
+                <Border.RenderTransform>
+                    <CompositeTransform x:Name="_menuCompositeRenderTransform"
+                                    TranslateX="0"
+                                    TranslateY="0" />
+                </Border.RenderTransform>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
@@ -344,8 +389,8 @@
                     </Grid.RowDefinitions>
                     <ListView x:Name="_menuListView"
                               Grid.RowSpan="2"
-                              d:DataContext="{Binding Source={StaticResource ViewModelLocator},
-                                                      Path=NavigationViewModel.MainMenu}"
+                              DataContext="{Binding Source={StaticResource ViewModelLocator},
+                                                      Path=MenuViewModel.Items}"
                               ItemsSource="{Binding}">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
@@ -394,7 +439,7 @@
                                                 Margin="10 0 0 0"
                                                 VerticalAlignment="Center">
                                         <TextBlock Style="{StaticResource AppLayoutMenuItemTextBlockStyle}" Text="{Binding Title}" />
-                                        <!--<TextBlock Style="{StaticResource AppLayoutMenuSubItemTextBlockStyle}" Text="{Binding Description}" TextWrapping="Wrap" />-->
+                                        <TextBlock Style="{StaticResource AppLayoutMenuSubItemTextBlockStyle}" Text="{Binding Description}" TextWrapping="Wrap" />
                                     </StackPanel>
 
                                 </Grid>

@@ -9,7 +9,6 @@ namespace Eurofurence.Companion.ViewModel.Local
     public class NavigationViewModel : BindableBase
     {
         private readonly INavigationMediator _navigationMediator;
-        private readonly INavigationProvider _navigationProvider;
 
         public RelayCommand NavigateToMainPage { get; set; }
         public RelayCommand NavigateToDebugPage { get; set; }
@@ -23,12 +22,9 @@ namespace Eurofurence.Companion.ViewModel.Local
         public RelayCommand NavigateToDealerDetailPage { get; set; }
         public RelayCommand NavigateToAboutPage { get; set; }
 
-        public ObservableCollection<NavigationMenuItem> MainMenu => _navigationProvider.MainMenu;
-
-        public NavigationViewModel(INavigationMediator navigationMediator, INavigationProvider navigationProvider)
+        public NavigationViewModel(INavigationMediator navigationMediator)
         {
             _navigationMediator = navigationMediator;
-            _navigationProvider = navigationProvider;
 
             NavigateToMainPage = new RelayCommand(_ => { _navigationMediator.NavigateAsync(typeof(Views.MainPage)); });
             NavigateToDebugPage = new RelayCommand(_ => { _navigationMediator.NavigateAsync(typeof(Views.DebugPage)); });

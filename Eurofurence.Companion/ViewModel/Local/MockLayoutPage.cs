@@ -12,11 +12,6 @@ namespace Eurofurence.Companion.ViewModel.Local
             throw new NotImplementedException();
         }
 
-        public void EnterPage(string area, string title, string subtitle, string icon = "")
-        {
-            throw new NotImplementedException();
-        }
-
         public bool Navigate(Type sourcePageType, bool forceNewBackStack = false)
         {
             throw new NotImplementedException();
@@ -28,11 +23,6 @@ namespace Eurofurence.Companion.ViewModel.Local
         }
 
         public bool Navigate(Type sourcePageType, object parameter, NavigationTransitionInfo infoOverride, bool forceNewBackStack = false)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnLayoutPageRendered()
         {
             throw new NotImplementedException();
         }

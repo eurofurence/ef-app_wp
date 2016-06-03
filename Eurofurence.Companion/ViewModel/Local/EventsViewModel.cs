@@ -72,17 +72,17 @@ namespace Eurofurence.Companion.ViewModel.Local
 
         private async void AddEventToCalendarAsync(object parameter)
         {
-            var entry = (EventEntry)parameter;
+            var entry = (EventEntryViewModel)parameter;
 
             var store = await AppointmentManager.RequestStoreAsync(AppointmentStoreAccessType.AllCalendarsReadOnly);
 
             var appointment = new Appointment()
             {
-                StartTime = entry.ConferenceDay.Date + entry.StartTime,
-                Duration = entry.Duration,
-                Location = entry.ConferenceRoom.Name,
-                Subject = entry.Title,
-                Details = entry.Description,
+                StartTime = entry.Entity.ConferenceDay.Date + entry.Entity.StartTime,
+                Duration = entry.Entity.Duration,
+                Location = entry.Entity.ConferenceRoom.Name,
+                Subject = entry.Entity.Title,
+                Details = entry.Entity.Description,
                 Reminder = TimeSpan.FromMinutes(30),
                 AllowNewTimeProposal = false,
                 IsOrganizedByUser = false,

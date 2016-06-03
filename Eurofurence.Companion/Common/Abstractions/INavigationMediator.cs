@@ -10,6 +10,6 @@ namespace Eurofurence.Companion.Common.Abstractions
 
         Task<bool> NavigateAsync(Type sourcePageType, bool forceNewStack = false);
         Task<bool> NavigateAsync(Type sourcePageType, object parameter, bool forceNewStack = false);
-        Task<bool> NavigateAsync(Type sourcePageType, object parameter, NavigationTransitionInfo infoOverride, bool forceNewStack = false);
+        Task<bool> NavigateAsync(Type sourcePageType, object parameter, NavigationTransitionInfo transitionInfo, bool forceNewStack = false);
     }
 }

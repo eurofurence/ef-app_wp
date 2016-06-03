@@ -77,7 +77,6 @@ namespace Eurofurence.Companion
             var layoutPage = new LayoutPage(navigationMediator, _telemetryClientProvider);
             KernelResolver.Current.Bind<ILayoutPage>().ToConstant(layoutPage);
             Window.Current.Content = layoutPage;
-            layoutPage.OnLayoutPageRendered();
 
 
             var firstTimeRunResult = await HandleFirstTimeRunAsync();

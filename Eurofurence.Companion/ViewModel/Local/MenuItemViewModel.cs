@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Eurofurence.Companion.Common;
 
-namespace Eurofurence.Companion.Common
+namespace Eurofurence.Companion.ViewModel.Local
 {
-    public class NavigationMenuItem : BindableBase
+    public class MenuItemViewModel : BindableBase
     {
         private bool _isActive;
 
@@ -12,6 +13,11 @@ namespace Eurofurence.Companion.Common
         public string Icon { get; set; }
         public RelayCommand NavigationCommand { get; set; }
         public ICollection<Type> ChildTypes { get; set; }
+
+        public MenuItemViewModel()
+        {
+            InitializeDispatcherFromCurrentThread();
+        }
 
         public bool IsActive
         {

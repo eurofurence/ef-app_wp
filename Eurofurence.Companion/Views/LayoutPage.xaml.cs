@@ -1,69 +1,39 @@
-﻿using Eurofurence.Companion.DependencyResolution;
-using Eurofurence.Companion.ViewModel;
-using System;
+﻿using System;
+using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml;
 using Windows.UI.Core;
-using System.Threading.Tasks;
 using Eurofurence.Companion.Common.Abstractions;
+using Eurofurence.Companion.DependencyResolution;
+using Eurofurence.Companion.ViewModel;
 using Eurofurence.Companion.ViewModel.Local;
-using Eurofurence.Companion.Common;
 
 namespace Eurofurence.Companion.Views
 {
 
     public sealed partial class LayoutPage : Page, ILayoutPage
     {
+        private readonly INavigationMediator _navigationMediator;
+        private readonly ITelemetryClientProvider _telemetryClientProvider;
+
         private readonly ContinuumNavigationTransitionInfo _defaultTransition;
+        private readonly CoreDispatcher _dispatcher;
 
-        public Frame RootFrame => _rootFrame;
+        private readonly Lazy<MenuViewModel> _menuViewModel = new Lazy<MenuViewModel>(() => ViewModelLocator.Current.MenuViewModel);
 
-        private readonly Lazy<NavigationViewModel> _navigationViewModel = new Lazy<NavigationViewModel>(() => ViewModelLocator.Current.NavigationViewModel);
-        private bool _isMenuVisible = false;
         private bool _isHeaderVisible = true;
         private SearchBarViewModel _searchBarViewModel;
 
-        private readonly INavigationMediator _navigationMediator;
-        private readonly ITelemetryClientProvider _telemetryClientProvider;
-        private readonly CoreDispatcher _dispatcher;
-        private NavigationHelper _navigationHelper;
+        public Frame RootFrame => _rootFrame;
 
-        private ISearchInteraction CurrentPageSearchInteraction => RootFrame.Content as ISearchInteraction;
-
-        public bool IsMenuVisible { get { return _isMenuVisible; } set { SetIsMenuVisible(value); } }
         public bool IsHeaderVisible { get { return _isHeaderVisible; } set { SetIsHeaderVisible(value); } }
-
-        private void SetIsHeaderVisible(bool value)
-        {
-            if (_isHeaderVisible == value) return;
-
-            _isHeaderVisible = value;
-            PanelTitle.Visibility = _isHeaderVisible ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        private void SetIsMenuVisible(bool value)
-        {
-            if (_isMenuVisible == value) return;
-
-            _isMenuVisible = value;
-            if (_isMenuVisible)
-            {
-                foreach(var item in _navigationViewModel.Value.MainMenu)
-                {
-                    item.IsActive = item.ChildTypes?.Contains(RootFrame.Content?.GetType()) ?? false;
-                }
-                menuShow.Begin();
-            } else
-            {
-                menuHide.Begin();
-            }
-        }
+        private ISearchInteraction CurrentPageSearchInteraction => RootFrame.Content as ISearchInteraction;
 
         public LayoutPage(INavigationMediator navigationMediator, ITelemetryClientProvider telemetryClientProvider)
         {
             InitializeComponent();
+
             _dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
             _navigationMediator = navigationMediator;
             _telemetryClientProvider = telemetryClientProvider;
@@ -74,6 +44,21 @@ namespace Eurofurence.Companion.Views
 
             _navigationMediator.OnNavigateAsync += NavigateAsync;
             RootFrame.Navigated += RootFrame_NavigatedAsync;
+        }
+
+        public bool AcknowledgeNavigateBackRequest()
+        {
+            if (!_menuViewModel.Value.IsMenuVisible) return true;
+            _menuViewModel.Value.IsMenuVisible = false;
+            return false;
+        }
+
+        private void SetIsHeaderVisible(bool value)
+        {
+            if (_isHeaderVisible == value) return;
+
+            _isHeaderVisible = value;
+            PanelTitle.Visibility = _isHeaderVisible ? Visibility.Visible : Visibility.Collapsed;
         }
 
 
@@ -115,25 +100,24 @@ namespace Eurofurence.Companion.Views
             transitionOut.Begin();
         }
 
-        public async Task<bool> NavigateAsync(Type sourcePageType, object parameter, NavigationTransitionInfo infoOverride, bool forceNewStack = false)
+        public async Task<bool> NavigateAsync(
+            Type sourcePageType, 
+            object parameter, 
+            NavigationTransitionInfo transitionInfo, 
+            bool forceNewStack = false)
         {
-            bool result = false;
+            var result = false;
+
             await _dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
             {
                 if (forceNewStack && !_forceNewStack()) return;
-                IsMenuVisible = false;
+                _menuViewModel.Value.IsMenuVisible = false;
                 _telemetryClientProvider.Client.TrackPageView(sourcePageType.FullName);
 
-                result = RootFrame.Navigate(sourcePageType, parameter, infoOverride ?? _defaultTransition);
+                result = RootFrame.Navigate(sourcePageType, parameter, transitionInfo ?? _defaultTransition);
             });
 
             return result;
-        }
-
-        [Obsolete]
-        public void EnterPage(string area, string title, string subtitle, string icon = "")
-        {
-
         }
 
         private bool _forceNewStack()
@@ -144,28 +128,6 @@ namespace Eurofurence.Companion.Views
             RootFrame.ForwardStack.Clear();
 
             return true;
-        }
-
-        private void ContentPresenter_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            IsMenuVisible = !IsMenuVisible;
-        }
-
-        public void OnLayoutPageRendered()
-        {
-            _menuListView.DataContext = _navigationViewModel.Value.MainMenu;
-        }
-
-        public bool AcknowledgeNavigateBackRequest()
-        {
-            if (!IsMenuVisible) return true;
-            IsMenuVisible = false;
-            return false;
-        }
-
-        private void E_Grid_MenuSurface_Background_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            IsMenuVisible = false;
         }
     }
 }

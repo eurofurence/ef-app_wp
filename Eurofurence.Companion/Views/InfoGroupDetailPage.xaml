@@ -11,6 +11,7 @@
       mc:Ignorable="d">
 
     <Grid x:Name="LayoutRoot">
+
         <ScrollViewer x:Name="svMain">
             <StackPanel Margin="19,9.5,19,0">
                 <TextBlock Foreground="{ThemeResource EurofurenceThemeColorBrush}"

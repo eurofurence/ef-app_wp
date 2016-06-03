@@ -7,6 +7,8 @@ namespace Eurofurence.Companion.Common.Abstractions
     {
         DateTime CurrentDateTimeUtc { get; }
         DateTime CurrentDateTimeMinuteUtc { get; }
+        DateTime CurrentDateTimeLocal { get; }
+        DateTime CurrentDateTimeMinuteLocal { get; }
         TimeSpan ForcedOffset { get; set; }
     }
 }
