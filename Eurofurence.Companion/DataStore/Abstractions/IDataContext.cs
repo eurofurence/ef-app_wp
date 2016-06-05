@@ -10,6 +10,7 @@ namespace Eurofurence.Companion.DataStore.Abstractions
     {
         event EventHandler Refreshed;
 
+        ObservableCollection<Announcement> Announcements { get; }
         ObservableCollection<EventEntry> EventEntries { get; }
         ObservableCollection<EventConferenceDay> EventConferenceDays { get; }
         ObservableCollection<EventConferenceRoom> EventConferenceRooms { get; }

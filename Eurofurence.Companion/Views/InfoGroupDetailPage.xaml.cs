@@ -17,6 +17,7 @@ namespace Eurofurence.Companion.Views
         public InfoGroupDetailPage()
         {
             InitializeComponent();
+            NavigationCacheMode = NavigationCacheMode.Enabled;
 
             NavigationHelper = new NavigationHelper(this);
             NavigationHelper.LoadState += NavigationHelper_LoadState;

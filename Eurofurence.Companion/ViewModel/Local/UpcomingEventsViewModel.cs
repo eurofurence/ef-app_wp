@@ -11,8 +11,8 @@ using Eurofurence.Companion.ViewModel.Abstractions;
 
 namespace Eurofurence.Companion.ViewModel.Local
 {
-    [IocBeacon(TargetType = typeof (MainViewModel), Scope = IocBeacon.ScopeEnum.Singleton)]
-    public class MainViewModel : BindableBase
+    [IocBeacon(TargetType = typeof (UpcomingEventsViewModel), Scope = IocBeacon.ScopeEnum.Singleton)]
+    public class UpcomingEventsViewModel : BindableBase
     {
         public enum ConventionStateEnum
         {
@@ -44,7 +44,7 @@ namespace Eurofurence.Companion.ViewModel.Local
 
         private DateTime _lastFullMinute = DateTime.MinValue;
 
-        public MainViewModel(ITimeProvider timeProvider, IEventsViewModelContext eventsViewModelContext)
+        public UpcomingEventsViewModel(ITimeProvider timeProvider, IEventsViewModelContext eventsViewModelContext)
         {
             InitializeDispatcherFromCurrentThread();
 

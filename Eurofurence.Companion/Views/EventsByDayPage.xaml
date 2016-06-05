@@ -52,6 +52,10 @@
                                 <TextBlock Style="{StaticResource TitleTextBlockStyle}"
                                            Text="{Binding Entity.Title}"
                                            TextWrapping="Wrap" />
+                                <TextBlock FontSize="{StaticResource TextStyleMediumFontSize}"
+                                           Style="{StaticResource TitleTextBlockStyle}"
+                                           Text="{Binding Entity.SubTitle}"
+                                           TextWrapping="Wrap" />
                                 <TextBlock Foreground="{ThemeResource PhoneMidBrush}"
                                            Text="{Binding ConferenceRoom.Entity.Name}"
                                            TextWrapping="Wrap" />

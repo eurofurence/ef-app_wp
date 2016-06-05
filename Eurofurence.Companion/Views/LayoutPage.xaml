@@ -162,36 +162,24 @@
                 <ColumnDefinition Width="0*" />
             </Grid.ColumnDefinitions>
 
-            <Border Grid.Column="0"
-                    Background="#40000000">
+            <Border Grid.Column="0" Background="#40000000">
                 <interactivity:Interaction.Behaviors>
                     <interactivity:BehaviorCollection>
                         <core:EventTriggerBehavior EventName="Tapped">
-                            <core:InvokeCommandAction Command="{Binding Source={StaticResource ViewModelLocator},
-                                Path=MenuViewModel.ToggleMenuCommand}" />
+                            <core:InvokeCommandAction Command="{Binding Source={StaticResource ViewModelLocator}, Path=MenuViewModel.ToggleMenuCommand}" />
                         </core:EventTriggerBehavior>
-                        <core:DataTriggerBehavior 
-                           
-                            Binding="{Binding Source={StaticResource ViewModelLocator},
-                                Path=MenuViewModel.IsMenuVisible}"
-                            Value="True"
-                            ComparisonCondition="Equal">
-                            <im:ControlStoryboardAction 
-                                Storyboard="{Binding ElementName=menuShow}" 
-                                ControlStoryboardOption="Play"
-                                />
+                        <core:DataTriggerBehavior Binding="{Binding Source={StaticResource ViewModelLocator},
+                                                                    Path=MenuViewModel.IsMenuVisible}"
+                                                  ComparisonCondition="Equal"
+                                                  Value="True">
+                            <im:ControlStoryboardAction ControlStoryboardOption="Play" Storyboard="{Binding ElementName=menuShow}" />
 
                         </core:DataTriggerBehavior>
-                        <core:DataTriggerBehavior 
-                           
-                            Binding="{Binding Source={StaticResource ViewModelLocator},
-                                Path=MenuViewModel.IsMenuVisible}"
-                            Value="False"
-                            ComparisonCondition="Equal">
-                            <im:ControlStoryboardAction 
-                                Storyboard="{Binding ElementName=menuHide}" 
-                                ControlStoryboardOption="Play"
-                                />
+                        <core:DataTriggerBehavior Binding="{Binding Source={StaticResource ViewModelLocator},
+                                                                    Path=MenuViewModel.IsMenuVisible}"
+                                                  ComparisonCondition="Equal"
+                                                  Value="False">
+                            <im:ControlStoryboardAction ControlStoryboardOption="Play" Storyboard="{Binding ElementName=menuHide}" />
 
                         </core:DataTriggerBehavior>
                     </interactivity:BehaviorCollection>
@@ -352,15 +340,13 @@
             </StackPanel>
         </Border>
 
-        <Grid 
-            DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=MenuViewModel}"
-            x:Name="E_Grid_MenuSurface"
+        <Grid x:Name="E_Grid_MenuSurface"
               Grid.Row="1"
-              HorizontalAlignment="Stretch">
+              HorizontalAlignment="Stretch"
+              DataContext="{Binding Source={StaticResource ViewModelLocator},
+                                    Path=MenuViewModel}">
 
-            <Border 
-                Visibility="{Binding IsMenuVisible, Converter={StaticResource TrueToVisibleConverter}}"
-                Background="Transparent">
+            <Border Background="Transparent" Visibility="{Binding IsMenuVisible, Converter={StaticResource TrueToVisibleConverter}}">
                 <interactivity:Interaction.Behaviors>
                     <interactivity:BehaviorCollection>
                         <core:EventTriggerBehavior EventName="Tapped">
@@ -368,18 +354,18 @@
                         </core:EventTriggerBehavior>
                     </interactivity:BehaviorCollection>
                 </interactivity:Interaction.Behaviors>
-                
+
             </Border>
 
-            <Border Width="300"
-                    x:Name="E_Border_MenuPanel"
+            <Border x:Name="E_Border_MenuPanel"
+                    Width="300"
                     HorizontalAlignment="Left"
                     Background="#101010"
                     BorderThickness="0">
                 <Border.RenderTransform>
                     <CompositeTransform x:Name="_menuCompositeRenderTransform"
-                                    TranslateX="0"
-                                    TranslateY="0" />
+                                        TranslateX="0"
+                                        TranslateY="0" />
                 </Border.RenderTransform>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -390,7 +376,7 @@
                     <ListView x:Name="_menuListView"
                               Grid.RowSpan="2"
                               DataContext="{Binding Source={StaticResource ViewModelLocator},
-                                                      Path=MenuViewModel.Items}"
+                                                    Path=MenuViewModel.Items}"
                               ItemsSource="{Binding}">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
@@ -439,7 +425,9 @@
                                                 Margin="10 0 0 0"
                                                 VerticalAlignment="Center">
                                         <TextBlock Style="{StaticResource AppLayoutMenuItemTextBlockStyle}" Text="{Binding Title}" />
-                                        <TextBlock Style="{StaticResource AppLayoutMenuSubItemTextBlockStyle}" Text="{Binding Description}" TextWrapping="Wrap" />
+                                        <TextBlock Style="{StaticResource AppLayoutMenuSubItemTextBlockStyle}"
+                                                   Text="{Binding Description}"
+                                                   TextWrapping="Wrap" />
                                     </StackPanel>
 
                                 </Grid>

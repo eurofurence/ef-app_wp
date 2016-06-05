@@ -17,6 +17,7 @@ namespace Eurofurence.Companion.DataModel
 
         private static readonly Dictionary<Type, string> _resourcePathMap = new Dictionary<Type, string>()
         {
+            { typeof(Announcement), "Announcement" },
             { typeof(EventEntry), "EventEntry" },
             { typeof(EventConferenceDay), "EventConferenceDay" },
             { typeof(EventConferenceRoom), "EventConferenceRoom" },

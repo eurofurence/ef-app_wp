@@ -126,9 +126,10 @@ namespace Eurofurence.Companion.DataStore
             var metadata = await _apiClient.GetEndpointMetadataAsync();
             var updateResults = new List<EntityUpdateResult>();
 
-            MainOperationMaxValue = 9;
+            MainOperationMaxValue = 10;
             MainOperationCurrentValue = 0;
 
+            updateResults.Add(await UpdateEntitiesAsync<Announcement>(metadata));
             updateResults.Add(await UpdateEntitiesAsync<EventEntry>(metadata));
             updateResults.Add(await UpdateEntitiesAsync<EventConferenceDay>(metadata));
             updateResults.Add(await UpdateEntitiesAsync<EventConferenceRoom>(metadata));

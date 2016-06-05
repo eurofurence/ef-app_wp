@@ -10,7 +10,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
       DataContext="{Binding Source={StaticResource ViewModelLocator},
-                            Path=MainViewModel}"
+                            Path=UpcomingEventsViewModel}"
       mc:Ignorable="d">
 
     <Grid x:Name="LayoutRoot">
@@ -48,6 +48,10 @@
                                 </ic:DataTriggerBehavior>
                             </interactivity:BehaviorCollection>
                         </interactivity:Interaction.Behaviors>
+
+                        <StackPanel Margin="0 0 0 20" DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=ActiveAnnouncementsViewModel}">
+                            <controls:ActiveAnnouncementsControl DataContext="{Binding}" Visibility="{Binding HasActiveAnnouncements, Converter={StaticResource TrueToVisibleConverter}}" />
+                        </StackPanel>
 
                         <StackPanel Name="E_StackPanel_UpcomingEvents">
                             <controls:UpcomingEventsControl DataContext="{Binding}" />

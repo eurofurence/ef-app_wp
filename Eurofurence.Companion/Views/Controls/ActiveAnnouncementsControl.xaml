@@ -1,0 +1,386 @@
+﻿<UserControl x:Class="Eurofurence.Companion.Views.Controls.ActiveAnnouncementsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+             xmlns:local="using:Eurofurence.Companion.Views.Controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:media="using:Microsoft.Xaml.Interactions.Media"
+             d:DataContext="{Binding Source={StaticResource ViewModelLocator},
+                                     Path=ActiveAnnouncementsViewModel}"
+             d:DesignHeight="300"
+             d:DesignWidth="400"
+             mc:Ignorable="d">
+
+    <Grid>
+        <StackPanel>
+            <TextBlock FontSize="{StaticResource TextStyleMediumFontSize}"
+                       Foreground="{StaticResource PhoneLowBrush}"
+                       Style="{StaticResource BaseTextBlockStyle}">
+                Announcements
+            </TextBlock>
+            <ListView Margin="-20 0 -20 0" ItemsSource="{Binding ActiveAnnouncements}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Background="Transparent">
+                            <interactivity:Interaction.Behaviors>
+                                <interactivity:BehaviorCollection>
+                                    <core:EventTriggerBehavior EventName="Tapped">
+                                        <core:InvokeCommandAction Command="{Binding Source={StaticResource ViewModelLocator}, Path=NavigationViewModel.NavigateToAnnouncementDetailPage}" CommandParameter="{Binding}" />
+                                    </core:EventTriggerBehavior>
+                                </interactivity:BehaviorCollection>
+                            </interactivity:Interaction.Behaviors>
+                            <Grid Margin="20 0 20 0">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Name="_ue_icon_favorite"
+                                           Margin="5 5 0 0"
+                                           FontFamily="{StaticResource IconFontFamily}"
+                                           FontSize="24"
+                                           Foreground="{ThemeResource PhoneLowBrush}"
+                                           Text="&#xE134;" />
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock MaxHeight="60"
+                                               Style="{StaticResource TitleTextBlockStyle}"
+                                               Text="{Binding Title}"
+                                               TextTrimming="CharacterEllipsis"
+                                               TextWrapping="Wrap" />
+                                    <TextBlock Name="_ue_textblock_startsIn" Foreground="{ThemeResource PhoneLowBrush}">
+                                        <Run FontFamily="{StaticResource IconFontFamily}" Text="&#xE8EC;" />
+                                        <Run Text="{Binding Area}" />
+                                    </TextBlock>
+                                    <!--<TextBlock Text="{Binding Area}" />
+                                    <TextBlock Text="{Binding Content}" TextWrapping="Wrap" />-->
+                                    <!--<TextBlock Text="{Binding Author}" />-->
+                                </StackPanel>
+                            </Grid>
+
+                            <!--<interactivity:Interaction.Behaviors>
+                                <interactivity:BehaviorCollection>
+                                    <core:EventTriggerBehavior EventName="Tapped">
+                                        <core:InvokeCommandAction Command="{Binding Source={StaticResource ViewModelLocator}, Path=NavigationViewModel.NavigateToEventDetailPage}" CommandParameter="{Binding}" />
+                                    </core:EventTriggerBehavior>
+                                </interactivity:BehaviorCollection>
+                            </interactivity:Interaction.Behaviors>-->
+                            <!--
+
+                            <Grid Margin="20 0 20 0">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40" />
+                                    <ColumnDefinition Width="70" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Name="_ue_icon_favorite"
+                                               Margin="5 5 0 0"
+                                               FontFamily="{StaticResource IconFontFamily}"
+                                               FontSize="24"
+                                               Text="&#xE1CE;" />
+                            -->
+                            <!--
+                                Visibility="{Binding AttributesProxy.Extension.IsFavorite,
+                                Converter={StaticResource TrueToVisibleConverter}}"
+                            -->
+                            <!--
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="{Binding Entity., Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:hh\\:mm}'}" />
+                                    <TextBlock Foreground="{ThemeResource PhoneMidBrush}">
+                                        <Run FontFamily="{StaticResource IconFontFamily}" Text="&#xE741;" />
+                                        <Run Text="{Binding Entity.EndTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:hh\\:mm}'}" />
+                                    </TextBlock>
+                                </StackPanel>
+
+
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock MaxHeight="60"
+                                               Style="{StaticResource TitleTextBlockStyle}"
+                                               Text="{Binding Title}"
+                                               TextTrimming="CharacterEllipsis"
+                                               TextWrapping="Wrap" />
+                                    <TextBlock Foreground="{ThemeResource PhoneMidBrush}"
+                                               Text="{Binding Area}"
+                                               TextWrapping="Wrap" />
+                                    <TextBlock Name="_ue_textblock_startsIn" Foreground="{ThemeResource PhoneLowBrush}">
+                                        <Run FontFamily="{StaticResource IconFontFamily}" Text="&#xE121;" />
+                                        <Run>scheduled to start in</Run>
+                                        <Run Text="{Binding TimeToStart, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:mm\\:ss}'}" />
+                                        <Run>minutes</Run>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>-->
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+        </StackPanel>
+    </Grid>
+</UserControl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

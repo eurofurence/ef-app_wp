@@ -24,6 +24,18 @@
           <m3:Rotation Preference="portrait" />
         </m3:InitialRotationPreference>
       </m3:VisualElements>
+      <Extensions>
+        <Extension Category="windows.protocol">
+          <Protocol Name="eurofurence">
+            <DisplayName>Eurofurence App Protocol</DisplayName>
+          </Protocol>
+        </Extension>
+        <Extension Category="windows.protocol">
+          <Protocol Name="ef">
+            <DisplayName>Eurofurence App Protocol</DisplayName>
+          </Protocol>
+        </Extension>
+      </Extensions>
     </Application>
   </Applications>
   <Capabilities>

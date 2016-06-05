@@ -86,18 +86,23 @@ namespace Eurofurence.Companion.Views
             var pageProperties = e.Content as IPageProperties;
             if (pageProperties == null) return;
 
-            EventHandler<object> action = null;
-            action = (_s, _e) =>
+            if (tbTitle.Text != pageProperties.Title)
             {
-                tbTitle.Text = pageProperties.Title ?? string.Empty;
-                tbIcon.Text = pageProperties.Icon ?? string.Empty;
+                EventHandler<object> action = null;
+                action = (_s, _e) =>
+                {
+                    tbTitle.Text = pageProperties.Title ?? string.Empty;
+                    tbIcon.Text = pageProperties.Icon ?? string.Empty;
 
-                transitionOut.Completed -= action;
-                transitionIn.Begin();
-            };
+                    transitionOut.Completed -= action;
+                    transitionIn.Begin();
+                };
 
-            transitionOut.Completed += action;
-            transitionOut.Begin();
+                transitionOut.Completed += action;
+                transitionOut.Begin();
+            }
+
+
         }
 
         public async Task<bool> NavigateAsync(

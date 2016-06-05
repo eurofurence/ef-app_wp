@@ -67,7 +67,7 @@ namespace Eurofurence.Companion.Common
 
             ForcedOffset = TimeSpan.Zero;
             //ForcedOffset = new DateTime(2015, 08, 19, 16, 45, 00) - DateTime.UtcNow;
-            ForcedOffset = new DateTime(2015, 08, 19, 16, 55, 00, DateTimeKind.Utc) - DateTime.UtcNow;
+            ForcedOffset = new DateTime(2016, 08, 17, 14, 55, 00, DateTimeKind.Utc) - DateTime.UtcNow;
             //ForcedOffset = new DateTime(2015, 08, 20, 06, 59, 45, DateTimeKind.Utc) - DateTime.UtcNow;
 
             var updateTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };

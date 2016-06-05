@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Eurofurence.Companion.DataModel.Api;
 using Eurofurence.Companion.DependencyResolution;
-using Eurofurence.Companion.DataModel.Local;
 using Eurofurence.Companion.DataModel;
-using System;
+using Eurofurence.Companion.DataModel.Api;
+using Eurofurence.Companion.DataModel.Local;
 using Eurofurence.Companion.DataModel.Abstractions;
 using Eurofurence.Companion.DataStore.Abstractions;
 
@@ -26,6 +26,7 @@ namespace Eurofurence.Companion.DataStore
             _dataStore = dataStore;
             _navigationResolver = navigationResolver;
 
+            Announcements = new ObservableCollection<Announcement>();
             EventEntries = new ObservableCollection<EventEntry>();
             EventConferenceDays = new ObservableCollection<EventConferenceDay>();
             EventConferenceRooms = new ObservableCollection<EventConferenceRoom>();
@@ -40,6 +41,7 @@ namespace Eurofurence.Companion.DataStore
             _navigationResolver.Resolve(this);
         }
 
+        public ObservableCollection<Announcement> Announcements { get; }
         public ObservableCollection<EventEntry> EventEntries { get; }
         public ObservableCollection<EventConferenceDay> EventConferenceDays { get; }
         public ObservableCollection<EventConferenceRoom> EventConferenceRooms { get; }
@@ -54,6 +56,7 @@ namespace Eurofurence.Companion.DataStore
 
         public async Task RefreshAsync()
         {
+            await LoadAsync(Announcements, nameof(Announcements));
             await LoadAsync(EventEntries, nameof(EventEntries));
             await LoadAsync(EventConferenceDays, nameof(EventConferenceDays));
             await LoadAsync(EventConferenceRooms, nameof(EventConferenceRooms));
