@@ -20,6 +20,8 @@ namespace Eurofurence.Companion.DataStore
             public string Name { get; set; }
         }
 
+        private bool _isInitialized;
+
         private readonly Dictionary<TypeInfo, string> _existingTypeTables = new Dictionary<TypeInfo, string>();
 
         private readonly SQLiteAsyncConnection _sqliteAsyncConnection;
@@ -29,12 +31,12 @@ namespace Eurofurence.Companion.DataStore
         {
             _localAssembly = GetType().GetTypeInfo().Assembly;
             _sqliteAsyncConnection = new SQLiteAsyncConnection(App.DatabaseStoragePath);
-
-            ScanTablesAsync().Wait();
         }
 
         public async Task<IList<T>> GetAsync<T>() where T : EntityBase, new()
         {
+            if (!_isInitialized) await ScanTablesAsync();
+
             return _existingTypeTables.ContainsKey(typeof(T).GetTypeInfo()) ?
                 await _sqliteAsyncConnection.Table<T>().ToListAsync() : new List<T>();
         }
@@ -42,16 +44,21 @@ namespace Eurofurence.Companion.DataStore
         public async Task ApplyDeltaAsync(IEnumerable<EntityBase> entities,
             Action<int, int, string> progressCallback = null)
         {
-            await _sqliteAsyncConnection.RunInTransactionAsync(async connection =>
+            var entitiesList = entities as IList<EntityBase> ?? entities.ToList();
+
+            foreach (var type in entitiesList.Select(a => a.GetType()).Distinct())
+            {
+                await EnsureTableAsync(type.GetTypeInfo());
+            }
+
+            await _sqliteAsyncConnection.RunInTransactionAsync(connection =>
             {
                 var i = 0;
-                var entitiesList = entities as IList<EntityBase> ?? entities.ToList();
+                
                 var total = entitiesList.Count;
 
                 foreach (var entity in entitiesList)
                 {
-                    await EnsureTableAsync(entity.GetType().GetTypeInfo()).ConfigureAwait(false);
-
                     if (entity.IsDeleted == 1)
                     {
                         connection.Delete(entity);
@@ -77,7 +84,7 @@ namespace Eurofurence.Companion.DataStore
 
         public async Task ClearAllAsync()
         {
-            await ClearAllTablesAsync().ConfigureAwait(false);
+            await ClearAllTablesAsync();
         }
 
         public async Task ClearAsync(Type entityType)
@@ -85,35 +92,31 @@ namespace Eurofurence.Companion.DataStore
             var tableName = _existingTypeTables.SingleOrDefault(a => a.Key.AsType() == entityType).Value;
             if (string.IsNullOrEmpty(tableName)) return;
 
-            await _sqliteAsyncConnection.ExecuteAsync($"delete from {tableName};")
-                .ConfigureAwait(false);
+            await _sqliteAsyncConnection.ExecuteAsync($"delete from {tableName};");
         }
 
         private async Task ClearAllTablesAsync()
         {
             foreach (var t in _existingTypeTables)
             {
-                await _sqliteAsyncConnection.ExecuteAsync($"delete from {t.Value};")
-                    .ConfigureAwait(false);
+                await _sqliteAsyncConnection.ExecuteAsync($"delete from {t.Value};");
             }
 
-            await _sqliteAsyncConnection.ExecuteAsync("vacuum;")
-                .ConfigureAwait(false); 
+            await _sqliteAsyncConnection.ExecuteAsync("vacuum;");
         }
 
 
         private async Task EnsureTableAsync(TypeInfo typeInfo)
         {
             if (_existingTypeTables.ContainsKey(typeInfo)) return;
-            await _sqliteAsyncConnection.CreateTablesAsync(typeInfo.AsType()).ConfigureAwait(false);
+            await _sqliteAsyncConnection.CreateTablesAsync(typeInfo.AsType());
             _existingTypeTables.Add(typeInfo, typeInfo.Name);
         }
 
         private async Task ScanTablesAsync()
         {
             var tables = await _sqliteAsyncConnection.QueryAsync<TableInfo>
-                ("SELECT * FROM sqlite_master WHERE type = 'table'")
-                .ConfigureAwait(false);
+                ("SELECT * FROM sqlite_master WHERE type = 'table'");
 
             var _localAssemblyEntityTypes = _localAssembly.DefinedTypes
                 .Where(typeInfo => typeof(EntityBase).GetTypeInfo().IsAssignableFrom(typeInfo)).ToList();
@@ -127,6 +130,8 @@ namespace Eurofurence.Companion.DataStore
                     _existingTypeTables.Add(localEntityType, table.Name);
                 }
             }
+
+            _isInitialized = true;
         }
     }
 }

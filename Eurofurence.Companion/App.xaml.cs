@@ -40,7 +40,7 @@ namespace Eurofurence.Companion
         {
             InitializeComponent();
             Suspending += OnSuspending;
-
+            
             HockeyClient.Current.Configure("790c6dfa20ff4523834501fcea150ec1");
 
             _telemetryClientProvider = KernelResolver.Current.Get<ITelemetryClientProvider>();

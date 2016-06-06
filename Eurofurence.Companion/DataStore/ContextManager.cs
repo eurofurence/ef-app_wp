@@ -182,7 +182,7 @@ namespace Eurofurence.Companion.DataStore
                             imageEntity.Url
                                 .Replace("{Endpoint}", Consts.WEB_API_ENDPOINT_URL)
                                 .Replace("{EndpointUrl}", Consts.WEB_API_ENDPOINT_URL)
-                            ).ConfigureAwait(false);
+                            );
                 var bytes = content.ToArray();
 
                 imageEntity.Content = bytes;
@@ -192,7 +192,7 @@ namespace Eurofurence.Companion.DataStore
 
             foreach (var task in tasks)
             {
-                await task.ConfigureAwait(false);
+                await task;
             }
 
             MainOperationCurrentValue++;

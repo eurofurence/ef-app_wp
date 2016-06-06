@@ -108,7 +108,7 @@ namespace Eurofurence.Companion.DataModel
         private async Task<T> GetAsync<T>(string resource, Action<HttpProgress> progressCallback = null)
         {
             var url = $"{_endpointUrl}/{resource}";
-            var content = await GetContentAsStringAsync(url, progressCallback).ConfigureAwait(false);
+            var content = await GetContentAsStringAsync(url, progressCallback);
             return JsonConvert.DeserializeObject<T>(content, new JsonSerializerSettings() { DateTimeZoneHandling = DateTimeZoneHandling.Utc });
         }
 
