@@ -100,6 +100,7 @@
     <Compile Include="Common\TelemetryClientProvider.cs" />
     <Compile Include="Common\ThemeManager.cs" />
     <Compile Include="Common\TimeProvider.cs" />
+    <Compile Include="Common\VisualTreeExtensions.cs" />
     <Compile Include="DataModel\Api\Dealer.cs" />
     <Compile Include="DataModel\Api\Endpoint.cs" />
     <Compile Include="DataModel\Api\EndpointConfiguration.cs" />

@@ -12,60 +12,65 @@
 
     <Grid x:Name="LayoutRoot">
 
-        <Grid x:Name="ContentRoot" Margin="19,9.5,19,0">
+        <ListView x:Name="E_ListView_Dealers"
+                  Margin="20"
+                  ItemsSource="{Binding Dealers}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <interactivity:Interaction.Behaviors>
+                            <interactivity:BehaviorCollection>
+                                <core:EventTriggerBehavior EventName="Tapped">
+                                    <core:InvokeCommandAction Command="{Binding Source={StaticResource ViewModelLocator}, Path=NavigationViewModel.NavigateToDealerDetailPage}" CommandParameter="{Binding}" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:BehaviorCollection>
+                        </interactivity:Interaction.Behaviors>
+                        <Grid MinHeight="70">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="70" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0"
+                                    Width="60"
+                                    Height="60"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    Background="{ThemeResource EurofurenceThemeColorBrush}"
+                                    CornerRadius="0" />
+                            <Border Grid.Column="0"
+                                    Width="60"
+                                    Height="60"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    CornerRadius="0">
+                                <Border.Background>
+                                    <ImageBrush ImageSource="{Binding ArtistThumbnailImage.Content, Converter={StaticResource BytesToImageConverter}}" />
+                                </Border.Background>
+                            </Border>
+                            <StackPanel Grid.Column="1">
+                                <Viewbox Height="35"
+                                         HorizontalAlignment="Left"
+                                         StretchDirection="DownOnly">
 
-            <ListView Margin="0 10 0 0" ItemsSource="{Binding Dealers}">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <interactivity:Interaction.Behaviors>
-                                <interactivity:BehaviorCollection>
-                                    <core:EventTriggerBehavior EventName="Tapped">
-                                        <core:InvokeCommandAction Command="{Binding Source={StaticResource ViewModelLocator}, Path=NavigationViewModel.NavigateToDealerDetailPage}" CommandParameter="{Binding}" />
-                                    </core:EventTriggerBehavior>
-                                </interactivity:BehaviorCollection>
-                            </interactivity:Interaction.Behaviors>
-                            <Grid MinHeight="70">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="70" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Border Grid.Column="0"
-                                        Width="60"
-                                        Height="60"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Top"
-                                        Background="{ThemeResource EurofurenceThemeColorBrush}"
-                                        CornerRadius="0" />
-                                <Border Grid.Column="0"
-                                        Width="60"
-                                        Height="60"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Top"
-                                        CornerRadius="0">
-                                    <Border.Background>
-                                        <ImageBrush ImageSource="{Binding ArtistThumbnailImage.Content, Converter={StaticResource BytesToImageConverter}}" />
-                                    </Border.Background>
-                                </Border>
-                                <StackPanel Grid.Column="1">
+                                    <TextBlock FontSize="{StaticResource TextStyleExtraLargeFontSize}"
+                                               Style="{StaticResource SubheaderTextBlockStyle}"
+                                               Text="{Binding UiDisplayName}" />
+                                </Viewbox>
+                                <TextBlock Foreground="{ThemeResource PhoneLowBrush}" Text="{Binding AttendeeNickname}" />
 
-                                    <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="{Binding UiDisplayName}" />
-                                    <!--<TextBlock Foreground="{ThemeResource EurofurenceThemeColorBrush}" Text="{Binding ShortDescription}" />-->
-
-                                </StackPanel>
-                            </Grid>
-
-
+                            </StackPanel>
                         </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
 
-            </ListView>
-        </Grid>
+
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
     </Grid>
 </Page>

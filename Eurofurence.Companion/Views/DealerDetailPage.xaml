@@ -11,12 +11,45 @@
 
     <Grid x:Name="LayoutRoot">
 
-        <Grid x:Name="ContentRoot" Margin="19,9.5,19,0">
+        <ScrollViewer>
             <StackPanel>
-                <TextBlock>Dealers Detail Page</TextBlock>
-                <TextBlock Style="{ThemeResource GroupHeaderTextBlockStyle}" Text="{Binding AttendeeNickname}" />
+                <Grid MinHeight="100">
+                    <Grid.Background>
+                        <LinearGradientBrush StartPoint="0, 0.5" EndPoint="1, 0.5">
+                            <GradientStop Offset="0" Color="#00000000" />
+                            <GradientStop Offset="1" Color="#00000000" />
+                            <GradientStop Offset="0.25" Color="#30FFFFFF" />
+                            <GradientStop Offset="0.75" Color="#30FFFFFF" />
+                        </LinearGradientBrush>
+                    </Grid.Background>
+                    <Image MaxHeight="250"
+                           Source="{Binding ArtistImage.Content,
+                                            Converter={StaticResource BytesToImageConverter}}"
+                           Stretch="Uniform" />
+                </Grid>
+
+                <StackPanel Margin="20">
+                    <TextBlock Style="{ThemeResource GroupHeaderTextBlockStyle}" Text="{Binding AttendeeNickname}" />
+
+                    <TextBlock Margin="15"
+                               FontSize="{StaticResource TextStyleMediumFontSize}"
+                               Text="{Binding ShortDescription}"
+                               TextWrapping="WrapWholeWords" />
+                    <TextBlock Margin="15"
+                               FontSize="{StaticResource TextStyleMediumFontSize}"
+                               Text="{Binding AboutTheArtistText}"
+                               TextWrapping="WrapWholeWords" />
+                    <TextBlock Margin="15"
+                               FontSize="{StaticResource TextStyleMediumFontSize}"
+                               Text="{Binding AboutTheArtText}"
+                               TextWrapping="WrapWholeWords" />
+
+                </StackPanel>
+
+
+
             </StackPanel>
-        </Grid>
+        </ScrollViewer>
 
     </Grid>
 </Page>
