@@ -22,7 +22,7 @@
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <Grid MinWidth="{Binding ActualWidth, ElementName=E_ListView_Dealers}">
                         <interactivity:Interaction.Behaviors>
                             <interactivity:BehaviorCollection>
                                 <core:EventTriggerBehavior EventName="Tapped">
