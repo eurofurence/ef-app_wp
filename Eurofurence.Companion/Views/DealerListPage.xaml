@@ -30,38 +30,53 @@
                                 </core:EventTriggerBehavior>
                             </interactivity:BehaviorCollection>
                         </interactivity:Interaction.Behaviors>
-                        <Grid MinHeight="70">
+                        <Grid MinHeight="60" Margin="0 0 0 10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="70" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Border Grid.Column="0"
-                                    Width="60"
-                                    Height="60"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Top"
-                                    Background="{ThemeResource EurofurenceThemeColorBrush}"
-                                    CornerRadius="0" />
-                            <Border Grid.Column="0"
-                                    Width="60"
-                                    Height="60"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Top"
-                                    CornerRadius="0">
-                                <Border.Background>
-                                    <ImageBrush ImageSource="{Binding ArtistThumbnailImage.Content, Converter={StaticResource BytesToImageConverter}}" />
-                                </Border.Background>
-                            </Border>
-                            <StackPanel Grid.Column="1">
+                            <Grid Grid.Column="0"
+                                  Width="60"
+                                  Height="60"
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Top"
+                                  Background="{ThemeResource EurofurenceThemeColorBrush}">
+                                <Border Width="60"
+                                        Height="60"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top"
+                                        CornerRadius="0"
+                                        Visibility="{Binding HasArtistThumbnailImage,
+                                                             Converter={StaticResource TrueToVisibleConverter}}">
+                                    <Border.Background>
+                                        <ImageBrush ImageSource="{Binding Entity.ArtistThumbnailImage.Content, Converter={StaticResource BytesToImageConverter}}" />
+                                    </Border.Background>
+
+                                </Border>
+                                <Grid Visibility="{Binding HasArtistThumbnailImage, Converter={StaticResource FalseToVisibleConverter}}">
+                                    <TextBlock HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               FontSize="50"
+                                               Foreground="#30000000">
+                                        <Run FontFamily="{StaticResource IconFontFamily}" Text="&#xEA8C;" />
+                                    </TextBlock>
+                                </Grid>
+                            </Grid>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
                                 <Viewbox Height="35"
                                          HorizontalAlignment="Left"
                                          StretchDirection="DownOnly">
 
                                     <TextBlock FontSize="{StaticResource TextStyleExtraLargeFontSize}"
                                                Style="{StaticResource SubheaderTextBlockStyle}"
-                                               Text="{Binding UiDisplayName}" />
+                                               Text="{Binding DisplayName}" />
                                 </Viewbox>
-                                <TextBlock Foreground="{ThemeResource PhoneLowBrush}" Text="{Binding AttendeeNickname}" />
+                                <TextBlock Foreground="{ThemeResource PhoneLowBrush}" Visibility="{Binding HasUniqueDisplayName, Converter={StaticResource TrueToVisibleConverter}}">
+                                    <Run FontFamily="{StaticResource IconFontFamily}" Text="&#xE77B;" />
+                                    <Run Text="{Binding Entity.AttendeeNickname}" />
+
+                                </TextBlock>
+
 
                             </StackPanel>
                         </Grid>

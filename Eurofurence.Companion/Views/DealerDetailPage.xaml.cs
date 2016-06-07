@@ -1,5 +1,9 @@
 ﻿using Eurofurence.Companion.Common;
 using Eurofurence.Companion.DataModel.Api;
+using Eurofurence.Companion.ViewModel.Local;
+using System;
+using Windows.System;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -8,10 +12,10 @@ namespace Eurofurence.Companion.Views
     public sealed partial class DealerDetailPage : Page, IPageProperties
     {
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
-        private Dealer _currentDealer;
+        private DealerViewModel CurrentDealer => (DataContext as DealerViewModel);
 
         public string Icon => "";
-        public string Title => _currentDealer?.UiDisplayName;
+        public string Title => CurrentDealer?.DisplayName;
 
         public DealerDetailPage()
         {
@@ -26,8 +30,7 @@ namespace Eurofurence.Companion.Views
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            _currentDealer = e.NavigationParameter as Dealer;
-            DataContext = _currentDealer;        
+            DataContext = e.NavigationParameter;        
         }
 
    
@@ -48,5 +51,11 @@ namespace Eurofurence.Companion.Views
         }
 
         #endregion
+
+        private async void OnWebsiteUriClick(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            var uri = new Uri((string)((FrameworkElement)e.OriginalSource).DataContext);
+            await Launcher.LaunchUriAsync(uri);
+        }
     }
 }

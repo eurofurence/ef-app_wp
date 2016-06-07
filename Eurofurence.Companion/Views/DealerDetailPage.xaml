@@ -5,7 +5,7 @@
       xmlns:local="using:Eurofurence.Companion.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       d:DataContext="{Binding Source={StaticResource ViewModelLocator},
-                              Path=DealersViewModel.Dealers[0]}"
+                              Path=DealersViewModel.Dealers[7]}"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
       mc:Ignorable="d">
 
@@ -13,40 +13,98 @@
 
         <ScrollViewer>
             <StackPanel>
-                <Grid MinHeight="100">
+                <Grid>
                     <Grid.Background>
                         <LinearGradientBrush StartPoint="0, 0.5" EndPoint="1, 0.5">
                             <GradientStop Offset="0" Color="#00000000" />
                             <GradientStop Offset="1" Color="#00000000" />
-                            <GradientStop Offset="0.25" Color="#30FFFFFF" />
-                            <GradientStop Offset="0.75" Color="#30FFFFFF" />
+                            <GradientStop Offset="0.25" Color="{Binding DominantColor}" />
+                            <GradientStop Offset="0.75" Color="{Binding DominantColor}" />
                         </LinearGradientBrush>
                     </Grid.Background>
+
                     <Image MaxHeight="250"
-                           Source="{Binding ArtistImage.Content,
+                           Source="{Binding Entity.ArtistImage.Content,
                                             Converter={StaticResource BytesToImageConverter}}"
                            Stretch="Uniform" />
+
+
                 </Grid>
 
                 <StackPanel Margin="20">
-                    <TextBlock Style="{ThemeResource GroupHeaderTextBlockStyle}" Text="{Binding AttendeeNickname}" />
+                    <TextBlock Style="{ThemeResource GroupHeaderTextBlockStyle}" Text="{Binding Entity.AttendeeNickname}" />
 
                     <TextBlock Margin="15"
                                FontSize="{StaticResource TextStyleMediumFontSize}"
-                               Text="{Binding ShortDescription}"
+                               Text="{Binding Entity.ShortDescription}"
                                TextWrapping="WrapWholeWords" />
+                    <TextBlock FontSize="{StaticResource TextStyleMediumFontSize}"
+                               Foreground="{StaticResource PhoneLowBrush}"
+                               Style="{StaticResource BaseTextBlockStyle}">
+                        About the Artist
+                    </TextBlock>
+
                     <TextBlock Margin="15"
                                FontSize="{StaticResource TextStyleMediumFontSize}"
-                               Text="{Binding AboutTheArtistText}"
-                               TextWrapping="WrapWholeWords" />
+                               Text="{Binding Entity.AboutTheArtistText}"
+                               TextWrapping="WrapWholeWords"
+                               Visibility="{Binding HasAboutTheArtistText,
+                                                    Converter={StaticResource TrueToVisibleConverter}}" />
+
                     <TextBlock Margin="15"
                                FontSize="{StaticResource TextStyleMediumFontSize}"
-                               Text="{Binding AboutTheArtText}"
-                               TextWrapping="WrapWholeWords" />
+                               FontStyle="Italic"
+                               Text="The artist did not provide any information about themselves to be shown here."
+                               TextWrapping="WrapWholeWords"
+                               Visibility="{Binding HasAboutTheArtistText,
+                                                    Converter={StaticResource FalseToVisibleConverter}}" />
+
+                    <StackPanel Visibility="{Binding HasWebsiteUri, Converter={StaticResource TrueToVisibleConverter}}">
+                        <ItemsControl Margin="15 0 15 0" ItemsSource="{Binding ParsedWebsiteUris}">
+                            <ItemsControl.ItemContainerStyle>
+                                <Style TargetType="ContentPresenter">
+                                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                </Style>
+                            </ItemsControl.ItemContainerStyle>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Button HorizontalAlignment="Stretch" Click="OnWebsiteUriClick">
+                                        <Viewbox StretchDirection="DownOnly">
+                                            <TextBlock Text="{Binding Converter={StaticResource UriToStringConverter}}" />
+                                        </Viewbox>
+                                    </Button>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+
+                    <StackPanel Visibility="{Binding HasAboutTheArtistText, Converter={StaticResource TrueToVisibleConverter}}">
+                        <TextBlock FontSize="{StaticResource TextStyleMediumFontSize}"
+                                   Foreground="{StaticResource PhoneLowBrush}"
+                                   Style="{StaticResource BaseTextBlockStyle}">
+                            About the Art
+                        </TextBlock>
+                        <StackPanel Margin="0 10 0 0" Visibility="{Binding HasArtPreviewImage, Converter={StaticResource TrueToVisibleConverter}}">
+                            <Image MaxHeight="200"
+                                   Source="{Binding Entity.ArtPreviewImage.Content,
+                                                    Converter={StaticResource BytesToImageConverter}}"
+                                   Stretch="Uniform" />
+                            <TextBlock Margin="40 0 40 0"
+                                       FontSize="{StaticResource TextStyleSmallFontSize}"
+                                       Foreground="{StaticResource PhoneMidBrush}"
+                                       LineHeight="12"
+                                       Style="{StaticResource BaseTextBlockStyle}"
+                                       Text="{Binding Entity.ArtPreviewCaption}"
+                                       TextAlignment="Center" />
+                        </StackPanel>
+
+                        <TextBlock Margin="15"
+                                   FontSize="{StaticResource TextStyleMediumFontSize}"
+                                   Text="{Binding Entity.AboutTheArtText}"
+                                   TextWrapping="WrapWholeWords" />
+                    </StackPanel>
 
                 </StackPanel>
-
-
 
             </StackPanel>
         </ScrollViewer>

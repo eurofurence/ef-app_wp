@@ -1,22 +1,21 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Eurofurence.Companion.DataModel.Api;
-using Eurofurence.Companion.DataStore.Abstractions;
 using Eurofurence.Companion.DependencyResolution;
+using Eurofurence.Companion.ViewModel.Abstractions;
 
 namespace Eurofurence.Companion.ViewModel.Local
 {
     [IocBeacon]
     public class DealersViewModel : BindableBase
     {
-        private readonly IDataContext _dataContext;
 
-        public ObservableCollection<Dealer> Dealers => _dataContext.Dealers;
-
-        public ObservableCollection<Dealer> DealerSearchResults { get; set; }
+        public ObservableCollection<DealerViewModel> Dealers => _dealersViewModelContext.Dealers;
+        public ObservableCollection<DealerViewModel> DealerSearchResults { get; set; }
 
         private string _searchText = "";
+        private readonly IDealersViewModelContext _dealersViewModelContext;
+
         public string SearchText
         {
             get { return _searchText; }
@@ -39,16 +38,17 @@ namespace Eurofurence.Companion.ViewModel.Local
                 return;
             }
 
-            foreach (var result in Dealers.Where(e => e.DisplayName.ToLower().Contains(_searchText.ToLower())))
+            foreach (var result in Dealers.Where(e => e.Entity.DisplayName.ToLower().Contains(_searchText.ToLower())))
             {
                 DealerSearchResults.Add(result);
             }
         }
 
-        public DealersViewModel(IDataContext dataContext)
+        public DealersViewModel(IDealersViewModelContext dealersViewModelContext)
         {
-            _dataContext = dataContext;
-            DealerSearchResults = new ObservableCollection<Dealer>();
+            _dealersViewModelContext = dealersViewModelContext;
+
+            DealerSearchResults = new ObservableCollection<DealerViewModel>();
 
             //if (DesignMode.DesignModeEnabled) SearchText = "";
         }

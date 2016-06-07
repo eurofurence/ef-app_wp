@@ -19,9 +19,6 @@ namespace Eurofurence.Companion.DataModel.Api
         public Guid? ArtPreviewImageId { get; set; }
 
         [Ignore]
-        public string UiDisplayName => !string.IsNullOrWhiteSpace(DisplayName) ? DisplayName : AttendeeNickname;
-
-        [Ignore]
         public virtual Image ArtistThumbnailImage { get; set; }
 
         [Ignore]
@@ -31,6 +28,6 @@ namespace Eurofurence.Companion.DataModel.Api
         public virtual Image ArtPreviewImage { get; set; }
 
         [Ignore]
-        public object SortOrderKey => UiDisplayName;
+        public object SortOrderKey => DisplayName ?? AttendeeNickname;
     }
 }

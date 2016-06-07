@@ -80,6 +80,7 @@
             <converter:BooleanToVisibilityConverter x:Key="TrueToVisibleConverter" />
             <converter:BooleanToVisibilityConverter x:Key="FalseToVisibleConverter" IsReversed="True" />
             <converter:WikiTextToHtmlConverter x:Key="WikiTextToHtmlConverter" />
+            <converter:UriToStringConverter x:Key="UriToStringConverter" />
             <viewModelLocal:TranslationViewModel x:Key="Translations" />
 
             <Style x:Key="FactBoxIcon" TargetType="TextBlock">

@@ -92,6 +92,7 @@
     <Compile Include="Common\Abstractions\ITelemetryClientProvider.cs" />
     <Compile Include="Common\Abstractions\ITimeProvider.cs" />
     <Compile Include="Common\AsyncNavigationEvent.cs" />
+    <Compile Include="DataModel\ImageExtensions.cs" />
     <Compile Include="Common\NavigationHelper.cs" />
     <Compile Include="Common\NavigationMediator.cs" />
     <Compile Include="Common\ObservableDictionary.cs" />
@@ -150,7 +151,10 @@
     <Compile Include="ViewModel\Behaviors\WikiTextBoxProperties.cs" />
     <Compile Include="ViewModel\Converter\BooleanToVisibilityConverter.cs" />
     <Compile Include="ViewModel\Converter\BytesToImageConverter.cs" />
+    <Compile Include="ViewModel\Converter\UriToStringConverter.cs" />
     <Compile Include="ViewModel\Converter\WikiTextToHtmlConverter.cs" />
+    <Compile Include="ViewModel\DealersViewModelContext.cs" />
+    <Compile Include="ViewModel\Abstractions\IDealersViewModelContext.cs" />
     <Compile Include="ViewModel\Local\ActiveAnnouncementsViewModel.cs" />
     <Compile Include="ViewModel\Local\DealersViewModel.cs" />
     <Compile Include="ViewModel\Local\DebugViewModel.cs" />
@@ -158,6 +162,7 @@
     <Compile Include="ViewModel\Local\EventConferenceDayViewModel.cs" />
     <Compile Include="ViewModel\Local\EventConferenceRoomViewModel.cs" />
     <Compile Include="ViewModel\Local\EventConferenceTrackViewModel.cs" />
+    <Compile Include="ViewModel\Local\DealerViewModel.cs" />
     <Compile Include="ViewModel\Local\EventEntryViewModel.cs" />
     <Compile Include="ViewModel\EventsViewModelContext.cs" />
     <Compile Include="ViewModel\Local\UpcomingEventsViewModel.cs" />
