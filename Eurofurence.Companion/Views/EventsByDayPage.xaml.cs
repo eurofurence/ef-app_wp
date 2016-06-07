@@ -19,7 +19,6 @@ namespace Eurofurence.Companion.Views
             InitializeComponent();
             EventList.DataContext = null;
 
-            NavigationCacheMode = NavigationCacheMode.Enabled;
 
             NavigationHelper = new NavigationHelper(this);
             NavigationHelper.LoadState += NavigationHelper_LoadState;
