@@ -1,6 +1,7 @@
 ﻿using Eurofurence.Companion.Common;
 using Eurofurence.Companion.DataModel.Api;
 using Eurofurence.Companion.ViewModel.Local;
+using Eurofurence.Companion.ViewModel.Local.Entity;
 using System;
 using Windows.System;
 using Windows.UI.Xaml;

@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using Eurofurence.Companion.ViewModel.Local;
 using Eurofurence.Companion.ViewModel.Local.Entity;
 
 namespace Eurofurence.Companion.ViewModel.Abstractions
 {
-    public interface IDealersViewModelContext
+    public interface IInfoViewModelContext
     {
-        ObservableCollection<DealerViewModel> Dealers { get; }
+        ObservableCollection<InfoGroupViewModel> Groups { get; }
 
         event EventHandler Invalidated;
     }

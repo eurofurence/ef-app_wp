@@ -16,6 +16,14 @@ namespace Eurofurence.Companion.DataModel.Api
         public List<Guid> ImageIds { get; set; }
         public List<NamedUrl> Urls { get; set; }
 
+        public Info()
+        {
+            Images = new List<Image>();
+        }
+
+        [JsonIgnore]
+        public virtual List<Image> Images { get; set; }
+
         [JsonIgnore]
         public virtual InfoGroup Group { get; set; }
 

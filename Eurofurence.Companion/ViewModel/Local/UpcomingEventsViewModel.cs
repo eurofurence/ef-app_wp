@@ -6,6 +6,7 @@ using System.Linq;
 using Eurofurence.Companion.Common.Abstractions;
 using Eurofurence.Companion.DependencyResolution;
 using Eurofurence.Companion.ViewModel.Abstractions;
+using Eurofurence.Companion.ViewModel.Local.Entity;
 
 // ReSharper disable ExplicitCallerInfoArgument
 

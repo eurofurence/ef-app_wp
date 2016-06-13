@@ -4,7 +4,7 @@ using Eurofurence.Companion.Common;
 using Eurofurence.Companion.Common.Abstractions;
 using Eurofurence.Companion.DataModel.Api;
 
-namespace Eurofurence.Companion.ViewModel.Local
+namespace Eurofurence.Companion.ViewModel.Local.Entity
 {
     public class EventConferenceDayViewModel : BindableBase
     {

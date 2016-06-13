@@ -149,6 +149,7 @@ namespace Eurofurence.Companion
                 //navigationMediator.Navigate(typeof(WelcomeGuidePage));
                 //navigationMediator.Navigate(typeof(LoadingPage));
 
+
                 if (firstTimeRunResult == FirstTimeRunResult.RunAndSynchronize)
                 {
                     await navigationMediator.NavigateAsync(
@@ -159,7 +160,14 @@ namespace Eurofurence.Companion
                             AutoNavigateBackOnSuccess = true,
                             AutoStartUpdateOnNavigatedTo = true
                         });
-                } 
+                }
+                else if (HasInternetAccess)
+                {
+                    KernelResolver.Current.Get<ContextManager>().Update();
+                }
+
+
+
             }
 
 
@@ -204,6 +212,11 @@ namespace Eurofurence.Companion
             base.OnActivated(args);
         }
 
+
+        private bool HasInternetAccess => NetworkInformation
+            .GetInternetConnectionProfile()
+            .GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess;
+
         public async Task<FirstTimeRunResult> HandleFirstTimeRunAsync()
         {
             var context = KernelResolver.Current.Get<ApplicationSettingsContext>();
@@ -212,9 +225,8 @@ namespace Eurofurence.Companion
                 return FirstTimeRunResult.RunNormally;
             }
 
-            var connectionProfile = NetworkInformation.GetInternetConnectionProfile();
-            var connectivityLevel = connectionProfile.GetNetworkConnectivityLevel();
-            if (connectivityLevel != NetworkConnectivityLevel.InternetAccess)
+           ;
+            if (!HasInternetAccess)
             {
                 var dlg =
                     new MessageDialog(

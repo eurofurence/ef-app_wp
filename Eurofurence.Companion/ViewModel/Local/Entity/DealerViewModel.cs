@@ -5,7 +5,7 @@ using Eurofurence.Companion.DataModel.Api;
 using System;
 using System.Collections.Generic;
 
-namespace Eurofurence.Companion.ViewModel.Local
+namespace Eurofurence.Companion.ViewModel.Local.Entity
 {
     public class DealerViewModel : BindableBase
     {

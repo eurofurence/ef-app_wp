@@ -43,6 +43,12 @@ namespace Eurofurence.Companion.DataStore
                 e.ArtistThumbnailImage = dataContext.Images.SingleOrDefault(a => a.Id == e.ArtistThumbnailImageId);
                 e.ArtPreviewImage = dataContext.Images.SingleOrDefault(a => a.Id == e.ArtPreviewImageId);
             }
+
+            foreach (var e in dataContext.Infos)
+            {
+                e.Images.Clear();
+                e.Images.AddRange(e.ImageIds.Select(f => dataContext.Images.SingleOrDefault(a => a.Id == f)));
+            }
         }
     }
 }

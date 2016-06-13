@@ -119,49 +119,63 @@ namespace Eurofurence.Companion.DataStore
         public async Task Update()
         {
             UpdateStatus = TaskStatus.Running;
-            MainOperationMessage = $"{Translations.ContextManager_Update_Initializing}...";
-
-            await _dataContext.SaveToStoreAsync();
-
-            var metadata = await _apiClient.GetEndpointMetadataAsync();
-            var updateResults = new List<EntityUpdateResult>();
-
-            MainOperationMaxValue = 10;
-            MainOperationCurrentValue = 0;
-
-            updateResults.Add(await UpdateEntitiesAsync<Announcement>(metadata));
-            updateResults.Add(await UpdateEntitiesAsync<EventEntry>(metadata));
-            updateResults.Add(await UpdateEntitiesAsync<EventConferenceDay>(metadata));
-            updateResults.Add(await UpdateEntitiesAsync<EventConferenceRoom>(metadata));
-            updateResults.Add(await UpdateEntitiesAsync<EventConferenceTrack>(metadata));
-            updateResults.Add(await UpdateEntitiesAsync<Info>(metadata));
-            updateResults.Add(await UpdateEntitiesAsync<InfoGroup>(metadata));
-            updateResults.Add(await UpdateEntitiesAsync<Image>(metadata));
-            updateResults.Add(await UpdateEntitiesAsync<Dealer>(metadata));
-
-            await UpdateImageDataAsync(updateResults.Single(a => a.EntityType == typeof (Image)).Entities.Cast<Image>());
-
-            MainOperationMessage = Translations.ContextManager_Update_Initializing;
-
-            foreach (var entity in updateResults.Where(a => a.TruncateBeforeProcessing).Select(b => b.EntityType))
+            try
             {
-                await _dataStore.ClearAsync(entity);
+
+
+                MainOperationMessage = $"{Translations.ContextManager_Update_Initializing}...";
+
+                await _dataContext.SaveToStoreAsync();
+
+                var metadata = await _apiClient.GetEndpointMetadataAsync();
+                var updateResults = new List<EntityUpdateResult>();
+
+                MainOperationMaxValue = 10;
+                MainOperationCurrentValue = 0;
+
+                updateResults.Add(await UpdateEntitiesAsync<Announcement>(metadata));
+                updateResults.Add(await UpdateEntitiesAsync<EventEntry>(metadata));
+                updateResults.Add(await UpdateEntitiesAsync<EventConferenceDay>(metadata));
+                updateResults.Add(await UpdateEntitiesAsync<EventConferenceRoom>(metadata));
+                updateResults.Add(await UpdateEntitiesAsync<EventConferenceTrack>(metadata));
+                updateResults.Add(await UpdateEntitiesAsync<Info>(metadata));
+                updateResults.Add(await UpdateEntitiesAsync<InfoGroup>(metadata));
+                updateResults.Add(await UpdateEntitiesAsync<Image>(metadata));
+                updateResults.Add(await UpdateEntitiesAsync<Dealer>(metadata));
+
+                await UpdateImageDataAsync(updateResults.Single(a => a.EntityType == typeof(Image)).Entities.Cast<Image>());
+
+                MainOperationMessage = Translations.ContextManager_Update_Initializing;
+
+                foreach (var entity in updateResults.Where(a => a.TruncateBeforeProcessing).Select(b => b.EntityType))
+                {
+                    await _dataStore.ClearAsync(entity);
+                }
+
+                await _dataStore.ApplyDeltaAsync(updateResults.SelectMany(a => a.Entities), (current, max, id) =>
+                {
+                    SubOperationMaxValue = (ulong)max;
+                    SubOperationCurrentValue = (ulong)current;
+                });
+
+                _applicationSettingsContext.LastServerQueryDateTimeUtc = metadata.CurrentDateTimeUtc;
+                OnPropertyChanged(nameof(LastServerQueryDateTimeUtc));
+
+                // Don't trigger a reload if we didn't touch anything.
+                if (updateResults.Any(a => a.TruncateBeforeProcessing || a.Entities.Count > 0))
+                {
+                    await _dataContext.LoadFromStoreAsync();
+                    await _dataContext.SaveToStoreAsync();
+                }
+
+                MainOperationMessage = $"{Translations.ContextManager_Update_Done}!";
+                UpdateStatus = TaskStatus.RanToCompletion;
+            }
+            catch (Exception) // This probably fails when no connectivity is present.
+            {
+                UpdateStatus = TaskStatus.Faulted;
             }
 
-            await _dataStore.ApplyDeltaAsync(updateResults.SelectMany(a => a.Entities), (current, max, id) =>
-            {
-                SubOperationMaxValue = (ulong) max;
-                SubOperationCurrentValue = (ulong) current;
-            });
-
-            _applicationSettingsContext.LastServerQueryDateTimeUtc = metadata.CurrentDateTimeUtc;
-            OnPropertyChanged(nameof(LastServerQueryDateTimeUtc));
-
-            await _dataContext.LoadFromStoreAsync();
-            await _dataContext.SaveToStoreAsync();
-
-            MainOperationMessage = $"{Translations.ContextManager_Update_Done}!";
-            UpdateStatus = TaskStatus.RanToCompletion;
         }
 
 

@@ -6,7 +6,7 @@
       xmlns:local="using:Eurofurence.Companion.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       d:DataContext="{Binding Source={StaticResource ViewModelLocator},
-                              Path=InfoViewModel.InfoGroups[0]}"
+                              Path=ConventionInfoViewModel.Groups[0]}"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
       mc:Ignorable="d">
 
@@ -36,7 +36,7 @@
                                            Margin="0"
                                            Foreground="White"
                                            Style="{StaticResource GroupHeaderTextBlockStyle}"
-                                           Text="{Binding Title}" />
+                                           Text="{Binding Entity.Title}" />
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -50,7 +50,7 @@
                                 <Grid>
                                     <TextBlock Foreground="{ThemeResource EurofurenceThemeColorBrush}"
                                                Style="{StaticResource GroupHeaderTextBlockStyle}"
-                                               Text="{Binding Title}" />
+                                               Text="{Binding Entity.Title}" />
                                     <TextBlock Margin="0 0 0 0"
                                                HorizontalAlignment="Right"
                                                FontFamily="{StaticResource IconFontFamily}"
@@ -59,12 +59,46 @@
                                                Text="&#xE898;" />
 
                                 </Grid>
+
                                 <Grid>
-                                    <RichTextBlock Margin="15"
-                                                   behaviors:RichTextBlockProperties.Html="{Binding Text,
-                                                                                                    Converter={StaticResource WikiTextToHtmlConverter}}"
-                                                   FontSize="{StaticResource TextStyleMediumFontSize}"
-                                                   TextWrapping="WrapWholeWords" />
+                                    <StackPanel>
+                                        <ItemsControl ItemsSource="{Binding Entity.Images}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Image MaxHeight="250"
+                                                           Source="{Binding Content,
+                                                                            Converter={StaticResource BytesToImageConverter}}"
+                                                           Stretch="Uniform" />
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+
+
+
+                                        <RichTextBlock Margin="15"
+                                                       behaviors:RichTextBlockProperties.Html="{Binding Entity.Text,
+                                                                                                        Converter={StaticResource WikiTextToHtmlConverter}}"
+                                                       FontSize="{StaticResource TextStyleMediumFontSize}"
+                                                       TextWrapping="WrapWholeWords" />
+
+                                        <ItemsControl Margin="15 0 15 0" ItemsSource="{Binding Entity.Urls}">
+                                            <ItemsControl.ItemContainerStyle>
+                                                <Style TargetType="ContentPresenter">
+                                                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                                </Style>
+                                            </ItemsControl.ItemContainerStyle>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Button HorizontalAlignment="Stretch" Click="OnWebsiteUriClick">
+                                                        <Viewbox StretchDirection="DownOnly">
+                                                            <TextBlock Text="{Binding Text}" />
+                                                        </Viewbox>
+                                                    </Button>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+
                                 </Grid>
                             </StackPanel>
                         </DataTemplate>

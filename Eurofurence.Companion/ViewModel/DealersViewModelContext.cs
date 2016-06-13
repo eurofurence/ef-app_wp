@@ -2,6 +2,7 @@
 using Eurofurence.Companion.DependencyResolution;
 using Eurofurence.Companion.ViewModel.Abstractions;
 using Eurofurence.Companion.ViewModel.Local;
+using Eurofurence.Companion.ViewModel.Local.Entity;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;

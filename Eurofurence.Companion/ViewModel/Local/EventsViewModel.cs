@@ -8,6 +8,7 @@ using Eurofurence.Companion.Common;
 using Eurofurence.Companion.DataModel.Api;
 using Eurofurence.Companion.DependencyResolution;
 using Eurofurence.Companion.ViewModel.Abstractions;
+using Eurofurence.Companion.ViewModel.Local.Entity;
 
 namespace Eurofurence.Companion.ViewModel.Local
 {

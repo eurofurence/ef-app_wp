@@ -3,7 +3,7 @@ using Eurofurence.Companion.ViewModel;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Eurofurence.Companion.ViewModel.Local;
-
+using Eurofurence.Companion.ViewModel.Local.Entity;
 
 namespace Eurofurence.Companion.Views
 {

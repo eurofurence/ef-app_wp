@@ -1,7 +1,10 @@
 ﻿using Eurofurence.Companion.Common;
 using Eurofurence.Companion.DataModel.Api;
+using Eurofurence.Companion.ViewModel.Local.Entity;
+using System;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -12,7 +15,7 @@ namespace Eurofurence.Companion.Views
 {
     public sealed partial class InfoGroupDetailPage : Page, IPageProperties
     {
-        private InfoGroup typedViewModel => DataContext as InfoGroup;
+        private InfoGroupViewModel typedViewModel => DataContext as InfoGroupViewModel;
 
         public InfoGroupDetailPage()
         {
@@ -23,7 +26,7 @@ namespace Eurofurence.Companion.Views
             NavigationHelper.SaveState += NavigationHelper_SaveState;
         }
 
-        public string Title => typedViewModel?.Name ?? "";
+        public string Title => typedViewModel?.Entity.Name ?? "";
         public string Icon => "" + (char)0xEC42;
 
 
@@ -31,9 +34,9 @@ namespace Eurofurence.Companion.Views
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            if (e.NavigationParameter is InfoGroup)
+            if (e.NavigationParameter is InfoGroupViewModel)
             {
-                var t = e.NavigationParameter as InfoGroup;
+                var t = e.NavigationParameter as InfoGroupViewModel;
                 DataContext = t;
             }
         }
@@ -67,8 +70,6 @@ namespace Eurofurence.Companion.Views
             var positionInScrollViewer = transform.TransformPoint(new Point(0, 0));
 
             svMain.ChangeView(null, positionInScrollViewer.Y, null, false);
-            
-
 
         }
 
@@ -76,6 +77,12 @@ namespace Eurofurence.Companion.Views
         {
             await Task.Delay(1);
             svMain.ChangeView(null, 0, null, false);
+        }
+
+        private async void OnWebsiteUriClick(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            var uri = new Uri(((NamedUrl)((FrameworkElement)e.OriginalSource).DataContext).Target);
+            await Launcher.LaunchUriAsync(uri);
         }
     }
 }

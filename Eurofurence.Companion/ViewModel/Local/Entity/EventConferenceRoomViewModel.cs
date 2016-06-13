@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Eurofurence.Companion.DataModel.Api;
 
-namespace Eurofurence.Companion.ViewModel.Local
+namespace Eurofurence.Companion.ViewModel.Local.Entity
 {
     public class EventConferenceRoomViewModel : BindableBase
     {

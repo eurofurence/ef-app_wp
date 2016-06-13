@@ -1,4 +1,5 @@
 ﻿using Eurofurence.Companion.DataModel.Abstractions;
+using Newtonsoft.Json;
 
 namespace Eurofurence.Companion.DataModel.Local
 {
@@ -6,7 +7,7 @@ namespace Eurofurence.Companion.DataModel.Local
     {
 
         private bool _isFavorite = false;
-        public bool IsFavorite { get { return _isFavorite; } set { SetProperty(ref _isFavorite, value); } } 
+        public bool IsFavorite { get { return _isFavorite; } set { SetProperty(ref _isFavorite, value); } }
 
         public bool GetPersistence()
         {

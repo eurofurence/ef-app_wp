@@ -8,7 +8,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
       DataContext="{Binding Source={StaticResource ViewModelLocator},
-                            Path=InfoViewModel}"
+                            Path=ConventionInfoViewModel}"
       mc:Ignorable="d">
 
     <Grid x:Name="LayoutRoot">
@@ -18,7 +18,7 @@
               Grid.Row="1"
               Margin="19,9.5,19,0">
 
-            <ListView ItemsSource="{Binding InfoGroups}">
+            <ListView ItemsSource="{Binding Groups}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -35,8 +35,8 @@
                                 </interactivity:BehaviorCollection>
                             </interactivity:Interaction.Behaviors>
                             <StackPanel>
-                                <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="{Binding Name}" />
-                                <TextBlock Foreground="{ThemeResource PhoneMidBrush}" Text="{Binding Description}" />
+                                <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="{Binding Entity.Name}" />
+                                <TextBlock Foreground="{ThemeResource PhoneMidBrush}" Text="{Binding Entity.Description}" />
                             </StackPanel>
                         </Grid>
                     </DataTemplate>

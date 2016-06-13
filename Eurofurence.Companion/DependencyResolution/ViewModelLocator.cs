@@ -13,7 +13,7 @@ namespace Eurofurence.Companion.DependencyResolution
         public EventsViewModel EventsViewModel => KernelResolver.Current.Get<EventsViewModel>();
         public NavigationViewModel NavigationViewModel => KernelResolver.Current.Get<NavigationViewModel>();
         public LayoutViewModel LayoutViewModel => KernelResolver.Current.Get<LayoutViewModel>();
-        public InfoViewModel InfoViewModel => KernelResolver.Current.Get<InfoViewModel>();
+        public ConventionInfoViewModel ConventionInfoViewModel => KernelResolver.Current.Get<ConventionInfoViewModel>();
         public DealersViewModel DealersViewModel => KernelResolver.Current.Get<DealersViewModel>();
         public UpcomingEventsViewModel UpcomingEventsViewModel => KernelResolver.Current.Get<UpcomingEventsViewModel>();
         public ActiveAnnouncementsViewModel ActiveAnnouncementsViewModel => KernelResolver.Current.Get<ActiveAnnouncementsViewModel>();

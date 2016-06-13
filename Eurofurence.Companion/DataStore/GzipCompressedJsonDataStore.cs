@@ -24,6 +24,8 @@ namespace Eurofurence.Companion.DataStore
             var entitiesToProcess = entities as IList<EntityBase> ?? entities.ToList();
             var distinctTypes = entitiesToProcess.Select(entity => entity.GetType()).Distinct();
 
+            int entitiesProcessed = 0;
+
             foreach (var distinctType in distinctTypes)
             {
                 var storeEntities = await LoadAsync<EntityBase>(distinctType);
@@ -35,6 +37,9 @@ namespace Eurofurence.Companion.DataStore
                     {
                         storeEntities.Add(entity);
                     }
+                    entitiesProcessed++;
+
+                    progressCallback?.Invoke(entitiesProcessed, entitiesToProcess.Count, "Persisting...");
                 }
 
                 await SaveAsync(distinctType, storeEntities);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Eurofurence.Companion.DataModel.Api;
 using Eurofurence.Companion.ViewModel.Local;
+using Eurofurence.Companion.ViewModel.Local.Entity;
 
 namespace Eurofurence.Companion.ViewModel.Abstractions
 {
