@@ -1,7 +1,7 @@
 using System;
 using Eurofurence.Companion.DataModel.Abstractions;
-using SQLite;
 using Eurofurence.Companion.DataModel.Local;
+using Newtonsoft.Json;
 
 namespace Eurofurence.Companion.DataModel.Api
 {
@@ -24,28 +24,28 @@ namespace Eurofurence.Companion.DataModel.Api
         public byte IsDeviatingFromConBook { get; set; }
 
 
-        [Ignore]
+        [JsonIgnore]
         public ExtensionProxy<EventEntry, EventEntryAttributes> AttributesProxy { get; set; }
 
-        [Ignore]
+        [JsonIgnore]
         public DateTime EventDateTimeUtc
             => ConferenceDay == null
                 ? DateTime.MinValue
                 : new DateTime((ConferenceDay.Date + StartTime - TimeSpan.FromHours(2)).Ticks, DateTimeKind.Utc);
 
-        [Ignore]
+        [JsonIgnore]
         public virtual EventConferenceTrack ConferenceTrack { get; set; }
 
-        [Ignore]
+        [JsonIgnore]
         public virtual EventConferenceDay ConferenceDay { get; set; }
 
-        [Ignore]
+        [JsonIgnore]
         public virtual EventConferenceRoom ConferenceRoom { get; set; }
 
-        [Ignore]
+        [JsonIgnore]
         public virtual Image Image { get; set; }
 
-        [Ignore]
+        [JsonIgnore]
         public object SortOrderKey => (ConferenceDay?.Date.Ticks ?? 0) + StartTime.TotalSeconds;
     }
 }

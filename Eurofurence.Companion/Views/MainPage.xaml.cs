@@ -25,7 +25,7 @@ namespace Eurofurence.Companion.Views
             NavigationHelper.LoadState += NavigationHelper_LoadState;
             NavigationHelper.SaveState += NavigationHelper_SaveState;
             NavigationHelper.GoBackCommand = new RelayCommand(async obj => {
-                await KernelResolver.Current.Get<IDataContext>().SaveAsync();
+                await KernelResolver.Current.Get<IDataContext>().SaveToStoreAsync();
                 Application.Current.Exit();
             });
         }

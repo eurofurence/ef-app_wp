@@ -22,7 +22,7 @@ namespace Eurofurence.Companion.DataStore.Abstractions
 
         ObservableCollection<EventEntryAttributes> EventEntryAttributes { get; }
 
-        Task RefreshAsync();
-        Task SaveAsync();
+        Task LoadFromStoreAsync();
+        Task SaveToStoreAsync();
     }
 }

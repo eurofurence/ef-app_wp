@@ -54,25 +54,25 @@ namespace Eurofurence.Companion.DataStore
         public ObservableCollection<EventEntryAttributes> EventEntryAttributes { get; }
 
 
-        public async Task RefreshAsync()
+        public async Task LoadFromStoreAsync()
         {
-            await LoadAsync(Announcements, nameof(Announcements));
-            await LoadAsync(EventEntries, nameof(EventEntries));
-            await LoadAsync(EventConferenceDays, nameof(EventConferenceDays));
-            await LoadAsync(EventConferenceRooms, nameof(EventConferenceRooms));
-            await LoadAsync(EventConferenceTracks, nameof(EventConferenceTracks));
-            await LoadAsync(Infos, nameof(Infos));
-            await LoadAsync(InfoGroups, nameof(InfoGroups));
-            await LoadAsync(Images, nameof(Images));
-            await LoadAsync(Dealers, nameof(Dealers));
-            await LoadAsync(EventEntryAttributes, nameof(EventEntryAttributes));
+            await LoadEntityFromStoreAsync(Announcements, nameof(Announcements));
+            await LoadEntityFromStoreAsync(EventEntries, nameof(EventEntries));
+            await LoadEntityFromStoreAsync(EventConferenceDays, nameof(EventConferenceDays));
+            await LoadEntityFromStoreAsync(EventConferenceRooms, nameof(EventConferenceRooms));
+            await LoadEntityFromStoreAsync(EventConferenceTracks, nameof(EventConferenceTracks));
+            await LoadEntityFromStoreAsync(Infos, nameof(Infos));
+            await LoadEntityFromStoreAsync(InfoGroups, nameof(InfoGroups));
+            await LoadEntityFromStoreAsync(Images, nameof(Images));
+            await LoadEntityFromStoreAsync(Dealers, nameof(Dealers));
+            await LoadEntityFromStoreAsync(EventEntryAttributes, nameof(EventEntryAttributes));
             _navigationResolver.Resolve(this);
 
             Refreshed?.Invoke(this, null);
         }
 
 
-        public async Task SaveAsync()
+        public async Task SaveToStoreAsync()
         {
             foreach(var entity in EventEntryAttributes)
             {
@@ -83,7 +83,7 @@ namespace Eurofurence.Companion.DataStore
         }
 
 
-        private async Task LoadAsync<T>(ICollection<T> target, string propertyName) where T : EntityBase, new()
+        private async Task LoadEntityFromStoreAsync<T>(ICollection<T> target, string propertyName) where T : EntityBase, new()
         {
             var entities = await _dataStore.GetAsync<T>();
 

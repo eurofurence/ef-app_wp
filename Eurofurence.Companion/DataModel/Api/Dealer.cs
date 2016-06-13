@@ -1,6 +1,6 @@
 using System;
 using Eurofurence.Companion.DataModel.Abstractions;
-using SQLite;
+using Newtonsoft.Json;
 
 namespace Eurofurence.Companion.DataModel.Api
 {
@@ -18,16 +18,16 @@ namespace Eurofurence.Companion.DataModel.Api
         public Guid? ArtistImageId { get; set; }
         public Guid? ArtPreviewImageId { get; set; }
 
-        [Ignore]
+        [JsonIgnore]
         public virtual Image ArtistThumbnailImage { get; set; }
 
-        [Ignore]
+        [JsonIgnore]
         public virtual Image ArtistImage { get; set; }
 
-        [Ignore]
+        [JsonIgnore]
         public virtual Image ArtPreviewImage { get; set; }
 
-        [Ignore]
+        [JsonIgnore]
         public object SortOrderKey => DisplayName ?? AttendeeNickname;
     }
 }

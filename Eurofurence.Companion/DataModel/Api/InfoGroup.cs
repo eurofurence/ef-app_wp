@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Eurofurence.Companion.DataModel.Abstractions;
-using SQLite;
+using Newtonsoft.Json;
 
 namespace Eurofurence.Companion.DataModel.Api
 {
@@ -16,10 +16,10 @@ namespace Eurofurence.Companion.DataModel.Api
         public string Description { get; set; }
         public int Position { get; set; }
 
-        [Ignore]
+        [JsonIgnore]
         public ICollection<Info> Entries { get; set; }
 
-        [Ignore]
+        [JsonIgnore]
         public object SortOrderKey => Position;
     }
 }

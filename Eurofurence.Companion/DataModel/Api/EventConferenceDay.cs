@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Eurofurence.Companion.DataModel.Abstractions;
-using SQLite;
+using Newtonsoft.Json;
 
 namespace Eurofurence.Companion.DataModel.Api
 {
@@ -17,22 +17,22 @@ namespace Eurofurence.Companion.DataModel.Api
         public DateTime Date { get; set; }
 
 
-        [Ignore]
+        [JsonIgnore]
         public ICollection<EventEntry> Entries { get; set; }
 
-        [Ignore]
+        [JsonIgnore]
         public string WeekdayAbbreviated => Date.ToString("ddd");
 
-        [Ignore]
+        [JsonIgnore]
         public string WeekdayFullname => Date.ToString("dddd");
 
-        [Ignore]
+        [JsonIgnore]
         public object SortOrderKey => Date.Ticks;
 
-        [Ignore]
+        [JsonIgnore]
         public DateTime DayStartDateTimeUtc => new DateTime((Date - TimeSpan.FromHours(2)).Ticks, DateTimeKind.Utc);
 
-        [Ignore]
+        [JsonIgnore]
         public DateTime DayEndDateTimeUtc => DayStartDateTimeUtc.AddHours(24);
 
     }

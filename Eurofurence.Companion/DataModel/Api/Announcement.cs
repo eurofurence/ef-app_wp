@@ -1,6 +1,6 @@
 using System;
-using SQLite;
 using Eurofurence.Companion.DataModel.Abstractions;
+using Newtonsoft.Json;
 
 namespace Eurofurence.Companion.DataModel.Api
 {
@@ -14,7 +14,7 @@ namespace Eurofurence.Companion.DataModel.Api
         public string Title { get; set; }
         public string Content { get; set; }
 
-        [Ignore]
+        [JsonIgnore]
         public object SortOrderKey => ValidFromDateTimeUtc;
     }
 }

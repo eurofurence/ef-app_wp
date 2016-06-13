@@ -188,7 +188,7 @@ namespace Eurofurence.Companion
         {
             var deferral = e.SuspendingOperation.GetDeferral();
 
-            await KernelResolver.Current.Get<IDataContext>().SaveAsync();
+            await KernelResolver.Current.Get<IDataContext>().SaveToStoreAsync();
 
             _telemetryClientProvider.Client.TrackEvent("Application suspended");
             _telemetryClientProvider.Client.Flush();

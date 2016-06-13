@@ -1,6 +1,7 @@
 using System;
-using SQLite;
+using System.Collections.Generic;
 using Eurofurence.Companion.DataModel.Abstractions;
+using Newtonsoft.Json;
 
 namespace Eurofurence.Companion.DataModel.Api
 {
@@ -12,10 +13,13 @@ namespace Eurofurence.Companion.DataModel.Api
 
         public Guid InfoGroupId { get; set; }
 
-        [Ignore]
+        public List<Guid> ImageIds { get; set; }
+        public List<NamedUrl> Urls { get; set; }
+
+        [JsonIgnore]
         public virtual InfoGroup Group { get; set; }
 
-        [Ignore]
+        [JsonIgnore]
         public object SortOrderKey => Position;
     }
 }

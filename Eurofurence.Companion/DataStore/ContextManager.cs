@@ -103,13 +103,13 @@ namespace Eurofurence.Companion.DataStore
 
         public async Task InitializeAsync()
         {
-            await _dataContext.RefreshAsync();
+            await _dataContext.LoadFromStoreAsync();
         }
 
         public async Task ClearAll()
         {
             await _dataStore.ClearAllAsync();
-            await _dataContext.RefreshAsync();
+            await _dataContext.LoadFromStoreAsync();
 
             _applicationSettingsContext.LastServerQueryDateTimeUtc = null;
             OnPropertyChanged(nameof(LastServerQueryDateTimeUtc));
@@ -121,7 +121,7 @@ namespace Eurofurence.Companion.DataStore
             UpdateStatus = TaskStatus.Running;
             MainOperationMessage = $"{Translations.ContextManager_Update_Initializing}...";
 
-            await _dataContext.SaveAsync();
+            await _dataContext.SaveToStoreAsync();
 
             var metadata = await _apiClient.GetEndpointMetadataAsync();
             var updateResults = new List<EntityUpdateResult>();
@@ -157,8 +157,8 @@ namespace Eurofurence.Companion.DataStore
             _applicationSettingsContext.LastServerQueryDateTimeUtc = metadata.CurrentDateTimeUtc;
             OnPropertyChanged(nameof(LastServerQueryDateTimeUtc));
 
-            await _dataContext.RefreshAsync();
-            await _dataContext.SaveAsync();
+            await _dataContext.LoadFromStoreAsync();
+            await _dataContext.SaveToStoreAsync();
 
             MainOperationMessage = $"{Translations.ContextManager_Update_Done}!";
             UpdateStatus = TaskStatus.RanToCompletion;

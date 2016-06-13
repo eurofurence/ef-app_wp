@@ -59,13 +59,13 @@ namespace Eurofurence.Companion.DataStore
         }
 
 
-        public Task RefreshAsync()
+        public Task LoadFromStoreAsync()
         {
             Refreshed?.Invoke(this, null);
             return Task.Delay(1);
         }
 
-        public Task SaveAsync()
+        public Task SaveToStoreAsync()
         {
             return Task.Delay(1);
         }
