@@ -1,8 +1,9 @@
 ﻿<Page x:Class="Eurofurence.Companion.Views.DealerDetailPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:core="using:Microsoft.Xaml.Interactions.Core"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="using:Eurofurence.Companion.Views"
+      xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       d:DataContext="{Binding Source={StaticResource ViewModelLocator},
                               Path=DealersViewModel.Dealers[7]}"
@@ -23,10 +24,23 @@
                         </LinearGradientBrush>
                     </Grid.Background>
 
-                    <Image MaxHeight="250"
+                    <Image Name="E_ArtistImage"
+                           MaxHeight="250"
                            Source="{Binding Entity.ArtistImage.Content,
                                             Converter={StaticResource BytesToImageConverter}}"
-                           Stretch="Uniform" />
+                           Stretch="Uniform">
+                        <interactivity:Interaction.Behaviors>
+                            <interactivity:BehaviorCollection>
+                                <core:EventTriggerBehavior EventName="Tapped">
+                                    <core:InvokeCommandAction Command="{Binding Source={StaticResource ViewModelLocator}, Path=NavigationViewModel.NavigateToImageViewerPage}" CommandParameter="{Binding Entity.ArtistImage.Content, Converter={StaticResource BytesToImageConverter}}" />
+
+                                </core:EventTriggerBehavior>
+                            </interactivity:BehaviorCollection>
+                        </interactivity:Interaction.Behaviors>
+
+
+
+                    </Image>
 
 
                 </Grid>
@@ -88,7 +102,16 @@
                             <Image MaxHeight="200"
                                    Source="{Binding Entity.ArtPreviewImage.Content,
                                                     Converter={StaticResource BytesToImageConverter}}"
-                                   Stretch="Uniform" />
+                                   Stretch="Uniform">
+                                <interactivity:Interaction.Behaviors>
+                                    <interactivity:BehaviorCollection>
+                                        <core:EventTriggerBehavior EventName="Tapped">
+                                            <core:InvokeCommandAction Command="{Binding Source={StaticResource ViewModelLocator}, Path=NavigationViewModel.NavigateToImageViewerPage}" CommandParameter="{Binding Entity.ArtPreviewImage.Content, Converter={StaticResource BytesToImageConverter}}" />
+
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:BehaviorCollection>
+                                </interactivity:Interaction.Behaviors>
+                            </Image>
                             <TextBlock Margin="40 0 40 0"
                                        FontSize="{StaticResource TextStyleSmallFontSize}"
                                        Foreground="{StaticResource PhoneMidBrush}"
