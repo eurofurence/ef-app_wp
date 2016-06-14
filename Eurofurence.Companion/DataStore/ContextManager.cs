@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Eurofurence.Companion.Common;
 using Eurofurence.Companion.DataModel;
 using Eurofurence.Companion.DataModel.Api;
+using Eurofurence.Companion.DataModel.Local;
 using Eurofurence.Companion.DataStore.Abstractions;
 using Eurofurence.Companion.DependencyResolution;
+using Newtonsoft.Json;
 
 // ReSharper disable ExplicitCallerInfoArgument
 
@@ -121,8 +125,6 @@ namespace Eurofurence.Companion.DataStore
             UpdateStatus = TaskStatus.Running;
             try
             {
-
-
                 MainOperationMessage = $"{Translations.ContextManager_Update_Initializing}...";
 
                 await _dataContext.SaveToStoreAsync();
@@ -169,6 +171,16 @@ namespace Eurofurence.Companion.DataStore
                 }
 
                 MainOperationMessage = $"{Translations.ContextManager_Update_Done}!";
+
+                //if (Debugger.IsAttached)
+                //{
+                //    var storageInfo = await _dataStore.GetStorageFileSizesAsync();
+                //    foreach (var row in storageInfo)
+                //    {
+                //        Debug.WriteLine($"{row.Key}: {row.Value} bytes");
+                //    }
+                //}
+
                 UpdateStatus = TaskStatus.RanToCompletion;
             }
             catch (Exception) // This probably fails when no connectivity is present.

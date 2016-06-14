@@ -51,6 +51,8 @@ namespace Eurofurence.Companion.ViewModel.Local.Entity
             IsFavoriteAndStartingSoon = IsStartingSoon && Entity.AttributesProxy.Extension.IsFavorite;
         }
 
+        public bool HasSubTitle => !string.IsNullOrEmpty(Entity?.SubTitle);
+
         private TimeSpan _timeToStart = TimeSpan.Zero;
         public TimeSpan TimeToStart { get { return _timeToStart; } set { SetProperty(ref _timeToStart, value); } }
 

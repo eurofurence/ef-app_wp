@@ -31,30 +31,111 @@
                 </ListView.ItemContainerStyle>
                 <ListViewItem>
                     <StackPanel>
-
-                        <Grid>
-                            <TextBlock FontSize="{StaticResource TextStyleMediumFontSize}"
-                                       Foreground="{StaticResource PhoneLowBrush}"
-                                       Style="{StaticResource BaseTextBlockStyle}">
-                                Upcoming Events
-                            </TextBlock>
-                            <TextBlock HorizontalAlignment="Right"
-                                       FontSize="{StaticResource TextStyleMediumFontSize}"
-                                       Foreground="{StaticResource PhoneMidBrush}"
-                                       Style="{StaticResource BaseTextBlockStyle}">
-                                <Run FontFamily="{StaticResource IconFontFamily}"
-                                     FontSize="{StaticResource TextStyleSmallFontSize}"
-                                     Foreground="{StaticResource PhoneLowBrush}"
-                                     Text="&#xE121;" />
-                                <Run Text="{Binding Source={StaticResource ServiceLocator}, Path=TimeProvider.CurrentDateTimeMinuteLocal, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:HH\\:mm}'}" />
-                            </TextBlock>
-                        </Grid>
                         <Grid>
                             <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="{Binding UpcomingEventsConferenceDay.Entity.Name}" />
                         </Grid>
                     </StackPanel>
                 </ListViewItem>
             </ListView>
+
+            <Border Margin="-20 0 -20 0" Background="#30000000" Padding="0 5 0 5">
+                <Grid Margin="20 0 20 0">
+
+                    <TextBlock HorizontalAlignment="Right"
+                                           FontSize="{StaticResource TextStyleMediumFontSize}"
+                                           Foreground="{StaticResource PhoneMidBrush}"
+                                           Style="{StaticResource BaseTextBlockStyle}">
+                                    <Run FontFamily="{StaticResource IconFontFamily}"
+                                         FontSize="{StaticResource TextStyleSmallFontSize}"
+                                         Foreground="{StaticResource PhoneLowBrush}"
+                                         Text="&#xE121;" />
+                                    <Run Text="{Binding Source={StaticResource ServiceLocator}, Path=TimeProvider.CurrentDateTimeMinuteLocal, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:HH\\:mm}'}" />
+                    </TextBlock>
+                    <TextBlock FontSize="{StaticResource TextStyleMediumFontSize}"
+                                           Foreground="{StaticResource PhoneLowBrush}"
+                                           Style="{StaticResource BaseTextBlockStyle}">
+                                    Running Events
+                    </TextBlock>
+                </Grid>
+            </Border>
+            <ListView Margin="-20 0 -20 0" ItemsSource="{Binding RunningEvents}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Background="Transparent">
+
+                            <interactivity:Interaction.Behaviors>
+                                <interactivity:BehaviorCollection>
+                                    <core:EventTriggerBehavior EventName="Tapped">
+                                        <core:InvokeCommandAction Command="{Binding Source={StaticResource ViewModelLocator}, Path=NavigationViewModel.NavigateToEventDetailPage}" CommandParameter="{Binding}" />
+                                    </core:EventTriggerBehavior>
+                                </interactivity:BehaviorCollection>
+                            </interactivity:Interaction.Behaviors>
+
+                            <Grid Margin="20 0 20 0">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40" />
+                                    <ColumnDefinition Width="70" />
+                                    <ColumnDefinition Width="290" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock 
+                                               Margin="5 5 0 0"
+                                               FontFamily="{StaticResource IconFontFamily}"
+                                               FontSize="24"
+                                               Text="&#xE1CE;"
+                                        Visibility="{Binding Entity.AttributesProxy.Extension.IsFavorite,
+                                        Converter={StaticResource TrueToVisibleConverter}}" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="{Binding Entity.StartTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:hh\\:mm}'}" />
+                                    <TextBlock Foreground="{ThemeResource PhoneMidBrush}">
+                                        <Run FontFamily="{StaticResource IconFontFamily}" Text="&#xE741;" />
+                                        <Run Text="{Binding Entity.EndTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:hh\\:mm}'}" />
+                                    </TextBlock>
+                                </StackPanel>
+
+
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock MaxHeight="60"
+                                               Style="{StaticResource TitleTextBlockStyle}"
+                                               Text="{Binding Entity.Title}"
+                                               TextTrimming="CharacterEllipsis"
+                                               TextWrapping="Wrap" />
+                                    <TextBlock FontSize="{StaticResource TextStyleSmallFontSize}"
+                                        Style="{StaticResource TitleTextBlockStyle}"
+                                        Text="{Binding Entity.SubTitle}"
+                                                       Visibility="{Binding HasSubTitle, Converter={StaticResource TrueToVisibleConverter}}"
+                                        TextWrapping="Wrap" />
+                                    <!--<TextBlock Foreground="{ThemeResource PhoneMidBrush}"
+                                        Text="{Binding ConferenceRoom.Entity.Name}"
+                                        TextWrapping="Wrap" MaxHeight="20" TextTrimming="CharacterEllipsis" />-->
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+
+
+            <Border Margin="-20 0 -20 0" Background="#30000000" Padding="0 5 0 5">
+
+                <Grid Margin="20 0 20 0">
+                    <TextBlock FontSize="{StaticResource TextStyleMediumFontSize}"
+                                           Foreground="{StaticResource PhoneLowBrush}"
+                                           Style="{StaticResource BaseTextBlockStyle}">
+                                    Upcoming Events
+                    </TextBlock>
+                </Grid>
+            </Border>
             <ListView Margin="-20 0 -20 0" ItemsSource="{Binding UpcomingEvents}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
@@ -64,7 +145,6 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid Name="_ue_grid" Background="Transparent">
-
                             <Grid.Resources>
                                 <Storyboard x:Name="_ue_pulseItemStoryboard">
                                     <ColorAnimation AutoReverse="True"
@@ -87,16 +167,16 @@
                                     <core:DataTriggerBehavior Binding="{Binding IsFavoriteAndStartingSoon}" Value="False">
                                         <media:ControlStoryboardAction ControlStoryboardOption="Stop" Storyboard="{StaticResource _ue_pulseItemStoryboard}" />
                                     </core:DataTriggerBehavior>
-                                    <core:DataTriggerBehavior Binding="{Binding Entity.AttributesProxy.Extension.IsFavorite}" Value="True">
+                                    <!--<core:DataTriggerBehavior Binding="{Binding Entity.AttributesProxy.Extension.IsFavorite}" Value="True">
                                         <core:ChangePropertyAction PropertyName="Visibility"
                                                                    TargetObject="{Binding ElementName=_ue_icon_favorite}"
                                                                    Value="Visible" />
-                                    </core:DataTriggerBehavior>
-                                    <core:DataTriggerBehavior Binding="{Binding Entity.AttributesProxy.Extension.IsFavorite}" Value="False">
+                                    </core:DataTriggerBehavior>-->
+                                    <!--<core:DataTriggerBehavior Binding="{Binding Entity.AttributesProxy.Extension.IsFavorite}" Value="False">
                                         <core:ChangePropertyAction PropertyName="Visibility"
                                                                    TargetObject="{Binding ElementName=_ue_icon_favorite}"
                                                                    Value="Collapsed" />
-                                    </core:DataTriggerBehavior>
+                                    </core:DataTriggerBehavior>-->
                                     <core:DataTriggerBehavior Binding="{Binding IsStartingSoon}" Value="False">
                                         <core:ChangePropertyAction PropertyName="Visibility"
                                                                    TargetObject="{Binding ElementName=_ue_textblock_startsIn}"
@@ -119,15 +199,13 @@
                                 </Grid.ColumnDefinitions>
 
                                 <StackPanel Grid.Column="0">
-                                    <TextBlock Name="_ue_icon_favorite"
+                                    <TextBlock 
                                                Margin="5 5 0 0"
                                                FontFamily="{StaticResource IconFontFamily}"
                                                FontSize="24"
-                                               Text="&#xE1CE;" />
-                                    <!--
-                                        Visibility="{Binding AttributesProxy.Extension.IsFavorite,
-                                        Converter={StaticResource TrueToVisibleConverter}}"
-                                    -->
+                                               Text="&#xE1CE;" 
+                                        Visibility="{Binding Entity.AttributesProxy.Extension.IsFavorite,
+                                        Converter={StaticResource TrueToVisibleConverter}}" />
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="1">
@@ -145,9 +223,14 @@
                                                Text="{Binding Entity.Title}"
                                                TextTrimming="CharacterEllipsis"
                                                TextWrapping="Wrap" />
+                                    <TextBlock FontSize="{StaticResource TextStyleSmallFontSize}"
+                                        Style="{StaticResource TitleTextBlockStyle}"
+                                        Text="{Binding Entity.SubTitle}"
+                                                       Visibility="{Binding HasSubTitle, Converter={StaticResource TrueToVisibleConverter}}"
+                                        TextWrapping="Wrap" />
                                     <TextBlock Foreground="{ThemeResource PhoneMidBrush}"
-                                               Text="{Binding Entity.ConferenceRoom.Name}"
-                                               TextWrapping="Wrap" />
+                                        Text="{Binding ConferenceRoom.Entity.Name}"
+                                        TextWrapping="Wrap" MaxHeight="20" TextTrimming="CharacterEllipsis" />
                                     <TextBlock Name="_ue_textblock_startsIn" Foreground="{ThemeResource PhoneLowBrush}">
                                         <Run FontFamily="{StaticResource IconFontFamily}" Text="&#xE121;" />
                                         <Run>scheduled to start in</Run>

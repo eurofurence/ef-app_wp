@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace Eurofurence.Companion.DataModel.Api
 {
-    public class EventConferenceDay : EntityBase, ISortOrderKeyProvider
+    public class EventConferenceDay : EntityBase, ISortOrderKeyProvider, IEquatable<EventConferenceDay>
     {
         public EventConferenceDay()
         {
@@ -35,5 +35,9 @@ namespace Eurofurence.Companion.DataModel.Api
         [JsonIgnore]
         public DateTime DayEndDateTimeUtc => DayStartDateTimeUtc.AddHours(24);
 
+        public bool Equals(EventConferenceDay other)
+        {
+            return Id == other.Id;
+        }
     }
 }

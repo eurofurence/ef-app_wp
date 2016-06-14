@@ -2,12 +2,16 @@
 using Eurofurence.Companion.DependencyResolution;
 using Ninject;
 using System;
+using System.Linq;
+using Windows.Networking.Connectivity;
+using Windows.System;
 using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using Eurofurence.Companion.Common.Abstractions;
+using Eurofurence.Companion.DataStore.Abstractions;
 using Eurofurence.Companion.ViewModel;
 using Eurofurence.Companion.ViewModel.Local;
 
@@ -28,10 +32,26 @@ namespace Eurofurence.Companion.Views
             NavigationHelper.LoadState += NavigationHelper_LoadState;
             NavigationHelper.SaveState += NavigationHelper_SaveState;
 
+            this.Loaded += DebugPage_Loaded;
 
 
             _tpOffsetDatePicker.Date = _timeProvider.CurrentDateTimeUtc.Date;
             _tpOffsetTimePicker.Time = _timeProvider.CurrentDateTimeUtc.TimeOfDay;
+        }
+
+
+
+        private async void DebugPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            var log = new Action<string>((s) => E_TextBlock_Info.Text += s + Environment.NewLine);
+
+            var storageSizes = (await KernelResolver.Current.Get<IDataStore>().GetStorageFileSizesAsync());
+            log($"Storage:\n  {storageSizes.Sum(a => (decimal)a.Value)} bytes in {storageSizes.Count} files.");
+            log($"Memory:\n  {MemoryManager.AppMemoryUsage}/{MemoryManager.AppMemoryUsageLimit} ({MemoryManager.AppMemoryUsageLevel})");
+
+
+            var networkProfile = NetworkInformation.GetInternetConnectionProfile();
+            log($"Network:\n  Connectivity: {networkProfile.GetNetworkConnectivityLevel()}");
         }
 
         public NavigationHelper NavigationHelper { get; }

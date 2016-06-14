@@ -63,6 +63,12 @@
 
 
 
+                <TextBlock Style="{StaticResource SubheaderTextBlockStyle}">
+                    Info
+                </TextBlock>
+                <TextBlock TextWrapping="Wrap" Name="E_TextBlock_Info" Margin="20">
+                    
+                </TextBlock>
 
                 <TextBlock Style="{StaticResource SubheaderTextBlockStyle}">
                     Context Manager

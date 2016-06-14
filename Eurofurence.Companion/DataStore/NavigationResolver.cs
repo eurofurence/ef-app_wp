@@ -47,7 +47,10 @@ namespace Eurofurence.Companion.DataStore
             foreach (var e in dataContext.Infos)
             {
                 e.Images.Clear();
-                e.Images.AddRange(e.ImageIds.Select(f => dataContext.Images.SingleOrDefault(a => a.Id == f)));
+                if (e.ImageIds != null)
+                {
+                    e.Images.AddRange(e.ImageIds.Select(f => dataContext.Images.SingleOrDefault(a => a.Id == f)));
+                }
             }
         }
     }

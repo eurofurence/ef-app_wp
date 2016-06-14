@@ -56,9 +56,31 @@ namespace Eurofurence.Companion.ViewModel.Local
             _timeProvider.PropertyChanged += _timeProvider_PropertyChanged;
 
             UpcomingEvents = new ObservableCollection<EventEntryViewModel>();
+            RunningEvents = new ObservableCollection<EventEntryViewModel>();
 
             UpdateConventionState();
             UpdateUpcomingEventsData();
+            UpdateRunningEventsData();
+        }
+
+        private void UpdateRunningEventsData()
+        {
+            var allRunningEvents = _eventsViewModelContext.EventEntries
+                .Where(a => a.Entity.EventDateTimeUtc <= CurrentDateTimeUtc &&
+                            a.Entity.EventDateTimeUtc + a.Entity.Duration >= CurrentDateTimeUtc)
+                .OrderBy(a => a.Entity.ConferenceDay.Date)
+                .ThenBy(a => a.Entity.EventDateTimeUtc)
+                .ToList();
+
+            foreach (var @event in RunningEvents.Where(a => !allRunningEvents.Contains(a)).ToList())
+            {
+                RunningEvents.Remove(@event);
+            }
+
+            foreach (var @event in allRunningEvents.Where(a => !RunningEvents.Contains(a)).ToList())
+            {
+                RunningEvents.Insert(0, @event);
+            }
         }
 
         public DateTime CurrentDateTimeUtc => _timeProvider.CurrentDateTimeUtc;
@@ -67,6 +89,7 @@ namespace Eurofurence.Companion.ViewModel.Local
         public EventConferenceDayViewModel UpcomingEventsConferenceDay { get { return _upcomingEventsConferenceDay; } set { SetProperty(ref _upcomingEventsConferenceDay, value); } }
 
         public ObservableCollection<EventEntryViewModel> UpcomingEvents { get; }
+        public ObservableCollection<EventEntryViewModel> RunningEvents { get; }
 
         private void UpdateUpcomingEventsData()
         {
@@ -122,6 +145,7 @@ namespace Eurofurence.Companion.ViewModel.Local
                 case nameof(_timeProvider.CurrentDateTimeMinuteUtc):
                     UpdateConventionState();
                     UpdateUpcomingEventsData();
+                    UpdateRunningEventsData();
                     break;
             }
         }

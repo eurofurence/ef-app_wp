@@ -83,16 +83,33 @@ namespace Eurofurence.Companion.Views
             IsHeaderVisible = layoutProperties?.IsHeaderVisible ?? true;
 
 
+            var extendedPageProperties = e.Content as IPagePropertiesExtended;
+            if (extendedPageProperties != null)
+            {
+                extendedPageProperties.TitleChanged += (s1, title) =>
+                {
+                    SetTitle(title);
+                };
+            }
+
             var pageProperties = e.Content as IPageProperties;
             if (pageProperties == null) return;
 
-            if (tbTitle.Text != pageProperties.Title)
+            SetTitle(pageProperties.Title);;
+
+
+        }
+
+        private void SetTitle(string title)
+        {
+            if (title == null || title == string.Empty) return;
+
+            if (tbTitle.Text != title)
             {
                 EventHandler<object> action = null;
                 action = (_s, _e) =>
                 {
-                    tbTitle.Text = pageProperties.Title ?? string.Empty;
-                    tbIcon.Text = pageProperties.Icon ?? string.Empty;
+                    tbTitle.Text = title;
 
                     transitionOut.Completed -= action;
                     transitionIn.Begin();
@@ -101,8 +118,6 @@ namespace Eurofurence.Companion.Views
                 transitionOut.Completed += action;
                 transitionOut.Begin();
             }
-
-
         }
 
         public async Task<bool> NavigateAsync(

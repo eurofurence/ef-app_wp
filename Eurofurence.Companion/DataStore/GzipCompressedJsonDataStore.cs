@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -70,11 +71,12 @@ namespace Eurofurence.Companion.DataStore
             {
                 var serializer = new JsonSerializer()
                 {
-                    TypeNameHandling = TypeNameHandling.None
+                    TypeNameHandling = TypeNameHandling.Auto
                 };
 
                 var targetType = typeof (List<>).MakeGenericType(entityType);
                 
+                Debug.WriteLine($"Serializing type {entityType} (target: {targetType}) to {GetFilenameForType(entityType)}");
 
                 serializer.Serialize(jsonWriter, entities.ToList(), targetType);
                 jsonWriter.Flush();
@@ -98,8 +100,17 @@ namespace Eurofurence.Companion.DataStore
             using (var reader = new StreamReader(gzipStream))
             using (var jsonReader = new JsonTextReader(reader))
             {
+
+                Debug.WriteLine($"Deserializing type {entityType} from {fileName}");
+
                 var serializer = new JsonSerializer() { TypeNameHandling = TypeNameHandling.Auto };
-                result.AddRange(serializer.Deserialize<List<T>>(jsonReader));
+                var f = serializer.Deserialize(jsonReader);
+
+                if (((List<EntityBase>) f) != null)
+                {
+                    result.AddRange(((List<EntityBase>)f).Cast<T>());
+                }
+                
             }
 
             return result;
@@ -128,6 +139,20 @@ namespace Eurofurence.Companion.DataStore
             var file = await folder.GetFileAsync(GetFilenameForType(entityType));
 
             await file.DeleteAsync();
-        }        
+        }
+
+        public async Task<Dictionary<string, ulong>> GetStorageFileSizesAsync()
+        {
+            var folder = await GetStoreFolderAsync();
+            var existingFiles = await folder.GetFilesAsync(CommonFileQuery.DefaultQuery);
+
+            var result = new Dictionary<string, ulong>();
+            foreach (var file in existingFiles)
+            {
+                result.Add(file.Name, (await file.GetBasicPropertiesAsync()).Size);
+            }
+
+            return result;
+        }
     }
 }

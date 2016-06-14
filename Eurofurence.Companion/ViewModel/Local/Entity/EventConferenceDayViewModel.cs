@@ -12,6 +12,14 @@ namespace Eurofurence.Companion.ViewModel.Local.Entity
         private readonly Func<ICollection<EventEntryViewModel>> _eventEntryViewModelSelector;
         public EventConferenceDay Entity { get; }
 
+        public EventConferenceDayViewModel PreviousDay { get; set; }
+        public bool HasPreviousDay => PreviousDay != null;
+        public EventConferenceDayViewModel NextDay { get; set; }
+        public bool HasNextDay => NextDay != null;
+
+        private bool _isSelected = false;
+        public bool IsSelected { get { return _isSelected; } set { SetProperty(ref _isSelected, value); } }
+
         private bool _isCurrentDay = false;
         public bool IsCurrentDay { get { return _isCurrentDay; } set { SetProperty(ref _isCurrentDay, value); } }
 
@@ -23,6 +31,8 @@ namespace Eurofurence.Companion.ViewModel.Local.Entity
             ITimeProvider timeProvider,
             Func<ICollection<EventEntryViewModel>> eventEntryViewModelSelector)
         {
+            InitializeDispatcherFromCurrentThread();
+
             Entity = entity;
             _eventEntryViewModelSelector = eventEntryViewModelSelector;
 

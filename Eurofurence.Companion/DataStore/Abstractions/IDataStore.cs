@@ -11,5 +11,7 @@ namespace Eurofurence.Companion.DataStore.Abstractions
         Task<IList<T>> GetAsync<T>() where T : EntityBase, new();
         Task ClearAllAsync();
         Task ClearAsync(Type entityType);
+
+        Task<Dictionary<string, ulong>> GetStorageFileSizesAsync();
     }
 }

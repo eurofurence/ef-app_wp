@@ -104,6 +104,16 @@ namespace Eurofurence.Companion.ViewModel
                     )
                 );
 
+            var sortedConferenceDays = EventConferenceDays.OrderBy(a => a.Entity.Date).ToList();
+            for (int i = 0; i < sortedConferenceDays.Count; i++)
+            {
+                if (i > 0) sortedConferenceDays[i - 1].NextDay = sortedConferenceDays[i];
+                if (i < sortedConferenceDays.Count - 1)
+                    sortedConferenceDays[i + 1].PreviousDay = sortedConferenceDays[i];
+            }
+
+            //sortedConferenceDays.First().IsSelected = true;
+
             Invalidated?.Invoke(this, null);
         }
     }

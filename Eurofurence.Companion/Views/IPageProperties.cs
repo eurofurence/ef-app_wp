@@ -1,4 +1,5 @@
-﻿using Eurofurence.Companion.ViewModel;
+﻿using System;
+using Eurofurence.Companion.ViewModel;
 using Eurofurence.Companion.ViewModel.Local;
 
 namespace Eurofurence.Companion.Views
@@ -7,7 +8,15 @@ namespace Eurofurence.Companion.Views
     {
         string Title { get; }
         string Icon { get; }
+
     }
+
+    public interface IPagePropertiesExtended
+    {
+        event EventHandler<string> TitleChanged;
+
+    }
+
 
     public interface ILayoutProperties
     {

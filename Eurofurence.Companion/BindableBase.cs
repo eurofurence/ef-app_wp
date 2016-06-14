@@ -2,12 +2,15 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.UI.Core;
+using Newtonsoft.Json;
+
 // ReSharper disable ExplicitCallerInfoArgument
 
 namespace Eurofurence.Companion
 {
     public abstract class BindableBase : INotifyPropertyChanged
     {
+        [JsonIgnore]
         public CoreDispatcher Dispatcher;
 
         protected void InitializeDispatcherFromCurrentThread()

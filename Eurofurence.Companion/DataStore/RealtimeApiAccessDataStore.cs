@@ -34,6 +34,11 @@ namespace Eurofurence.Companion.DataStore
             throw new NotImplementedException();
         }
 
+        public Task<Dictionary<string, ulong>> GetStorageFileSizesAsync()
+        {
+            return Task.Run(() => new Dictionary<string, ulong>());
+        }
+
         public async Task<IList<T>> GetAsync<T>() where T : EntityBase, new()
         {
             var result = await _apiClient.GetEntitiesAsync<T>().ConfigureAwait(false);

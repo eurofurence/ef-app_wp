@@ -1,11 +1,12 @@
 using System;
+using System.Collections.Generic;
 using Eurofurence.Companion.DataModel.Abstractions;
 using Eurofurence.Companion.DataModel.Local;
 using Newtonsoft.Json;
 
 namespace Eurofurence.Companion.DataModel.Api
 {
-    public class EventEntry : EntityBase, ISortOrderKeyProvider
+    public class EventEntry : EntityBase, ISortOrderKeyProvider, IEquatable<EventEntry>
     {
         public int SourceEventId { get; set; }
         public string Slug { get; set; }
@@ -47,5 +48,10 @@ namespace Eurofurence.Companion.DataModel.Api
 
         [JsonIgnore]
         public object SortOrderKey => (ConferenceDay?.Date.Ticks ?? 0) + StartTime.TotalSeconds;
+
+        public bool Equals(EventEntry other)
+        {
+            return Id == other.Id;
+        }
     }
 }

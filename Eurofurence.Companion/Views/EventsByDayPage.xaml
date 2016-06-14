@@ -5,69 +5,191 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
       xmlns:local="using:Eurofurence.Companion.Views"
+      xmlns:controls="using:Eurofurence.Companion.Views.Controls"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      DataContext="{Binding Source={StaticResource ViewModelLocator},
-                            Path=EventsViewModel}"
+      DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=EventsViewModel}"
       mc:Ignorable="d">
 
     <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <ListView ItemsSource="{Binding EventConferenceDays}" ItemClick="ListViewBase_OnItemClick" IsItemClickEnabled="True">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <controls:SplitPanel></controls:SplitPanel>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <interactivity:Interaction.Behaviors>
+                            <interactivity:BehaviorCollection>
+                                <core:DataTriggerBehavior Binding="{Binding IsSelected}" Value="True">
+                                    <core:ChangePropertyAction TargetObject="{Binding ElementName=E_TextBlock_Day}" 
+                                                               PropertyName="Foreground"
+                                                               Value="{ThemeResource PhoneForegroundBrush}"/>
+                                    <core:ChangePropertyAction TargetObject="{Binding ElementName=E_TextBlock_Weekday}" 
+                                                               PropertyName="Foreground"
+                                                               Value="{ThemeResource PhoneForegroundBrush}"/>
+                                </core:DataTriggerBehavior>
+                                <core:DataTriggerBehavior Binding="{Binding IsSelected}" Value="False">
+                                    <core:ChangePropertyAction TargetObject="{Binding ElementName=E_TextBlock_Day}" 
+                                                               PropertyName="Foreground"
+                                                               Value="{ThemeResource PhoneLowBrush}"/>
+                                    <core:ChangePropertyAction TargetObject="{Binding ElementName=E_TextBlock_Weekday}" 
+                                                               PropertyName="Foreground"
+                                                               Value="{ThemeResource PhoneLowBrush}"/>
+                                </core:DataTriggerBehavior>
+                            </interactivity:BehaviorCollection>
+                        </interactivity:Interaction.Behaviors>
+                        <Border x:Name="E_Border_Day" Height="50">
+                            <Grid>
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="OrientationStates">
+                                            <!--<VisualState x:Name="Full"/>-->
+                                            <!--<VisualState x:Name="Fill"/>-->
+                                            <VisualState x:Name="Portrait">
+                                                
+                                            </VisualState>
+                                            <!--<VisualState x:Name="Snapped"/>-->
+                                            
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                    
+                                <Border Background="{StaticResource AppLowContrastTransparentBackgroundBrush}" 
+                                        Visibility="{Binding IsCurrentDay, Converter={StaticResource TrueToVisibleConverter}}"
+                                        />
+                                <Border Background="{StaticResource EurofurenceThemeColorBrush}" 
+                                        VerticalAlignment="Bottom" Height="4"
+                                        Visibility="{Binding IsSelected, Converter={StaticResource TrueToVisibleConverter}}"
+                                        />
+                                <StackPanel>
+                                    <TextBlock x:Name="E_TextBlock_Day"
+                                Style="{StaticResource TitleTextBlockStyle}"
+                                FontSize="{StaticResource TextStyleLargeFontSize}"
+                                    Foreground="{ThemeResource PhoneLowBrush}"
+                                    Margin="0 3 0 -5"
+                                FontWeight="Thin"
+                                HorizontalAlignment="Center"
+                                Text="{Binding Entity.Date.Day}"/>
+                                    <TextBlock x:Name="E_TextBlock_Weekday"
+                                Style="{StaticResource TitleTextBlockStyle}"
+                                FontSize="{StaticResource TextStyleMediumFontSize}"
+                                               Foreground="{ThemeResource PhoneLowBrush}"
+                                HorizontalAlignment="Center"
+                                       Text="{Binding Entity.WeekdayAbbreviated}"/>
+                                </StackPanel>
+                                <TextBlock FontFamily="{StaticResource IconFontFamily}"
+                                     FontSize="{StaticResource TextStyleSmallFontSize}"
+                                     Foreground="{ThemeResource EurofurenceThemeColorBrush}"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Center"
+                                           Visibility="{Binding IsSelected, Converter={StaticResource TrueToVisibleConverter}}"
+                                     Text="&#xE936;"></TextBlock>
+
+                                <!--<TextBlock FontFamily="{StaticResource IconFontFamily}"
+                                     FontSize="{StaticResource TextStyleSmallFontSize}"
+                                     Foreground="{StaticResource PhoneForegroundBrush}"
+                                           VerticalAlignment="Bottom"
+                                           HorizontalAlignment="Center"
+                                           Visibility="{Binding IsCurrentDay, Converter={StaticResource TrueToVisibleConverter}}"
+                                     Text="&#xE935;"></TextBlock>-->
+
+                            </Grid>
+
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ListView>
+        
+        <FlipView 
+            x:Name="E_FlipView_Events" 
+            ItemsSource="{Binding EventConferenceDays}" Grid.Row="1" SelectionChanged="FlipView_SelectionChanged" Loaded="E_FlipView_Events_Loaded">
+            <FlipView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <ListView
+                            x:Name="EventList" 
+                    Margin="20 10 20 0"
+                    IsItemClickEnabled="True"
+                    ItemsSource="{Binding EventEntries}">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <interactivity:Interaction.Behaviors>
+                                            <interactivity:BehaviorCollection>
+                                                <core:EventTriggerBehavior EventName="Tapped">
+                                                    <core:InvokeCommandAction Command="{Binding Source={StaticResource ViewModelLocator}, Path=NavigationViewModel.NavigateToEventDetailPage}" CommandParameter="{Binding}" />
+                                                </core:EventTriggerBehavior>
+                                            </interactivity:BehaviorCollection>
+                                        </interactivity:Interaction.Behaviors>
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="50" />
+                                            <ColumnDefinition Width="40" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="{Binding Entity.StartTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:hh\\:mm}'}" />
+                                            <TextBlock Foreground="{ThemeResource PhoneMidBrush}">
+                                                <Run FontFamily="{StaticResource IconFontFamily}" Text="&#xE741;" />
+                                                <Run Text="{Binding Entity.EndTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:hh\\:mm}'}" />
+                                            </TextBlock> 
+                                            <!--<TextBlock Text="{Binding EndTime}"  Foreground="{ThemeResource PhoneMidBrush}"/>-->
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="1">
+
+                                            <TextBlock
+                                                   Margin="0 3 0 0"
+                                                   HorizontalAlignment="Center"                                                   
+                                                   FontFamily="{StaticResource IconFontFamily}"
+                                                   Visibility="{Binding Entity.AttributesProxy.Extension.IsFavorite, Converter={StaticResource TrueToVisibleConverter}}"
+                                                   FontSize="20"
+                                                   Text="&#xE1CE;" />
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="2">
+                                            <TextBlock Style="{StaticResource TitleTextBlockStyle}"
+                                        Text="{Binding Entity.Title}"
+                                        TextWrapping="Wrap" />
+                                            <TextBlock FontSize="{StaticResource TextStyleSmallFontSize}"
+                                        Style="{StaticResource TitleTextBlockStyle}"
+                                        Text="{Binding Entity.SubTitle}"
+                                                       Visibility="{Binding HasSubTitle, Converter={StaticResource TrueToVisibleConverter}}"
+                                        TextWrapping="Wrap" />
+                                            <TextBlock Foreground="{ThemeResource PhoneMidBrush}"
+                                        Text="{Binding ConferenceRoom.Entity.Name}"
+                                        TextWrapping="Wrap" MaxHeight="20" TextTrimming="CharacterEllipsis" />
+                                            <Image Source="{Binding Entity.Image.Content, Converter={StaticResource BytesToImageConverter}}" />
+                                            <!--<TextBlock Text="{Binding Abstract}" TextAlignment="Justify" TextWrapping="Wrap" Foreground="{ThemeResource PhoneMidBrush}"></TextBlock>-->
+                                        </StackPanel>
+                                    </Grid>
+
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </DataTemplate>
+
+            </FlipView.ItemTemplate>
+        </FlipView>
 
 
-
-
-        <Grid x:Name="ContentRoot"
-              Margin="19,9.5,19,0"
-              DataContext="{Binding Path=EventEntries}">
-            <ListView x:Name="EventList"
-                      IsItemClickEnabled="True"
-                      ItemsSource="{Binding}">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <interactivity:Interaction.Behaviors>
-                                <interactivity:BehaviorCollection>
-                                    <core:EventTriggerBehavior EventName="Tapped">
-                                        <core:InvokeCommandAction Command="{Binding Source={StaticResource ViewModelLocator}, Path=NavigationViewModel.NavigateToEventDetailPage}" CommandParameter="{Binding}" />
-                                    </core:EventTriggerBehavior>
-                                </interactivity:BehaviorCollection>
-                            </interactivity:Interaction.Behaviors>
-
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="90" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Column="0">
-                                <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="{Binding Entity.StartTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:hh\\:mm}'}" />
-                                <TextBlock Foreground="{ThemeResource PhoneMidBrush}" Text="{Binding Entity.EndTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='until \{0:hh\\:mm}'}" />
-                                <!--<TextBlock Text="{Binding EndTime}"  Foreground="{ThemeResource PhoneMidBrush}"/>-->
-                            </StackPanel>
-
-
-                            <StackPanel Grid.Column="1">
-                                <TextBlock Style="{StaticResource TitleTextBlockStyle}"
-                                           Text="{Binding Entity.Title}"
-                                           TextWrapping="Wrap" />
-                                <TextBlock FontSize="{StaticResource TextStyleMediumFontSize}"
-                                           Style="{StaticResource TitleTextBlockStyle}"
-                                           Text="{Binding Entity.SubTitle}"
-                                           TextWrapping="Wrap" />
-                                <TextBlock Foreground="{ThemeResource PhoneMidBrush}"
-                                           Text="{Binding ConferenceRoom.Entity.Name}"
-                                           TextWrapping="Wrap" />
-                                <Image Source="{Binding Entity.Image.Content, Converter={StaticResource BytesToImageConverter}}" />
-                                <!--<TextBlock Text="{Binding Abstract}" TextAlignment="Justify" TextWrapping="Wrap" Foreground="{ThemeResource PhoneMidBrush}"></TextBlock>-->
-                            </StackPanel>
-                        </Grid>
-
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
 
 
     </Grid>

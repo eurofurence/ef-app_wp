@@ -8,5 +8,10 @@ namespace Eurofurence.Companion.DataModel
 
         public byte IsDeleted { get; set; }
         public DateTime LastChangeDateTimeUtc { get; set; }
+
+        protected EntityBase()
+        {
+            InitializeDispatcherFromCurrentThread();
+        }
     }
 }

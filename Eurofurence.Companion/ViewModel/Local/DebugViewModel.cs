@@ -21,6 +21,7 @@ namespace Eurofurence.Companion.ViewModel.Local
 
         public DebugViewModel(ContextManager contextManager)
         {
+            InitializeDispatcherFromCurrentThread();
             ContextManager = contextManager;
         }
 
