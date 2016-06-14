@@ -104,6 +104,29 @@
                 <Setter Property="Foreground" Value="{ThemeResource PhoneForegroundBrush}" />
                 <Setter Property="TextWrapping" Value="WrapWholeWords" />
             </Style>
+            <Style x:Key="AppGroupHeaderBorder" TargetType="Border">
+                <Setter Property="BorderBrush" Value="#30000000" />
+                <Setter Property="BorderThickness" Value="0 0 0 3" />
+            </Style>
+
+            <Thickness x:Key="AppGroupHeaderOuterMargin">0,0,0,0</Thickness>
+            <Thickness x:Key="AppGroupHeaderInnerMargin">0,0,0,0</Thickness>
+            <FontFamily x:Key="PhoneFontFamilyNormal">Segoe WP</FontFamily>
+            <x:Double x:Key="TextStyleLargeFontSize">18.14</x:Double>
+            <Style x:Key="AppGroupHeaderTextStyle" TargetType="TextBlock">
+                <Setter Property="FontFamily" Value="{ThemeResource PhoneFontFamilyNormal}" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="Foreground" Value="{ThemeResource PhoneMidBrush}" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="TextTrimming" Value="Clip" />
+                <Setter Property="TextWrapping" Value="WrapWholeWords" />
+                <Setter Property="LineHeight" Value="21.5" />
+                <Setter Property="LineStackingStrategy" Value="BaselineToBaseline" />
+                <Setter Property="TextLineBounds" Value="Full" />
+                <Setter Property="OpticalMarginAlignment" Value="TrimSideBearings" />
+
+            </Style>
+
 
 
             <ResourceDictionary.ThemeDictionaries>

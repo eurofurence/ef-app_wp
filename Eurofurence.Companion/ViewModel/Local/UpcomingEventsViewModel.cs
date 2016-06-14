@@ -59,8 +59,8 @@ namespace Eurofurence.Companion.ViewModel.Local
             RunningEvents = new ObservableCollection<EventEntryViewModel>();
 
             UpdateConventionState();
-            UpdateUpcomingEventsData();
             UpdateRunningEventsData();
+            UpdateUpcomingEventsData();
         }
 
         private void UpdateRunningEventsData()

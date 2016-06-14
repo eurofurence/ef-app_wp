@@ -28,7 +28,7 @@
                            VerticalAlignment="Top"
                            Source="ms-appx:///Assets/Eurofurence/Volatile/logo_small.png" />
                 </Grid>
-                <Grid x:Name="ContentRoot" Margin="20 0 20 0">
+                <Grid x:Name="ContentRoot" Margin="20 20 20 0">
                     <StackPanel>
                         <interactivity:Interaction.Behaviors>
                             <interactivity:BehaviorCollection>

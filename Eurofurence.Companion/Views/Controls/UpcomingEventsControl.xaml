@@ -38,26 +38,27 @@
                 </ListViewItem>
             </ListView>
 
-            <Border Margin="-20 0 -20 0" Background="#30000000" Padding="0 5 0 5">
-                <Grid Margin="20 0 20 0">
+            <Border Height="5" />
+
+            <Border Margin="{StaticResource AppGroupHeaderOuterMargin}" Style="{StaticResource AppGroupHeaderBorder}">
+                <Grid Margin="{StaticResource AppGroupHeaderInnerMargin}">
 
                     <TextBlock HorizontalAlignment="Right"
-                                           FontSize="{StaticResource TextStyleMediumFontSize}"
-                                           Foreground="{StaticResource PhoneMidBrush}"
-                                           Style="{StaticResource BaseTextBlockStyle}">
-                                    <Run FontFamily="{StaticResource IconFontFamily}"
-                                         FontSize="{StaticResource TextStyleSmallFontSize}"
-                                         Foreground="{StaticResource PhoneLowBrush}"
-                                         Text="&#xE121;" />
-                                    <Run Text="{Binding Source={StaticResource ServiceLocator}, Path=TimeProvider.CurrentDateTimeMinuteLocal, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:HH\\:mm}'}" />
+                               FontSize="{StaticResource TextStyleMediumFontSize}"
+                               Foreground="{StaticResource PhoneMidBrush}"
+                               Style="{StaticResource BaseTextBlockStyle}">
+                        <Run FontFamily="{StaticResource IconFontFamily}"
+                             FontSize="{StaticResource TextStyleSmallFontSize}"
+                             Foreground="{StaticResource PhoneLowBrush}"
+                             Text="&#xE121;" />
+                        <Run Foreground="{ThemeResource PhoneForegroundBrush}" Text="{Binding Source={StaticResource ServiceLocator}, Path=TimeProvider.CurrentDateTimeMinuteLocal, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:HH\\:mm}'}" />
                     </TextBlock>
-                    <TextBlock FontSize="{StaticResource TextStyleMediumFontSize}"
-                                           Foreground="{StaticResource PhoneLowBrush}"
-                                           Style="{StaticResource BaseTextBlockStyle}">
-                                    Running Events
+                    <TextBlock Style="{StaticResource AppGroupHeaderTextStyle}">
+                        Running Events
                     </TextBlock>
                 </Grid>
             </Border>
+
             <ListView Margin="-20 0 -20 0" ItemsSource="{Binding RunningEvents}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
@@ -85,13 +86,12 @@
                                 </Grid.ColumnDefinitions>
 
                                 <StackPanel Grid.Column="0">
-                                    <TextBlock 
-                                               Margin="5 5 0 0"
+                                    <TextBlock Margin="5 5 0 0"
                                                FontFamily="{StaticResource IconFontFamily}"
                                                FontSize="24"
                                                Text="&#xE1CE;"
-                                        Visibility="{Binding Entity.AttributesProxy.Extension.IsFavorite,
-                                        Converter={StaticResource TrueToVisibleConverter}}" />
+                                               Visibility="{Binding Entity.AttributesProxy.Extension.IsFavorite,
+                                                                    Converter={StaticResource TrueToVisibleConverter}}" />
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="1">
@@ -110,10 +110,11 @@
                                                TextTrimming="CharacterEllipsis"
                                                TextWrapping="Wrap" />
                                     <TextBlock FontSize="{StaticResource TextStyleSmallFontSize}"
-                                        Style="{StaticResource TitleTextBlockStyle}"
-                                        Text="{Binding Entity.SubTitle}"
-                                                       Visibility="{Binding HasSubTitle, Converter={StaticResource TrueToVisibleConverter}}"
-                                        TextWrapping="Wrap" />
+                                               Style="{StaticResource TitleTextBlockStyle}"
+                                               Text="{Binding Entity.SubTitle}"
+                                               TextWrapping="Wrap"
+                                               Visibility="{Binding HasSubTitle,
+                                                                    Converter={StaticResource TrueToVisibleConverter}}" />
                                     <!--<TextBlock Foreground="{ThemeResource PhoneMidBrush}"
                                         Text="{Binding ConferenceRoom.Entity.Name}"
                                         TextWrapping="Wrap" MaxHeight="20" TextTrimming="CharacterEllipsis" />-->
@@ -125,14 +126,13 @@
 
             </ListView>
 
+            <Border Height="5" />
 
-            <Border Margin="-20 0 -20 0" Background="#30000000" Padding="0 5 0 5">
 
-                <Grid Margin="20 0 20 0">
-                    <TextBlock FontSize="{StaticResource TextStyleMediumFontSize}"
-                                           Foreground="{StaticResource PhoneLowBrush}"
-                                           Style="{StaticResource BaseTextBlockStyle}">
-                                    Upcoming Events
+            <Border Margin="{StaticResource AppGroupHeaderOuterMargin}" Style="{StaticResource AppGroupHeaderBorder}">
+                <Grid Margin="{StaticResource AppGroupHeaderInnerMargin}">
+                    <TextBlock Style="{StaticResource AppGroupHeaderTextStyle}">
+                        Upcoming Events
                     </TextBlock>
                 </Grid>
             </Border>
@@ -199,13 +199,12 @@
                                 </Grid.ColumnDefinitions>
 
                                 <StackPanel Grid.Column="0">
-                                    <TextBlock 
-                                               Margin="5 5 0 0"
+                                    <TextBlock Margin="5 5 0 0"
                                                FontFamily="{StaticResource IconFontFamily}"
                                                FontSize="24"
-                                               Text="&#xE1CE;" 
-                                        Visibility="{Binding Entity.AttributesProxy.Extension.IsFavorite,
-                                        Converter={StaticResource TrueToVisibleConverter}}" />
+                                               Text="&#xE1CE;"
+                                               Visibility="{Binding Entity.AttributesProxy.Extension.IsFavorite,
+                                                                    Converter={StaticResource TrueToVisibleConverter}}" />
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="1">
@@ -224,13 +223,16 @@
                                                TextTrimming="CharacterEllipsis"
                                                TextWrapping="Wrap" />
                                     <TextBlock FontSize="{StaticResource TextStyleSmallFontSize}"
-                                        Style="{StaticResource TitleTextBlockStyle}"
-                                        Text="{Binding Entity.SubTitle}"
-                                                       Visibility="{Binding HasSubTitle, Converter={StaticResource TrueToVisibleConverter}}"
-                                        TextWrapping="Wrap" />
-                                    <TextBlock Foreground="{ThemeResource PhoneMidBrush}"
-                                        Text="{Binding ConferenceRoom.Entity.Name}"
-                                        TextWrapping="Wrap" MaxHeight="20" TextTrimming="CharacterEllipsis" />
+                                               Style="{StaticResource TitleTextBlockStyle}"
+                                               Text="{Binding Entity.SubTitle}"
+                                               TextWrapping="Wrap"
+                                               Visibility="{Binding HasSubTitle,
+                                                                    Converter={StaticResource TrueToVisibleConverter}}" />
+                                    <TextBlock MaxHeight="20"
+                                               Foreground="{ThemeResource PhoneMidBrush}"
+                                               Text="{Binding ConferenceRoom.Entity.Name}"
+                                               TextTrimming="CharacterEllipsis"
+                                               TextWrapping="Wrap" />
                                     <TextBlock Name="_ue_textblock_startsIn" Foreground="{ThemeResource PhoneLowBrush}">
                                         <Run FontFamily="{StaticResource IconFontFamily}" Text="&#xE121;" />
                                         <Run>scheduled to start in</Run>

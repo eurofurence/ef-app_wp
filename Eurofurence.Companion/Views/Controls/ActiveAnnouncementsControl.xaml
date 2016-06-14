@@ -15,12 +15,10 @@
 
     <Grid>
         <StackPanel>
-            <Border Margin="-20 0 -20 0" Background="#30000000" Padding="0 5 0 5">
-                <StackPanel Margin="20 0 20 0">
-                    <TextBlock FontSize="{StaticResource TextStyleMediumFontSize}"
-                           Foreground="{StaticResource PhoneLowBrush}"
-                           Style="{StaticResource BaseTextBlockStyle}">
-                    Announcements
+            <Border Margin="{StaticResource AppGroupHeaderOuterMargin}" Style="{StaticResource AppGroupHeaderBorder}">
+                <StackPanel Margin="{StaticResource AppGroupHeaderInnerMargin}">
+                    <TextBlock Style="{StaticResource AppGroupHeaderTextStyle}">
+                        Announcements
                     </TextBlock>
                 </StackPanel>
             </Border>
