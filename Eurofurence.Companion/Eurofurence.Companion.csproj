@@ -157,6 +157,7 @@
     <Compile Include="ViewModel\DealersViewModelContext.cs" />
     <Compile Include="ViewModel\Abstractions\IDealersViewModelContext.cs" />
     <Compile Include="ViewModel\Local\ActiveAnnouncementsViewModel.cs" />
+    <Compile Include="ViewModel\Local\ConventionStateViewModel.cs" />
     <Compile Include="ViewModel\Local\DealersViewModel.cs" />
     <Compile Include="ViewModel\Local\DebugViewModel.cs" />
     <Compile Include="Common\Abstractions\INavigationMediator.cs" />
@@ -194,6 +195,9 @@
     </Compile>
     <Compile Include="Views\Controls\ActiveAnnouncementsControl.xaml.cs">
       <DependentUpon>ActiveAnnouncementsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\PreConMessageControl.xaml.cs">
+      <DependentUpon>PreConMessageControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\SplitPanel.cs" />
     <Compile Include="Views\Controls\UpcomingEventsControl.xaml.cs">
@@ -305,6 +309,10 @@
     <Page Include="Views\Controls\ActiveAnnouncementsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Controls\PreConMessageControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\UpcomingEventsControl.xaml">
       <SubType>Designer</SubType>

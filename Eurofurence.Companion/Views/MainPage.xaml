@@ -48,6 +48,8 @@
                                 </ic:DataTriggerBehavior>
                             </interactivity:BehaviorCollection>
                         </interactivity:Interaction.Behaviors>
+                        
+                        <TextBlock Text="{Binding Source={StaticResource ViewModelLocator}, Path=UpcomingEventsViewModel.ConventionState}"></TextBlock>
 
                         <StackPanel Margin="0 0 0 20" DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=ActiveAnnouncementsViewModel}">
                             <controls:ActiveAnnouncementsControl DataContext="{Binding}" Visibility="{Binding HasActiveAnnouncements, Converter={StaticResource TrueToVisibleConverter}}" />
