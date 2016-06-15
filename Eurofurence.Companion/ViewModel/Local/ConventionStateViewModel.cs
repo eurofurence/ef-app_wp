@@ -53,6 +53,8 @@ namespace Eurofurence.Companion.ViewModel.Local
             _timeProvider.WatchProperty(nameof(_timeProvider.CurrentDateTimeMinuteUtc), args => Invalidate());
 
             _eventsViewModelContext = eventsViewModelContext;
+            _eventsViewModelContext.Invalidated += (sender, args) => Invalidate();
+
             Invalidate();
         }
 
