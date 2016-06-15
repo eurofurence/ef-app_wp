@@ -196,6 +196,9 @@
     <Compile Include="Views\Controls\ActiveAnnouncementsControl.xaml.cs">
       <DependentUpon>ActiveAnnouncementsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\PostConMessageControl.xaml.cs">
+      <DependentUpon>PostConMessageControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\PreConMessageControl.xaml.cs">
       <DependentUpon>PreConMessageControl.xaml</DependentUpon>
     </Compile>
@@ -256,6 +259,7 @@
     <Content Include="Assets\Eurofurence\Volatile\background_blur.jpg" />
     <Content Include="Assets\Eurofurence\Volatile\logo_small.png" />
     <Content Include="Assets\Eurofurence\WolfHead.svg" />
+    <None Include="Assets\Fonts\fontelico-codes.css" />
     <Content Include="Assets\MediumGray.png" />
     <Content Include="Assets\Logo.scale-240.png" />
     <Content Include="Assets\PageBackground.jpg" />
@@ -272,6 +276,7 @@
     </Content>
     <Content Include="ViewModel\Behaviors\RichTextBlockHtml2Xaml.xslt" />
     <Content Include="Assets\Fonts\ef_app_icons.ttf" />
+    <Content Include="Assets\Fonts\fontelico.ttf" />
     <None Include="Package.StoreAssociation.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -309,6 +314,10 @@
     <Page Include="Views\Controls\ActiveAnnouncementsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Controls\PostConMessageControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\PreConMessageControl.xaml">
       <SubType>Designer</SubType>

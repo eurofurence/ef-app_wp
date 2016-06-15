@@ -18,7 +18,7 @@
 
         <ScrollViewer>
             <StackPanel>
-                <Grid>
+                <Grid IsDoubleTapEnabled="True" DoubleTapped="Banner_OnDoubleTapped">
                     <Image Height="150"
                            Source="ms-appx:///Assets/Eurofurence/Volatile/background.jpg"
                            Stretch="UniformToFill" />
@@ -49,15 +49,34 @@
                             </interactivity:BehaviorCollection>
                         </interactivity:Interaction.Behaviors>
                         
-                        <TextBlock Text="{Binding Source={StaticResource ViewModelLocator}, Path=UpcomingEventsViewModel.ConventionState}"></TextBlock>
-
                         <StackPanel Margin="0 0 0 20" DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=ActiveAnnouncementsViewModel}">
                             <controls:ActiveAnnouncementsControl DataContext="{Binding}" Visibility="{Binding HasActiveAnnouncements, Converter={StaticResource TrueToVisibleConverter}}" />
                         </StackPanel>
+                        
+                        <controls:PreConMessageControl
+                            Visibility="{Binding 
+                                Source={StaticResource ViewModelLocator}, 
+                                Path=ConventionStateViewModel.IsAhead,
+                                Converter={StaticResource TrueToVisibleConverter}
+                            }"/>
 
-                        <StackPanel Name="E_StackPanel_UpcomingEvents">
+
+
+                        <StackPanel Name="E_StackPanel_UpcomingEvents"
+                            Visibility="{Binding 
+                                Source={StaticResource ViewModelLocator}, 
+                                Path=ConventionStateViewModel.IsOngoing,
+                                Converter={StaticResource TrueToVisibleConverter}
+                            }">
                             <controls:UpcomingEventsControl DataContext="{Binding}" />
                         </StackPanel>
+
+                        <controls:PostConMessageControl
+                            Visibility="{Binding 
+                                Source={StaticResource ViewModelLocator}, 
+                                Path=ConventionStateViewModel.IsOver,
+                                Converter={StaticResource TrueToVisibleConverter}
+                            }"/>
 
                     </StackPanel>
 

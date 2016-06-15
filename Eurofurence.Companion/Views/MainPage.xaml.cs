@@ -2,9 +2,11 @@
 using Ninject;
 using Eurofurence.Companion.Common;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using Eurofurence.Companion.DependencyResolution;
 using Eurofurence.Companion.DataStore.Abstractions;
+using Eurofurence.Companion.ViewModel.Local;
 
 namespace Eurofurence.Companion.Views
 {
@@ -54,5 +56,10 @@ namespace Eurofurence.Companion.Views
         }
 
         #endregion
+
+        private void Banner_OnDoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {
+            KernelResolver.Current.Get<NavigationViewModel>().NavigateToDebugPage.Execute(null);
+        }
     }
 }

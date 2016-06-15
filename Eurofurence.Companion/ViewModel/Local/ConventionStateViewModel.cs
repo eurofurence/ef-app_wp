@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using System.Linq;
 using Eurofurence.Companion.Common;
 using Eurofurence.Companion.Common.Abstractions;
@@ -19,36 +21,57 @@ namespace Eurofurence.Companion.ViewModel.Local
             Over
         }
 
-        private string _conventionStateText;
-        public string ConventionStateText
+
+        private int _daysUntilFirstConventionDay = 0;
+        public int DaysUntilFirstConventionDay
         {
-            get { return _conventionStateText; }
-            set
-            {
-                SetProperty(ref _conventionStateText, value);
-            }
+            get { return _daysUntilFirstConventionDay; }
+            set { SetProperty(ref _daysUntilFirstConventionDay, value); }
         }
 
+        private bool _isAhead = false;
+        private bool _isOngoing = false;
+        private bool _isOver = false;
 
-        private ConventionStateEnum _conventionState = ConventionStateEnum.Ahead;
-        public ConventionStateEnum ConventionState
-        {
+        public bool IsAhead { get { return _isAhead; } set { SetProperty(ref _isAhead, value); } }
+        public bool IsOngoing { get { return _isOngoing; } set { SetProperty(ref _isOngoing, value); } }
+        public bool IsOver { get { return _isOver; } set { SetProperty(ref _isOver, value); } }
+
+
+        private ConventionStateEnum _conventionState;
+        public ConventionStateEnum ConventionState {
             get { return _conventionState; }
-            set
-            {
-                SetProperty(ref _conventionState, value);
-            }
+            set { SetProperty(ref _conventionState, value); }
         }
+
 
         public ConventionStateViewModel(ITimeProvider timeProvider, IEventsViewModelContext eventsViewModelContext)
         {
             InitializeDispatcherFromCurrentThread();
 
             _timeProvider = timeProvider;
-            _timeProvider.WatchProperty(nameof(_timeProvider.CurrentDateTimeMinuteUtc), args => UpdateConventionState());
+            _timeProvider.WatchProperty(nameof(_timeProvider.CurrentDateTimeMinuteUtc), args => Invalidate());
 
             _eventsViewModelContext = eventsViewModelContext;
+            Invalidate();
+        }
+
+        private void Invalidate()
+        {
             UpdateConventionState();
+            UpdateDaysUntilFirstConventionDay();
+        }
+
+        private void UpdateDaysUntilFirstConventionDay()
+        {
+            if (!_eventsViewModelContext.EventConferenceDays.Any()) return;
+            if (_conventionState != ConventionStateEnum.Ahead) return;
+
+            var firstConventionDayStartDateTimeUtc = 
+                _eventsViewModelContext.EventConferenceDays.Min(a => a.Entity.DayStartDateTimeUtc);
+
+            DaysUntilFirstConventionDay = 
+                (int)Math.Ceiling((firstConventionDayStartDateTimeUtc - _timeProvider.CurrentDateTimeUtc).TotalDays);
         }
 
         private void UpdateConventionState()
@@ -70,7 +93,10 @@ namespace Eurofurence.Companion.ViewModel.Local
             {
                 ConventionState = ConventionStateEnum.Ongoing;
             }
-            ConventionStateText = ConventionState.ToString();
+
+            IsAhead = ConventionState == ConventionStateEnum.Ahead;
+            IsOngoing = ConventionState == ConventionStateEnum.Ongoing;
+            IsOver = ConventionState == ConventionStateEnum.Over;
         }
     }
 }

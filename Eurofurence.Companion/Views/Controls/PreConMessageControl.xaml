@@ -6,12 +6,57 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DataContext="{Binding Source={StaticResource ViewModelLocator},
-                            Path=UpcomingEventsViewModel}"
+    DataContext="{Binding Source={StaticResource ViewModelLocator},
+                            Path=ConventionStateViewModel}"
     d:DesignHeight="300"
     d:DesignWidth="400">
     
     <Grid>
 
+
+
+        <StackPanel>
+            
+            <Border Margin="{StaticResource AppGroupHeaderOuterMargin}" Style="{StaticResource AppGroupHeaderBorder}">
+                <TextBlock Margin="{StaticResource AppGroupHeaderInnerMargin}" Style="{StaticResource AppGroupHeaderTextStyle}">
+                    Is it Eurofurence yet?
+                </TextBlock>
+            </Border>
+            
+            <TextBlock Style="{StaticResource BaseTextBlockStyle}"
+                       FontSize="{StaticResource TextStyleSmallFontSize}"
+                       TextWrapping="Wrap">
+                Given your mobile phone's data (and the app data) is accurate, calculated by the wonders
+                of modern technology, the next Eurofurence will start in:
+            </TextBlock>
+            
+
+            
+            <!--<Ellipse Stroke="{ThemeResource PhoneLowBrush}" StrokeThickness="5"></Ellipse>-->
+            <TextBlock Margin="20"
+                        Style="{StaticResource SubheaderTextBlockStyle}"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        TextAlignment="Center">
+                <Run FontSize="60" Text="{Binding DaysUntilFirstConventionDay}" />
+                <Run>&#160;day(s)! &#160;&#160;</Run>
+                <Run FontFamily="{StaticResource FontelicoFontFamily}" >&#xE800;</Run>
+
+            </TextBlock>
+
+            <TextBlock Style="{StaticResource BaseTextBlockStyle}"
+                       FontSize="{StaticResource TextStyleSmallFontSize}"
+                       TextWrapping="Wrap">
+                During the convention days, this place will show you upcoming and running events and their locations.
+                <LineBreak />
+                <LineBreak />You can already browse through the preliminary convention information, event schedule &amp; dealers listings
+                via the application menu on the top left.
+            </TextBlock>
+
+        </StackPanel>
+        
+
+        
+        
     </Grid>
 </UserControl>

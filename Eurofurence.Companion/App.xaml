@@ -71,6 +71,7 @@
 
             <FontFamily x:Key="IconFontFamily">/Assets/Fonts/segmdl2.ttf#Segoe MDL2 Assets</FontFamily>
             <FontFamily x:Key="EurofurenceAppIconsFontFamily">/Assets/Fonts/ef_app_icons.ttf#ef_app_icons</FontFamily>
+            <FontFamily x:Key="FontelicoFontFamily">/Assets/Fonts/fontelico.ttf#fontelico</FontFamily>
 
             <dependencyResolution:ViewModelLocator x:Key="ViewModelLocator" />
             <dependencyResolution:ServiceLocator x:Key="ServiceLocator" />
