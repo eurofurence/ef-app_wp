@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -23,6 +24,9 @@ using HockeyApp;
 using Ninject;
 using Eurofurence.Companion.Common.Abstractions;
 using Eurofurence.Companion.DataStore.Abstractions;
+using Eurofurence.Companion.Services;
+using Eurofurence.Companion.ViewModel.Abstractions;
+using Eurofurence.Companion.ViewModel.Local;
 
 namespace Eurofurence.Companion
 {
@@ -59,7 +63,11 @@ namespace Eurofurence.Companion
 
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
-            if (_isInitialized) return;
+            if (_isInitialized)
+            {
+                HandleLaunchActivatedEvent(e);
+                return;
+            }
 
             ThemeManager.SetThemeColor((Color)Resources["EurofurenceThemeColor"]);
 
@@ -77,6 +85,8 @@ namespace Eurofurence.Companion
             var layoutPage = new LayoutPage(navigationMediator, _telemetryClientProvider);
             KernelResolver.Current.Bind<ILayoutPage>().ToConstant(layoutPage);
             Window.Current.Content = layoutPage;
+
+            var s = KernelResolver.Current.Get<ToastNotificationService>();
 
 
             var firstTimeRunResult = await HandleFirstTimeRunAsync();
@@ -179,7 +189,25 @@ namespace Eurofurence.Companion
             Window.Current.Activate();
             _isInitialized = true;
 
+            HandleLaunchActivatedEvent(e);
+
             await HockeyClient.Current.SendCrashesAsync();
+        }
+
+        private void HandleLaunchActivatedEvent(LaunchActivatedEventArgs e)
+        {
+            if (e.Arguments.StartsWith("toast:"))
+            {
+                var args = e.Arguments.Split(':');
+                if (args[1] == "eventDetail")
+                {
+                    var eventId = Guid.Parse(args[2]);
+                    var evm = KernelResolver.Current.Get<IEventsViewModelContext>();
+                    var x = evm.EventEntries.Single(a => a.Entity.Id == eventId);
+                    KernelResolver.Current.Get<NavigationViewModel>().NavigateToEventDetailPage.Execute(x);
+                }
+            }
+
         }
 
         private void RootFrame_FirstNavigated(object sender, NavigationEventArgs e)

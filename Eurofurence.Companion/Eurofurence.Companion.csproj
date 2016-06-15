@@ -121,6 +121,7 @@
     <Compile Include="DataStore\GzipCompressedJsonDataStore.cs" />
     <Compile Include="DependencyResolution\IocBeacon.cs" />
     <Compile Include="DependencyResolution\ServiceLocator.cs" />
+    <Compile Include="Services\ToastNotificationService.cs" />
     <Compile Include="Translations.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -412,6 +413,10 @@
     </Reference>
     <Reference Include="Ninject, Version=3.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Portable.Ninject.3.3.1\lib\Wpa81\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NotificationsExtensions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c936aba0ac6438e9, processorArchitecture=MSIL">
+      <HintPath>..\packages\NotificationsExtensions.Portable.1.0.7\lib\dotnet\NotificationsExtensions.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
