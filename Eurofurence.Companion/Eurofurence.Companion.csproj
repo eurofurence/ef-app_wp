@@ -121,6 +121,7 @@
     <Compile Include="DataStore\GzipCompressedJsonDataStore.cs" />
     <Compile Include="DependencyResolution\IocBeacon.cs" />
     <Compile Include="DependencyResolution\ServiceLocator.cs" />
+    <Compile Include="Services\EventService.cs" />
     <Compile Include="Services\ToastNotificationService.cs" />
     <Compile Include="Translations.cs">
       <AutoGen>True</AutoGen>

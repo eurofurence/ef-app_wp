@@ -22,7 +22,9 @@
     </Page.Resources>
     <Page.BottomAppBar>
         <CommandBar>
-            <AppBarToggleButton Click="AppBarToggleButton_Click"
+            <AppBarToggleButton 
+                Command="{Binding Source={StaticResource ServiceLocator}, Path=EventService.ToggleFavoriteStatusCommand}"
+                CommandParameter="{Binding Entity}"
                                 Icon="Favorite"
                                 IsChecked="{Binding Entity.AttributesProxy.Extension.IsFavorite}"
                                 Label="Favorite" />

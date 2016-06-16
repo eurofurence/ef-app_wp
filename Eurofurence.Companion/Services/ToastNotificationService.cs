@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using Windows.Data.Xml.Dom;
-using Windows.Phone.Notification.Management;
-using Eurofurence.Companion.DataStore.Abstractions;
+using Eurofurence.Companion.Common.Abstractions;
 using Eurofurence.Companion.DependencyResolution;
-using Windows.UI.Notifications;
-using NotificationsExtensions.TileContent;
+using Eurofurence.Companion.DataStore.Abstractions;
+using Eurofurence.Companion.DataModel.Api;
 using NotificationsExtensions.ToastContent;
+using Windows.Data.Xml.Dom;
+using Windows.UI.Notifications;
 
 namespace Eurofurence.Companion.Services
 {
@@ -18,45 +14,112 @@ namespace Eurofurence.Companion.Services
     public class ToastNotificationService
     {
         private readonly IDataContext _dataContext;
+        private readonly ITimeProvider _timeProvider;
         private readonly ToastNotifier _toastNotificationManager;
 
-        public ToastNotificationService(IDataContext dataContext)
+        public ToastNotificationService(IDataContext dataContext, ITimeProvider timeProvider)
         {
             _dataContext = dataContext;
+            _timeProvider = timeProvider;
             _toastNotificationManager = ToastNotificationManager.CreateToastNotifier();
 
-            UpdateEventNotifications();
+            RescheduleAllEventNotifications();
         }
 
-        private void UpdateEventNotifications()
+
+        private DateTime? GetSanitizedDeliveryDate(DateTime origin)
         {
+            if (origin > _timeProvider.CurrentDateTimeUtc)
+            {
+                return origin.Add(TimeSpan.Zero - _timeProvider.ForcedOffset);
+            }
+            return null;
+        }
+
+
+        public void QueueEventNotifications(EventEntry entity)
+        {
+            DequeueEventNotifications(entity);
+
+            var notifyXMinutesAhead = new Action<int>(notifyMinutesAhead =>
+            {
+                try
+                {
+                    var deliveryDate =
+                        GetSanitizedDeliveryDate(entity.EventDateTimeUtc.AddMinutes(0 - notifyMinutesAhead));
+                    if (!deliveryDate.HasValue) return;
+
+                    var parts = SplitGuid(entity.Id);
+
+                    var toast = new ScheduledToastNotification(
+                        CreateToast($"{entity.Title} {entity.SubTitle}",
+                            $"Event starts in {notifyMinutesAhead} minutes",
+                            $"toast:eventDetail:{entity.Id}"),
+                        deliveryDate.Value)
+                    {
+                        Id = parts.Item1,
+                        Tag = parts.Item2,
+                        Group = $"e:{notifyMinutesAhead}min",
+                    };
+
+                    _toastNotificationManager.AddToSchedule(toast);
+                }
+                catch (Exception)
+                {
+
+                }
+            });
+
+            notifyXMinutesAhead(60);
+            notifyXMinutesAhead(30);
+            notifyXMinutesAhead(15);
+        }
+
+
+        public void DequeueEventNotifications(EventEntry entity)
+        {
+            var parts = SplitGuid(entity.Id);
+
             var toasts = _toastNotificationManager
                 .GetScheduledToastNotifications()
-                .Where(a => a.Group == "efapp_tg_1");
+                .Where(a => a.Group.StartsWith("e:") && a.Id == parts.Item1 && a.Tag == parts.Item2);
 
-            foreach (var toast in toasts.Where(a => a.Group == "efapp_tg_1"))
+            foreach (var toast in toasts)
             {
                 _toastNotificationManager.RemoveFromSchedule(toast);
             }
-            
+        }
+
+        private static Tuple<string, string> SplitGuid(Guid id)
+        {
+            var bytes = id.ToByteArray();
+            return new Tuple<string, string>(Convert.ToBase64String(bytes, 8, 8), Convert.ToBase64String(bytes, 0, 8));
+        }
+
+        private static Guid AssembleGuid(string a, string b)
+        {
+            var bytes = new byte[16];
+
+            Array.Copy(Convert.FromBase64String(a), 0, bytes, 8, 8);
+            Array.Copy(Convert.FromBase64String(b), 0, bytes, 0, 8);
+
+            return new Guid(bytes);
+        }
+
+        private void RescheduleAllEventNotifications()
+        {
+            var toasts = _toastNotificationManager
+                .GetScheduledToastNotifications()
+                .Where(a => a.Group.StartsWith("e:"));
+
+            foreach (var toast in toasts)
+            {
+                _toastNotificationManager.RemoveFromSchedule(toast);
+            }
 
             foreach (var @event in _dataContext.EventEntries.Where(a => a.AttributesProxy.Extension.IsFavorite))
             {
-                var toast = new ScheduledToastNotification(
-                    CreateToast(
-                        $"{@event.Title} {@event.SubTitle}", 
-                        "Event starts in 30 minutes",
-                        $"toast:eventDetail:{@event.Id}"
-                        ),
-                    //@event.EventDateTimeUtc.AddMinutes(-30)
-                    DateTime.UtcNow.AddSeconds(5)
-                    )
-                {
-                    Id = GetRandomToastId(),
-                    Group = "efapp_tg_1",
-                };
-
-                _toastNotificationManager.AddToSchedule(toast);
+                QueueEventNotifications(@event);
             }
         }
 
@@ -79,8 +142,5 @@ namespace Eurofurence.Companion.Services
         {
             return Math.Floor(new Random().NextDouble()*1000000).ToString();
         }
-
-
-
     }
 }
