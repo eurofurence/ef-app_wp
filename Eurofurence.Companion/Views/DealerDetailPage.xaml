@@ -82,7 +82,7 @@
                             </ItemsControl.ItemContainerStyle>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Button HorizontalAlignment="Stretch" Click="OnWebsiteUriClick">
+                                    <Button HorizontalAlignment="Stretch" Click="OnWebsiteUriClickAsync">
                                         <Viewbox StretchDirection="DownOnly">
                                             <TextBlock Text="{Binding Converter={StaticResource UriToStringConverter}}" />
                                         </Viewbox>

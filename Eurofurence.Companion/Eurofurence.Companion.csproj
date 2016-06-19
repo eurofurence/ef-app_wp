@@ -171,6 +171,7 @@
     <Compile Include="ViewModel\EventsViewModelContext.cs" />
     <Compile Include="ViewModel\Local\Entity\InfoGroupViewModel.cs" />
     <Compile Include="ViewModel\Local\Entity\InfoViewModel.cs" />
+    <Compile Include="ViewModel\Local\EventsPageViewModel.cs" />
     <Compile Include="ViewModel\Local\UpcomingEventsViewModel.cs" />
     <Compile Include="ViewModel\Local\MenuItemViewModel.cs" />
     <Compile Include="ViewModel\Local\MenuViewModel.cs" />
@@ -198,6 +199,10 @@
     <Compile Include="Views\Controls\ActiveAnnouncementsControl.xaml.cs">
       <DependentUpon>ActiveAnnouncementsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\EventListControl.xaml.cs">
+      <DependentUpon>EventListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\FixedFlipView.cs" />
     <Compile Include="Views\Controls\PostConMessageControl.xaml.cs">
       <DependentUpon>PostConMessageControl.xaml</DependentUpon>
     </Compile>
@@ -222,6 +227,12 @@
     </Compile>
     <Compile Include="Views\EventsByDayPage.xaml.cs">
       <DependentUpon>EventsByDayPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EventsByRoomPage.xaml.cs">
+      <DependentUpon>EventsByRoomPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EventsByTrackPage.xaml.cs">
+      <DependentUpon>EventsByTrackPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EventsPage.xaml.cs">
       <DependentUpon>EventsPage.xaml</DependentUpon>
@@ -256,15 +267,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\BadgeLogo24x24.scale-240.png" />
-    <Content Include="Assets\Eurofurence\aewin10.jpg" />
     <Content Include="Assets\Eurofurence\Volatile\background.jpg" />
-    <Content Include="Assets\Eurofurence\Volatile\background_blur.jpg" />
     <Content Include="Assets\Eurofurence\Volatile\logo_small.png" />
     <Content Include="Assets\Eurofurence\WolfHead.svg" />
     <None Include="Assets\Fonts\fontelico-codes.css" />
-    <Content Include="Assets\MediumGray.png" />
     <Content Include="Assets\Logo.scale-240.png" />
-    <Content Include="Assets\PageBackground.jpg" />
     <Content Include="Assets\Square150x150Logo.scale-240.png" />
     <Content Include="Assets\Square71x71Logo.scale-240.png" />
     <Content Include="Assets\LuchsAvatar.png" />
@@ -317,6 +324,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Controls\EventListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Controls\PostConMessageControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -346,6 +357,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EventsByDayPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EventsByRoomPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\EventsByTrackPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

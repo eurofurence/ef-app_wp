@@ -43,7 +43,7 @@ namespace Eurofurence.Companion.Views
 
 
             _navigationMediator.OnNavigateAsync += NavigateAsync;
-            RootFrame.Navigated += RootFrame_NavigatedAsync;
+            RootFrame.Navigated += RootFrame_Navigated;
         }
 
         public bool AcknowledgeNavigateBackRequest()
@@ -62,19 +62,19 @@ namespace Eurofurence.Companion.Views
         }
 
 
-        private async void RootFrame_NavigatedAsync(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
+        private void RootFrame_Navigated(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
         {
-            _searchBarViewModel = new SearchBarViewModel() { Dispatcher = _dispatcher };
-            _searchBarViewModel.PropertyChanged += async (s, a) =>
-            {
-                if (a.PropertyName == nameof(_searchBarViewModel.IsSearchExpanded) && _searchBarViewModel.IsSearchExpanded)
-                {
-                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
-                        _textBox_searchBox.Focus(FocusState.Programmatic);
-                    });
-                }
-            };
-            _grid_searchBar.DataContext = _searchBarViewModel;
+            //_searchBarViewModel = new SearchBarViewModel() { Dispatcher = _dispatcher };
+            //_searchBarViewModel.PropertyChanged += async (s, a) =>
+            //{
+            //    if (a.PropertyName == nameof(_searchBarViewModel.IsSearchExpanded) && _searchBarViewModel.IsSearchExpanded)
+            //    {
+            //        await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
+            //            _textBox_searchBox.Focus(FocusState.Programmatic);
+            //        });
+            //    }
+            //};
+            //_grid_searchBar.DataContext = _searchBarViewModel;
 
 
             if (CurrentPageSearchInteraction != null) CurrentPageSearchInteraction.SearchBarViewModel = _searchBarViewModel;
@@ -96,8 +96,6 @@ namespace Eurofurence.Companion.Views
             if (pageProperties == null) return;
 
             SetTitle(pageProperties.Title);;
-
-
         }
 
         private void SetTitle(string title)

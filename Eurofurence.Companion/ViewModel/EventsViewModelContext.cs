@@ -88,19 +88,27 @@ namespace Eurofurence.Companion.ViewModel
                 new EventConferenceDayViewModel(
                     entity,
                     _timeProvider,
-                    () => entity.Entries.Select(e => _eventEntryMapping[e]).ToList()
+                    () => entity.Entries.Select(e => _eventEntryMapping[e])
+                        .OrderBy(e => e.Entity.StartTime)
+                        .ToList()
                     )
                 );
 
             Populate(_dataContext.EventConferenceRooms, EventConferenceRooms, _eventConferenceRoomsMapping, entity =>
                 new EventConferenceRoomViewModel(entity,
-                    () => entity.Entries.Select(e => _eventEntryMapping[e]).ToList()
+                    () => entity.Entries.Select(e => _eventEntryMapping[e])
+                        .OrderBy(e => e.ConferenceDay.Entity.Date)
+                        .ThenBy(e => e.Entity.StartTime)
+                        .ToList()
                     )
                 );
 
             Populate(_dataContext.EventConferenceTracks, EventConferenceTracks, _eventConferenceTracksMapping, entity =>
                 new EventConferenceTrackViewModel(entity,
-                    () => entity.Entries.Select(e => _eventEntryMapping[e]).ToList()
+                    () => entity.Entries.Select(e => _eventEntryMapping[e])
+                        .OrderBy(e => e.ConferenceDay.Entity.Date)
+                        .ThenBy(e => e.Entity.StartTime)                                           
+                        .ToList()
                     )
                 );
 

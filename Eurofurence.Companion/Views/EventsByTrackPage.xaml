@@ -1,0 +1,34 @@
+﻿<Page x:Class="Eurofurence.Companion.Views.EventsByTrackPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:controls="using:Eurofurence.Companion.Views.Controls"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:Eurofurence.Companion.Views"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      d:DataContext="{Binding Source={StaticResource ViewModelLocator},
+                              Path=EventsViewModel.EventConferenceTracks[1]}"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+      mc:Ignorable="d">
+
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+
+        <Border Height="4"
+                VerticalAlignment="Bottom"
+                Background="{StaticResource EurofurenceThemeColorBrush}" />
+
+        <Grid Margin="20 10 20 0">
+            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="{Binding Entity.Name}" />
+        </Grid>
+
+        <controls:EventListControl Grid.Row="1"
+                                   Margin="20"
+                                   DataContext="{Binding EventEntries}"
+                                   ShowConferenceDay="True"
+                                   ShowConferenceRoom="True" />
+    </Grid>
+</Page>

@@ -9,6 +9,9 @@ namespace Eurofurence.Companion.Views
 
     public sealed partial class DealerListPage : Page, IPageProperties
     {
+        public const string PAGE_ICON = "\uE13D";
+        public string Title => Translations.Dealers_Title;
+
         private const string STATE_SCROLLVIEWER_OFFSET_Y = "scrollViewer.OffsetY";
 
         public DealerListPage()
@@ -46,9 +49,6 @@ namespace Eurofurence.Companion.Views
             e.PageState[STATE_SCROLLVIEWER_OFFSET_Y] = GetListViewScrollViewer().VerticalOffset;
         }
 
-        public const string PAGE_ICON = "\uE13D";
-        public string Title => Translations.Dealers_Title;
-        public string Icon => PAGE_ICON;
 
         #region NavigationHelper registration
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Eurofurence.Companion.DataModel.Api;
+using System.Linq;
 
 namespace Eurofurence.Companion.ViewModel.Local.Entity
 {
@@ -10,6 +11,9 @@ namespace Eurofurence.Companion.ViewModel.Local.Entity
         public EventConferenceRoom Entity { get; }
 
         public ICollection<EventEntryViewModel> EventEntries => _eventEntryViewModelSelector();
+
+        public int EventEntryCount => EventEntries?.Count ?? 0;
+        public double EventTotalHourCount => EventEntries?.Sum(a => a.Entity.Duration.TotalHours) ?? 0d;
 
         public EventConferenceRoomViewModel(
             EventConferenceRoom entity,

@@ -9,7 +9,6 @@ namespace Eurofurence.Companion.Views
     public sealed partial class AboutPage : Page, IPageProperties
     {
         public string Title => Translations.About_Title;
-        public string Icon => "";
 
         public AboutPage()
         {

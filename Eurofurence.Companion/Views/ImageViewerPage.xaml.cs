@@ -11,13 +11,6 @@ namespace Eurofurence.Companion.Views
     {
         private NavigationHelper navigationHelper;
         public bool IsHeaderVisible => false;
-        private ImageViewerPageOptions _options = null;
-
-        public class ImageViewerPageOptions
-        {
-            public ImageSource Image { get; set; }
-            public bool AllowZoom { get; set; }
-        }
 
         public ImageViewerPage()
         {

@@ -3,16 +3,18 @@ using Eurofurence.Companion.Common;
 using Eurofurence.Companion.DependencyResolution;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Eurofurence.Companion.ViewModel;
 using Eurofurence.Companion.ViewModel.Local;
+using Windows.UI.Xaml;
+using System.Linq;
 
 namespace Eurofurence.Companion.Views
 {
 
-    public sealed partial class EventsPage : Page, IPageProperties, ISearchInteraction
+    public sealed partial class EventsPage : Page, IPageProperties
 
     {
-        private const string STATE_EVENTPIVOT_INDEX = "eventPivot.Index";
+        private const string STATE_FLIPVIEW_INDEX = "flipview.Index";
+        private const string STATE_FLIPVIEW_SCROLLVIEW_VERTICALOFFSET = "flipview.VerticalOffset";
         private const string STATE_SEARCHTEXT = "searchText";
 
         private EventsViewModel ViewModel => (EventsViewModel)DataContext;
@@ -20,6 +22,8 @@ namespace Eurofurence.Companion.Views
         public EventsPage()
         {
             InitializeComponent();
+
+            NavigationCacheMode = NavigationCacheMode.Enabled;
 
             NavigationHelper = new NavigationHelper(this);
             NavigationHelper.LoadState += NavigationHelper_LoadState;
@@ -31,47 +35,48 @@ namespace Eurofurence.Companion.Views
 
         public const string PAGE_ICON = "\uE163";
 
-
         public string Title => Translations.EventSchedule_Title;
         public string Icon => PAGE_ICON;
 
-        public string PlaceholderText => "Search for events";
-        public string DefaultSearchText => "";
-
-        public bool IsSearchAvailable => true;
-
-        public SearchBarViewModel SearchBarViewModel { get; set; }
-
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            SearchBarViewModel.IsSearchAvailable = true;
-            SearchBarViewModel.PropertyChanged += (s, a) =>
+            if (e.PageState == null) return;
+
+            ViewModel.SearchText = (string)e.PageState[STATE_SEARCHTEXT];
+
+            GroupFlipView.SelectedIndex = e.PageState.ContainsKey(STATE_FLIPVIEW_INDEX) ?
+                (int)e.PageState[STATE_FLIPVIEW_INDEX] : 0;
+
+            if (e.PageState.ContainsKey(STATE_FLIPVIEW_SCROLLVIEW_VERTICALOFFSET))
             {
-                switch (a.PropertyName)
+                var selectedItem = (GroupFlipView.SelectedItem as FlipViewItem);
+                RoutedEventHandler restoreVerticalOffset = null;
+                restoreVerticalOffset = (_, __) =>
                 {
-                    case nameof(SearchBarViewModel.SearchText):
-                        ViewModel.SearchText = SearchBarViewModel.SearchText;
-                        break;
-                }
+                    selectedItem.Loaded -= restoreVerticalOffset;
+                    (GroupFlipView.SelectedItem as FrameworkElement)
+                        .Descendents()
+                        .OfType<ScrollViewer>()
+                        .FirstOrDefault()?
+                        .ChangeView(null, (double)e.PageState[STATE_FLIPVIEW_SCROLLVIEW_VERTICALOFFSET], null, true);
+                };
 
-                FlipViewMain.SelectedItem = SearchBarViewModel.IsSearchExpanded && !string.IsNullOrEmpty(ViewModel.SearchText) ? 
-                    FlipViewItemSearch : FlipViewItemEventPivot;
-            };
-
-
-            var previousSearchText = (string)(e.PageState?[STATE_SEARCHTEXT] ?? "");
-            if (!string.IsNullOrWhiteSpace(previousSearchText))
-            {
-                SearchBarViewModel.IsSearchExpanded = true;
-                SearchBarViewModel.SearchText = previousSearchText;
+                selectedItem.Loaded += restoreVerticalOffset;
             }
         }
 
 
+
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
-
             e.PageState.Add(STATE_SEARCHTEXT, ViewModel.SearchText);
+            e.PageState.Add(STATE_FLIPVIEW_INDEX, GroupFlipView.SelectedIndex);
+            e.PageState.Add(STATE_FLIPVIEW_SCROLLVIEW_VERTICALOFFSET, 
+                (GroupFlipView.SelectedItem as FrameworkElement)
+                    .Descendents()?
+                    .OfType<ScrollViewer>()?
+                    .FirstOrDefault()?
+                    .VerticalOffset ?? 0);
         }
 
         #region NavigationHelper registration
@@ -95,5 +100,24 @@ namespace Eurofurence.Companion.Views
                 .NavigationViewModel.NavigateToEventsByDayPage.Execute(e.ClickedItem);
         }
 
+        private void GroupItemClick(object sender, ItemClickEventArgs e)
+        {
+            var t = (e.ClickedItem as EventsPageViewModel.EventGroupViewModel);
+
+            GroupFlipView.SelectedIndex = localViewModel.Groups.IndexOf(t);
+            foreach(var v in localViewModel.Groups)
+            {
+                v.IsSelected = (v == t);
+            }
+        }
+
+        private void SynchronizeFlipView(object sender, SelectionChangedEventArgs e)
+        {
+            if (localViewModel == null) return;
+            foreach (var v in localViewModel.Groups)
+            {
+                v.IsSelected = localViewModel.Groups.IndexOf(v) == GroupFlipView.SelectedIndex;
+            }
+        }
     }
 }

@@ -1,20 +1,14 @@
 ﻿using Eurofurence.Companion.Common;
 using Eurofurence.Companion.ViewModel.Local.Entity;
-using System;
-using Windows.System;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
+
 namespace Eurofurence.Companion.Views
 {
-    public sealed partial class DealerDetailPage : Page, IPageProperties
+    public sealed partial class EventsByRoomPage : Page
     {
-        private DealerViewModel CurrentDealer => (DataContext as DealerViewModel);
-
-        public string Title => CurrentDealer?.DisplayName;
-
-        public DealerDetailPage()
+        public EventsByRoomPage()
         {
             InitializeComponent();
 
@@ -27,18 +21,17 @@ namespace Eurofurence.Companion.Views
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            DataContext = e.NavigationParameter;        
         }
 
-   
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
         }
 
         #region NavigationHelper registration
-
+        
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            DataContext = (EventConferenceRoomViewModel)e.Parameter;
             NavigationHelper.OnNavigatedTo(e);
         }
 
@@ -48,11 +41,5 @@ namespace Eurofurence.Companion.Views
         }
 
         #endregion
-
-        private async void OnWebsiteUriClickAsync(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            var uri = new Uri((string)((FrameworkElement)e.OriginalSource).DataContext);
-            await Launcher.LaunchUriAsync(uri);
-        }
     }
 }
