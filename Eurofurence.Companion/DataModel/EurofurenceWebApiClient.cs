@@ -26,6 +26,8 @@ namespace Eurofurence.Companion.DataModel
             { typeof(InfoGroup), "InfoGroup" },
             { typeof(Image), "Image" },
             { typeof(Dealer), "Dealer" },
+            { typeof(Map), "Map" },
+            { typeof(MapEntry), "MapEntry" }
         };
      
         public EurofurenceWebApiClient(string endpointUrl)

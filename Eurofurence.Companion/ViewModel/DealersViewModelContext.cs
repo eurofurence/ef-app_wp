@@ -36,6 +36,16 @@ namespace Eurofurence.Companion.ViewModel
 
             foreach(var viewModel in viewModels.OrderBy(viewModel => viewModel.DisplayName))
             {
+                var mapEntry = _dataContext.MapEntries.SingleOrDefault(
+                    a => a.MarkerType == "Dealer" && a.TargetId == viewModel.Entity.Id);
+
+                if (mapEntry != null)
+                {
+                    viewModel.MapEntry = new MapEntryViewModel(mapEntry);
+                    viewModel.MapEntry.Map = new MapViewModel(mapEntry.Map);
+                    viewModel.MapEntry.Map.Entries.Add(viewModel.MapEntry);
+                }
+
                 Dealers.Add(viewModel);
             }
 

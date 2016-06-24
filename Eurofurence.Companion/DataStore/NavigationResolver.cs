@@ -52,6 +52,29 @@ namespace Eurofurence.Companion.DataStore
                     e.Images.AddRange(e.ImageIds.Select(f => dataContext.Images.SingleOrDefault(a => a.Id == f)));
                 }
             }
+
+            foreach (var e in dataContext.Maps)
+            {
+                e.Entries.Clear();
+                e.Image = dataContext.Images.SingleOrDefault(a => a.Id == e.ImageId);
+            }
+            foreach (var e in dataContext.MapEntries)
+            {
+                e.Map = dataContext.Maps.SingleOrDefault(a => a.Id == e.MapId);
+                e.Map?.Entries.Add(e);
+
+                switch (e.MarkerType)
+                {
+                    case "Dealer":
+                        if (e.TargetId.HasValue)
+                        {
+                            e.TargetEntity = dataContext.Dealers.Single(a => a.Id == e.TargetId);
+                        }
+                        
+                        break;
+
+                }
+            }
         }
     }
 }

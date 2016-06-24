@@ -21,6 +21,16 @@ namespace Eurofurence.Companion.Views
             NavigationHelper = new NavigationHelper(this);
             NavigationHelper.LoadState += NavigationHelper_LoadState;
             NavigationHelper.SaveState += NavigationHelper_SaveState;
+
+            this.Loaded += (sender, args) =>
+            {
+                if (CurrentDealer?.HasMapEntry ?? false)
+                {
+                    E_ScrollViewer_Map.ChangeView(CurrentDealer.MapEntry.X / 1.5
+                        - (E_ScrollViewer_Map.ActualWidth / 2)
+                        , CurrentDealer.MapEntry.Y / 1.5 - (E_ScrollViewer_Map.ActualHeight / 2), 1 / 1.5f, true);
+                }
+            };
         }
 
         public NavigationHelper NavigationHelper { get; }

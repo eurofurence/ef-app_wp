@@ -1,0 +1,30 @@
+﻿<Page
+    x:Class="Eurofurence.Companion.Views.MapDetailPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:local="using:Eurofurence.Companion.Views"
+      xmlns:controls="using:Eurofurence.Companion.Views.Controls"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+      d:DataContext="{Binding Source={StaticResource ViewModelLocator},
+                            Path=MapsViewModel.Maps[0]}"
+      mc:Ignorable="d">
+
+    <Grid x:Name="LayoutRoot">
+
+
+
+        <ScrollViewer ZoomMode="Enabled" HorizontalSnapPointsType="None"
+                      HorizontalSnapPointsAlignment="Center"
+                      HorizontalScrollBarVisibility="Visible"
+                      VerticalSnapPointsAlignment="Center"
+                      VerticalSnapPointsType="None" MaxZoomFactor="20">
+
+            <controls:MapViewerControl DataContext="{Binding}" />
+        </ScrollViewer>
+    </Grid>
+</Page>
+

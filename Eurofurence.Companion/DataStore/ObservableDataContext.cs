@@ -35,6 +35,8 @@ namespace Eurofurence.Companion.DataStore
             InfoGroups = new ObservableCollection<InfoGroup>();
             Images = new ObservableCollection<Image>();
             Dealers = new ObservableCollection<Dealer>();
+            Maps = new ObservableCollection<Map>();
+            MapEntries = new ObservableCollection<MapEntry>();
 
             EventEntryAttributes = new ObservableCollection<EventEntryAttributes>();
 
@@ -50,6 +52,8 @@ namespace Eurofurence.Companion.DataStore
         public ObservableCollection<InfoGroup> InfoGroups { get; }
         public ObservableCollection<Image> Images { get; }
         public ObservableCollection<Dealer> Dealers { get; }
+        public ObservableCollection<Map> Maps { get; }
+        public ObservableCollection<MapEntry> MapEntries { get; }
 
         public ObservableCollection<EventEntryAttributes> EventEntryAttributes { get; }
 
@@ -65,6 +69,8 @@ namespace Eurofurence.Companion.DataStore
             await LoadEntityFromStoreAsync(InfoGroups, nameof(InfoGroups));
             await LoadEntityFromStoreAsync(Images, nameof(Images));
             await LoadEntityFromStoreAsync(Dealers, nameof(Dealers));
+            await LoadEntityFromStoreAsync(Maps, nameof(Maps));
+            await LoadEntityFromStoreAsync(MapEntries, nameof(MapEntries));
             await LoadEntityFromStoreAsync(EventEntryAttributes, nameof(EventEntryAttributes));
             _navigationResolver.Resolve(this);
 

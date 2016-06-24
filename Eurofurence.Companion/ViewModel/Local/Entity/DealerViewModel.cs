@@ -13,6 +13,9 @@ namespace Eurofurence.Companion.ViewModel.Local.Entity
 
         public List<Uri> ParsedWebsiteUris { get; set; }
 
+        public MapEntryViewModel MapEntry { get; set; }
+  
+
         public DealerViewModel(Dealer entity)
         {
             InitializeDispatcherFromCurrentThread();
@@ -50,6 +53,7 @@ namespace Eurofurence.Companion.ViewModel.Local.Entity
 
         public string DisplayName => HasUniqueDisplayName ? Entity.DisplayName : Entity.AttendeeNickname;
         public bool HasUniqueDisplayName => !string.IsNullOrWhiteSpace(Entity.DisplayName);
+        public bool HasMapEntry => MapEntry != null;
 
         public bool HasArtistThumbnailImage => Entity.ArtistThumbnailImage != null;
         public bool HasArtistImage => Entity.ArtistImage != null;

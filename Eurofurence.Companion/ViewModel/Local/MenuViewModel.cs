@@ -80,6 +80,14 @@ namespace Eurofurence.Companion.ViewModel.Local
                     NavigationCommand = new RelayCommand(p => {
                         _navigationMediator.NavigateAsync(typeof(Views.DealerListPage), forceNewStack: true);
                     })
+                },
+                new MenuItemViewModel{
+                    Title = "Maps",
+                    Icon = "\uE128",
+                    Description = "Maps (Beta)",
+                    NavigationCommand = new RelayCommand(p => {
+                        _navigationMediator.NavigateAsync(typeof(Views.MapsPage), forceNewStack: true);
+                    })
                 }
             };
         }

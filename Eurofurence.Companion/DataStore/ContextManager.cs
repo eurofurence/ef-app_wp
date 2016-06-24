@@ -132,7 +132,7 @@ namespace Eurofurence.Companion.DataStore
                 var metadata = await _apiClient.GetEndpointMetadataAsync();
                 var updateResults = new List<EntityUpdateResult>();
 
-                MainOperationMaxValue = 10;
+                MainOperationMaxValue = 12;
                 MainOperationCurrentValue = 0;
 
                 updateResults.Add(await UpdateEntitiesAsync<Announcement>(metadata));
@@ -144,6 +144,8 @@ namespace Eurofurence.Companion.DataStore
                 updateResults.Add(await UpdateEntitiesAsync<InfoGroup>(metadata));
                 updateResults.Add(await UpdateEntitiesAsync<Image>(metadata));
                 updateResults.Add(await UpdateEntitiesAsync<Dealer>(metadata));
+                updateResults.Add(await UpdateEntitiesAsync<Map>(metadata));
+                updateResults.Add(await UpdateEntitiesAsync<MapEntry>(metadata));
 
                 await UpdateImageDataAsync(updateResults.Single(a => a.EntityType == typeof(Image)).Entities.Cast<Image>());
 

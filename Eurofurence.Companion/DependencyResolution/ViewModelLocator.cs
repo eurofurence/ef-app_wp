@@ -19,5 +19,6 @@ namespace Eurofurence.Companion.DependencyResolution
         public ActiveAnnouncementsViewModel ActiveAnnouncementsViewModel => KernelResolver.Current.Get<ActiveAnnouncementsViewModel>();
         public ConventionStateViewModel ConventionStateViewModel => KernelResolver.Current.Get<ConventionStateViewModel>();
         public MenuViewModel MenuViewModel => KernelResolver.Current.Get<MenuViewModel>();
+        public MapsViewModel MapsViewModel => KernelResolver.Current.Get<MapsViewModel>();
     }
 }

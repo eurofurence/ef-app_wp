@@ -92,6 +92,8 @@
     <Compile Include="Common\Abstractions\ITelemetryClientProvider.cs" />
     <Compile Include="Common\Abstractions\ITimeProvider.cs" />
     <Compile Include="Common\AsyncNavigationEvent.cs" />
+    <Compile Include="DataModel\Api\Map.cs" />
+    <Compile Include="DataModel\Api\MapEntry.cs" />
     <Compile Include="DataModel\Api\NamedUrl.cs" />
     <Compile Include="DataModel\ImageExtensions.cs" />
     <Compile Include="Common\NavigationHelper.cs" />
@@ -129,6 +131,7 @@
       <DependentUpon>Translations.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\Abstractions\IEventsViewModelContext.cs" />
+    <Compile Include="ViewModel\Abstractions\IMapsViewModelContext.cs" />
     <Compile Include="ViewModel\Behaviors\RichTextBlockProperties.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="DataModel\StringFormatConverter.cs" />
@@ -155,11 +158,15 @@
     <Compile Include="ViewModel\Converter\UriToStringConverter.cs" />
     <Compile Include="ViewModel\Converter\WikiTextToHtmlConverter.cs" />
     <Compile Include="ViewModel\Abstractions\IInfoViewModelContext.cs" />
+    <Compile Include="ViewModel\MapsViewModelContext.cs" />
     <Compile Include="ViewModel\InfoViewModelContext.cs" />
     <Compile Include="ViewModel\DealersViewModelContext.cs" />
     <Compile Include="ViewModel\Abstractions\IDealersViewModelContext.cs" />
     <Compile Include="ViewModel\Local\ActiveAnnouncementsViewModel.cs" />
     <Compile Include="ViewModel\Local\ConventionStateViewModel.cs" />
+    <Compile Include="ViewModel\Local\Entity\MapViewModel.cs" />
+    <Compile Include="ViewModel\Local\Entity\MapEntryViewModel.cs" />
+    <Compile Include="ViewModel\Local\MapsViewModel.cs" />
     <Compile Include="ViewModel\Local\DealersViewModel.cs" />
     <Compile Include="ViewModel\Local\DebugViewModel.cs" />
     <Compile Include="Common\Abstractions\INavigationMediator.cs" />
@@ -203,6 +210,9 @@
       <DependentUpon>EventListControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\FixedFlipView.cs" />
+    <Compile Include="Views\Controls\MapViewerControl.xaml.cs">
+      <DependentUpon>MapViewerControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\PostConMessageControl.xaml.cs">
       <DependentUpon>PostConMessageControl.xaml</DependentUpon>
     </Compile>
@@ -256,6 +266,12 @@
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MapDetailPage.xaml.cs">
+      <DependentUpon>MapDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MapsPage.xaml.cs">
+      <DependentUpon>MapsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\WelcomeGuidePage.xaml.cs">
       <DependentUpon>WelcomeGuidePage.xaml</DependentUpon>
     </Compile>
@@ -270,6 +286,7 @@
     <Content Include="Assets\Eurofurence\Volatile\background.jpg" />
     <Content Include="Assets\Eurofurence\Volatile\logo_small.png" />
     <Content Include="Assets\Eurofurence\WolfHead.svg" />
+    <None Include="app.config" />
     <None Include="Assets\Fonts\fontelico-codes.css" />
     <Content Include="Assets\Logo.scale-240.png" />
     <Content Include="Assets\Square150x150Logo.scale-240.png" />
@@ -325,6 +342,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Controls\EventListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\MapViewerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -396,6 +417,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\MapDetailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MapsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\WelcomeGuidePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -407,14 +436,6 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="HockeyApp, Version=2.2.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\HockeySDK.WINRT.2.2.3\lib\portable-wpa81\HockeyApp.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="HockeyAppPCL, Version=2.2.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\HockeySDK.Core.2.2.3\lib\portable-net45+win8+wp8+wpa81+win81\HockeyAppPCL.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid+MonoTouch\HtmlAgilityPack.dll</HintPath>
       <Private>True</Private>
@@ -425,6 +446,14 @@
     </Reference>
     <Reference Include="Microsoft.ApplicationInsights.PersistenceChannel, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.PersistenceChannel.2.0.0-beta3\lib\portable-win81+wpa81\Microsoft.ApplicationInsights.PersistenceChannel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.HockeyApp.Core45, Version=4.1.1.17552, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HockeySDK.Core.4.1.1-build17552\lib\portable-net45+win8+wp8+wpa81+win81+uap10.0\Microsoft.HockeyApp.Core45.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.HockeyApp.Kit, Version=4.1.1.17552, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HockeySDK.WINRT.4.1.1-build17552\lib\portable-wpa81\Microsoft.HockeyApp.Kit.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">

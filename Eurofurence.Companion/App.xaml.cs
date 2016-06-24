@@ -20,13 +20,13 @@ using Eurofurence.Companion.DataStore;
 using Eurofurence.Companion.DependencyResolution;
 using Eurofurence.Companion.ViewModel;
 using Eurofurence.Companion.Views;
-using HockeyApp;
 using Ninject;
 using Eurofurence.Companion.Common.Abstractions;
 using Eurofurence.Companion.DataStore.Abstractions;
 using Eurofurence.Companion.Services;
 using Eurofurence.Companion.ViewModel.Abstractions;
 using Eurofurence.Companion.ViewModel.Local;
+using Microsoft.HockeyApp;
 
 namespace Eurofurence.Companion
 {

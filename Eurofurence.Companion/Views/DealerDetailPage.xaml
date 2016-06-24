@@ -4,6 +4,7 @@
       xmlns:core="using:Microsoft.Xaml.Interactions.Core"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:controls="using:Eurofurence.Companion.Views.Controls"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       d:DataContext="{Binding Source={StaticResource ViewModelLocator},
                               Path=DealersViewModel.Dealers[7]}"
@@ -46,12 +47,42 @@
                 </Grid>
 
                 <StackPanel Margin="20">
-                    <TextBlock Style="{ThemeResource GroupHeaderTextBlockStyle}" Text="{Binding Entity.AttendeeNickname}" />
+                   
+                    <TextBlock Style="{ThemeResource GroupHeaderTextBlockStyle}" Text="{Binding DisplayName}" />
+                    <TextBlock Foreground="{ThemeResource PhoneLowBrush}" Visibility="{Binding HasUniqueDisplayName, Converter={StaticResource TrueToVisibleConverter}}">
+                                    <Run FontFamily="{StaticResource IconFontFamily}" Text="&#xE77B;" />
+                                    <Run Text="{Binding Entity.AttendeeNickname}" />
+
+                    </TextBlock>
+
 
                     <TextBlock Margin="15"
                                FontSize="{StaticResource TextStyleMediumFontSize}"
                                Text="{Binding Entity.ShortDescription}"
                                TextWrapping="WrapWholeWords" />
+
+
+                    <StackPanel Visibility="{Binding HasMapEntry, Converter={StaticResource TrueToVisibleConverter}}">
+                        <TextBlock FontSize="{StaticResource TextStyleMediumFontSize}"
+                               Foreground="{StaticResource PhoneLowBrush}"
+                               Style="{StaticResource BaseTextBlockStyle}">
+                        Dealers Den Location
+                        </TextBlock>
+                        <ScrollViewer Margin="15" Name="E_ScrollViewer_Map" Height="200" 
+                                  HorizontalScrollBarVisibility="Visible"
+                                  VerticalScrollBarVisibility="Visible"
+                                  HorizontalScrollMode="Enabled"
+                                  VerticalScrollMode="Enabled"
+                                  Visibility="{Binding HasMapEntry}"
+                                  IsHitTestVisible="False">
+                            <controls:MapViewerControl DataContext="{Binding MapEntry.Map}"
+                                                       MarkerScale="2.0"
+                                                       MarkerFill="Transparent"
+                                                       />
+                            
+                        </ScrollViewer>
+                    </StackPanel>
+
                     <TextBlock FontSize="{StaticResource TextStyleMediumFontSize}"
                                Foreground="{StaticResource PhoneLowBrush}"
                                Style="{StaticResource BaseTextBlockStyle}">
