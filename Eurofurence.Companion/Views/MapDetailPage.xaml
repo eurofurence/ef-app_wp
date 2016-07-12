@@ -21,7 +21,9 @@
                       HorizontalSnapPointsAlignment="Center"
                       HorizontalScrollBarVisibility="Visible"
                       VerticalSnapPointsAlignment="Center"
-                      VerticalSnapPointsType="None" MaxZoomFactor="20">
+                      VerticalSnapPointsType="None" MaxZoomFactor="20"
+                      x:Name="E_ScrollViewer_Map"
+                      >
 
             <controls:MapViewerControl DataContext="{Binding}" />
         </ScrollViewer>
