@@ -36,7 +36,7 @@
                             </interactivity:Interaction.Behaviors>
                             <StackPanel>
                                 <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="{Binding Entity.Description}" />
-                                <TextBlock Foreground="{ThemeResource PhoneMidBrush}" Text="{Binding Entity.Description}" />
+                                <!--<TextBlock Foreground="{ThemeResource PhoneMidBrush}" Text="{Binding Entity.Description}" />-->
                             </StackPanel>
                         </Grid>
                     </DataTemplate>
