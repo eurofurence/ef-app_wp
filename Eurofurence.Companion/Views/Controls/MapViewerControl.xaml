@@ -41,7 +41,9 @@
                         <Ellipse Fill="{Binding ElementName=_this, Path=MarkerFill}" 
                                  Stroke="{Binding ElementName=_this, Path=MarkerStroke}" 
                                  Visibility="{Binding ElementName=_this, Path=MarkerVisibility}"
-                                 StrokeThickness="2">
+                                 StrokeThickness="2"
+                                 Tapped="MarkerTapped"
+                                 >
 
 
                         </Ellipse>
