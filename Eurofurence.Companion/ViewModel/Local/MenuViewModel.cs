@@ -84,7 +84,7 @@ namespace Eurofurence.Companion.ViewModel.Local
                 new MenuItemViewModel{
                     Title = "Maps",
                     Icon = "\uE128",
-                    Description = "Maps (Beta)",
+                    Description = "Convention space maps to help navigating",
                     NavigationCommand = new RelayCommand(p => {
                         _navigationMediator.NavigateAsync(typeof(Views.MapsPage), forceNewStack: true);
                     })
