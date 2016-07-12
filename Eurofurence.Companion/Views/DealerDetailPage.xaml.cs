@@ -4,6 +4,7 @@ using System;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 
 namespace Eurofurence.Companion.Views
@@ -63,6 +64,11 @@ namespace Eurofurence.Companion.Views
         {
             var uri = new Uri((string)((FrameworkElement)e.OriginalSource).DataContext);
             await Launcher.LaunchUriAsync(uri);
+        }
+
+        private void MapTapped(object sender, TappedRoutedEventArgs e)
+        {
+            
         }
     }
 }

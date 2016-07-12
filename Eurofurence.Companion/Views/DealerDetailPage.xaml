@@ -78,6 +78,7 @@
                             <controls:MapViewerControl DataContext="{Binding MapEntry.Map}"
                                                        MarkerScale="2.0"
                                                        MarkerFill="Transparent"
+                                                       Tapped="MapTapped"
                                                        />
                             
                         </ScrollViewer>
