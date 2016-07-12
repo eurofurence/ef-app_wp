@@ -6,60 +6,108 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
       mc:Ignorable="d">
+    <Page.Resources>
+        <Style x:Key="TextBlockStylePosition" BasedOn="{StaticResource BaseTextBlockStyle}" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="{ThemeResource TextStyleSmallFontSize}"/>
+            <Setter Property="Foreground" Value="{ThemeResource PhoneLowBrush}"/>
+        </Style>
+        <Style x:Key="TextBlockStyleName" BasedOn="{StaticResource BaseTextBlockStyle}" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="{ThemeResource TextStyleLargeFontSize}"/>
+        </Style>        
+    </Page.Resources>
 
     <Grid x:Name="LayoutRoot" Margin="19 0 19 0">
+        <ScrollViewer>
+            <StackPanel>
 
-        <StackPanel>
+
+
+                <TextBlock Margin="0 20 0 0" Style="{StaticResource SubheaderTextBlockStyle}">About</TextBlock>
+
+                <TextBlock>
+                    Version&#160;<Run Text="{Binding Source={StaticResource ViewModelLocator}, Path=DebugViewModel.AppVersion}" />
+                </TextBlock>
+
+                <Grid>
+                    <Image Height="100"
+                           Margin="0 0 0 0"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Top"
+                           RenderTransformOrigin="0.5,0.5"
+                           Source="ms-appx:///Assets/LuchsAvatar.png" />
+                    <StackPanel Margin="20 20 0 0">
 
 
 
-            <TextBlock Margin="0 20 0 0" Style="{StaticResource SubheaderTextBlockStyle}">About</TextBlock>
+                        <TextBlock Style="{StaticResource TextBlockStylePosition}"
+                            Text="Windows Phone App Developer" />
+                        <TextBlock Style="{StaticResource TextBlockStyleName}"
+                            Text="Luchs" Margin="0 0 0 0" />
 
-            <TextBlock>
-                Version&#160;<Run Text="{Binding Source={StaticResource ViewModelLocator}, Path=DebugViewModel.AppVersion}" />
-            </TextBlock>
+                        <TextBlock Margin="10 0 0 0" FontSize="13" Foreground="{StaticResource PhoneLowBrush}">
+                            @ <Hyperlink NavigateUri="https://twitter.com/Pinselohrkater">
+                                <Underline>Twitter</Underline>
+                                </Hyperlink>
+                            <LineBreak />@ <Hyperlink NavigateUri="https://www.soundcloud.com/luchs/">
+                                <Underline>SoundCloud</Underline>
+                            </Hyperlink>
+                            <LineBreak />
+                        </TextBlock>
 
-            <Button Command="{Binding Source={StaticResource ViewModelLocator}, Path=NavigationViewModel.NavigateToDebugPage}" Content="Debug" />
+                        <TextBlock Style="{StaticResource TextBlockStylePosition}"
+                            Text="Android App Developers" />
+                        <TextBlock Style="{StaticResource TextBlockStyleName}"
+                            Text="Pazuzu" Margin="0 0 0 0" />
+                        <TextBlock Style="{StaticResource TextBlockStyleName}"
+                            Text="Requinard" Margin="0 0 0 20" />
 
-            <Grid>
-                <Image Height="150"
-                       Margin="0 0 0 0"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Bottom"
-                       RenderTransformOrigin="0.5,0.5"
-                       Source="ms-appx:///Assets/LuchsAvatar.png" />
-                <StackPanel Margin="150 20 0 0">
-                    <TextBlock Foreground="{ThemeResource PhoneLowBrush}">Developed by:</TextBlock>
-                    <TextBlock Style="{StaticResource BaseTextBlockStyle}">Luchs</TextBlock>
-                    <TextBlock Margin="20 0 0 0" FontSize="13">
-                        <LineBreak />
-                        @
-                        <Hyperlink NavigateUri="https://www.furaffinity.net/user/luchs/">
-                            <Underline>Furaffinity</Underline>
-                        </Hyperlink>
-                        <LineBreak />
-                        @
-                        <Hyperlink NavigateUri="https://www.soundcloud.com/luchs/">
-                            <Underline>SoundCloud</Underline>
-                        </Hyperlink>
-                        <LineBreak />
-                    </TextBlock>
-                </StackPanel>
-            </Grid>
+                        <TextBlock Style="{StaticResource TextBlockStylePosition}"
+                            Text="iOS Developer" />
+                        <TextBlock Style="{StaticResource TextBlockStyleName}"
+                            Text="Omega Wolfblood" Margin="0 0 0 40" />
 
-            <TextBlock Margin="0 50 0 0"
-                       Style="{StaticResource SubheaderTextBlockStyle}"
-                       Text="{Binding Source={StaticResource Translations},
-                                      Path=[About_Disclaimer_Title]}" />
 
-            <TextBlock FontSize="12"
-                       Foreground="{ThemeResource PhoneMidBrush}"
-                       LineHeight="15"
-                       Style="{StaticResource BaseTextBlockStyle}"
-                       Text="{Binding Source={StaticResource Translations},
-                                      Path=[About_Disclaimer_Content]}"
-                       TextAlignment="Justify" />
+                        <TextBlock Style="{StaticResource TextBlockStylePosition}"
+                            Text="Program Management" />
+                        <TextBlock Style="{StaticResource TextBlockStyleName}"
+                            Text="Zefiro" Margin="0 0 0 0" />
+                        <TextBlock Style="{StaticResource TextBlockStyleName}"
+                            Text="Luchs" Margin="0 0 0 40" />
 
-        </StackPanel>
+
+
+
+                        <TextBlock Style="{StaticResource TextBlockStylePosition}"
+                            Text="Special Thanks" />
+                        <TextBlock Style="{StaticResource TextBlockStyleName}"
+                            Text="Akulatraxas" Margin="0 0 0 0" />
+                        <TextBlock Style="{StaticResource TextBlockStyleName}"
+                            Text="Mark Treefox" Margin="0 0 0 0" />
+                        <TextBlock Style="{StaticResource TextBlockStyleName}"
+                            Text="StreifiGreif" Margin="0 0 0 0" />
+
+                    </StackPanel>
+                </Grid>
+
+                <TextBlock Margin="0 50 0 0"
+                           Style="{StaticResource SubheaderTextBlockStyle}"
+                           Text="{Binding Source={StaticResource Translations},
+                                          Path=[About_Disclaimer_Title]}" />
+
+                <TextBlock FontSize="12"
+                           Foreground="{ThemeResource PhoneMidBrush}"
+                           LineHeight="15"
+                           Style="{StaticResource BaseTextBlockStyle}"
+                           Text="{Binding Source={StaticResource Translations},
+                                          Path=[About_Disclaimer_Content]}"
+                           TextAlignment="Justify" />
+
+                <TextBlock Margin="0 50 0 0"
+                           Style="{StaticResource SubheaderTextBlockStyle}"
+                           Text="Debug Mode" />
+                <Button Command="{Binding Source={StaticResource ViewModelLocator}, Path=NavigationViewModel.NavigateToDebugPage}" Content="Launch" />
+
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>
