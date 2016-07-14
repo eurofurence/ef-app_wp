@@ -25,6 +25,7 @@ using Eurofurence.Companion.Services;
 using Eurofurence.Companion.ViewModel.Abstractions;
 using Eurofurence.Companion.ViewModel.Local;
 using Microsoft.HockeyApp;
+using System.Threading.Tasks;
 
 namespace Eurofurence.Companion
 {
@@ -81,7 +82,7 @@ namespace Eurofurence.Companion
             var s = KernelResolver.Current.Get<ToastNotificationService>();
 
 
-            var startupMode = GetStartupMode();
+            var startupMode = await GetStartupModeAsync();
             if (startupMode == StartupMode.Close)
             {
                 Current.Exit();
@@ -221,10 +222,25 @@ namespace Eurofurence.Companion
             .GetInternetConnectionProfile()
             .GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess;
 
-        public StartupMode GetStartupMode()
+        public async Task<StartupMode> GetStartupModeAsync()
         {
-            var context = KernelResolver.Current.Get<ApplicationSettingsContext>();
-            if (context.LastServerQueryDateTimeUtc.HasValue)
+            var applicationSettingsContext = KernelResolver.Current.Get<ApplicationSettingsContext>();
+            var appVersionProvider = KernelResolver.Current.Get<IAppVersionProvider>();
+
+            if (applicationSettingsContext.LastPackageVersionRunning != appVersionProvider.GetAppVersion())
+            {
+                switch (applicationSettingsContext.LastPackageVersionRunning)
+                {
+                    default:
+                        var contextManager = KernelResolver.Current.Get<ContextManager>();
+                        await contextManager.ClearAll();
+                        break;
+                }
+
+                applicationSettingsContext.LastPackageVersionRunning = appVersionProvider.GetAppVersion();
+            }
+
+            if (applicationSettingsContext.LastServerQueryDateTimeUtc.HasValue)
             {
                 return StartupMode.RunNormally;
             }

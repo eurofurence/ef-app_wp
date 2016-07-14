@@ -85,6 +85,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\AppVersionProvider.cs" />
     <Compile Include="Common\AwaitableCommand.cs" />
     <Compile Include="BindableBase.cs" />
     <Compile Include="Common\Consts.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Common\Abstractions\ITelemetryClientProvider.cs" />
     <Compile Include="Common\Abstractions\ITimeProvider.cs" />
     <Compile Include="Common\AsyncNavigationEvent.cs" />
+    <Compile Include="Common\Abstractions\IAppVersionProvider.cs" />
     <Compile Include="DataModel\Api\Map.cs" />
     <Compile Include="DataModel\Api\MapEntry.cs" />
     <Compile Include="DataModel\Api\NamedUrl.cs" />

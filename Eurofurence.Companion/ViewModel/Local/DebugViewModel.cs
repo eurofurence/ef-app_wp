@@ -1,6 +1,6 @@
-﻿using Windows.ApplicationModel;
-using Eurofurence.Companion.DataStore;
+﻿using Eurofurence.Companion.DataStore;
 using Eurofurence.Companion.DependencyResolution;
+using Eurofurence.Companion.Common.Abstractions;
 
 namespace Eurofurence.Companion.ViewModel.Local
 {
@@ -8,6 +8,7 @@ namespace Eurofurence.Companion.ViewModel.Local
     public class DebugViewModel : BindableBase
     {
         private bool _isDebugMode;
+        private IAppVersionProvider _appVersionProvider;
 
         public bool IsDebugMode
         {
@@ -17,21 +18,13 @@ namespace Eurofurence.Companion.ViewModel.Local
 
         public ContextManager ContextManager { get; private set; }
 
-        public string AppVersion => GetAppVersion();
+        public string AppVersion => _appVersionProvider.GetAppVersion();
 
-        public DebugViewModel(ContextManager contextManager)
+        public DebugViewModel(ContextManager contextManager, IAppVersionProvider appVersionProvider)
         {
             InitializeDispatcherFromCurrentThread();
             ContextManager = contextManager;
-        }
-
-        private string GetAppVersion()
-        {
-            Package package = Package.Current;
-            PackageId packageId = package.Id;
-            PackageVersion version = packageId.Version;
-
-            return $"{version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
+            _appVersionProvider = appVersionProvider;
         }
     }
 }

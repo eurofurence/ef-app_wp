@@ -9,12 +9,16 @@ namespace Eurofurence.Companion.DataStore
     {
         private readonly IApplicationSettingsManager _applicationSettingsManager;
 
-
         public ApplicationSettingsContext(IApplicationSettingsManager applicationSettingsManager)
         {
             _applicationSettingsManager = applicationSettingsManager;
         }
 
+        public string LastPackageVersionRunning
+        {
+            get { return _applicationSettingsManager.Get<string>("LastPackageVersionRunning", "-"); }
+            set { _applicationSettingsManager.Set<string>("LastPackageVersionRunning", value); }
+        }
 
         public DateTime? LastServerQueryDateTimeUtc
         {
