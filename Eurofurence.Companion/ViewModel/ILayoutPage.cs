@@ -1,10 +1,9 @@
-﻿using System;
-
-namespace Eurofurence.Companion.ViewModel
+﻿namespace Eurofurence.Companion.ViewModel
 {
     public interface ILayoutPage
     {
         bool AcknowledgeNavigateBackRequest();
+        void Reveal();
     }
 }
     

@@ -33,6 +33,7 @@ namespace Eurofurence.Companion.Views
         public LayoutPage(INavigationMediator navigationMediator, ITelemetryClientProvider telemetryClientProvider)
         {
             InitializeComponent();
+            Opacity = 0;
 
             _dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
             _navigationMediator = navigationMediator;
@@ -147,6 +148,11 @@ namespace Eurofurence.Companion.Views
             RootFrame.ForwardStack.Clear();
 
             return true;
+        }
+
+        public void Reveal()
+        {
+            Opacity = 1;
         }
     }
 }

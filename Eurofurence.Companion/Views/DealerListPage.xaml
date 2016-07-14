@@ -1,13 +1,13 @@
 ﻿<Page x:Class="Eurofurence.Companion.Views.DealerListPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:behaviors="using:Eurofurence.Companion.ViewModel.Behaviors"
+      xmlns:converter="using:Eurofurence.Companion.ViewModel.Converter"
       xmlns:core="using:Microsoft.Xaml.Interactions.Core"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
       xmlns:local="using:Eurofurence.Companion.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:converter="using:Eurofurence.Companion.ViewModel.Converter"
-      xmlns:behaviors="using:Eurofurence.Companion.ViewModel.Behaviors"
       DataContext="{Binding Source={StaticResource ViewModelLocator},
                             Path=DealersViewModel}"
       mc:Ignorable="d">
@@ -32,7 +32,7 @@
                                 </core:EventTriggerBehavior>
                             </interactivity:BehaviorCollection>
                         </interactivity:Interaction.Behaviors>
-                        
+
                         <Grid MinHeight="60" Margin="0 0 0 10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="70" />
@@ -51,8 +51,7 @@
                                         CornerRadius="0"
                                         Visibility="{Binding HasArtistThumbnailImage,
                                                              Converter={StaticResource TrueToVisibleConverter}}">
-                                    <Image behaviors:AsyncImageLoaderProperties.ImageId="{Binding Entity.ArtistThumbnailImage.Id}"
-                                           Stretch="Fill" />
+                                    <Image behaviors:AsyncImageLoaderProperties.ImageId="{Binding Entity.ArtistThumbnailImage.Id}" Stretch="Fill" />
 
                                 </Border>
                                 <Grid Visibility="{Binding HasArtistThumbnailImage, Converter={StaticResource FalseToVisibleConverter}}">

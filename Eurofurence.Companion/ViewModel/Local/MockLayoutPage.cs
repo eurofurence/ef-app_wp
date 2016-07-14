@@ -26,5 +26,10 @@ namespace Eurofurence.Companion.ViewModel.Local
         {
             throw new NotImplementedException();
         }
+
+        public void Reveal()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

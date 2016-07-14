@@ -1,0 +1,68 @@
+﻿<Page x:Class="Eurofurence.Companion.Views.FirstStartPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:Eurofurence.Companion.Views"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+      mc:Ignorable="d">
+
+    <Grid x:Name="LayoutRoot">
+
+        <StackPanel x:Name="ContentRoot"
+                    Margin="30"
+                    VerticalAlignment="Center">
+            <StackPanel>
+
+                <TextBlock Margin="0 0 0 40"
+                           Style="{StaticResource SubheaderTextBlockStyle}"
+                           TextAlignment="Center"
+                           TextWrapping="Wrap">
+                    Welcome to the offical Eurofurence app for Windows Phone!
+                </TextBlock>
+
+
+                <TextBlock Style="{StaticResource BaseTextBlockStyle}" TextWrapping="Wrap">
+
+                    <Span>
+                        Before you can use this application, we need to download some
+                        data from the Eurofurence servers to your phone.
+                    </Span>
+
+                    <LineBreak />
+                    <LineBreak />
+                    <Span>
+                        This will consume a few megabytes of traffic and can take anywhere
+                        from a few seconds up to a few minutes, depending on the speed of
+                        your connection.
+                    </Span>
+
+                    <LineBreak />
+                    <LineBreak />
+
+                    <Span>Is it okay to download the data now?</Span>
+                    <LineBreak />
+                    <Span FontSize="{StaticResource TextStyleSmallFontSize}">
+                        (Chosing 'no' will close the application at this point.)
+                    </Span>
+
+                </TextBlock>
+
+
+
+
+                <Button Margin="0 30 0 0"
+                        HorizontalAlignment="Stretch"
+                        Click="ButtonStartDownload_Click"
+                        Content="Yes - Download it now!" />
+                <Button HorizontalAlignment="Stretch"
+                        Click="ButtonCloseApplication_Click"
+                        Content="No - Not right now." />
+
+            </StackPanel>
+
+        </StackPanel>
+
+
+    </Grid>
+</Page>
