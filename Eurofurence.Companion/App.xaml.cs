@@ -68,8 +68,10 @@ namespace Eurofurence.Companion
                 return;
             }
 
-            ThemeManager.SetThemeColor((Color)Resources["EurofurenceThemeColor"]);
+            Window.Current.Content = new StaticLoadingPage();
+            Window.Current.Activate();
 
+            ThemeManager.SetThemeColor((Color)Resources["EurofurenceThemeColor"]);
 
             var contextManager = KernelResolver.Current.Get<ContextManager>();
             var navigationMediator = KernelResolver.Current.Get<INavigationMediator>();
@@ -77,7 +79,8 @@ namespace Eurofurence.Companion
 
             var layoutPage = new LayoutPage(navigationMediator, _telemetryClientProvider);
             KernelResolver.Current.Bind<ILayoutPage>().ToConstant(layoutPage);
-            Window.Current.Content = layoutPage;
+
+            
 
             var s = KernelResolver.Current.Get<ToastNotificationService>();
 
@@ -89,7 +92,8 @@ namespace Eurofurence.Companion
                 return;
             }
 
-            _rootFrame = ((LayoutPage) Window.Current.Content)?.RootFrame;
+
+            _rootFrame = layoutPage.RootFrame;
 
 
             // Do not repeat app initialization when the Window already has content,
@@ -162,10 +166,10 @@ namespace Eurofurence.Companion
             await statusBar.HideAsync();
 
             // Ensure the current window is active.
-            Window.Current.Activate();
             _isInitialized = true;
 
             HandleLaunchActivatedEvent(e);
+            Window.Current.Content = layoutPage;
             layoutPage.Reveal();
 
             await HockeyClient.Current.SendCrashesAsync();

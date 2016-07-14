@@ -281,6 +281,9 @@
     <Compile Include="Views\MapsPage.xaml.cs">
       <DependentUpon>MapsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\StaticLoadingPage.xaml.cs">
+      <DependentUpon>StaticLoadingPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\WelcomeGuidePage.xaml.cs">
       <DependentUpon>WelcomeGuidePage.xaml</DependentUpon>
     </Compile>
@@ -435,6 +438,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MapsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StaticLoadingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
