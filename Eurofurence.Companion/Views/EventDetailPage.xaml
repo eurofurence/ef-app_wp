@@ -47,10 +47,15 @@
                     </StackPanel.ChildrenTransitions>
                     <!--<Button Command="{Binding Source={StaticResource ViewModelLocator}, Path=EventsViewModel.AddEventToCalendarCommand}" CommandParameter="{Binding}">Add to Calendar</Button>-->
 
-                    <TextBlock Margin="0 0 0 15"
-                               FontWeight="SemiBold"
+                    <TextBlock Margin="0 0 0 0"
+                               FontWeight="Light"
                                Style="{StaticResource SubheaderTextBlockStyle}"
                                Text="{Binding Entity.Title}" />
+                    <TextBlock Margin="0 0 0 15"
+                               FontWeight="Light"
+                               FontSize="{StaticResource TextStyleMediumFontSize}"
+                               Style="{StaticResource SubheaderTextBlockStyle}"
+                               Text="{Binding Entity.SubTitle}" />
 
 
                     <Grid>
@@ -116,7 +121,7 @@
                                    Style="{StaticResource BodyTextBlockStyle}"
                                    TextWrapping="WrapWholeWords" />
                     </Grid>
-                    <Image MaxHeight="200" Source="{Binding Image.Content, Converter={StaticResource BytesToImageConverter}}" />
+                    <Image MaxHeight="200" behaviors:AsyncImageLoaderProperties.ImageId="{Binding Entity.ImageId}" />
                 </StackPanel>
             </ScrollViewer>
         </Grid>

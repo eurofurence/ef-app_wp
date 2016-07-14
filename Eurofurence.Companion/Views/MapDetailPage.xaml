@@ -15,8 +15,6 @@
 
     <Grid x:Name="LayoutRoot">
 
-
-
         <ScrollViewer ZoomMode="Enabled" HorizontalSnapPointsType="None"
                       HorizontalSnapPointsAlignment="Center"
                       HorizontalScrollBarVisibility="Visible"
@@ -25,7 +23,9 @@
                       x:Name="E_ScrollViewer_Map"
                       >
 
-            <controls:MapViewerControl DataContext="{Binding}" />
+            <controls:MapViewerControl 
+                x:Name="E_MapViewerControl_Map"
+                DataContext="{Binding}"/>
         </ScrollViewer>
     </Grid>
 </Page>

@@ -6,6 +6,8 @@
       xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
       xmlns:local="using:Eurofurence.Companion.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:converter="using:Eurofurence.Companion.ViewModel.Converter"
+      xmlns:behaviors="using:Eurofurence.Companion.ViewModel.Behaviors"
       DataContext="{Binding Source={StaticResource ViewModelLocator},
                             Path=DealersViewModel}"
       mc:Ignorable="d">
@@ -30,6 +32,7 @@
                                 </core:EventTriggerBehavior>
                             </interactivity:BehaviorCollection>
                         </interactivity:Interaction.Behaviors>
+                        
                         <Grid MinHeight="60" Margin="0 0 0 10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="70" />
@@ -48,9 +51,8 @@
                                         CornerRadius="0"
                                         Visibility="{Binding HasArtistThumbnailImage,
                                                              Converter={StaticResource TrueToVisibleConverter}}">
-                                    <Border.Background>
-                                        <ImageBrush ImageSource="{Binding Entity.ArtistThumbnailImage.Content, Converter={StaticResource BytesToImageConverter}}" />
-                                    </Border.Background>
+                                    <Image behaviors:AsyncImageLoaderProperties.ImageId="{Binding Entity.ArtistThumbnailImage.Id}"
+                                           Stretch="Fill" />
 
                                 </Border>
                                 <Grid Visibility="{Binding HasArtistThumbnailImage, Converter={StaticResource FalseToVisibleConverter}}">

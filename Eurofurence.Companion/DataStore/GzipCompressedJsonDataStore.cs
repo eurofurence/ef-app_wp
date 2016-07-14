@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Search;
+using Windows.Storage.Streams;
 using Eurofurence.Companion.DataModel;
 using Eurofurence.Companion.DataStore.Abstractions;
 using Eurofurence.Companion.DependencyResolution;
@@ -18,6 +19,7 @@ namespace Eurofurence.Companion.DataStore
     public class GzipCompressedJsonDataStore : IDataStore
     {
         private const string STORE_FILENAME_BASE = "DataStore-{0}.json.gz";
+        private const string STORE_FILENAME_BLOB = "{0}-{1}.blob";
 
 
         public async Task ApplyDeltaAsync(IEnumerable<EntityBase> entities, Action<int, int, string> progressCallback = null)
@@ -52,10 +54,20 @@ namespace Eurofurence.Companion.DataStore
             var rootFolder = ApplicationData.Current.LocalFolder;
             return await rootFolder.CreateFolderAsync("Store", CreationCollisionOption.OpenIfExists);
         }
+        private async Task<StorageFolder> GetBlobStoreFolderAsync()
+        {
+            var rootFolder = ApplicationData.Current.LocalFolder;
+            return await rootFolder.CreateFolderAsync("BlobStore", CreationCollisionOption.OpenIfExists);
+        }
 
         private string GetFilenameForType(Type type)
         {
             return string.Format(STORE_FILENAME_BASE, type.FullName);
+        }
+
+        private string GetFilenameForBlob(Guid id, string prefix)
+        {
+            return string.Format(STORE_FILENAME_BLOB, prefix, id);
         }
 
 
@@ -153,6 +165,61 @@ namespace Eurofurence.Companion.DataStore
             }
 
             return result;
+        }
+
+        public async Task SaveBlobAsync(Guid id, string prefix, byte[] content)
+        {
+            var folder = await GetBlobStoreFolderAsync();
+            var file =
+                await folder.OpenStreamForWriteAsync(GetFilenameForBlob(id, prefix), 
+                    CreationCollisionOption.ReplaceExisting);
+
+            await file.WriteAsync(content, 0, content.Length);
+            file.Dispose();
+        }
+
+        public async Task ClearBlobAsync(Guid id, string prefix)
+        {
+            var folder = await GetBlobStoreFolderAsync();
+            var fileName = GetFilenameForBlob(id, prefix);
+            var file = await folder.GetFileAsync(fileName);
+            await file.DeleteAsync();
+        }
+
+        public async Task<byte[]> GetBlobAsync(Guid id, string prefix)
+        {
+            var folder = await GetBlobStoreFolderAsync();
+            var fileName = GetFilenameForBlob(id, prefix);
+            var file = await folder.GetFileAsync(fileName);
+            var fileSize = (await file.GetBasicPropertiesAsync()).Size;
+            
+            var fileStream = await folder.OpenStreamForReadAsync(fileName);
+
+            var result = new byte[fileSize];
+            await fileStream.ReadAsync(result, 0, result.Length);
+
+            return result;
+        }
+
+        public async Task<IRandomAccessStream> GetBlobStreamAsync(Guid id, string prefix)
+        {
+            var folder = await GetBlobStoreFolderAsync();
+            var file = await folder.GetFileAsync(GetFilenameForBlob(id, prefix));
+            // var fileSize = (await file.GetBasicPropertiesAsync()).Size;
+
+            var fileStream = await file.OpenAsync(FileAccessMode.Read);
+            return fileStream;
+        }
+
+        public async Task ClearAllBlobsAsync()
+        {
+            var folder = await GetBlobStoreFolderAsync();
+            var files = await folder.GetFilesAsync();
+
+            foreach (var file in files)
+            {
+                await file.DeleteAsync();
+            }
         }
     }
 }

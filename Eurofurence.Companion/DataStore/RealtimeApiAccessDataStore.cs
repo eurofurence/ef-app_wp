@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
+using Windows.Storage.Streams;
 using Eurofurence.Companion.Common;
 using Eurofurence.Companion.DataModel;
 using Eurofurence.Companion.DataStore.Abstractions;
@@ -37,6 +39,31 @@ namespace Eurofurence.Companion.DataStore
         public Task<Dictionary<string, ulong>> GetStorageFileSizesAsync()
         {
             return Task.Run(() => new Dictionary<string, ulong>());
+        }
+
+        public Task SaveBlobAsync(Guid id, string prefix, byte[] content)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task ClearBlobAsync(Guid id, string prefix)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<byte[]> GetBlobAsync(Guid id, string prefix)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IRandomAccessStream> GetBlobStreamAsync(Guid id, string prefix)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task ClearAllBlobsAsync()
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<IList<T>> GetAsync<T>() where T : EntityBase, new()

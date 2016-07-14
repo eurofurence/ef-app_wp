@@ -66,8 +66,7 @@
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
                                                     <Image MaxHeight="250"
-                                                           Source="{Binding Content,
-                                                                            Converter={StaticResource BytesToImageConverter}}"
+                                                           behaviors:AsyncImageLoaderProperties.ImageId="{Binding Id}"
                                                            Stretch="Uniform" />
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>

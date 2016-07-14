@@ -77,11 +77,11 @@
             <dependencyResolution:ServiceLocator x:Key="ServiceLocator" />
 
             <dataModel:StringFormatConverter x:Key="StringFormatConverter" />
-            <converter:BytesToImageConverter x:Key="BytesToImageConverter" />
             <converter:BooleanToVisibilityConverter x:Key="TrueToVisibleConverter" />
             <converter:BooleanToVisibilityConverter x:Key="FalseToVisibleConverter" IsReversed="True" />
             <converter:WikiTextToHtmlConverter x:Key="WikiTextToHtmlConverter" />
             <converter:UriToStringConverter x:Key="UriToStringConverter" />
+
             <viewModelLocal:TranslationViewModel x:Key="Translations" />
 
             <Style x:Key="FactBoxIcon" TargetType="TextBlock">

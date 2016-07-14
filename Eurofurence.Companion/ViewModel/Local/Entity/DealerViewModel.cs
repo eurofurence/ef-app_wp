@@ -4,6 +4,7 @@ using Eurofurence.Companion.DataModel;
 using Eurofurence.Companion.DataModel.Api;
 using System;
 using System.Collections.Generic;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace Eurofurence.Companion.ViewModel.Local.Entity
 {
@@ -70,7 +71,7 @@ namespace Eurofurence.Companion.ViewModel.Local.Entity
         public async Task CalculateDominantColorAsync()
         {
             if (!HasArtistImage) return;
-            DominantColor = await Entity.ArtistImage.GetDominantColorAsync();
+            //DominantColor = await Entity.ArtistImage.GetDominantColorAsync();
         }
     }
 }

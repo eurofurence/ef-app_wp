@@ -123,7 +123,9 @@
     <Compile Include="DataStore\GzipCompressedJsonDataStore.cs" />
     <Compile Include="DependencyResolution\IocBeacon.cs" />
     <Compile Include="DependencyResolution\ServiceLocator.cs" />
+    <Compile Include="Services\AsyncImageLoaderService.cs" />
     <Compile Include="Services\EventService.cs" />
+    <Compile Include="Services\Abstractions\IAsyncImageLoaderService.cs" />
     <Compile Include="Services\ToastNotificationService.cs" />
     <Compile Include="Translations.cs">
       <AutoGen>True</AutoGen>
@@ -132,6 +134,7 @@
     </Compile>
     <Compile Include="ViewModel\Abstractions\IEventsViewModelContext.cs" />
     <Compile Include="ViewModel\Abstractions\IMapsViewModelContext.cs" />
+    <Compile Include="ViewModel\Behaviors\AsyncImageLoaderProperties.cs" />
     <Compile Include="ViewModel\Behaviors\RichTextBlockProperties.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="DataModel\StringFormatConverter.cs" />
@@ -155,6 +158,7 @@
     <Compile Include="ViewModel\Behaviors\WikiTextBoxProperties.cs" />
     <Compile Include="ViewModel\Converter\BooleanToVisibilityConverter.cs" />
     <Compile Include="ViewModel\Converter\BytesToImageConverter.cs" />
+    <Compile Include="ViewModel\Converter\StreamToImageConverter.cs" />
     <Compile Include="ViewModel\Converter\UriToStringConverter.cs" />
     <Compile Include="ViewModel\Converter\WikiTextToHtmlConverter.cs" />
     <Compile Include="ViewModel\Abstractions\IInfoViewModelContext.cs" />

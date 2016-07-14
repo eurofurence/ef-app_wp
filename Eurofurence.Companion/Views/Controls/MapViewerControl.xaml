@@ -5,6 +5,7 @@
     xmlns:local="using:Eurofurence.Companion.Views.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:behaviors="using:Eurofurence.Companion.ViewModel.Behaviors"
     mc:Ignorable="d"
     x:Name="_this"
     d:DesignHeight="300"
@@ -14,12 +15,15 @@
     >
     
     <Grid>
-        <Image Stretch="None" Source="{Binding Entity.Image.Content,
-                                            Converter={StaticResource BytesToImageConverter}}"
-                            />
+        <Image Stretch="Fill" 
+               x:Name="E_Image_Map"
+               Tapped="ImageTapped"
+               MinWidth="{Binding Entity.Image.Width}"
+               MinHeight="{Binding Entity.Image.Height}" />
+        <!--behaviors:AsyncImageLoaderProperties.ImageId="{Binding Entity.Image.Id}"-->
 
 
-        <ItemsControl ItemsSource="{Binding Entries}">
+        <ItemsControl ItemsSource="{Binding Entries}" IsHitTestVisible="False">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Canvas />
@@ -42,9 +46,9 @@
                                  Stroke="{Binding ElementName=_this, Path=MarkerStroke}" 
                                  Visibility="{Binding ElementName=_this, Path=MarkerVisibility}"
                                  StrokeThickness="2"
-                                 Tapped="MarkerTapped"
+                                 
                                  >
-
+                            <!--Tapped="MarkerTapped"-->
 
                         </Ellipse>
         

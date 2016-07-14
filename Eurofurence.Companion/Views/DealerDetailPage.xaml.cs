@@ -23,7 +23,8 @@ namespace Eurofurence.Companion.Views
             NavigationHelper.LoadState += NavigationHelper_LoadState;
             NavigationHelper.SaveState += NavigationHelper_SaveState;
 
-            this.Loaded += (sender, args) =>
+
+            E_MapViewerControl_DealersPosition.MapImageLoadedEvent += (sender, args) =>
             {
                 if (CurrentDealer?.HasMapEntry ?? false)
                 {

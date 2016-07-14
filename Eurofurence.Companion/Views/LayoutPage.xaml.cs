@@ -126,13 +126,14 @@ namespace Eurofurence.Companion.Views
         {
             var result = false;
 
-            await _dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
+            await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 if (forceNewStack && !_forceNewStack()) return;
                 _menuViewModel.Value.IsMenuVisible = false;
                 _telemetryClientProvider.Client.TrackPageView(sourcePageType.FullName);
 
                 result = RootFrame.Navigate(sourcePageType, parameter, transitionInfo ?? _defaultTransition);
+                GC.Collect();
             });
 
             return result;

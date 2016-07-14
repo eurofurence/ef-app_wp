@@ -1,39 +1,45 @@
-﻿using Eurofurence.Companion.Common;
+﻿using System;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Eurofurence.Companion.Common;
+using Eurofurence.Companion.DependencyResolution;
 
 
 namespace Eurofurence.Companion.Views
 {
     public sealed partial class ImageViewerPage : Page
     {
-        private NavigationHelper navigationHelper;
+        private readonly NavigationHelper _navigationHelper;
         public bool IsHeaderVisible => false;
 
         public ImageViewerPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
-            this.navigationHelper = new NavigationHelper(this);
-            this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
-            this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+            _navigationHelper = new NavigationHelper(this);
+            _navigationHelper.LoadState += NavigationHelper_LoadState;
+            _navigationHelper.SaveState += NavigationHelper_SaveState;
         }
 
-        public NavigationHelper NavigationHelper => navigationHelper;
+        public NavigationHelper NavigationHelper => _navigationHelper;
 
-        
-
-        private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             if (e.NavigationParameter is ImageSource)
             {
                 E_Image.Source = (e.NavigationParameter as ImageSource);
+            } else if (e.NavigationParameter is Guid)
+            {
+                E_Image.Source =
+                    await
+                        ServiceLocator.Current.AsyncImageLoaderService
+                            .LoadImageAsync((Guid) e.NavigationParameter);
             }
         }
 
-      
+
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
         }
@@ -42,12 +48,12 @@ namespace Eurofurence.Companion.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            this.navigationHelper.OnNavigatedTo(e);
+            _navigationHelper.OnNavigatedTo(e);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            this.navigationHelper.OnNavigatedFrom(e);
+            _navigationHelper.OnNavigatedFrom(e);
         }
 
         #endregion

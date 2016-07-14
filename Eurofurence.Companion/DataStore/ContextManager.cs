@@ -113,6 +113,7 @@ namespace Eurofurence.Companion.DataStore
         public async Task ClearAll()
         {
             await _dataStore.ClearAllAsync();
+            await _dataStore.ClearAllBlobsAsync();
             await _dataContext.LoadFromStoreAsync();
 
             _applicationSettingsContext.LastServerQueryDateTimeUtc = null;
@@ -212,8 +213,7 @@ namespace Eurofurence.Companion.DataStore
                                 .Replace("{EndpointUrl}", Consts.WEB_API_ENDPOINT_URL)
                             );
                 var bytes = content.ToArray();
-
-                imageEntity.Content = bytes;
+                await _dataStore.SaveBlobAsync(imageEntity.Id, "ImageData", bytes);
 
                 SubOperationCurrentValue++;
             })).ToList();
