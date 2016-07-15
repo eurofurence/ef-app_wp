@@ -40,7 +40,7 @@ namespace Eurofurence.Companion.Views
             _telemetryClientProvider = telemetryClientProvider;
 
             _defaultTransition = new ContinuumNavigationTransitionInfo();
-            _menuCompositeRenderTransform.TranslateX = -300;
+            _menuCompositeRenderTransform.TranslateX = -320;
 
 
             _navigationMediator.OnNavigateAsync += NavigateAsync;

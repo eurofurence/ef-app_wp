@@ -50,7 +50,8 @@
             <Style x:Key="AppLayoutMenuSubItemTextBlockStyle"
                    BasedOn="{StaticResource AppLayoutMenuItemTextBlockStyle}"
                    TargetType="TextBlock">
-                <Setter Property="FontSize" Value="11" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="FontWeight" Value="Normal" />
                 <Setter Property="Foreground" Value="Gray" />
             </Style>
 

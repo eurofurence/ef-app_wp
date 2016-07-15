@@ -35,7 +35,7 @@
                              From="0"
                              Storyboard.TargetName="E_Border_MenuPanel"
                              Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)"
-                             To="-300">
+                             To="-320">
                 <DoubleAnimation.EasingFunction>
                     <PowerEase EasingMode="EaseIn" />
                 </DoubleAnimation.EasingFunction>
@@ -43,7 +43,7 @@
         </Storyboard>
         <Storyboard x:Name="menuShow" AutoReverse="False">
             <DoubleAnimation Duration="0:0:0.15"
-                             From="-300"
+                             From="-320"
                              Storyboard.TargetName="E_Border_MenuPanel"
                              Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)"
                              To="0">
@@ -372,7 +372,7 @@
             </Border>
 
             <Border x:Name="E_Border_MenuPanel"
-                    Width="300"
+                    Width="320"
                     HorizontalAlignment="Left"
                     Background="#101010"
                     BorderThickness="0">
