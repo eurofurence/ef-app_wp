@@ -28,20 +28,17 @@ namespace Eurofurence.Companion.ViewModel.Local
             InitializeDispatcherFromCurrentThread();
 
             _navigationMediator = navigationMediator;
-            _navigationMediator.OnNavigateAsync += NavigationMediatorOnOnNavigateAsync;
+            _navigationMediator.OnPageLoaded += (s, e) => UpdateActiveMenuItem(e);
 
             BuildMainMenu();
         }
 
-        private async Task<bool> NavigationMediatorOnOnNavigateAsync(Type sourcePageType, object parameter, NavigationTransitionInfo infoOverride, bool forceNewStack)
+        private void UpdateActiveMenuItem(Type currentPageType)
         {
             foreach (var item in Items)
             {
-                item.IsActive = item.ChildTypes?.Contains(sourcePageType) ?? false;
+                item.IsActive = item.ChildTypes?.Contains(currentPageType) ?? false;
             }
-
-            await Task.Delay(1);
-            return true;
         }
 
         private void BuildMainMenu()
@@ -79,7 +76,11 @@ namespace Eurofurence.Companion.ViewModel.Local
                     Description = "List of dealers and their merchandise",
                     NavigationCommand = new RelayCommand(p => {
                         _navigationMediator.NavigateAsync(typeof(Views.DealerListPage), forceNewStack: true);
-                    })
+                    }),
+                    ChildTypes = new List<Type>() {
+                        typeof(Views.DealerListPage),
+                        typeof(Views.DealerDetailPage)
+                    }
                 },
                 new MenuItemViewModel{
                     Title = "Maps",
@@ -87,7 +88,12 @@ namespace Eurofurence.Companion.ViewModel.Local
                     Description = "Convention space maps to help navigating",
                     NavigationCommand = new RelayCommand(p => {
                         _navigationMediator.NavigateAsync(typeof(Views.MapsPage), forceNewStack: true);
-                    })
+                    }),
+                    ChildTypes = new List<Type>() {
+                        typeof(Views.MapsPage),
+                        typeof(Views.MapDetailPage)
+                    }
+
                 }
             };
         }

@@ -4,6 +4,7 @@ using Ninject;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Eurofurence.Companion.Common.Abstractions;
 using Eurofurence.Companion.DependencyResolution;
 using Eurofurence.Companion.ViewModel;
 
@@ -74,6 +75,7 @@ namespace Eurofurence.Companion.Common
             // 2) Handle hardware navigation requests
             Page.Loaded += (sender, e) =>
             {
+                KernelResolver.Current.Get<INavigationMediator>().RaisePageLoaded(Page.GetType());
 #if WINDOWS_PHONE_APP
                 Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtons_BackPressed;
 #else

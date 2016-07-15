@@ -11,6 +11,13 @@ namespace Eurofurence.Companion.Common
     {
         public event AsyncNavigationEvent OnNavigateAsync;
 
+        public event EventHandler<Type> OnPageLoaded;
+
+        public void RaisePageLoaded(Type type)
+        {
+            OnPageLoaded?.Invoke(this, type);
+        }
+
         public Task<bool> NavigateAsync(Type sourcePageType, bool forceNewStack = false)
             => OnNavigateAsync?.Invoke(sourcePageType, null, null, forceNewStack);
 

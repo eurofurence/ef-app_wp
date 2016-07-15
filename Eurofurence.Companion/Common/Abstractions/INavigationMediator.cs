@@ -8,6 +8,9 @@ namespace Eurofurence.Companion.Common.Abstractions
     {
         event AsyncNavigationEvent OnNavigateAsync;
 
+        event EventHandler<Type> OnPageLoaded;
+        void RaisePageLoaded(Type type);
+
         Task<bool> NavigateAsync(Type sourcePageType, bool forceNewStack = false);
         Task<bool> NavigateAsync(Type sourcePageType, object parameter, bool forceNewStack = false);
         Task<bool> NavigateAsync(Type sourcePageType, object parameter, NavigationTransitionInfo transitionInfo, bool forceNewStack = false);
