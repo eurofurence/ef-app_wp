@@ -170,7 +170,8 @@ namespace Eurofurence.Companion
                 {
                     var updateTask = KernelResolver.Current.Get<ContextManager>()
                         .Update(doSaveToStoreBeforeUpdate: false);
-                    Task.WaitAll(new[] { updateTask }, TimeSpan.FromSeconds(10));
+
+                    await Task.Run(() => Task.WaitAll(new[] { updateTask }, TimeSpan.FromSeconds(10)));
                 }
             }
 
