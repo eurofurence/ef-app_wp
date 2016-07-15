@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Windows.ApplicationModel;
@@ -68,13 +69,24 @@ namespace Eurofurence.Companion
                 return;
             }
 
-            Window.Current.Content = new StaticLoadingPage();
+            var statusBar = StatusBar.GetForCurrentView();
+            //statusBar.ForegroundColor = Color.FromArgb(50, 0xff, 0xff, 0xff);
+            await statusBar.HideAsync();
+
+
+            var staticLoadingPage = new StaticLoadingPage();
+            Window.Current.Content = staticLoadingPage;
             Window.Current.Activate();
+
+            staticLoadingPage.PageFadeInAsync();
+
 
             ThemeManager.SetThemeColor((Color)Resources["EurofurenceThemeColor"]);
 
+
             var contextManager = KernelResolver.Current.Get<ContextManager>();
             var navigationMediator = KernelResolver.Current.Get<INavigationMediator>();
+
             await contextManager.InitializeAsync();
 
             var layoutPage = new LayoutPage(navigationMediator, _telemetryClientProvider);
@@ -156,19 +168,19 @@ namespace Eurofurence.Companion
                 }
                 else if (HasInternetAccess)
                 {
-                    KernelResolver.Current.Get<ContextManager>().Update();
+                    var updateTask = KernelResolver.Current.Get<ContextManager>()
+                        .Update(doSaveToStoreBeforeUpdate: false);
+                    Task.WaitAll(new[] { updateTask }, TimeSpan.FromSeconds(10));
                 }
             }
 
-
-            var statusBar = StatusBar.GetForCurrentView();
-            statusBar.ForegroundColor = Color.FromArgb(50, 0xff, 0xff, 0xff);
-            await statusBar.HideAsync();
 
             // Ensure the current window is active.
             _isInitialized = true;
 
             HandleLaunchActivatedEvent(e);
+
+            await staticLoadingPage.PageFadeOutAsync();
             Window.Current.Content = layoutPage;
             layoutPage.Reveal();
 
@@ -228,6 +240,8 @@ namespace Eurofurence.Companion
 
         public async Task<StartupMode> GetStartupModeAsync()
         {
+            //if (Debugger.IsAttached) await Task.Delay(TimeSpan.FromSeconds(5));
+
             var applicationSettingsContext = KernelResolver.Current.Get<ApplicationSettingsContext>();
             var appVersionProvider = KernelResolver.Current.Get<IAppVersionProvider>();
 

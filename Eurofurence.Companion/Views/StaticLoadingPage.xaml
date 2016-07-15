@@ -4,14 +4,56 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:Eurofurence.Companion.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      Background="{StaticResource EurofurenceThemeColorBrush}"
+      
+      x:Name="_this"
       mc:Ignorable="d">
+    <Page.Resources>
+        <Storyboard x:Name="pageFadeIn" AutoReverse="False">
+            <DoubleAnimation Duration="0:0:1.0"
+                             From="0"
+                             Storyboard.TargetName="_this"
+                             Storyboard.TargetProperty="Opacity"
+                             To="1">
+            </DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Name="pageFadeOut" AutoReverse="False">
+            <DoubleAnimation Duration="0:0:0.3"
+                             From="1"
+                             Storyboard.TargetName="_this"
+                             Storyboard.TargetProperty="Opacity"
+                             To="0">
+                <DoubleAnimation.EasingFunction>
+                    <PowerEase EasingMode="EaseIn" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
 
+    </Page.Resources>
 
     <Grid>
-        <ProgressRing Margin="0"
-                      Background="Transparent"
-                      Foreground="White"
-                      IsActive="True" />
+        <StackPanel VerticalAlignment="Center">
+            <Grid>
+                <TextBlock FontFamily="{StaticResource IconFontFamily}" FontSize="30" Margin="0 -8 0 0"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       >
+
+                <Run>&#x1f43e;</Run>
+                </TextBlock>
+
+                <ProgressRing Margin="0"
+                              
+                          Background="Transparent"
+                          Foreground="White"
+                          IsActive="True" RenderTransformOrigin="0.5,0.5" >
+                    <ProgressRing.RenderTransform>
+                        <CompositeTransform ScaleX="1.3" ScaleY="1.3"/>
+                    </ProgressRing.RenderTransform>
+                </ProgressRing>
+            </Grid>
+        </StackPanel>
+
+
+
     </Grid>
 </Page>

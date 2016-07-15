@@ -8,6 +8,9 @@
       mc:Ignorable="d">
 
     <Grid x:Name="LayoutRoot">
+        <Viewbox Margin="-50">
+            <Path Data="{StaticResource EurofurenceWolfHead}" Fill="White" Opacity="0.1" />
+        </Viewbox>
 
         <StackPanel x:Name="ContentRoot"
                     Margin="30"

@@ -11,10 +11,24 @@
       xmlns:local1="using:Eurofurence.Companion.ViewModel.Local"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:Eurofurence.Companion.ViewModel"
-      Background="{StaticResource AppPageBackgroundBrush}"
+      x:Name="_this"
+      Background="Black"
+      
       RequestedTheme="Dark"
       mc:Ignorable="d">
     <Page.Resources>
+
+        <Storyboard x:Name="pageFadeIn" AutoReverse="False">
+            <DoubleAnimation Duration="0:0:0.4"
+                             From="0"
+                             Storyboard.TargetName="_this"
+                             Storyboard.TargetProperty="Opacity"
+                             To="1">
+                <DoubleAnimation.EasingFunction>
+                    <PowerEase EasingMode="EaseIn" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
 
         <Storyboard x:Name="menuHide" AutoReverse="False">
             <DoubleAnimation Duration="0:0:0.15"

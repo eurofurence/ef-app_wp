@@ -152,7 +152,7 @@ namespace Eurofurence.Companion.Views
 
         public void Reveal()
         {
-            Opacity = 1;
+            pageFadeIn.Begin();
         }
     }
 }

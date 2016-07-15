@@ -94,7 +94,7 @@ namespace Eurofurence.Companion.DataStore
                 ? TaskStatus.RanToCompletion
                 : TaskStatus.WaitingToRun;
 
-            UpdateCommand = new AwaitableCommand(Update);
+            UpdateCommand = new AwaitableCommand(() => Update());
             ClearAllCommand = new AwaitableCommand(ClearAll);
         }
 
@@ -121,14 +121,17 @@ namespace Eurofurence.Companion.DataStore
         }
 
 
-        public async Task Update()
+        public async Task Update(bool doSaveToStoreBeforeUpdate = true)
         {
             UpdateStatus = TaskStatus.Running;
             try
             {
                 MainOperationMessage = $"{Translations.ContextManager_Update_Initializing}...";
 
-                await _dataContext.SaveToStoreAsync();
+                if (doSaveToStoreBeforeUpdate)
+                {
+                    await _dataContext.SaveToStoreAsync();
+                }
 
                 var metadata = await _apiClient.GetEndpointMetadataAsync();
                 var updateResults = new List<EntityUpdateResult>();
