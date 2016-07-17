@@ -7,7 +7,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:Eurofurence.Companion.ViewModel"
       d:DataContext="{Binding Source={StaticResource ViewModelLocator},
-                              Path=EventsViewModel.EventEntries[0]}"
+                              Path=EventsViewModel.EventEntries[11]}"
       mc:Ignorable="d">
     <Page.Resources>
         <Style x:Name="EurofurencePageHeader" TargetType="Border">
@@ -22,9 +22,9 @@
     </Page.Resources>
     <Page.BottomAppBar>
         <CommandBar>
-            <AppBarToggleButton 
-                Command="{Binding Source={StaticResource ServiceLocator}, Path=EventService.ToggleFavoriteStatusCommand}"
-                CommandParameter="{Binding Entity}"
+            <AppBarToggleButton Command="{Binding Source={StaticResource ServiceLocator},
+                                                  Path=EventService.ToggleFavoriteStatusCommand}"
+                                CommandParameter="{Binding Entity}"
                                 Icon="Favorite"
                                 IsChecked="{Binding Entity.AttributesProxy.Extension.IsFavorite}"
                                 Label="Favorite" />
@@ -37,28 +37,62 @@
         </CommandBar>
     </Page.BottomAppBar>
     <Grid x:Name="LayoutRoot">
-        <Grid x:Name="ContentRoot" Margin="19 20 19 0">
+        <Grid x:Name="ContentRoot">
             <ScrollViewer>
-                <StackPanel>
+
+
+                <StackPanel Margin="20">
                     <StackPanel.ChildrenTransitions>
                         <TransitionCollection>
                             <EntranceThemeTransition />
                         </TransitionCollection>
                     </StackPanel.ChildrenTransitions>
-                    <!--<Button Command="{Binding Source={StaticResource ViewModelLocator}, Path=EventsViewModel.AddEventToCalendarCommand}" CommandParameter="{Binding}">Add to Calendar</Button>-->
 
-                    <TextBlock Margin="0 0 0 0"
-                               FontWeight="Light"
-                               Style="{StaticResource SubheaderTextBlockStyle}"
-                               Text="{Binding Entity.Title}" />
-                    <TextBlock Margin="0 0 0 15"
-                               FontWeight="Light"
-                               FontSize="{StaticResource TextStyleMediumFontSize}"
-                               Style="{StaticResource SubheaderTextBlockStyle}"
-                               Text="{Binding Entity.SubTitle}" />
-
-
+                    <!--<TextBlock FontSize="{StaticResource TextStyleMediumFontSize}"
+                               Foreground="{StaticResource PhoneLowBrush}"
+                               Style="{StaticResource BaseTextBlockStyle}">
+                        Event
+                    </TextBlock>-->
                     <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="70" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Margin="5 5 0 0"
+                                   FontFamily="{StaticResource IconFontFamily}"
+                                   FontSize="50"
+                                   Foreground="{ThemeResource PhoneLowBrush}"
+                                   Text="&#xE1DB;" />
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Style="{StaticResource SubheaderTextBlockStyle}"
+                                       Text="{Binding Entity.Title}"
+                                       TextTrimming="CharacterEllipsis"
+                                       TextWrapping="Wrap" />
+                            <TextBlock FontWeight="Normal"
+                                       Foreground="{StaticResource PhoneMidBrush}"
+                                       Style="{StaticResource TitleTextBlockStyle}"
+                                       Text="{Binding Entity.SubTitle}"
+                                       TextTrimming="CharacterEllipsis"
+                                       TextWrapping="Wrap"
+                                       Visibility="{Binding HasSubTitle,
+                                                            Converter={StaticResource TrueToVisibleConverter}}" />
+
+                            <TextBlock Margin="0 5 0 0"
+                                       FontSize="{StaticResource TextStyleSmallFontSize}"
+                                       FontStyle="Italic"
+                                       TextWrapping="Wrap"
+                                       Visibility="{Binding Entity.AttributesProxy.Extension.IsFavorite,
+                                                            Converter={StaticResource TrueToVisibleConverter}}">
+                                You have marked this event as a favorite. You will be notified 60, 30 and 15 minutes before the event starts.
+                            </TextBlock>
+
+                        </StackPanel>
+
+                    </Grid>
+
+                    <Border Background="Red" />
+
+                    <Grid Margin="30 20 0 0">
                         <Grid.Resources />
 
                         <Grid.ColumnDefinitions>
@@ -80,6 +114,7 @@
                         <StackPanel Grid.Row="0" Grid.Column="1">
                             <!--<TextBlock Text="Location:" Style="{StaticResource FactBoxLabel}" />-->
                             <TextBlock Style="{StaticResource FactBoxValue}">
+                                <Run Text="{Binding Entity.ConferenceDay.WeekdayFullname}" /><Run Text=", " />
                                 <Run Text="{Binding Entity.StartTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:hh\\:mm}'}" />
                                 <Run Text="to" />
                                 <Run Text="{Binding Entity.EndTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:hh\\:mm}'}" />
@@ -114,13 +149,35 @@
                     </Grid>
 
 
+                    <StackPanel Margin="10">
+                        <TextBlock behaviors:WikiTextBoxProperties.WikiText="{Binding Entity.Description}"
+                                   Style="{StaticResource BodyTextBlockStyle}"
+                                   TextTrimming="CharacterEllipsis"
+                                   TextWrapping="Wrap" />
+                    </StackPanel>
+
+                    <!--<Button Command="{Binding Source={StaticResource ViewModelLocator}, Path=EventsViewModel.AddEventToCalendarCommand}" CommandParameter="{Binding}">Add to Calendar</Button>-->
+
+                    <!--<TextBlock Margin="0 0 0 0"
+                               FontWeight="Light"
+                               Style="{StaticResource SubheaderTextBlockStyle}"
+                               Text="{Binding Entity.Title}" />
+                    <TextBlock Margin="0 0 0 15"
+                               FontSize="{StaticResource TextStyleMediumFontSize}"
+                               FontWeight="Light"
+                               Style="{StaticResource SubheaderTextBlockStyle}"
+                               Text="{Binding Entity.SubTitle}" />
+
+
+
+
                     <Grid Background="{ThemeResource AppLowContrastTransparentBackgroundBrush}">
                         <TextBlock Margin="10"
                                    behaviors:WikiTextBoxProperties.WikiText="{Binding Entity.Description}"
                                    FontSize="14"
                                    Style="{StaticResource BodyTextBlockStyle}"
                                    TextWrapping="WrapWholeWords" />
-                    </Grid>
+                    </Grid>-->
                     <Image MaxHeight="200" behaviors:AsyncImageLoaderProperties.ImageId="{Binding Entity.ImageId}" />
                 </StackPanel>
             </ScrollViewer>
