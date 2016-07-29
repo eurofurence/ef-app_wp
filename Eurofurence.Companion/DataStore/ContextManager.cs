@@ -208,15 +208,21 @@ namespace Eurofurence.Companion.DataStore
 
             var tasks = imageList.Select(imageEntity => Task.Run(async () =>
             {
-                var content =
-                    await
-                        _apiClient.GetContentAsBufferAsync(
-                            imageEntity.Url
-                                .Replace("{Endpoint}", Consts.WEB_API_ENDPOINT_URL)
-                                .Replace("{EndpointUrl}", Consts.WEB_API_ENDPOINT_URL)
-                            );
-                var bytes = content.ToArray();
-                await _dataStore.SaveBlobAsync(imageEntity.Id, "ImageData", bytes);
+                if (imageEntity.IsDeleted == 1)
+                {
+                    await _dataStore.ClearBlobAsync(imageEntity.Id, "ImageData");
+                }
+                else {
+                    var content =
+                        await
+                            _apiClient.GetContentAsBufferAsync(
+                                imageEntity.Url
+                                    .Replace("{Endpoint}", Consts.WEB_API_ENDPOINT_URL)
+                                    .Replace("{EndpointUrl}", Consts.WEB_API_ENDPOINT_URL)
+                                );
+                    var bytes = content.ToArray();
+                    await _dataStore.SaveBlobAsync(imageEntity.Id, "ImageData", bytes);
+                }
 
                 SubOperationCurrentValue++;
             })).ToList();
