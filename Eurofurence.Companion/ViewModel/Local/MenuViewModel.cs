@@ -1,7 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Store;
+using Windows.System;
+using Windows.UI.Popups;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Eurofurence.Companion.Common;
 using Eurofurence.Companion.Common.Abstractions;
@@ -35,7 +41,7 @@ namespace Eurofurence.Companion.ViewModel.Local
 
         private void UpdateActiveMenuItem(Type currentPageType)
         {
-            foreach (var item in Items)
+            foreach (var item in Items.Where(a => a is MenuItemViewModel).Cast<MenuItemViewModel>())
             {
                 item.IsActive = item.ChildTypes?.Contains(currentPageType) ?? false;
             }
@@ -43,12 +49,12 @@ namespace Eurofurence.Companion.ViewModel.Local
 
         private void BuildMainMenu()
         {
-            Items = new ObservableCollection<MenuItemViewModel>()
+            Items = new ObservableCollection<object>()
             {
                 new MenuItemViewModel {
                     Title = Translations.Info_Title,
                     Icon = Views.InfoPage.PAGE_ICON,
-                    Description = "Information across all areas & departments",
+                    Description = "Information across all areas & departments.",
                     NavigationCommand = new RelayCommand(p => {
                         _navigationMediator.NavigateAsync(typeof(Views.InfoPage), forceNewStack: true);
                     }),
@@ -60,7 +66,7 @@ namespace Eurofurence.Companion.ViewModel.Local
                 new MenuItemViewModel {
                     Title = Translations.EventSchedule_Title,
                     Icon = Views.EventsPage.PAGE_ICON,
-                    Description = "What's happening, when & where",
+                    Description = "What's happening, when & where?",
                     NavigationCommand = new RelayCommand(p => {
                         _navigationMediator.NavigateAsync(typeof(Views.EventsPage), forceNewStack: true);
                     }),
@@ -73,7 +79,7 @@ namespace Eurofurence.Companion.ViewModel.Local
                 new MenuItemViewModel{
                     Title = Translations.Dealers_Title,
                     Icon = Views.DealerListPage.PAGE_ICON,
-                    Description = "List of dealers and their merchandise",
+                    Description = "List of dealers and their merchandise.",
                     NavigationCommand = new RelayCommand(p => {
                         _navigationMediator.NavigateAsync(typeof(Views.DealerListPage), forceNewStack: true);
                     }),
@@ -85,9 +91,53 @@ namespace Eurofurence.Companion.ViewModel.Local
                 new MenuItemViewModel{
                     Title = "Maps",
                     Icon = "\uE128",
-                    Description = "Convention space maps to help navigating",
+                    Description = "Convention space maps to help navigating.",
                     NavigationCommand = new RelayCommand(p => {
                         _navigationMediator.NavigateAsync(typeof(Views.MapsPage), forceNewStack: true);
+                    }),
+                    ChildTypes = new List<Type>() {
+                        typeof(Views.MapsPage),
+                        typeof(Views.MapDetailPage)
+                    }
+                },
+                new object(),
+                new MenuItemViewModel{
+                    Title = "Feedback",
+                    Icon = "\uE8DF",
+                    Description = "Let us know how the app works for you.",
+                    NavigationCommand = new RelayCommand(p =>
+                    {
+                        var flyout = new MenuFlyout();
+
+                        flyout.Items.Add(new MenuFlyoutItem()
+                        {
+                            Text = "Send feedback",
+                            Command = new RelayCommand(async a =>
+                            {
+                                await Launcher.LaunchUriAsync(new Uri(@"http://goo.gl/forms/6hejPn85maAohLJm1"));
+                            })
+                        });
+
+                        flyout.Items.Add(new MenuFlyoutItem()
+                        {
+                            Text = "Report a bug",
+                            Command = new RelayCommand(async a =>
+                            {
+                                await Launcher.LaunchUriAsync(new Uri(@"http://goo.gl/forms/IwckZ8lONCDRZooQ2"));
+                            })
+                        });                        
+
+                        flyout.Items.Add(new MenuFlyoutItem()
+                        {
+                            Text = "Write a review",
+                            Command = new RelayCommand(async a =>
+                            {
+                                await Windows.System.Launcher.LaunchUriAsync(
+                                    new Uri("ms-windows-store:reviewapp?appid=" + CurrentApp.AppId));
+                            })
+                        });
+
+                        flyout.ShowAt((FrameworkElement)p);
                     }),
                     ChildTypes = new List<Type>() {
                         typeof(Views.MapsPage),
@@ -98,7 +148,7 @@ namespace Eurofurence.Companion.ViewModel.Local
             };
         }
 
-        public ObservableCollection<MenuItemViewModel> Items { get; set; }
+        public ObservableCollection<object> Items { get; set; }
     }
 
 }

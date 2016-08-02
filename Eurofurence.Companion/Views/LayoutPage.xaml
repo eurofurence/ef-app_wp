@@ -144,6 +144,71 @@
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
         </Storyboard>
+
+
+        <DataTemplate x:Key="MenuItemDataTemplate">
+            <Grid HorizontalAlignment="Stretch" Style="{StaticResource AppLayoutMenuItemGridStyle}"
+                  x:Name="_thisGrid"
+                  >
+                <interactivity:Interaction.Behaviors>
+                    <interactivity:BehaviorCollection>
+                        <core:EventTriggerBehavior EventName="Tapped">
+                            <core:InvokeCommandAction Command="{Binding NavigationCommand}"
+                                                      CommandParameter="{Binding ElementName=_thisGrid}"
+                                                      />
+                        </core:EventTriggerBehavior>
+                        <core:DataTriggerBehavior Binding="{Binding IsActive}" Value="True">
+                            <core:ChangePropertyAction PropertyName="Style" Value="{StaticResource AppLayoutMenuSelectedItemGridStyle}" />
+                        </core:DataTriggerBehavior>
+                        <core:DataTriggerBehavior Binding="{Binding IsActive}" Value="False">
+                            <core:ChangePropertyAction PropertyName="Style" Value="{StaticResource AppLayoutMenuItemGridStyle}" />
+                        </core:DataTriggerBehavior>
+                    </interactivity:BehaviorCollection>
+                </interactivity:Interaction.Behaviors>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0"
+                                            Width="60"
+                                            Height="60"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top">
+                    <TextBlock Name="_mi_tbIcon"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   FontFamily="{StaticResource IconFontFamily}"
+                                                   FontSize="25"
+                                                   Foreground="White"
+                                                   Text="{Binding Icon}" />
+                </Border>
+
+                <StackPanel Grid.Column="1"
+                                                Margin="10 0 0 0"
+                                                VerticalAlignment="Center">
+                    <TextBlock Style="{StaticResource AppLayoutMenuItemTextBlockStyle}" Text="{Binding Title}" />
+                    <TextBlock Style="{StaticResource AppLayoutMenuSubItemTextBlockStyle}"
+                                                   Text="{Binding Description}"
+                                                   TextWrapping="Wrap" />
+                </StackPanel>
+
+            </Grid>
+
+        </DataTemplate>
+        <DataTemplate x:Key="MenuSpacerDataTemplate">
+            <Border Height="10"
+                            BorderBrush="#30000000"
+                            BorderThickness="0 0 0 2"></Border>
+        </DataTemplate>
+        <behaviors:MainMenuDataTemplateSelector 
+            x:Key="MainMenuDataTemplateSelector"
+            MenuItemTemplate="{StaticResource MenuItemDataTemplate}"
+            MenuSpacerTemplate="{StaticResource MenuSpacerDataTemplate}"
+            />
+        
+        
     </Page.Resources>
 
     <Grid Background="#FF1C1C1C">
@@ -388,73 +453,24 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <ListView x:Name="_menuListView"
+                              ContainerContentChanging="_menuListView_OnContainerContentChanging"
                               Grid.RowSpan="2"
                               DataContext="{Binding Source={StaticResource ViewModelLocator},
                                                     Path=MenuViewModel.Items}"
+                              ItemTemplateSelector="{StaticResource MainMenuDataTemplateSelector}"
                               ItemsSource="{Binding}">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                             </Style>
                         </ListView.ItemContainerStyle>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid HorizontalAlignment="Stretch" Style="{StaticResource AppLayoutMenuItemGridStyle}">
-
-
-                                    <interactivity:Interaction.Behaviors>
-                                        <interactivity:BehaviorCollection>
-                                            <core:EventTriggerBehavior EventName="Tapped">
-                                                <core:InvokeCommandAction Command="{Binding NavigationCommand}" />
-                                            </core:EventTriggerBehavior>
-                                            <core:DataTriggerBehavior Binding="{Binding IsActive}" Value="True">
-                                                <core:ChangePropertyAction PropertyName="Style" Value="{StaticResource AppLayoutMenuSelectedItemGridStyle}" />
-                                            </core:DataTriggerBehavior>
-                                            <core:DataTriggerBehavior Binding="{Binding IsActive}" Value="False">
-                                                <core:ChangePropertyAction PropertyName="Style" Value="{StaticResource AppLayoutMenuItemGridStyle}" />
-                                            </core:DataTriggerBehavior>
-                                        </interactivity:BehaviorCollection>
-                                    </interactivity:Interaction.Behaviors>
-
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="60" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <Border Grid.Column="0"
-                                            Width="60"
-                                            Height="60"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top">
-                                        <TextBlock Name="_mi_tbIcon"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   FontFamily="{StaticResource IconFontFamily}"
-                                                   FontSize="25"
-                                                   Foreground="White"
-                                                   Text="{Binding Icon}" />
-                                    </Border>
-
-                                    <StackPanel Grid.Column="1"
-                                                Margin="10 0 0 0"
-                                                VerticalAlignment="Center">
-                                        <TextBlock Style="{StaticResource AppLayoutMenuItemTextBlockStyle}" Text="{Binding Title}" />
-                                        <TextBlock Style="{StaticResource AppLayoutMenuSubItemTextBlockStyle}"
-                                                   Text="{Binding Description}"
-                                                   TextWrapping="Wrap" />
-                                    </StackPanel>
-
-                                </Grid>
-
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-
+ 
                     </ListView>
 
                     <Border Grid.Row="1"
                             BorderBrush="#30000000"
-                            BorderThickness="0 5 0 0">
-                        <ListView>
+                            BorderThickness="0 2 0 0">
+                        <ListView Margin="0 10 0 0">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -599,7 +615,8 @@
                                                         VerticalAlignment="Center">
                                                 <TextBlock Style="{StaticResource AppLayoutMenuItemTextBlockStyle}" Text="About" />
                                                 <TextBlock Height="20" Style="{StaticResource AppLayoutMenuSubItemTextBlockStyle}">
-                                                    Version<Run Text="{Binding Source={StaticResource ViewModelLocator}, Path=DebugViewModel.AppVersion}" />
+                                                    <Run Text="Version "/>
+                                                    <Run Text="{Binding Source={StaticResource ViewModelLocator}, Path=DebugViewModel.AppVersion}" />
                                                 </TextBlock>
                                             </StackPanel>
                                         </Grid>

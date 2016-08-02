@@ -137,6 +137,7 @@
     <Compile Include="ViewModel\Abstractions\IEventsViewModelContext.cs" />
     <Compile Include="ViewModel\Abstractions\IMapsViewModelContext.cs" />
     <Compile Include="ViewModel\Behaviors\AsyncImageLoaderProperties.cs" />
+    <Compile Include="ViewModel\Behaviors\MainMenuDataTemplateSelector.cs" />
     <Compile Include="ViewModel\Behaviors\RichTextBlockProperties.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="DataModel\StringFormatConverter.cs" />

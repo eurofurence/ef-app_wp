@@ -154,5 +154,18 @@ namespace Eurofurence.Companion.Views
         {
             pageFadeIn.Begin();
         }
+
+        private void _menuListView_OnContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
+        {
+            var listViewItem = args.ItemContainer;
+
+            if (listViewItem != null)
+            {
+                if (args.Item is MenuItemViewModel) return;
+
+                listViewItem.IsHitTestVisible = false;
+                listViewItem.Height = 20;
+            }
+        }
     }
 }

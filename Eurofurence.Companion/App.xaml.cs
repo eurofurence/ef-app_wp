@@ -250,6 +250,8 @@ namespace Eurofurence.Companion
             {
                 switch (applicationSettingsContext.LastPackageVersionRunning)
                 {
+                    case "1.1.0.22":
+                        break;
                     default:
                         var contextManager = KernelResolver.Current.Get<ContextManager>();
                         await contextManager.ClearAll();
