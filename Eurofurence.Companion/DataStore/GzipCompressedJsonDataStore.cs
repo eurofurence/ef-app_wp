@@ -180,10 +180,16 @@ namespace Eurofurence.Companion.DataStore
 
         public async Task ClearBlobAsync(Guid id, string prefix)
         {
-            var folder = await GetBlobStoreFolderAsync();
-            var fileName = GetFilenameForBlob(id, prefix);
-            var file = await folder.GetFileAsync(fileName);
-            await file.DeleteAsync();
+            try
+            {
+                var folder = await GetBlobStoreFolderAsync();
+                var fileName = GetFilenameForBlob(id, prefix);
+                var file = await folder.GetFileAsync(fileName);
+                await file.DeleteAsync();
+            }
+            catch (FileNotFoundException)
+            {
+            }
         }
 
         public async Task<byte[]> GetBlobAsync(Guid id, string prefix)
