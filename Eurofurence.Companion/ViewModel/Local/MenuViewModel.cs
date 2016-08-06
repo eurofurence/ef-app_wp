@@ -2,13 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 using Windows.ApplicationModel.Store;
 using Windows.System;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media.Animation;
 using Eurofurence.Companion.Common;
 using Eurofurence.Companion.Common.Abstractions;
 using Eurofurence.Companion.DependencyResolution;
@@ -22,12 +19,9 @@ namespace Eurofurence.Companion.ViewModel.Local
         private bool _isMenuVisible = false;
         public bool IsMenuVisible {  get { return _isMenuVisible; } set { SetProperty(ref _isMenuVisible, value); } }
 
-
-
         public RelayCommand ToggleMenuCommand => new RelayCommand(p => IsMenuVisible = !IsMenuVisible);
         public RelayCommand OpenMenuCommand => new RelayCommand(p => IsMenuVisible = true);
         public RelayCommand CloseMenuCommand => new RelayCommand(p => IsMenuVisible = false);
-
 
         public MenuViewModel(INavigationMediator navigationMediator)
         {
@@ -139,11 +133,7 @@ namespace Eurofurence.Companion.ViewModel.Local
 
                         flyout.ShowAt((FrameworkElement)p);
                     }),
-                    ChildTypes = new List<Type>() {
-                        typeof(Views.MapsPage),
-                        typeof(Views.MapDetailPage)
-                    }
-
+                    ChildTypes = new List<Type>() 
                 }
             };
         }
