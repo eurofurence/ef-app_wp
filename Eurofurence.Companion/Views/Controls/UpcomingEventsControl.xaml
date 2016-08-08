@@ -51,7 +51,7 @@
                              FontSize="{StaticResource TextStyleSmallFontSize}"
                              Foreground="{StaticResource PhoneLowBrush}"
                              Text="&#xE121;" />
-                        <Run Foreground="{ThemeResource PhoneForegroundBrush}" Text="{Binding Source={StaticResource ServiceLocator}, Path=TimeProvider.CurrentDateTimeMinuteLocal, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:HH\\:mm}'}" />
+                        <Run Foreground="{ThemeResource PhoneForegroundBrush}" Text="{Binding Source={StaticResource ServiceLocator}, Path=TimeProvider.CurrentDateTimeMinuteLocal, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:dddd, HH\\:mm}'}" />
                     </TextBlock>
                     <TextBlock Style="{StaticResource AppGroupHeaderTextStyle}">
                         Running Events
