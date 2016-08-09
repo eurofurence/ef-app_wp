@@ -12,6 +12,7 @@ using Eurofurence.Companion.DependencyResolution;
 using Eurofurence.Companion.ViewModel.Abstractions;
 using Eurofurence.Companion.ViewModel.Local.Entity;
 using Ninject;
+using NotificationsExtensions.TileContent;
 
 namespace Eurofurence.Companion.Views.Controls
 {
@@ -34,7 +35,7 @@ namespace Eurofurence.Companion.Views.Controls
         public MapViewerControl()
         {
             this.InitializeComponent();
-            var dispatcher = Windows.UI.Core.CoreWindow.GetForCurrentThread().Dispatcher;
+            
 
             MarkerVisibility = Visibility.Visible;
             MarkerFill = new SolidColorBrush(Color.FromArgb(70, 255, 0, 0));
@@ -43,6 +44,7 @@ namespace Eurofurence.Companion.Views.Controls
 
 
             if (DesignMode.DesignModeEnabled) return;
+            var dispatcher = Windows.UI.Core.CoreWindow.GetForCurrentThread().Dispatcher;
 
             DataContextChanged += (sender, args) =>
             {
@@ -54,8 +56,11 @@ namespace Eurofurence.Companion.Views.Controls
                     {
                         await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                         {
+                            E_Image_Map.ImageOpened += (s1, a1) => {
+                                MapImageLoadedEvent?.Invoke(this, null);
+                            };
+
                             E_Image_Map.Source = imageTask.Result;
-                            MapImageLoadedEvent?.Invoke(this, null);
                         });
                     });
             };

@@ -14,19 +14,37 @@
       mc:Ignorable="d">
 
     <Grid x:Name="LayoutRoot">
+        
 
-        <ScrollViewer ZoomMode="Enabled" HorizontalSnapPointsType="None"
-                      HorizontalSnapPointsAlignment="Center"
+
+        <ScrollViewer ZoomMode="Enabled"
+                      HorizontalSnapPointsType="None"
+                      VerticalSnapPointsType="None"
                       HorizontalScrollBarVisibility="Visible"
-                      VerticalSnapPointsAlignment="Center"
-                      VerticalSnapPointsType="None" MaxZoomFactor="20"
-                      x:Name="E_ScrollViewer_Map"
+                      MaxZoomFactor="5"
+                      x:Name="E_ScrollViewer_Map" 
                       >
 
             <controls:MapViewerControl 
                 x:Name="E_MapViewerControl_Map"
+                MarkerVisibility="Collapsed"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
                 DataContext="{Binding}"/>
         </ScrollViewer>
+
+        <Grid x:Name="E_Grid_TouchPointNotification" 
+              VerticalAlignment="Bottom" 
+              Background="#90000000">
+            <TextBlock Style="{StaticResource BaseTextBlockStyle}"
+                       Margin="5"
+                       FontSize="{StaticResource TextStyleSmallFontSize}"
+                       LineHeight="14">
+                
+                This map has interactive touch points. Try tapping on
+                distinct elements on the map to inspect them.
+            </TextBlock>
+        </Grid>
     </Grid>
 </Page>
 

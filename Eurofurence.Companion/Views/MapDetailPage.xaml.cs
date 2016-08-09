@@ -1,6 +1,8 @@
-﻿using Eurofurence.Companion.Common;
+﻿using System.Linq;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Eurofurence.Companion.Common;
 using Eurofurence.Companion.ViewModel.Local.Entity;
 
 
@@ -20,35 +22,47 @@ namespace Eurofurence.Companion.Views
             _navigationHelper = new NavigationHelper(this);
             _navigationHelper.LoadState += NavigationHelper_LoadState;
             _navigationHelper.SaveState += NavigationHelper_SaveState;
-
-
         }
 
         public NavigationHelper NavigationHelper => _navigationHelper;
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            if (e.PageState != null && e.PageState.ContainsKey("HorizontalOffset"))
+            this.Loaded += (s1, e1) =>
             {
+                E_Grid_TouchPointNotification.Visibility = (ViewModel?.Entries?.Any() ?? false)
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
 
-                E_ScrollViewer_Map.Loaded += (s, args) =>
-                {
-                    E_ScrollViewer_Map.ChangeView(
-                        (double)e.PageState["HorizontalOffset"],
-                        (double)e.PageState["VerticalOffset"],
-                        (float)e.PageState["ZoomFactor"]
-                        );
-                };
-            }
-            else
-            {
-                E_ScrollViewer_Map.Loaded += (s, args) =>
-                {
-                    E_ScrollViewer_Map.ChangeView(null, null,
-                        (float)(E_ScrollViewer_Map.ActualHeight / ViewModel.Entity.Image.Height));
-                };
-            }
+                var minZoomFactor = (float) (E_ScrollViewer_Map.ActualHeight/ViewModel.Entity.Image.Height);
+                E_ScrollViewer_Map.MinZoomFactor = minZoomFactor;
 
+
+                if (e.PageState != null && e.PageState.ContainsKey("HorizontalOffset"))
+                {
+                    E_MapViewerControl_Map.MapImageLoadedEvent += (s, args) =>
+                    {
+                        E_ScrollViewer_Map.ChangeView(
+                            (double) e.PageState["HorizontalOffset"],
+                            (double) e.PageState["VerticalOffset"],
+                            (float) e.PageState["ZoomFactor"],
+                            disableAnimation: true
+                            );
+                    };
+                }
+                else
+                {
+                    E_MapViewerControl_Map.MapImageLoadedEvent += (s, args) =>
+                    {
+                        E_ScrollViewer_Map.ChangeView(
+                            null,
+                            null,
+                            minZoomFactor,
+                            disableAnimation: true
+                            );
+                    };
+                }
+            };
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
