@@ -241,8 +241,6 @@ namespace Eurofurence.Companion
 
         public async Task<StartupMode> GetStartupModeAsync()
         {
-            //if (Debugger.IsAttached) await Task.Delay(TimeSpan.FromSeconds(5));
-
             var applicationSettingsContext = KernelResolver.Current.Get<ApplicationSettingsContext>();
             var appVersionProvider = KernelResolver.Current.Get<IAppVersionProvider>();
 
@@ -250,7 +248,8 @@ namespace Eurofurence.Companion
             {
                 switch (applicationSettingsContext.LastPackageVersionRunning)
                 {
-                    case "1.1.0.22":
+                    case "1.1.0.25":
+                    case "1.1.0.24":
                         break;
                     default:
                         var contextManager = KernelResolver.Current.Get<ContextManager>();
