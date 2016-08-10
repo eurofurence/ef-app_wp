@@ -126,8 +126,10 @@
     <Compile Include="DependencyResolution\IocBeacon.cs" />
     <Compile Include="DependencyResolution\ServiceLocator.cs" />
     <Compile Include="Services\AsyncImageLoaderService.cs" />
+    <Compile Include="Services\BackgroundUpdateService.cs" />
     <Compile Include="Services\EventService.cs" />
     <Compile Include="Services\Abstractions\IAsyncImageLoaderService.cs" />
+    <Compile Include="Services\Abstractions\IBackgroundUpdateService.cs" />
     <Compile Include="Services\ToastNotificationService.cs" />
     <Compile Include="Translations.cs">
       <AutoGen>True</AutoGen>

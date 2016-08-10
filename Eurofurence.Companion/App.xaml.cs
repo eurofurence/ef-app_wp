@@ -27,6 +27,7 @@ using Eurofurence.Companion.ViewModel.Abstractions;
 using Eurofurence.Companion.ViewModel.Local;
 using Microsoft.HockeyApp;
 using System.Threading.Tasks;
+using Eurofurence.Companion.Services.Abstractions;
 
 namespace Eurofurence.Companion
 {
@@ -92,10 +93,8 @@ namespace Eurofurence.Companion
             var layoutPage = new LayoutPage(navigationMediator, _telemetryClientProvider);
             KernelResolver.Current.Bind<ILayoutPage>().ToConstant(layoutPage);
 
-            
-
-            var s = KernelResolver.Current.Get<ToastNotificationService>();
-
+            KernelResolver.Current.Get<ToastNotificationService>();
+            KernelResolver.Current.Get<IBackgroundUpdateService>().Start(TimeSpan.FromMinutes(1));
 
             var startupMode = await GetStartupModeAsync();
             if (startupMode == StartupMode.Close)
