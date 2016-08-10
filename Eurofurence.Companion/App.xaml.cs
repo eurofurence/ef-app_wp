@@ -247,6 +247,7 @@ namespace Eurofurence.Companion
             {
                 switch (applicationSettingsContext.LastPackageVersionRunning)
                 {
+                    case "1.1.0.26":
                     case "1.1.0.25":
                     case "1.1.0.24":
                         break;
