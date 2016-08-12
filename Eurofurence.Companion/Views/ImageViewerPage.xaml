@@ -15,6 +15,7 @@
                       MaxZoomFactor="3"
                       MinZoomFactor="1"
                       VerticalScrollBarVisibility="Auto"
+                      IsZoomInertiaEnabled="False"
                       ZoomMode="Enabled">
             <Image Name="E_Image"
                    Width="{Binding Path=ViewportWidth,

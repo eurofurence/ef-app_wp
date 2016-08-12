@@ -21,6 +21,7 @@
                       HorizontalSnapPointsType="None"
                       VerticalSnapPointsType="None"
                       HorizontalScrollBarVisibility="Visible"
+                      IsZoomInertiaEnabled="False"
                       MaxZoomFactor="5"
                       x:Name="E_ScrollViewer_Map" 
                       >
