@@ -94,7 +94,7 @@ namespace Eurofurence.Companion
             KernelResolver.Current.Bind<ILayoutPage>().ToConstant(layoutPage);
 
             KernelResolver.Current.Get<ToastNotificationService>();
-            KernelResolver.Current.Get<IBackgroundUpdateService>().Start(TimeSpan.FromMinutes(1));
+            KernelResolver.Current.Get<IBackgroundUpdateService>().SetInterval(TimeSpan.FromMinutes(1));
 
             var startupMode = await GetStartupModeAsync();
             if (startupMode == StartupMode.Close)
@@ -171,6 +171,8 @@ namespace Eurofurence.Companion
                         .Update(doSaveToStoreBeforeUpdate: false);
 
                     await Task.Run(() => Task.WaitAll(new[] { updateTask }, TimeSpan.FromSeconds(10)));
+
+                    KernelResolver.Current.Get<IBackgroundUpdateService>().Start();
                 }
             }
 

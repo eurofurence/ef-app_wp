@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Eurofurence.Companion.DependencyResolution;
+using Eurofurence.Companion.Services.Abstractions;
+using Ninject;
 
 
 namespace Eurofurence.Companion.Views
@@ -42,6 +45,7 @@ namespace Eurofurence.Companion.Views
                 if (_options?.AutoNavigateBackOnSuccess == true &&
                     _contextManager.UpdateStatus == TaskStatus.RanToCompletion)
                 {
+                    KernelResolver.Current.Get<IBackgroundUpdateService>().Start();
                     NavigationHelper.GoBack();
                 }
             }

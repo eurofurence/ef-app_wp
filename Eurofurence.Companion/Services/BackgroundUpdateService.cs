@@ -21,7 +21,6 @@ namespace Eurofurence.Companion.Services
             _contextManager = contextManager;
             _timer = new DispatcherTimer();
             _timer.Tick += TimerOnTickAsync;
-            
         }
 
         private async void TimerOnTickAsync(object sender, object o)
@@ -30,15 +29,19 @@ namespace Eurofurence.Companion.Services
             await _contextManager.Update(doSaveToStoreBeforeUpdate: true);
         }
 
-        public void Start(TimeSpan interval)
+        public void Start()
         {
-            _timer.Interval = interval;
             _timer.Start();
         }
 
         public void Stop()
         {
             _timer.Stop();
+        }
+
+        public void SetInterval(TimeSpan interval)
+        {
+            _timer.Interval = interval;
         }
     }
 }
