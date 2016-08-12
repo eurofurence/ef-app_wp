@@ -246,15 +246,17 @@
                 </ListView>
             </FlipViewItem>
             <FlipViewItem>
-                <Grid Margin="20 10 20 10">
+                <Grid Margin="0 10 0 10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
 
-                    <TextBox Margin="0" Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    <controls:EventListControl Grid.Row="1" DataContext="{Binding EventEntrySearchResults}" />
+                    <TextBox Margin="20 0 20 0" Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <controls:EventListControl Grid.Row="1" 
+                                               ShowConferenceDay="True"
+                                               DataContext="{Binding EventEntrySearchResults}" />
                 </Grid>
 
             </FlipViewItem>

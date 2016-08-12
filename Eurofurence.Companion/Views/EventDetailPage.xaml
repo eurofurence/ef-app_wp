@@ -40,9 +40,10 @@
     </Page.BottomAppBar>
     <Grid x:Name="LayoutRoot">
         <Grid x:Name="ContentRoot">
+            <Image VerticalAlignment="Center"
+                               behaviors:AsyncImageLoaderProperties.ImageId="{Binding Entity.ImageId}"
+                               Stretch="UniformToFill" Opacity="0.08" />
             <ScrollViewer>
-
-
                 <StackPanel Margin="20">
                     <StackPanel.ChildrenTransitions>
                         <TransitionCollection>
@@ -50,7 +51,7 @@
                         </TransitionCollection>
                     </StackPanel.ChildrenTransitions>
 
-                    <Grid Height="150"
+                    <Grid MaxHeight="200"
                           Margin="-20 -20 -20 20"
                           Visibility="{Binding HasImage,
                                                Converter={StaticResource TrueToVisibleConverter}}">
@@ -64,7 +65,7 @@
 
                         <Image VerticalAlignment="Center"
                                behaviors:AsyncImageLoaderProperties.ImageId="{Binding Entity.ImageId}"
-                               Stretch="UniformToFill" />
+                               Stretch="Uniform" />
 
                     </Grid>
 
@@ -193,7 +194,7 @@
                                    Style="{StaticResource BodyTextBlockStyle}"
                                    TextWrapping="WrapWholeWords" />
                     </Grid>-->
-                    <Image MaxHeight="200" behaviors:AsyncImageLoaderProperties.ImageId="{Binding Entity.ImageId}" />
+                    <!--<Image MaxHeight="200" behaviors:AsyncImageLoaderProperties.ImageId="{Binding Entity.ImageId}" />-->
                 </StackPanel>
             </ScrollViewer>
         </Grid>
