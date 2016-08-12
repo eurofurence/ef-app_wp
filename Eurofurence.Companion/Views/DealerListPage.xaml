@@ -55,12 +55,9 @@
 
                                 </Border>
                                 <Grid Visibility="{Binding HasArtistThumbnailImage, Converter={StaticResource FalseToVisibleConverter}}">
-                                    <TextBlock HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               FontSize="50"
-                                               Foreground="#30000000">
-                                        <Run FontFamily="{StaticResource IconFontFamily}" Text="&#xEA8C;" />
-                                    </TextBlock>
+                                    <Viewbox Margin="-7 -10 0 5">
+                                        <Path Data="{StaticResource YchGlyph}" Fill="White" Opacity="0.4" ></Path>
+                                    </Viewbox>
                                 </Grid>
                             </Grid>
                             <StackPanel Grid.Column="1" VerticalAlignment="Center">
