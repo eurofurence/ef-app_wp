@@ -249,6 +249,7 @@ namespace Eurofurence.Companion
             {
                 switch (applicationSettingsContext.LastPackageVersionRunning)
                 {
+                    case "1.1.0.28":
                     case "1.1.0.27":
                     case "1.1.0.26":
                     case "1.1.0.25":
