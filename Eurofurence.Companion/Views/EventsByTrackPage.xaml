@@ -26,7 +26,7 @@
         </Grid>
 
         <controls:EventListControl Grid.Row="1"
-                                   Margin="20"
+                                   Margin="0 10 0 0"
                                    DataContext="{Binding EventEntries}"
                                    ShowConferenceDay="True"
                                    ShowConferenceRoom="True" />

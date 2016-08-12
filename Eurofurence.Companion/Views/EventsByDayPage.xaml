@@ -119,7 +119,7 @@
             <FlipView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
-                        <controls:EventListControl Margin="20 10 20 0"
+                        <controls:EventListControl Margin="0 10 0 0"
                                                    DataContext="{Binding EventEntries}"
                                                    ShowConferenceDay="False"
                                                    ShowConferenceRoom="True" />
