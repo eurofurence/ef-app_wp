@@ -12,7 +12,7 @@ namespace Eurofurence.Companion.DataModel.Api
         public string ShortDescription { get; set; }
         public string AboutTheArtistText { get; set; }
         public string AboutTheArtText { get; set; }
-        public string WebsiteUri { get; set; }
+        public LinkFragment[] Links { get; set; }
         public string ArtPreviewCaption { get; set; }
         public Guid? ArtistThumbnailImageId { get; set; }
         public Guid? ArtistImageId { get; set; }

@@ -94,6 +94,7 @@
     <Compile Include="Common\Abstractions\ITimeProvider.cs" />
     <Compile Include="Common\AsyncNavigationEvent.cs" />
     <Compile Include="Common\Abstractions\IAppVersionProvider.cs" />
+    <Compile Include="DataModel\Api\LinkFragment.cs" />
     <Compile Include="DataModel\Api\Map.cs" />
     <Compile Include="DataModel\Api\MapEntry.cs" />
     <Compile Include="DataModel\Api\NamedUrl.cs" />
