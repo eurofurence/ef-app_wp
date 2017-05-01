@@ -14,12 +14,14 @@ namespace Eurofurence.Companion.DataModel.Api
 
         public string Name { get; set; }
         public string Description { get; set; }
-        public int Position { get; set; }
+        public int Order { get; set; }
+
+        public bool ShowInHamburgerMenu { get; set; }
 
         [JsonIgnore]
         public ICollection<Info> Entries { get; set; }
 
         [JsonIgnore]
-        public object SortOrderKey => Position;
+        public object SortOrderKey => Order;
     }
 }

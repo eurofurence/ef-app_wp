@@ -97,6 +97,7 @@
     <Compile Include="DataModel\Api\Map.cs" />
     <Compile Include="DataModel\Api\MapEntry.cs" />
     <Compile Include="DataModel\Api\NamedUrl.cs" />
+    <Compile Include="DataModel\Api\Sync.cs" />
     <Compile Include="DataModel\ImageExtensions.cs" />
     <Compile Include="Common\NavigationHelper.cs" />
     <Compile Include="Common\NavigationMediator.cs" />

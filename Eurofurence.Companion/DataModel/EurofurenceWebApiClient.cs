@@ -55,6 +55,17 @@ namespace Eurofurence.Companion.DataModel
             throw new NotSupportedException();
         }
 
+        public Task<AggregatedDeltaResponse> GetDeltaAsync(DateTime? since = null, Action<HttpProgress> progressCallback = null)
+        {
+            var uri = "Sync";
+            if (since.HasValue)
+            {
+                uri = $"{uri}?since={since.Value.ToString("yyyy-MM-ddTHH:mm:ssZ")}";
+            }
+
+            return GetAsync<AggregatedDeltaResponse>(uri, null);
+        }
+
         public Task<List<T>> GetEntitiesAsync<T>(DateTime? since = null, Action<HttpProgress> progressCallback = null)
         {
             var uri = GetResourcePath(typeof(T));
@@ -95,6 +106,12 @@ namespace Eurofurence.Companion.DataModel
                 return result;
             }
         }
+
+        public Task<IBuffer> GetImageContentAsBufferAsync(Guid imageId, Action<HttpProgress> progressCallback = null)
+        {
+            return GetContentAsBufferAsync($"{_endpointUrl}/Images/{imageId}/Content", null);
+        }
+
 
         public Task<string> GetContentAsStringAsync(string url, Action<HttpProgress> progressCallback = null)
         {

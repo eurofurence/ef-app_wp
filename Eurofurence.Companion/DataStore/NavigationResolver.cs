@@ -32,7 +32,7 @@ namespace Eurofurence.Companion.DataStore
             foreach (var e in dataContext.InfoGroups) e.Entries.Clear();
             foreach (var e in dataContext.Infos)
             {
-                e.Group = dataContext.InfoGroups.SingleOrDefault(a => a.Id == e.InfoGroupId);
+                e.Group = dataContext.InfoGroups.SingleOrDefault(a => a.Id == e.KnowledgeGroupId);
 
                 e.Group?.Entries.Add(e);
             }

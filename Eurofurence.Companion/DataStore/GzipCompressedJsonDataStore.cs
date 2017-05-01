@@ -147,10 +147,17 @@ namespace Eurofurence.Companion.DataStore
 
         public async Task ClearAsync(Type entityType)
         {
-            var folder = await GetStoreFolderAsync();
-            var file = await folder.GetFileAsync(GetFilenameForType(entityType));
+            try
+            {
+                var folder = await GetStoreFolderAsync();
+                var file = await folder.GetFileAsync(GetFilenameForType(entityType));
 
-            await file.DeleteAsync();
+                await file.DeleteAsync();
+            }
+            catch (Exception)
+            {
+                // File didn't exist - we don't care.
+            }
         }
 
         public async Task<Dictionary<string, ulong>> GetStorageFileSizesAsync()

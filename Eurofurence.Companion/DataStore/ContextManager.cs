@@ -133,11 +133,51 @@ namespace Eurofurence.Companion.DataStore
                     await _dataContext.SaveToStoreAsync();
                 }
 
-                var metadata = await _apiClient.GetEndpointMetadataAsync();
                 var updateResults = new List<EntityUpdateResult>();
 
-                MainOperationMaxValue = 12;
-                MainOperationCurrentValue = 0;
+                var sync = await _apiClient.GetDeltaAsync(LastServerQueryDateTimeUtc);
+
+                updateResults.Add(ProcessDelta(sync.Events));
+                updateResults.Add(ProcessDelta(sync.EventConferenceDays));
+                updateResults.Add(ProcessDelta(sync.EventConferenceRooms));
+                updateResults.Add(ProcessDelta(sync.EventConferenceTracks));
+                updateResults.Add(ProcessDelta(sync.Dealers));
+                updateResults.Add(ProcessDelta(sync.KnowledgeGroups));
+                updateResults.Add(ProcessDelta(sync.KnowledgeEntries));
+                updateResults.Add(ProcessDelta(sync.Images));
+
+                await UpdateImageDataAsync(updateResults.Single(a => a.EntityType == typeof(Image)).Entities.Cast<Image>());
+
+
+                foreach (var entity in updateResults.Where(a => a.TruncateBeforeProcessing).Select(b => b.EntityType))
+                {
+                    await _dataStore.ClearAsync(entity);
+                }
+
+                await _dataStore.ApplyDeltaAsync(updateResults.SelectMany(a => a.Entities), (current, max, id) =>
+                {
+                    SubOperationMaxValue = (ulong)max;
+                    SubOperationCurrentValue = (ulong)current;
+                });
+
+
+                _applicationSettingsContext.LastServerQueryDateTimeUtc = sync.CurrentDateTimeUtc;
+                OnPropertyChanged(nameof(LastServerQueryDateTimeUtc));
+
+                // Don't trigger a reload if we didn't touch anything.
+                if (updateResults.Any(a => a.TruncateBeforeProcessing || a.Entities.Count > 0))
+                {
+                    await _dataContext.LoadFromStoreAsync();
+                    await _dataContext.SaveToStoreAsync();
+                }
+
+
+                UpdateStatus = TaskStatus.RanToCompletion;
+                return;
+
+                var metadata = await _apiClient.GetEndpointMetadataAsync();
+                
+
 
                 updateResults.Add(await UpdateEntitiesAsync<Announcement>(metadata));
                 updateResults.Add(await UpdateEntitiesAsync<EventEntry>(metadata));
@@ -196,6 +236,30 @@ namespace Eurofurence.Companion.DataStore
 
         }
 
+        private EntityUpdateResult ProcessDelta<T>(DeltaResponse<T> response) where T: EntityBase, new()
+        {
+            var result = new EntityUpdateResult {
+                EntityType = typeof(T),
+                Entities = new List<EntityBase>(),
+                TruncateBeforeProcessing = response.RemoveAllBeforeInsert
+            };
+
+            foreach(var id in response.DeletedEntities)
+            {
+                var x = new T();
+                x.Id = id;
+                x.IsDeleted = 1;
+
+                result.Entities.Add(x);
+            }
+
+            foreach(var record in response.ChangedEntities)
+            {
+                result.Entities.Add(record);
+            }
+
+            return result;
+        }
 
         private async Task UpdateImageDataAsync(IEnumerable<Image> images)
         {
@@ -213,13 +277,7 @@ namespace Eurofurence.Companion.DataStore
                     await _dataStore.ClearBlobAsync(imageEntity.Id, "ImageData");
                 }
                 else {
-                    var content =
-                        await
-                            _apiClient.GetContentAsBufferAsync(
-                                imageEntity.Url
-                                    .Replace("{Endpoint}", Consts.WEB_API_ENDPOINT_URL)
-                                    .Replace("{EndpointUrl}", Consts.WEB_API_ENDPOINT_URL)
-                                );
+                    var content = await _apiClient.GetImageContentAsBufferAsync(imageEntity.Id);
                     var bytes = content.ToArray();
                     await _dataStore.SaveBlobAsync(imageEntity.Id, "ImageData", bytes);
                 }

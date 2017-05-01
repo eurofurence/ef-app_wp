@@ -2,6 +2,6 @@
 {
     public class Consts
     {
-        public const string WEB_API_ENDPOINT_URL = "https://app.eurofurence.org/api";
+        public const string WEB_API_ENDPOINT_URL = "https://app.eurofurence.org/api/v2";
     }
 }

@@ -7,11 +7,12 @@ namespace Eurofurence.Companion.DataModel.Api
 {
     public class Info : EntityBase, ISortOrderKeyProvider
     {
+        public Guid KnowledgeGroupId { get; set; }
+
         public string Title { get; set; }
         public string Text { get; set; }
-        public int Position { get; set; }
+        public int Order { get; set; }
 
-        public Guid InfoGroupId { get; set; }
 
         public List<Guid> ImageIds { get; set; }
         public List<NamedUrl> Urls { get; set; }
@@ -28,6 +29,6 @@ namespace Eurofurence.Companion.DataModel.Api
         public virtual InfoGroup Group { get; set; }
 
         [JsonIgnore]
-        public object SortOrderKey => Position;
+        public object SortOrderKey => Order;
     }
 }
