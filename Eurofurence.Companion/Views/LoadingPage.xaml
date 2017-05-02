@@ -10,14 +10,20 @@
 
     <Grid>
         <Grid.Background>
-            <ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/Eurofurence/Volatile/background_nologo_1080p.jpg"/>
+            <ImageBrush ImageSource="ms-appx:///Assets/Eurofurence/Volatile/background_nologo_1080p.jpg" Stretch="UniformToFill" />
         </Grid.Background>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="300"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="300" />
         </Grid.RowDefinitions>
-        <Image Width="120" Margin="0 20 0 0" Source="ms-appx:///Assets/Eurofurence/Volatile/logo.png"  VerticalAlignment="Top"/>
-        <StackPanel Margin="0" VerticalAlignment="Bottom" Grid.Row="2" Background="#90000000">
+        <Image Width="120"
+               Margin="0 20 0 0"
+               VerticalAlignment="Top"
+               Source="ms-appx:///Assets/Eurofurence/Volatile/logo.png" />
+        <StackPanel Grid.Row="2"
+                    Margin="0"
+                    VerticalAlignment="Bottom"
+                    Background="#90000000">
 
 
             <Grid Margin="20 10 20 5">
@@ -64,10 +70,9 @@
             <TextBlock Margin="0 -30 0 0"
                        FontSize="{ThemeResource TextStyleMediumFontSize}"
                        Style="{StaticResource BaseTextBlockStyle}"
-                       Text="Deciphering Prophecy"
-                       TextAlignment="Center">
-            </TextBlock>
-            <!--Text="{Binding Path=ContextManager.MainOperationMessage}"-->
+                       Text="{Binding Path=ContextManager.MainOperationMessage}"
+                       TextAlignment="Center" />
+            <!--  Text="{Binding Path=ContextManager.MainOperationMessage}"  -->
             <!--<TextBlock Margin="0 30 0 0"
                        FontSize="{ThemeResource TextStyleLargeFontSize}"
                        Style="{StaticResource BaseTextBlockStyle}"
