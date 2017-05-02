@@ -121,7 +121,7 @@
                     </ListView.ItemContainerStyle>
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Grid x:Name="E_Grid_ListViewItem_ConferenceDay" Background="Transparent">
+                            <Grid x:Name="E_Grid_ListViewItem_ConferenceDay" Background="Transparent" Margin="0 0 0 10">
                                 <interactivity:Interaction.Behaviors>
                                     <interactivity:BehaviorCollection>
                                         <core:DataTriggerBehavior Binding="{Binding IsCurrentDay}" Value="True">
@@ -143,7 +143,7 @@
                                 </Grid.ColumnDefinitions>
 
                                 <Border Grid.Column="0"
-                                        Margin="0,0,0,10"
+                                        Margin="0,0,0,0"
                                         HorizontalAlignment="Left">
                                     <Border Width="60"
                                             Height="60"

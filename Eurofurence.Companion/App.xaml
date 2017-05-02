@@ -15,7 +15,9 @@
             </ResourceDictionary.MergedDictionaries>-->
 
 
-            <Color x:Key="EurofurenceThemeColor">#006357</Color>
+            <Color x:Key="EurofurenceThemeColor">#F29D42</Color>
+            <!--<Color x:Key="EurofurenceThemeColor">#006357</Color>-->
+            
             <Color x:Key="EurofurenceThemeColorTransparent">#00006357</Color>
             <Color x:Key="EurofurenceThemeColorLight">#90d3c7</Color>
             <SolidColorBrush x:Key="EurofurenceThemeColorBrush" Color="{StaticResource EurofurenceThemeColor}" />
@@ -23,6 +25,8 @@
 
             <SolidColorBrush x:Key="AppPageBackgroundBrush" Color="{StaticResource EurofurenceThemeColor}" />
 
+            <SolidColorBrush x:Key="AppMidBrushAccent" Color="{StaticResource EurofurenceThemeColor}" Opacity="0.8"></SolidColorBrush>
+            <SolidColorBrush x:Key="AppLowBrushAccent" Color="{StaticResource EurofurenceThemeColor}" Opacity="0.5"></SolidColorBrush>
 
             <Style x:Key="AppLayoutBaseTextBlockStyle"
                    BasedOn="{StaticResource BaseTextBlockStyle}"
@@ -108,8 +112,8 @@
                 <Setter Property="TextWrapping" Value="WrapWholeWords" />
             </Style>
             <Style x:Key="AppGroupHeaderBorder" TargetType="Border">
-                <Setter Property="BorderBrush" Value="#30000000" />
-                <Setter Property="BorderThickness" Value="0 0 0 3" />
+                <Setter Property="BorderBrush" Value="{ThemeResource AppLowBrushAccent}" />
+                <Setter Property="BorderThickness" Value="0 0 0 2" />
             </Style>
 
             <Thickness x:Key="AppGroupHeaderOuterMargin">0,0,0,0</Thickness>
@@ -119,7 +123,8 @@
             <Style x:Key="AppGroupHeaderTextStyle" TargetType="TextBlock">
                 <Setter Property="FontFamily" Value="{ThemeResource PhoneFontFamilyNormal}" />
                 <Setter Property="FontSize" Value="14" />
-                <Setter Property="Foreground" Value="{ThemeResource PhoneMidBrush}" />
+                <!--<Setter Property="Foreground" Value="{ThemeResource PhoneMidBrush}" />-->
+                <Setter Property="Foreground" Value="{ThemeResource AppMidBrushAccent}" />
                 <Setter Property="FontWeight" Value="SemiBold" />
                 <Setter Property="TextTrimming" Value="Clip" />
                 <Setter Property="TextWrapping" Value="WrapWholeWords" />

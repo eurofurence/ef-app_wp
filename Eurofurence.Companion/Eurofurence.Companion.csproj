@@ -94,6 +94,7 @@
     <Compile Include="Common\Abstractions\ITimeProvider.cs" />
     <Compile Include="Common\AsyncNavigationEvent.cs" />
     <Compile Include="Common\Abstractions\IAppVersionProvider.cs" />
+    <Compile Include="Controls\TilePanel.cs" />
     <Compile Include="DataModel\Api\LinkFragment.cs" />
     <Compile Include="DataModel\Api\Map.cs" />
     <Compile Include="DataModel\Api\MapEntry.cs" />
@@ -301,7 +302,10 @@
   <ItemGroup>
     <Content Include="Assets\BadgeLogo24x24.scale-240.png" />
     <Content Include="Assets\Eurofurence\Volatile\background.jpg" />
+    <Content Include="Assets\Eurofurence\Volatile\background_nologo_1080p.jpg" />
+    <Content Include="Assets\Eurofurence\Volatile\logo.png" />
     <Content Include="Assets\Eurofurence\Volatile\logo_small.png" />
+    <Content Include="Assets\Eurofurence\Volatile\tile2.jpg" />
     <Content Include="Assets\Eurofurence\WolfHead.svg" />
     <None Include="app.config" />
     <None Include="Assets\Fonts\fontelico-codes.css" />
