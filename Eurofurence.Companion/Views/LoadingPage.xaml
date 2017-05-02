@@ -17,10 +17,10 @@
             <RowDefinition Height="300"/>
         </Grid.RowDefinitions>
         <Image Width="120" Margin="0 20 0 0" Source="ms-appx:///Assets/Eurofurence/Volatile/logo.png"  VerticalAlignment="Top"/>
-        <StackPanel Margin="0" VerticalAlignment="Top" Grid.Row="2" Background="#60000000">
+        <StackPanel Margin="0" VerticalAlignment="Bottom" Grid.Row="2" Background="#90000000">
 
 
-            <Grid Margin="20">
+            <Grid Margin="20 10 20 5">
                 <ProgressBar Width="160"
                              Height="10"
                              Margin="15 0 0 0"
@@ -61,13 +61,13 @@
                 </StackPanel>
             </Grid>
 
-            <TextBlock Margin="0 0 0 30"
-                       FontSize="{ThemeResource TextStyleExtraLargeFontSize}"
+            <TextBlock Margin="0 -30 0 0"
+                       FontSize="{ThemeResource TextStyleMediumFontSize}"
                        Style="{StaticResource BaseTextBlockStyle}"
-                       Text="{Binding Path=ContextManager.MainOperationMessage}"
+                       Text="Deciphering Prophecy"
                        TextAlignment="Center">
             </TextBlock>
-
+            <!--Text="{Binding Path=ContextManager.MainOperationMessage}"-->
             <!--<TextBlock Margin="0 30 0 0"
                        FontSize="{ThemeResource TextStyleLargeFontSize}"
                        Style="{StaticResource BaseTextBlockStyle}"

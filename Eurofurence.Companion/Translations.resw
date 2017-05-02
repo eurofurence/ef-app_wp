@@ -145,7 +145,7 @@
     <value>Praying to the Old Gods</value>
   </data>
   <data name="ContextManager_Update_Synchronizing" xml:space="preserve">
-    <value>Deciphering the Ancient Prophecy</value>
+    <value>Deciphering Prophecy</value>
   </data>
   <data name="ContextManager_Update_Done" xml:space="preserve">
     <value>Done</value>
