@@ -39,6 +39,8 @@ namespace Eurofurence.Companion.Views
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
+            if (!(e.PageState?.ContainsKey(STATE_SCROLLVIEWER_OFFSET_Y) ?? false)) return;
+
             var verticalOffset = Convert.ToDouble(e.PageState?[STATE_SCROLLVIEWER_OFFSET_Y] ?? 0);
             GetListViewScrollViewer().ChangeView(null, verticalOffset, null);
         }

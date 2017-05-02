@@ -17,7 +17,7 @@ namespace Eurofurence.Companion.Views
         private readonly INavigationMediator _navigationMediator;
         private readonly ITelemetryClientProvider _telemetryClientProvider;
 
-        private readonly ContinuumNavigationTransitionInfo _defaultTransition;
+        private readonly NavigationTransitionInfo _defaultTransition;
         private readonly CoreDispatcher _dispatcher;
 
         private readonly Lazy<MenuViewModel> _menuViewModel = new Lazy<MenuViewModel>(() => ViewModelLocator.Current.MenuViewModel);
@@ -39,7 +39,8 @@ namespace Eurofurence.Companion.Views
             _navigationMediator = navigationMediator;
             _telemetryClientProvider = telemetryClientProvider;
 
-            _defaultTransition = new ContinuumNavigationTransitionInfo();
+
+            _defaultTransition = new ContinuumNavigationTransitionInfo(); //  { ExitElement = RootFrame };
             _menuCompositeRenderTransform.TranslateX = -320;
 
 
@@ -133,19 +134,38 @@ namespace Eurofurence.Companion.Views
                 _menuViewModel.Value.IsMenuVisible = false;
                 _telemetryClientProvider.Client.TrackPageView(sourcePageType.FullName);
 
-                result = RootFrame.Navigate(sourcePageType, parameter, transitionInfo ?? _defaultTransition);
+                result = RootFrame.Navigate(sourcePageType, parameter, transitionInfo ?? _defaultTransition); 
+
+                if (result && forceNewStack) _cleanupStack();
+
                 GC.Collect();
             });
 
             return result;
         }
 
+        private void _cleanupStack()
+        {
+            while (RootFrame.BackStack.Count > 1)
+                RootFrame.BackStack.RemoveAt(1);
+
+        }
+
         private bool _forceNewStack()
         {
-            if (!RootFrame.Navigate(typeof(MainPage))) return false;
+            if (RootFrame.CurrentSourcePageType == typeof(MainPage)) return true;
 
-            RootFrame.BackStack.Clear();
-            RootFrame.ForwardStack.Clear();
+            if (RootFrame.BackStack.Count == 0 || RootFrame.BackStack[0].SourcePageType != typeof(MainPage)) {
+
+                if (!RootFrame.Navigate(typeof(MainPage))) return false;
+                RootFrame.BackStack.Clear();
+                RootFrame.ForwardStack.Clear();
+            }
+
+            //if (!RootFrame.Navigate(typeof(MainPage))) return false;
+
+            //RootFrame.BackStack.Clear();
+            //RootFrame.ForwardStack.Clear();
 
             return true;
         }

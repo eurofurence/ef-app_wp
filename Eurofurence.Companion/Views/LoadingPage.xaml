@@ -9,18 +9,27 @@
       mc:Ignorable="d">
 
     <Grid>
-        <StackPanel Margin="20" VerticalAlignment="Top">
-            <Image Margin="30" Source="ms-appx:///Assets/Eurofurence/Volatile/logo_small.png" />
-            <Grid Margin="0 150 0 0">
+        <Grid.Background>
+            <ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/Eurofurence/Volatile/background_nologo_1080p.jpg"/>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="300"/>
+        </Grid.RowDefinitions>
+        <Image Width="120" Margin="0 20 0 0" Source="ms-appx:///Assets/Eurofurence/Volatile/logo.png"  VerticalAlignment="Top"/>
+        <StackPanel Margin="0" VerticalAlignment="Top" Grid.Row="2" Background="#60000000">
+
+
+            <Grid Margin="20">
                 <ProgressBar Width="160"
-                             Height="40"
+                             Height="10"
                              Margin="15 0 0 0"
                              Background="Transparent"
                              Foreground="{StaticResource AppLowContrastTransparentBackgroundBrush}"
                              Maximum="{Binding Path=ContextManager.MainOperationMaxValue}"
                              Value="{Binding Path=ContextManager.MainOperationCurrentValue}" />
                 <ProgressBar Width="160"
-                             Height="40"
+                             Height="10"
                              Margin="15 0 0 0"
                              Background="Transparent"
                              Foreground="{StaticResource AppLowContrastTransparentBackgroundBrush}"
@@ -34,36 +43,36 @@
 
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                     <TextBlock HorizontalAlignment="Center"
-                               FontFamily="{StaticResource IconFontFamily}"
+                               FontFamily="{StaticResource HieroglifyFontFamily}"
                                FontSize="100"
-                               Text="&#xE128;" />
+                               Text="Z" />
                     <TextBlock Margin="20"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                FontFamily="{StaticResource IconFontFamily}"
                                FontSize="30"
                                Foreground="{ThemeResource PhoneLowBrush}"
-                               Opacity="0.4"
+                               Opacity="0.0"
                                Text="&#xE26B;&#xE26B;&#xE26B;" />
                     <TextBlock HorizontalAlignment="Center"
-                               FontFamily="{StaticResource IconFontFamily}"
+                               FontFamily="{StaticResource HieroglifyFontFamily}"
                                FontSize="100"
-                               Text="&#xEC75;" />
+                               Text="U" />
                 </StackPanel>
             </Grid>
 
-            <TextBlock Margin="0 30 0 0"
+            <TextBlock Margin="0 0 0 30"
                        FontSize="{ThemeResource TextStyleExtraLargeFontSize}"
                        Style="{StaticResource BaseTextBlockStyle}"
+                       Text="{Binding Path=ContextManager.MainOperationMessage}"
                        TextAlignment="Center">
-                Fetching the latest data...
             </TextBlock>
 
-            <TextBlock Margin="0 30 0 0"
+            <!--<TextBlock Margin="0 30 0 0"
                        FontSize="{ThemeResource TextStyleLargeFontSize}"
                        Style="{StaticResource BaseTextBlockStyle}"
                        Text="{Binding Path=ContextManager.MainOperationMessage}"
-                       TextAlignment="Center" />
+                       TextAlignment="Center" />-->
         </StackPanel>
     </Grid>
 </Page>

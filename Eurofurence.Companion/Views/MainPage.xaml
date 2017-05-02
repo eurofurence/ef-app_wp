@@ -26,11 +26,11 @@
                             <RectangleGeometry Rect="0,275,1080,150"></RectangleGeometry>
                         </Image.Clip>
                     </Image>
-                    <Image Height="100"
+                    <!--<Image Height="100"
                            Margin="20 20 20 20"
                            HorizontalAlignment="Left"
                            VerticalAlignment="Top"
-                           Source="ms-appx:///Assets/Eurofurence/Volatile/logo.png" />
+                           Source="ms-appx:///Assets/Eurofurence/Volatile/logo.png" />-->
                 </Grid>
                 <Grid x:Name="ContentRoot" Margin="20 20 20 0">
                     <StackPanel>

@@ -224,8 +224,8 @@
                 <ImageBrush ImageSource="ms-appx:///Assets/Eurofurence/Volatile/tile2.jpg"/>
             </c:TilePanel.Image>
         </c:TilePanel>
-        
-        <Viewbox Grid.Row="1" Opacity="0.08" Margin="-130">
+
+        <Viewbox Grid.Row="1" Opacity="0.08" Margin="-130 0 -130 0" Height="600" VerticalAlignment="Top">
             <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg5229" Width="163.36252" Height="157.10095"
                     >
                 <Canvas.RenderTransform>
@@ -330,14 +330,12 @@
                     </interactivity:BehaviorCollection>
                 </interactivity:Interaction.Behaviors>
 
-                <!--<Viewbox>
+                <Viewbox>
                 <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="w_svg5229" Width="163.36252" Height="157.10095">
                     <Canvas.RenderTransform>
                         <TranslateTransform X="0" Y="0"/>
                     </Canvas.RenderTransform>
                     <Canvas.Resources/>
-                    --><!--Unknown tag: sodipodi:namedview-->
-                    <!--Unknown tag: metadata--><!--
                     <Canvas Name="w_layer1">
                         <Canvas.RenderTransform>
                             <TranslateTransform X="-24.530046" Y="-51.762021"/>
@@ -373,15 +371,15 @@
                         <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="w_path3772" Fill="#FFFFFFFF" StrokeThickness="0.26458332" Data="m 161.5761 152.72037 c -5.90233 -2.8829 -11.97108 -5.34882 -18.30124 -7.13687 -1.08003 -0.30454 -2.18969 -0.52917 -2.01983 -2.05899 0.195 -1.75022 1.54358 -1.22317 2.52651 -1.22872 7.36283 -0.0421 14.6865 0.65061 22.01572 1.23983 1.31551 0.27067 2.11772 0.98902 1.96003 2.42015 -0.25717 2.33495 -0.47096 4.69477 -1.35466 6.89266 -0.37518 0.93318 -0.81122 2.15873 -2.31855 1.41737 -0.83396 -0.51964 -1.62983 -1.11654 -2.50798 -1.54543 z"/>
                     </Canvas>
                 </Canvas>
-                </Viewbox>-->
+                </Viewbox>
 
 
-                <TextBlock HorizontalAlignment="Center"
+                <!--<TextBlock HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            FontFamily="{StaticResource IconFontFamily}"
                            FontSize="25"
                            FontWeight="ExtraBlack"
-                           Text="&#xE700;" />
+                           Text="&#xE700;" />-->
             </Border>
 
             <TextBlock x:Name="tbIcon"

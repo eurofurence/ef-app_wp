@@ -146,7 +146,10 @@ namespace Eurofurence.Companion.DataStore
                 updateResults.Add(ProcessDelta(sync.KnowledgeEntries));
                 updateResults.Add(ProcessDelta(sync.Images));
 
+                MainOperationMessage = $"{Translations.ContextManager_Update_DownloadingImageContent}...";
                 await UpdateImageDataAsync(updateResults.Single(a => a.EntityType == typeof(Image)).Entities.Cast<Image>());
+
+                MainOperationMessage = $"{Translations.ContextManager_Update_Synchronizing}...";
 
 
                 foreach (var entity in updateResults.Where(a => a.TruncateBeforeProcessing).Select(b => b.EntityType))
@@ -173,6 +176,8 @@ namespace Eurofurence.Companion.DataStore
 
 
                 UpdateStatus = TaskStatus.RanToCompletion;
+                MainOperationMessage = $"{Translations.ContextManager_Update_Done}!";
+
                 return;
 
                 var metadata = await _apiClient.GetEndpointMetadataAsync();
@@ -193,6 +198,8 @@ namespace Eurofurence.Companion.DataStore
 
                 await UpdateImageDataAsync(updateResults.Single(a => a.EntityType == typeof(Image)).Entities.Cast<Image>());
 
+
+                
                 MainOperationMessage = Translations.ContextManager_Update_Initializing;
 
                 foreach (var entity in updateResults.Where(a => a.TruncateBeforeProcessing).Select(b => b.EntityType))
@@ -229,7 +236,7 @@ namespace Eurofurence.Companion.DataStore
 
                 UpdateStatus = TaskStatus.RanToCompletion;
             }
-            catch (Exception) // This probably fails when no connectivity is present.
+            catch (Exception ex) // This probably fails when no connectivity is present.
             {
                 UpdateStatus = TaskStatus.Faulted;
             }
@@ -264,8 +271,6 @@ namespace Eurofurence.Companion.DataStore
         private async Task UpdateImageDataAsync(IEnumerable<Image> images)
         {
             var imageList = images.ToList();
-
-            MainOperationMessage = $"{Translations.ContextManager_Update_DownloadingImageContent}...";
 
             SubOperationMaxValue = (ulong) imageList.Count;
             SubOperationCurrentValue = 0;

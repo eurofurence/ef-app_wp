@@ -115,11 +115,13 @@
         <controls:FixedFlipView x:Name="E_FlipView_Events"
                                 Grid.Row="1"
                                 ItemsSource="{Binding EventConferenceDays}"
+                                ScrollViewer.IsDeferredScrollingEnabled="True"
                                 SelectionChanged="FlipView_SelectionChanged">
             <FlipView.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <Grid ScrollViewer.IsDeferredScrollingEnabled="True">
                         <controls:EventListControl Margin="0 10 0 0"
+                                                   ScrollViewer.IsDeferredScrollingEnabled="True"
                                                    DataContext="{Binding EventEntries}"
                                                    ShowConferenceDay="False"
                                                    ShowConferenceRoom="True" />
