@@ -12,26 +12,57 @@
       DataContext="{Binding Source={StaticResource ViewModelLocator},
                             Path=UpcomingEventsViewModel}"
       mc:Ignorable="d">
-    <!--Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"-->
+
+    <Page.Resources>
+
+        <Storyboard x:Name="LogoAnimation" AutoReverse="False" RepeatBehavior="Forever">
+            <DoubleAnimationUsingKeyFrames 
+                Storyboard.TargetName="bannerCompositeTransform"
+                Storyboard.TargetProperty="TranslateY"
+                >
+                <EasingDoubleKeyFrame KeyTime="0:0:00.0" Value="-100">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <PowerEase EasingMode="EaseInOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:45.0" Value="-340">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <PowerEase EasingMode="EaseInOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:1:30.0" Value="-100">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <PowerEase EasingMode="EaseInOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+
+
+    </Page.Resources>
 
     <Grid x:Name="LayoutRoot">
         <ScrollViewer>
             <StackPanel>
                 <Grid DoubleTapped="Banner_OnDoubleTapped" IsDoubleTapEnabled="True">
-                    <Image Height="425" Margin="0 -275 0 0"
-                           Name="Banner"
-                           Source="ms-appx:///Assets/Eurofurence/Volatile/background_nologo_1080p.jpg"
-                           Stretch="UniformToFill" >
+                    <Canvas Height="150">
+                        <Canvas.Clip>
+                            <RectangleGeometry Rect="0,0,1080,150"></RectangleGeometry>
+                        </Canvas.Clip>
 
-                        <Image.Clip>
-                            <RectangleGeometry Rect="0,275,1080,150"></RectangleGeometry>
-                        </Image.Clip>
-                    </Image>
-                    <!--<Image Height="100"
-                           Margin="20 20 20 20"
-                           HorizontalAlignment="Left"
-                           VerticalAlignment="Top"
-                           Source="ms-appx:///Assets/Eurofurence/Volatile/logo.png" />-->
+                        <Image HorizontalAlignment="Stretch"
+                               Width="{Binding ActualWidth, ElementName=LayoutRoot}"
+                               Name="Banner"
+                               VerticalAlignment="Top"
+                               Source="ms-appx:///Assets/Eurofurence/Volatile/background_nologo_1080p.jpg"
+                               Stretch="UniformToFill" 
+                               RenderTransformOrigin="0.5,0.5"  >
+                            <Image.RenderTransform>
+                                <CompositeTransform x:Name="bannerCompositeTransform" TranslateY="-340"/>
+                            </Image.RenderTransform>
+
+                        </Image>
+                    </Canvas>
                 </Grid>
                 <Grid x:Name="ContentRoot" Margin="20 20 20 0">
                     <StackPanel>

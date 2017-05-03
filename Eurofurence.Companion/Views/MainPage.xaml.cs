@@ -32,6 +32,8 @@ namespace Eurofurence.Companion.Views
                 await KernelResolver.Current.Get<IDataContext>().SaveToStoreAsync();
                 Application.Current.Exit();
             });
+
+            LogoAnimation.Begin();
         }
 
         public NavigationHelper NavigationHelper { get; }

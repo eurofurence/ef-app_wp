@@ -33,23 +33,27 @@
     <Grid>
         <StackPanel VerticalAlignment="Center" Margin="0 100 0 0">
             <Grid Margin="0 0 0 50">
-                <TextBlock FontFamily="{StaticResource IconFontFamily}" FontSize="30" Margin="0 -8 0 0"
+                <TextBlock FontFamily="{StaticResource HieroglifyFontFamily}" FontSize="130" Margin="0 -8 0 0"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
+                           Name="E_TextBlock_Glyph"
+                           
                        >
 
-                <Run>&#x1f43e;</Run>
+                <Run>Z</Run>
                 </TextBlock>
 
-                <ProgressRing Margin="0"
+                <ProgressBar IsIndeterminate="True" VerticalAlignment="Bottom" Height="10" />
+
+                <!--<ProgressRing Margin="0"
                               
                           Background="Transparent"
                           Foreground="White"
                           IsActive="True" RenderTransformOrigin="0.5,0.5" >
                     <ProgressRing.RenderTransform>
-                        <CompositeTransform ScaleX="1.3" ScaleY="1.3"/>
+                        <CompositeTransform ScaleX="3.3" ScaleY="3.3"/>
                     </ProgressRing.RenderTransform>
-                </ProgressRing>
+                </ProgressRing>-->
             </Grid>
 
 
@@ -58,17 +62,16 @@
                     <TextBlock
                         Style="{StaticResource BodyTextBlockStyle}"
                         x:Name="E_TextBlock_Quote"
-                        FontSize="14"
-                        LineHeight="18"
+                        FontSize="24"
+                        LineHeight="30"
                         TextAlignment="Left"
                         >"Quote"</TextBlock>
                     <TextBlock
                         Style="{StaticResource BodyTextBlockStyle}"
                         x:Name="E_TextBlock_Author"
-                        FontSize="12"
+                        FontSize="18"
                         Foreground="{ThemeResource PhoneMidBrush}"
                         LineHeight="18"
-                        FontStyle="Italic"
                         TextAlignment="Right"
                         >- Author</TextBlock>
                 </StackPanel>
