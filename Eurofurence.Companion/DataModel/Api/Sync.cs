@@ -19,6 +19,7 @@ namespace Eurofurence.Companion.DataModel.Api
         public DeltaResponse<Info> KnowledgeEntries { get; set; }
         public DeltaResponse<Image> Images { get; set; }
         public DeltaResponse<Dealer> Dealers { get; set; }
+        public DeltaResponse<Announcement> Announcements { get; set; }
     }
 
 
