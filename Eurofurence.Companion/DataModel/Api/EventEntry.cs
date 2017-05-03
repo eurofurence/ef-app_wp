@@ -22,7 +22,7 @@ namespace Eurofurence.Companion.DataModel.Api
         public TimeSpan Duration { get; set; }
         public Guid ConferenceRoomId { get; set; }
         public string PanelHosts { get; set; }
-        public byte IsDeviatingFromConBook { get; set; }
+        public bool IsDeviatingFromConBook { get; set; }
 
 
         [JsonIgnore]
