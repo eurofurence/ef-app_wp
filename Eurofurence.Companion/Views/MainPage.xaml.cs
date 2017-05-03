@@ -7,6 +7,8 @@ using Windows.UI.Xaml.Navigation;
 using Eurofurence.Companion.DependencyResolution;
 using Eurofurence.Companion.DataStore.Abstractions;
 using Eurofurence.Companion.ViewModel.Local;
+using System.Diagnostics;
+using System;
 
 namespace Eurofurence.Companion.Views
 {

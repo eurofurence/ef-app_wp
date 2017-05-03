@@ -7,7 +7,7 @@
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
       mc:Ignorable="d">
 
-    <Grid x:Name="LayoutRoot">
+    <Grid x:Name="LayoutRoot" Background="Black">
         <Viewbox Margin="-50">
             <Path Data="{StaticResource EurofurenceWolfHead}" Fill="White" Opacity="0.1" />
         </Viewbox>

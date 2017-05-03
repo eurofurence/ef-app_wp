@@ -123,10 +123,27 @@ namespace Eurofurence.Companion.Views
         public async Task<bool> NavigateAsync(
             Type sourcePageType, 
             object parameter, 
-            NavigationTransitionInfo transitionInfo, 
+            bool useTransition,
             bool forceNewStack = false)
         {
             var result = false;
+
+            System.Diagnostics.Debug.WriteLine($"Navigatig to {sourcePageType}, useTransition: {useTransition}, forceNewStack: {forceNewStack}");
+
+            if (!useTransition)
+            {
+                RootFrame.ContentTransitions = null;
+            }
+            else
+            {
+                RootFrame.ContentTransitions = new TransitionCollection()
+                {
+                    new NavigationThemeTransition()
+                    {
+                        DefaultNavigationTransitionInfo = null
+                    }
+                };
+            }
 
             await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
@@ -134,7 +151,7 @@ namespace Eurofurence.Companion.Views
                 _menuViewModel.Value.IsMenuVisible = false;
                 _telemetryClientProvider.Client.TrackPageView(sourcePageType.FullName);
 
-                result = RootFrame.Navigate(sourcePageType, parameter, transitionInfo ?? _defaultTransition); 
+                result = RootFrame.Navigate(sourcePageType, parameter, useTransition ? _defaultTransition : null); 
 
                 if (result && forceNewStack) _cleanupStack();
 
@@ -157,7 +174,7 @@ namespace Eurofurence.Companion.Views
 
             if (RootFrame.BackStack.Count == 0 || RootFrame.BackStack[0].SourcePageType != typeof(MainPage)) {
 
-                if (!RootFrame.Navigate(typeof(MainPage))) return false;
+                if (!RootFrame.Navigate(typeof(MainPage), null, null)) return false;
                 RootFrame.BackStack.Clear();
                 RootFrame.ForwardStack.Clear();
             }
@@ -172,7 +189,7 @@ namespace Eurofurence.Companion.Views
 
         public void Reveal()
         {
-            pageFadeIn.Begin();
+            pageFadeIn.Begin();            
         }
 
         private void _menuListView_OnContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)

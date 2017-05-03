@@ -19,6 +19,7 @@
             <StackPanel>
                 <Grid DoubleTapped="Banner_OnDoubleTapped" IsDoubleTapEnabled="True">
                     <Image Height="425" Margin="0 -275 0 0"
+                           Name="Banner"
                            Source="ms-appx:///Assets/Eurofurence/Volatile/background_nologo_1080p.jpg"
                            Stretch="UniformToFill" >
 

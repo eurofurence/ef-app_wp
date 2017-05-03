@@ -19,12 +19,12 @@ namespace Eurofurence.Companion.Common
         }
 
         public Task<bool> NavigateAsync(Type sourcePageType, bool forceNewStack = false)
-            => OnNavigateAsync?.Invoke(sourcePageType, null, null, forceNewStack);
+            => OnNavigateAsync?.Invoke(sourcePageType, null, forceNewStack: forceNewStack);
 
-        public Task<bool> NavigateAsync(Type sourcePageType, object parameter, bool forceNewStack = false)
-            => OnNavigateAsync?.Invoke(sourcePageType, parameter, null, forceNewStack);
+        public Task<bool> NavigateAsync(Type sourcePageType, object parameter)
+            => OnNavigateAsync?.Invoke(sourcePageType, parameter);
 
-        public Task<bool> NavigateAsync(Type sourcePageType, object parameter, NavigationTransitionInfo transitionInfo, bool forceNewStack = false)
-            => OnNavigateAsync?.Invoke(sourcePageType, parameter, transitionInfo, forceNewStack);
+        public Task<bool> NavigateAsync(Type sourcePageType, object parameter, bool useTransition = true, bool forceNewStack = false)
+            => OnNavigateAsync?.Invoke(sourcePageType, parameter, useTransition, forceNewStack);
     }
 }

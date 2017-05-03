@@ -105,6 +105,7 @@ namespace Eurofurence.Companion
 
 
             _rootFrame = layoutPage.RootFrame;
+            _rootFrame.ContentTransitions = null;
 
 
             // Do not repeat app initialization when the Window already has content,
@@ -143,27 +144,14 @@ namespace Eurofurence.Companion
 
             if (_rootFrame.Content == null)
             {
-                // Removes the turnstile navigation for startup.
-                if (_rootFrame.ContentTransitions != null)
-                {
-                    _transitions = new TransitionCollection();
-                    foreach (var c in _rootFrame.ContentTransitions)
-                    {
-                        _transitions.Add(c);
-                    }
-                }
-
-                _rootFrame.ContentTransitions = null;
-                _rootFrame.Navigated += RootFrame_FirstNavigated;
-
-                if (!await navigationMediator.NavigateAsync(typeof (MainPage), e.Arguments))
+                if (!await navigationMediator.NavigateAsync(typeof (MainPage), e.Arguments, useTransition: false))
                 {
                     throw new Exception("Failed to create initial page");
                 }
 
                 if (startupMode == StartupMode.RunAsFirstStart)
                 {
-                    await navigationMediator.NavigateAsync(typeof(FirstStartPage));
+                    await navigationMediator.NavigateAsync(typeof(FirstStartPage), null, useTransition: false);
                 }
                 else if (HasInternetAccess)
                 {
@@ -184,6 +172,7 @@ namespace Eurofurence.Companion
 
             await staticLoadingPage.PageFadeOutAsync();
             Window.Current.Content = layoutPage;
+
             layoutPage.Reveal();
 
             await HockeyClient.Current.SendCrashesAsync();
