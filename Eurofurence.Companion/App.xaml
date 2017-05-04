@@ -86,6 +86,7 @@
             <dataModel:StringFormatConverter x:Key="StringFormatConverter" />
             <converter:BooleanToVisibilityConverter x:Key="TrueToVisibleConverter" />
             <converter:BooleanToVisibilityConverter x:Key="FalseToVisibleConverter" IsReversed="True" />
+            <converter:BooleanInvertConverter x:Key="BooleanInvertConverter" />
             <converter:WikiTextToHtmlConverter x:Key="WikiTextToHtmlConverter" />
             <converter:UriToStringConverter x:Key="UriToStringConverter" />
 

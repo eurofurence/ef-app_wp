@@ -95,10 +95,12 @@
     <Compile Include="Common\AsyncNavigationEvent.cs" />
     <Compile Include="Common\Abstractions\IAppVersionProvider.cs" />
     <Compile Include="Controls\TilePanel.cs" />
+    <Compile Include="DataModel\Api\AuthenticationResponse.cs" />
     <Compile Include="DataModel\Api\LinkFragment.cs" />
     <Compile Include="DataModel\Api\Map.cs" />
     <Compile Include="DataModel\Api\MapEntry.cs" />
     <Compile Include="DataModel\Api\NamedUrl.cs" />
+    <Compile Include="DataModel\Api\RegSysAuthenticationRequest.cs" />
     <Compile Include="DataModel\Api\Sync.cs" />
     <Compile Include="DataModel\ImageExtensions.cs" />
     <Compile Include="Common\NavigationHelper.cs" />
@@ -129,6 +131,7 @@
     <Compile Include="DependencyResolution\IocBeacon.cs" />
     <Compile Include="DependencyResolution\ServiceLocator.cs" />
     <Compile Include="Services\AsyncImageLoaderService.cs" />
+    <Compile Include="Services\AuthenticationService.cs" />
     <Compile Include="Services\BackgroundUpdateService.cs" />
     <Compile Include="Services\EventService.cs" />
     <Compile Include="Services\Abstractions\IAsyncImageLoaderService.cs" />
@@ -164,12 +167,14 @@
     <Compile Include="DependencyResolution\ViewModelLocator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\Behaviors\WikiTextBoxProperties.cs" />
+    <Compile Include="ViewModel\Converter\BooleanInvertConverter.cs" />
     <Compile Include="ViewModel\Converter\BooleanToVisibilityConverter.cs" />
     <Compile Include="ViewModel\Converter\BytesToImageConverter.cs" />
     <Compile Include="ViewModel\Converter\StreamToImageConverter.cs" />
     <Compile Include="ViewModel\Converter\UriToStringConverter.cs" />
     <Compile Include="ViewModel\Converter\WikiTextToHtmlConverter.cs" />
     <Compile Include="ViewModel\Abstractions\IInfoViewModelContext.cs" />
+    <Compile Include="ViewModel\Local\AuthenticationViewModel.cs" />
     <Compile Include="ViewModel\MapsViewModelContext.cs" />
     <Compile Include="ViewModel\InfoViewModelContext.cs" />
     <Compile Include="ViewModel\DealersViewModelContext.cs" />
@@ -277,6 +282,9 @@
     </Compile>
     <Compile Include="Views\LoadingPage.xaml.cs">
       <DependentUpon>LoadingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -438,6 +446,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LoadingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

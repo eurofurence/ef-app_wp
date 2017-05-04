@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Windows.Security.Cryptography.Certificates;
 using Windows.Storage.Streams;
@@ -129,6 +130,29 @@ namespace Eurofurence.Companion.DataModel
             var url = $"{_endpointUrl}/{resource}";
             var content = await GetContentAsStringAsync(url, progressCallback);
             return JsonConvert.DeserializeObject<T>(content, new JsonSerializerSettings() { DateTimeZoneHandling = DateTimeZoneHandling.Utc });
+        }
+
+        public async Task<TResponse> PostAsync<TPayload, TResponse>(string resource, TPayload payload)
+        {
+            var url = $"{_endpointUrl}/{resource}";
+            var postContent = new HttpStringContent(JsonConvert.SerializeObject(payload), Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/json");
+
+            var filter = new HttpBaseProtocolFilter { AutomaticDecompression = true };
+            filter.CacheControl.ReadBehavior = HttpCacheReadBehavior.MostRecent;
+            filter.IgnorableServerCertificateErrors.Add(ChainValidationResult.Untrusted);
+            filter.IgnorableServerCertificateErrors.Add(ChainValidationResult.InvalidName);
+
+            using (var client = new HttpClient(filter))
+            {
+                client.DefaultRequestHeaders.Add("Cache-Control", "no-cache");
+                var responseOperation = client.PostAsync(new Uri(url), postContent);
+
+                var response = await responseOperation;
+                response.EnsureSuccessStatusCode();
+
+                var resultContent = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<TResponse>(resultContent);
+            }
         }
 
 

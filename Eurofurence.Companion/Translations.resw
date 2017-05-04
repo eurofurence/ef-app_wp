@@ -156,4 +156,13 @@
   <data name="ContextManager_Update_Downloading_arg0" xml:space="preserve">
     <value>Downloading {0}</value>
   </data>
+  <data name="Login_Error_CredentialsRejected" xml:space="preserve">
+    <value>The specified combination of Registration Number / Username / Password is invalid.</value>
+  </data>
+  <data name="Login_Error_RegistrationNumberInvalid" xml:space="preserve">
+    <value>Registration number must be in numeric format.</value>
+  </data>
+  <data name="Login_Error_UsernamePasswordNotProvided" xml:space="preserve">
+    <value>Username / Password cannot be blank.</value>
+  </data>
 </root>

@@ -53,5 +53,14 @@ namespace Eurofurence.Companion
 
         public static string ContextManager_Update_Downloading_arg0 
 			=> _resourceLoader.GetString("ContextManager_Update_Downloading_arg0"); 
+
+        public static string Login_Error_CredentialsRejected 
+			=> _resourceLoader.GetString("Login_Error_CredentialsRejected"); 
+
+        public static string Login_Error_RegistrationNumberInvalid 
+			=> _resourceLoader.GetString("Login_Error_RegistrationNumberInvalid"); 
+
+        public static string Login_Error_UsernamePasswordNotProvided 
+			=> _resourceLoader.GetString("Login_Error_UsernamePasswordNotProvided"); 
     }
 }

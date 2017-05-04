@@ -695,6 +695,60 @@
                                         </Grid>
                                     </ListViewItem.Content>
                                 </ListViewItem>
+
+                                <ListViewItem>
+                                    <ListViewItem.Content>
+                                        <Grid>
+                                            <interactivity:Interaction.Behaviors>
+                                                <interactivity:BehaviorCollection>
+                                                    <core:EventTriggerBehavior EventName="Tapped">
+                                                        <core:InvokeCommandAction Command="{Binding Source={StaticResource ViewModelLocator}, Path=NavigationViewModel.NavigateToLoginPage}" />
+                                                    </core:EventTriggerBehavior>
+                                                </interactivity:BehaviorCollection>
+                                            </interactivity:Interaction.Behaviors>
+
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="60" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Border Grid.Column="0"
+                                                    Width="60"
+                                                    Height="60"
+                                                    HorizontalAlignment="Left"
+                                                    VerticalAlignment="Top">
+                                                <Grid>
+                                                    <TextBlock HorizontalAlignment="Center"
+                                                               VerticalAlignment="Center"
+                                                               FontFamily="{StaticResource IconFontFamily}"
+                                                               FontSize="25"
+                                                               Foreground="White"
+                                                               Text="&#xE8D7;" />
+
+                                                </Grid>
+                                            </Border>
+
+                                            <StackPanel Grid.Column="1"
+                                                        Margin="10 0 0 0"
+                                                        VerticalAlignment="Center">
+                                                <StackPanel
+                                                    Visibility="{Binding Source={StaticResource ViewModelLocator}, Path=AuthenticationViewModel.IsAuthenticated, Converter={StaticResource FalseToVisibleConverter}}">
+                                                    <TextBlock Style="{StaticResource AppLayoutMenuItemTextBlockStyle}" Text="Login" />
+                                                    <TextBlock Height="20" Style="{StaticResource AppLayoutMenuSubItemTextBlockStyle}">
+                                                    <Run Text="with your registration details"/>
+                                                    </TextBlock>
+                                                </StackPanel>
+                                                <StackPanel
+                                                    Visibility="{Binding Source={StaticResource ViewModelLocator}, Path=AuthenticationViewModel.IsAuthenticated, Converter={StaticResource TrueToVisibleConverter}}">
+                                                    <TextBlock Style="{StaticResource AppLayoutMenuItemTextBlockStyle}" Text="Logout" />
+                                                    <TextBlock Height="20" Style="{StaticResource AppLayoutMenuSubItemTextBlockStyle}">
+                                                    <Run Text="{Binding Source={StaticResource ViewModelLocator}, Path=AuthenticationViewModel.Username}" />
+                                                    </TextBlock>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Grid>
+                                    </ListViewItem.Content>
+                                </ListViewItem>
                                 <ListViewItem>
                                     <ListViewItem.Content>
                                         <Grid>
