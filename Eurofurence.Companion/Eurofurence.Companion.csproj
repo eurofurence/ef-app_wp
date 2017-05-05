@@ -136,6 +136,7 @@
     <Compile Include="Services\EventService.cs" />
     <Compile Include="Services\Abstractions\IAsyncImageLoaderService.cs" />
     <Compile Include="Services\Abstractions\IBackgroundUpdateService.cs" />
+    <Compile Include="Services\PushService.cs" />
     <Compile Include="Services\ToastNotificationService.cs" />
     <Compile Include="Translations.cs">
       <AutoGen>True</AutoGen>
@@ -542,6 +543,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Euforuence.Companion.PushHandlerBackgroundTask\Euforuence.Companion.PushHandlerBackgroundTask.csproj">
+      <Project>{216d2444-4d5c-4537-b244-4f87a68efec3}</Project>
+      <Name>Euforuence.Companion.PushHandlerBackgroundTask</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>

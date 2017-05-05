@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eurofurence.Companion", "Eurofurence.Companion\Eurofurence.Companion.csproj", "{E7787F83-46D7-4616-84CE-78F50B81F54A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Euforuence.Companion.PushHandlerBackgroundTask", "Euforuence.Companion.PushHandlerBackgroundTask\Euforuence.Companion.PushHandlerBackgroundTask.csproj", "{216D2444-4D5C-4537-B244-4F87A68EFEC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,18 @@ Global
 		{E7787F83-46D7-4616-84CE-78F50B81F54A}.Release|x86.ActiveCfg = Release|x86
 		{E7787F83-46D7-4616-84CE-78F50B81F54A}.Release|x86.Build.0 = Release|x86
 		{E7787F83-46D7-4616-84CE-78F50B81F54A}.Release|x86.Deploy.0 = Release|x86
+		{216D2444-4D5C-4537-B244-4F87A68EFEC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{216D2444-4D5C-4537-B244-4F87A68EFEC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{216D2444-4D5C-4537-B244-4F87A68EFEC3}.Debug|ARM.ActiveCfg = Debug|ARM
+		{216D2444-4D5C-4537-B244-4F87A68EFEC3}.Debug|ARM.Build.0 = Debug|ARM
+		{216D2444-4D5C-4537-B244-4F87A68EFEC3}.Debug|x86.ActiveCfg = Debug|x86
+		{216D2444-4D5C-4537-B244-4F87A68EFEC3}.Debug|x86.Build.0 = Debug|x86
+		{216D2444-4D5C-4537-B244-4F87A68EFEC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{216D2444-4D5C-4537-B244-4F87A68EFEC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{216D2444-4D5C-4537-B244-4F87A68EFEC3}.Release|ARM.ActiveCfg = Release|ARM
+		{216D2444-4D5C-4537-B244-4F87A68EFEC3}.Release|ARM.Build.0 = Release|ARM
+		{216D2444-4D5C-4537-B244-4F87A68EFEC3}.Release|x86.ActiveCfg = Release|x86
+		{216D2444-4D5C-4537-B244-4F87A68EFEC3}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

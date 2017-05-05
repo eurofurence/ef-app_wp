@@ -75,10 +75,9 @@ namespace Eurofurence.Companion.DataStore
 
 
         public ContextManager(IDataStore dataStore, IDataContext dataContext,
-            ApplicationSettingsContext applicationSettingsContext)
+            ApplicationSettingsContext applicationSettingsContext
+            )
         {
-            InitializeDispatcherFromCurrentThread();
-
             _apiClient = new EurofurenceWebApiClient(Consts.WEB_API_ENDPOINT_URL);
             _dataStore = dataStore;
             _dataContext = dataContext;

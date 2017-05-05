@@ -28,6 +28,8 @@ using Eurofurence.Companion.ViewModel.Local;
 using Microsoft.HockeyApp;
 using System.Threading.Tasks;
 using Eurofurence.Companion.Services.Abstractions;
+using Windows.ApplicationModel.Background;
+using Windows.UI.Core;
 
 namespace Eurofurence.Companion
 {
@@ -40,6 +42,8 @@ namespace Eurofurence.Companion
         private Frame _rootFrame;
         private TransitionCollection _transitions;
         private readonly ITelemetryClientProvider _telemetryClientProvider;
+        private CoreDispatcher _dispatcher;
+
 
         public App()
         {
@@ -50,6 +54,7 @@ namespace Eurofurence.Companion
 
             _telemetryClientProvider = KernelResolver.Current.Get<ITelemetryClientProvider>();
             _telemetryClientProvider.Client.TrackEvent("Application started");
+
 
             UnhandledException += App_UnhandledException;
         }
@@ -70,9 +75,14 @@ namespace Eurofurence.Companion
                 return;
             }
 
+            _dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
+            KernelResolver.Current.Bind<CoreDispatcher>().ToConstant(_dispatcher);
+
             var statusBar = StatusBar.GetForCurrentView();
-            //statusBar.ForegroundColor = Color.FromArgb(50, 0xff, 0xff, 0xff);
             await statusBar.HideAsync();
+
+            await RegisterBackgroundTasksAsync();
+            
 
 
             var staticLoadingPage = new StaticLoadingPage();
@@ -81,12 +91,11 @@ namespace Eurofurence.Companion
 
             staticLoadingPage.PageFadeInAsync();
 
-
             ThemeManager.SetThemeColor((Color)Resources["EurofurenceThemeColor"]);
-
 
             var contextManager = KernelResolver.Current.Get<ContextManager>();
             var navigationMediator = KernelResolver.Current.Get<INavigationMediator>();
+            var pushService = KernelResolver.Current.Get<PushService>();
 
             await contextManager.InitializeAsync();
 
@@ -102,6 +111,8 @@ namespace Eurofurence.Companion
                 Current.Exit();
                 return;
             }
+
+            await pushService.UpdateChannelUri();
 
 
             _rootFrame = layoutPage.RootFrame;
@@ -144,6 +155,7 @@ namespace Eurofurence.Companion
 
             if (_rootFrame.Content == null)
             {
+
                 if (!await navigationMediator.NavigateAsync(typeof (MainPage), e.Arguments, useTransition: false))
                 {
                     throw new Exception("Failed to create initial page");
@@ -175,7 +187,21 @@ namespace Eurofurence.Companion
 
             layoutPage.Reveal();
 
+
             await HockeyClient.Current.SendCrashesAsync();
+        }
+
+        private async Task RegisterBackgroundTasksAsync()
+        {
+            await BackgroundExecutionManager.RequestAccessAsync();
+
+            BackgroundTaskBuilder taskBuilder = new BackgroundTaskBuilder();
+            taskBuilder.Name = "PushHandler";
+            PushNotificationTrigger trigger = new PushNotificationTrigger();
+            taskBuilder.SetTrigger(trigger);
+            taskBuilder.TaskEntryPoint = typeof(Euforuence.Companion.PushHandlerBackgroundTask.TaskImplementation).FullName;
+
+            BackgroundTaskRegistration registration = taskBuilder.Register();
         }
 
         private void HandleLaunchActivatedEvent(LaunchActivatedEventArgs e)

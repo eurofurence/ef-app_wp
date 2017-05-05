@@ -132,7 +132,7 @@ namespace Eurofurence.Companion.DataModel
             return JsonConvert.DeserializeObject<T>(content, new JsonSerializerSettings() { DateTimeZoneHandling = DateTimeZoneHandling.Utc });
         }
 
-        public async Task<TResponse> PostAsync<TPayload, TResponse>(string resource, TPayload payload)
+        public async Task<TResponse> PostAsync<TPayload, TResponse>(string resource, TPayload payload, string oAuthToken = null)
         {
             var url = $"{_endpointUrl}/{resource}";
             var postContent = new HttpStringContent(JsonConvert.SerializeObject(payload), Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/json");
@@ -145,6 +145,12 @@ namespace Eurofurence.Companion.DataModel
             using (var client = new HttpClient(filter))
             {
                 client.DefaultRequestHeaders.Add("Cache-Control", "no-cache");
+
+                if (!string.IsNullOrWhiteSpace(oAuthToken))
+                {
+                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {oAuthToken}");
+                }
+
                 var responseOperation = client.PostAsync(new Uri(url), postContent);
 
                 var response = await responseOperation;
