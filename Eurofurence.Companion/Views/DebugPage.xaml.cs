@@ -142,5 +142,10 @@ namespace Eurofurence.Companion.Views
             var m = KernelResolver.Current.Get<DebugViewModel>();
             m.IsDebugMode = !m.IsDebugMode;
         }
+
+        private void E_Button_QRCode_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            KernelResolver.Current.Get<INavigationMediator>().NavigateAsync(typeof(QrCodeScannerPage));
+        }
     }
 }

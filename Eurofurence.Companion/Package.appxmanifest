@@ -41,5 +41,6 @@
   <Capabilities>
     <Capability Name="internetClientServer" />
     <m3:Capability Name="appointments" />
+    <DeviceCapability Name="webcam" />
   </Capabilities>
 </Package>

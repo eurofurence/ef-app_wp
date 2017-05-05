@@ -295,6 +295,9 @@
     <Compile Include="Views\MapsPage.xaml.cs">
       <DependentUpon>MapsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\QrCodeScannerPage.xaml.cs">
+      <DependentUpon>QrCodeScannerPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\StaticLoadingPage.xaml.cs">
       <DependentUpon>StaticLoadingPage.xaml</DependentUpon>
     </Compile>
@@ -327,6 +330,7 @@
     <Content Include="Assets\StoreLogo120x120.scale-240.png" />
     <Content Include="Assets\SplashScreen.scale-240.png" />
     <Content Include="Assets\WideLogo310x150.scale-240.png" />
+    <Content Include="StoreManifest.xml" />
     <Content Include="Translations.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Translations.cs</LastGenOutput>
@@ -465,6 +469,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\QrCodeScannerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\StaticLoadingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -510,6 +518,10 @@
     </Reference>
     <Reference Include="NotificationsExtensions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c936aba0ac6438e9, processorArchitecture=MSIL">
       <HintPath>..\packages\NotificationsExtensions.Portable.1.0.7\lib\dotnet\NotificationsExtensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ZXing, Version=0.14.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.14.0.1\lib\wpa81\ZXing.winmd</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

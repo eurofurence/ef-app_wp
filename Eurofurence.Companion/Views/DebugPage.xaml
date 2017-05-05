@@ -24,6 +24,10 @@
                             HorizontalAlignment="Stretch"
                             Content="Toggle Debug Mode"
                             Tapped="E_Button_ToggleDebugMode_Tapped" />
+                    <Button x:Name="E_Button_QRCode"
+                            HorizontalAlignment="Stretch"
+                            Content="QR Code Scanner"
+                            Tapped="E_Button_QRCode_Tapped" />
                     <TextBlock Text="{Binding IsDebugMode}" />
 
 
