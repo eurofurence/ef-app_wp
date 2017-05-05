@@ -123,7 +123,11 @@ namespace Eurofurence.Companion.Views
 
 
                 // Get the proper webcam (default one)  
-                DeviceInformation backWebcam = (from webcam in webcamList where webcam.IsEnabled select webcam).FirstOrDefault();
+                //DeviceInformation backWebcam = (from webcam in webcamList where webcam.IsEnabled select webcam).FirstOrDefault();
+
+                //Get back camera
+                var devices = await DeviceInformation.FindAllAsync(DeviceClass.VideoCapture);
+                DeviceInformation backWebcam = devices.FirstOrDefault(x => x.EnclosureLocation != null && x.EnclosureLocation.Panel == Windows.Devices.Enumeration.Panel.Back);
 
 
                 // Initializing MediaCapture  
