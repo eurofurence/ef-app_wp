@@ -1,8 +1,11 @@
 ﻿using Eurofurence.Companion.Common;
+using Eurofurence.Companion.Common.Abstractions;
 using Eurofurence.Companion.DataModel;
 using Eurofurence.Companion.DataStore;
 using Eurofurence.Companion.DependencyResolution;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
 using Windows.Networking.PushNotifications;
@@ -25,6 +28,7 @@ namespace Eurofurence.Companion.Services
         private readonly ApplicationSettingsContext _applicationSettingsContext;
         private readonly ContextManager _contextManager;
         private readonly CoreDispatcher _dispatcher;
+        private readonly IAppVersionProvider _appVersionProvider;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Services.PushService"/> class.
@@ -32,13 +36,18 @@ namespace Eurofurence.Companion.Services
         /// <param name="applicationSettingsContext"></param>
         /// <param name="contextManager"></param>
         /// <param name="dispatcher"></param>
-        public PushService(ApplicationSettingsContext applicationSettingsContext, ContextManager contextManager, CoreDispatcher dispatcher)
+        public PushService(
+            ApplicationSettingsContext applicationSettingsContext, 
+            ContextManager contextManager, 
+            CoreDispatcher dispatcher,
+            IAppVersionProvider appVersionProvider)
         {
             _channelUri = LocalSettingsLoad(ApplicationData.Current.LocalSettings, ChannelUriKey, ChannelUriDefault);
             _apiClient = new EurofurenceWebApiClient(Consts.WEB_API_ENDPOINT_URL);
             _applicationSettingsContext = applicationSettingsContext;
             _contextManager = contextManager;
             _dispatcher = dispatcher;
+            _appVersionProvider = appVersionProvider;
         }
 
         public string ChannelUri
@@ -57,7 +66,7 @@ namespace Eurofurence.Companion.Services
         public async Task<string> UpdateChannelUri()
         {
             var retries = 3;
-            var difference = 10; // In seconds
+            var difference = 1; // In seconds
 
             var currentRetry = 0;
 
@@ -71,19 +80,24 @@ namespace Eurofurence.Companion.Services
                     {
                         ChannelUri = _channel.Uri;
                         this.RaiseChannelUriUpdated();
+
+
+                        var topics = new List<string>() { "Debug" };
+                        topics.Add($"Version-{_appVersionProvider.GetAppVersion()}");
+                        if (Debugger.IsAttached) topics.Add("Emulator");
+
+                        await _apiClient.PostAsync<object, object>("PushNotifications/WnsChannelRegistration", new
+                        {
+                            DeviceId = _applicationSettingsContext.UniqueRandomUserId,
+                            ChannelUri = _channel.Uri,
+                            Topics = topics
+                        });
+
                     }
 
-                    await _apiClient.PostAsync<object, object>("PushNotifications/WnsChannelRegistration", new
-                    {
-                        DeviceId = _applicationSettingsContext.UniqueRandomUserId,
-                        ChannelUri = _channel.Uri,
-                        Topics = new string[1] { "Debug" }
-                    });
-
                     return _channel.Uri;
-
                 }
-                catch
+                catch (Exception ex)
                 {
                     // Could not create a channel
                 }
@@ -113,7 +127,7 @@ namespace Eurofurence.Companion.Services
 
                 case PushNotificationType.Raw:
 
-                    if (args.RawNotification.Content == "update")
+                    if (args.RawNotification.Content == "update" && _contextManager.UpdateStatus == TaskStatus.RanToCompletion)
                     {
                         _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => _contextManager.Update());
                     }

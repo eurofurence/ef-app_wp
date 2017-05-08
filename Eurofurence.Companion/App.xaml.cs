@@ -195,9 +195,15 @@ namespace Eurofurence.Companion
         {
             await BackgroundExecutionManager.RequestAccessAsync();
 
-            BackgroundTaskBuilder taskBuilder = new BackgroundTaskBuilder();
+            // Unregister all tasks - we'll create a new one.
+            foreach (var task in BackgroundTaskRegistration.AllTasks.ToList())
+            {
+                task.Value.Unregister(true);
+            }
+
+            var taskBuilder = new BackgroundTaskBuilder();
             taskBuilder.Name = "PushHandler";
-            PushNotificationTrigger trigger = new PushNotificationTrigger();
+            var trigger = new PushNotificationTrigger();
             taskBuilder.SetTrigger(trigger);
             taskBuilder.TaskEntryPoint = typeof(Euforuence.Companion.PushHandlerBackgroundTask.TaskImplementation).FullName;
 
