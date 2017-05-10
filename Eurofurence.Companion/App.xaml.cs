@@ -57,6 +57,7 @@ namespace Eurofurence.Companion
 
 
             UnhandledException += App_UnhandledException;
+
         }
 
         private async void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -76,7 +77,8 @@ namespace Eurofurence.Companion
             }
 
             _dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
-            KernelResolver.Current.Bind<CoreDispatcher>().ToConstant(_dispatcher);
+            KernelResolver.Current.Bind<CoreDispatcher>().ToMethod((c) => _dispatcher);
+
 
             var statusBar = StatusBar.GetForCurrentView();
             await statusBar.HideAsync();

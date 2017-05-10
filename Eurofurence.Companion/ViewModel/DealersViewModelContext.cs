@@ -32,7 +32,8 @@ namespace Eurofurence.Companion.ViewModel
         {
             Dealers.Clear();
 
-            var viewModels = _dataContext.Dealers.Select(entity => new DealerViewModel(entity));
+            var viewModels = _dataContext.Dealers
+                .Select(entity => new DealerViewModel(entity));
 
             foreach(var viewModel in viewModels.OrderBy(viewModel => viewModel.DisplayName))
             {

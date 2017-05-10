@@ -68,7 +68,7 @@ namespace Eurofurence.Companion.DataStore
                     case "Dealer":
                         if (e.TargetId.HasValue)
                         {
-                            e.TargetEntity = dataContext.Dealers.Single(a => a.Id == e.TargetId);
+                            e.TargetEntity = dataContext.Dealers.SingleOrDefault(a => a.Id == e.TargetId);
                         }
                         
                         break;

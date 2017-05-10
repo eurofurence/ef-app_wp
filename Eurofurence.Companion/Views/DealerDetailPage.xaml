@@ -8,7 +8,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:behaviors="using:Eurofurence.Companion.ViewModel.Behaviors"
       d:DataContext="{Binding Source={StaticResource ViewModelLocator},
-                              Path=DealersViewModel.Dealers[7]}"
+                              Path=DealersViewModel.Dealers[0]}"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
       mc:Ignorable="d">
 
@@ -48,17 +48,91 @@
                 <StackPanel Margin="20">
                    
                     <TextBlock Style="{ThemeResource GroupHeaderTextBlockStyle}" Text="{Binding DisplayName}" />
-                    <TextBlock Foreground="{ThemeResource PhoneLowBrush}" Visibility="{Binding HasUniqueDisplayName, Converter={StaticResource TrueToVisibleConverter}}">
-                                    <Run FontFamily="{StaticResource IconFontFamily}" Text="&#xE77B;" />
-                                    <Run Text="{Binding Entity.AttendeeNickname}" />
+ 
 
-                    </TextBlock>
+                    <StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="15 5 15 0"
+                                    Visibility="{Binding HasUniqueDisplayName, Converter={StaticResource TrueToVisibleConverter}}">
+                            <TextBlock FontSize="{StaticResource TextStyleLargeFontSize}" Width="30"
+                                       FontFamily="{StaticResource IconFontFamily}" Text="&#xE77B;" />
+                            <TextBlock FontSize="{StaticResource TextStyleLargeFontSize}" 
+                                       Text="{Binding Entity.AttendeeNickname}" />
+                        </StackPanel>
+           
+                        <StackPanel Orientation="Horizontal" Margin="15 5 15 0"
+                                    Visibility="{Binding HasTwitterHandle, Converter={StaticResource TrueToVisibleConverter}}"
+                                    >
+                            <TextBlock FontSize="{StaticResource TextStyleLargeFontSize}" Width="30"
+                                       FontFamily="{StaticResource SocialFontFamily}" Text="&#xF099;" />
+                            <TextBlock FontSize="{StaticResource TextStyleLargeFontSize}" 
+                                       Text="{Binding Entity.TwitterHandle}" />
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="15 5 15 0"
+                                    Visibility="{Binding HasTelegramHandle, Converter={StaticResource TrueToVisibleConverter}}"
+                                    >
+                            <TextBlock FontSize="{StaticResource TextStyleLargeFontSize}" Width="30"
+                                       FontFamily="{StaticResource SocialFontFamily}" Text="&#xF2c6;" />
+                            <TextBlock FontSize="{StaticResource TextStyleLargeFontSize}" 
+                                       Text="{Binding Entity.TelegramHandle}" />
+                        </StackPanel>
+                    </StackPanel>
+
+
+
 
 
                     <TextBlock Margin="15"
                                FontSize="{StaticResource TextStyleMediumFontSize}"
                                Text="{Binding Entity.ShortDescription}"
                                TextWrapping="WrapWholeWords" />
+
+                    <StackPanel Margin="0 0 0 10">
+                        <TextBlock FontSize="{StaticResource TextStyleMediumFontSize}"
+                               Foreground="{StaticResource PhoneLowBrush}"
+                               Style="{StaticResource BaseTextBlockStyle}">
+                        Merchandise
+                        </TextBlock>
+
+                        <TextBlock Margin="15"
+                               FontSize="{StaticResource TextStyleMediumFontSize}"
+                               Text="{Binding Entity.Merchandise}"
+                               TextWrapping="WrapWholeWords" />
+
+                    </StackPanel>
+
+
+                    <StackPanel Visibility="{Binding AttendsOnAllDays, Converter={StaticResource FalseToVisibleConverter}}"
+                                Margin="0 0 0 10">
+                        <TextBlock FontSize="{StaticResource TextStyleMediumFontSize}"
+                               Foreground="{StaticResource PhoneLowBrush}"
+                               Style="{StaticResource BaseTextBlockStyle}">
+                        Availability
+                        </TextBlock>
+
+                        <TextBlock Margin="15"
+                               FontSize="{StaticResource TextStyleMediumFontSize}"
+                               Text="This dealer is only present in the Dealers Den on the following days of the convention:"
+                               TextWrapping="WrapWholeWords" />
+
+                        <TextBlock  FontSize="{StaticResource TextStyleMediumFontSize}"
+                                    FontWeight="Bold"
+                                    Visibility="{Binding Entity.AttendsOnThursday, Converter={StaticResource TrueToVisibleConverter}}"
+                                    Margin="15 0 15 5"
+                                    Text="Thursday" />
+                        <TextBlock  FontSize="{StaticResource TextStyleMediumFontSize}"
+                                    FontWeight="Bold"
+                                    Visibility="{Binding Entity.AttendsOnFriday, Converter={StaticResource TrueToVisibleConverter}}"
+                                    Margin="15 0 15 5"
+                                    Text="Friday" />
+                        <TextBlock  FontSize="{StaticResource TextStyleMediumFontSize}"
+                                    FontWeight="Bold"
+                                    Visibility="{Binding Entity.AttendsOnSaturday, Converter={StaticResource TrueToVisibleConverter}}"
+                                    Margin="15 0 15 5"
+                                    Text="Saturday" />
+
+                    </StackPanel>
 
 
                     <StackPanel Visibility="{Binding HasMapEntry, Converter={StaticResource TrueToVisibleConverter}}">

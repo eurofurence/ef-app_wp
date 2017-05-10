@@ -39,6 +39,11 @@ namespace Eurofurence.Companion.ViewModel.Local.Entity
         public bool HasAboutTheArtText => !string.IsNullOrWhiteSpace(Entity.AboutTheArtText);
         public bool HasWebsiteUris => ParsedWebsiteUris.Count > 0;
 
+        public bool HasTelegramHandle => !string.IsNullOrWhiteSpace(Entity.TelegramHandle);
+        public bool HasTwitterHandle => !string.IsNullOrWhiteSpace(Entity.TwitterHandle);
+
+        public bool AttendsOnAllDays => Entity.AttendsOnThursday && Entity.AttendsOnFriday && Entity.AttendsOnSaturday;
+
         private Color _dominantColor = Colors.Transparent;
         public Color DominantColor {  get { return _dominantColor; } set { SetProperty(ref _dominantColor, value); } }
     }

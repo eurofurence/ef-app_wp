@@ -2,6 +2,8 @@
 using Eurofurence.Companion.ViewModel.Local;
 using Eurofurence.Companion.Views;
 using Ninject;
+using Windows.ApplicationModel;
+using Windows.UI.Core;
 
 namespace Eurofurence.Companion.DependencyResolution
 {

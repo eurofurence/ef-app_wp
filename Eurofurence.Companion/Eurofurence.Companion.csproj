@@ -321,6 +321,7 @@
     <Content Include="Assets\Eurofurence\WolfHead.svg" />
     <None Include="app.config" />
     <None Include="Assets\Fonts\fontelico-codes.css" />
+    <Content Include="Assets\Fonts\social-codes.css" />
     <Content Include="Assets\Fonts\Volatile\info.txt" />
     <Content Include="Assets\Logo.scale-240.png" />
     <Content Include="Assets\LuchsAvatar.jpg" />
@@ -340,6 +341,7 @@
     <Content Include="Assets\Fonts\ef_app_icons.ttf" />
     <Content Include="Assets\Fonts\fontelico.ttf" />
     <Content Include="Assets\Fonts\Volatile\Hieroglify.ttf" />
+    <Content Include="Assets\Fonts\social.ttf" />
     <None Include="Package.StoreAssociation.xml" />
   </ItemGroup>
   <ItemGroup>

@@ -5,6 +5,7 @@ using Windows.UI.Core;
 using Newtonsoft.Json;
 using Eurofurence.Companion.DependencyResolution;
 using Ninject;
+using Windows.ApplicationModel;
 
 // ReSharper disable ExplicitCallerInfoArgument
 
@@ -17,7 +18,10 @@ namespace Eurofurence.Companion
 
         public BindableBase()
         {
-            Dispatcher = KernelResolver.Current.Get<CoreDispatcher>();
+            if (!DesignMode.DesignModeEnabled)
+            {
+                Dispatcher = KernelResolver.Current.Get<CoreDispatcher>();
+            }
         }
 
         protected void InitializeDispatcherFromCurrentThread()
