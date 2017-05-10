@@ -6,6 +6,7 @@ using Windows.UI.Xaml.Navigation;
 using Eurofurence.Companion.ViewModel.Local;
 using Windows.UI.Xaml;
 using System.Linq;
+using System;
 
 namespace Eurofurence.Companion.Views
 {
@@ -42,26 +43,33 @@ namespace Eurofurence.Companion.Views
         {
             if (e.PageState == null) return;
 
-            ViewModel.SearchText = (string)e.PageState[STATE_SEARCHTEXT];
-
-            GroupFlipView.SelectedIndex = e.PageState.ContainsKey(STATE_FLIPVIEW_INDEX) ?
-                (int)e.PageState[STATE_FLIPVIEW_INDEX] : 0;
-
-            if (e.PageState.ContainsKey(STATE_FLIPVIEW_SCROLLVIEW_VERTICALOFFSET))
+            try
             {
-                var selectedItem = (GroupFlipView.SelectedItem as FlipViewItem);
-                RoutedEventHandler restoreVerticalOffset = null;
-                restoreVerticalOffset = (_, __) =>
-                {
-                    selectedItem.Loaded -= restoreVerticalOffset;
-                    (GroupFlipView.SelectedItem as FrameworkElement)
-                        .Descendents()
-                        .OfType<ScrollViewer>()
-                        .FirstOrDefault()?
-                        .ChangeView(null, (double)e.PageState[STATE_FLIPVIEW_SCROLLVIEW_VERTICALOFFSET], null, true);
-                };
+                ViewModel.SearchText = (string)e.PageState[STATE_SEARCHTEXT];
 
-                selectedItem.Loaded += restoreVerticalOffset;
+                GroupFlipView.SelectedIndex = e.PageState.ContainsKey(STATE_FLIPVIEW_INDEX) ?
+                    (int)e.PageState[STATE_FLIPVIEW_INDEX] : 0;
+
+                if (e.PageState.ContainsKey(STATE_FLIPVIEW_SCROLLVIEW_VERTICALOFFSET))
+                {
+                    var selectedItem = (GroupFlipView.SelectedItem as FlipViewItem);
+                    RoutedEventHandler restoreVerticalOffset = null;
+                    restoreVerticalOffset = (_, __) =>
+                    {
+                        selectedItem.Loaded -= restoreVerticalOffset;
+                        (GroupFlipView.SelectedItem as FrameworkElement)
+                            .Descendents()
+                            .OfType<ScrollViewer>()
+                            .FirstOrDefault()?
+                            .ChangeView(null, (double)e.PageState[STATE_FLIPVIEW_SCROLLVIEW_VERTICALOFFSET], null, true);
+                    };
+
+                    selectedItem.Loaded += restoreVerticalOffset;
+                }
+            }
+            catch(Exception)
+            {
+
             }
         }
 
