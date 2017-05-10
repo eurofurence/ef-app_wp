@@ -79,7 +79,7 @@ namespace Eurofurence.Companion.ViewModel.Local
 
             var appointment = new Appointment()
             {
-                StartTime =  entry.Entity.EventDateTimeUtc,
+                StartTime =  entry.Entity.StartDateTimeUtc,
                 Duration = entry.Entity.Duration,
                 Location = entry.Entity.ConferenceRoom.Name,
                 Subject = entry.Entity.Title,

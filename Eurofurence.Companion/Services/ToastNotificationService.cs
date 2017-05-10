@@ -46,7 +46,7 @@ namespace Eurofurence.Companion.Services
                 try
                 {
                     var deliveryDate =
-                        GetSanitizedDeliveryDate(entity.EventDateTimeUtc.AddMinutes(0 - notifyMinutesAhead));
+                        GetSanitizedDeliveryDate(entity.StartDateTimeUtc.AddMinutes(0 - notifyMinutesAhead));
                     if (!deliveryDate.HasValue) return;
 
                     var parts = SplitGuid(entity.Id);

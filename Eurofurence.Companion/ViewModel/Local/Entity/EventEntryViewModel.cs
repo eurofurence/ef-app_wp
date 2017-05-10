@@ -46,7 +46,7 @@ namespace Eurofurence.Companion.ViewModel.Local.Entity
 
         private void Invalidate()
         {
-            TimeToStart = Entity.EventDateTimeUtc - _timeProvider.CurrentDateTimeUtc;
+            TimeToStart = Entity.StartDateTimeUtc - _timeProvider.CurrentDateTimeUtc;
             IsStartingSoon = TimeToStart.TotalMinutes <= 30;
             IsFavoriteAndStartingSoon = IsStartingSoon && Entity.AttributesProxy.Extension.IsFavorite;
         }

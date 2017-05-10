@@ -44,10 +44,10 @@ namespace Eurofurence.Companion.ViewModel.Local
         private void UpdateRunningEventsData()
         {
             var allRunningEvents = _eventsViewModelContext.EventEntries
-                .Where(a => a.Entity.EventDateTimeUtc <= CurrentDateTimeUtc &&
-                            a.Entity.EventDateTimeUtc + a.Entity.Duration >= CurrentDateTimeUtc)
+                .Where(a => a.Entity.StartDateTimeUtc <= CurrentDateTimeUtc &&
+                            a.Entity.EndDateTimeUtc >= CurrentDateTimeUtc)
                 .OrderBy(a => a.Entity.ConferenceDay.Date)
-                .ThenBy(a => a.Entity.EventDateTimeUtc)
+                .ThenBy(a => a.Entity.StartDateTimeUtc)
                 .ToList();
 
             foreach (var @event in RunningEvents.Where(a => !allRunningEvents.Contains(a)).ToList())
@@ -72,12 +72,12 @@ namespace Eurofurence.Companion.ViewModel.Local
         private void UpdateUpcomingEventsData()
         {
             var allUpcomingEvents = _eventsViewModelContext.EventEntries
-                .Where(a => a.Entity.EventDateTimeUtc >= CurrentDateTimeUtc) // && a.Entity.EventDateTimeUtc.Day == CurrentDateTimeUtc.Day
+                .Where(a => a.Entity.StartDateTimeUtc >= CurrentDateTimeUtc) // && a.Entity.EventDateTimeUtc.Day == CurrentDateTimeUtc.Day
                 .OrderBy(a => a.Entity.ConferenceDay.Date)
                 .ToList();
 
             var allUpcomingEventsDistinctStartingTimes =
-                allUpcomingEvents.Select(a => a.Entity.EventDateTimeUtc).Distinct().ToList();
+                allUpcomingEvents.Select(a => a.Entity.StartDateTimeUtc).Distinct().ToList();
 
             var eventsToDisplay = new List<EventEntryViewModel>();
 
@@ -87,7 +87,7 @@ namespace Eurofurence.Companion.ViewModel.Local
                     allUpcomingEventsDistinctStartingTimes.Where(
                         time => (time - CurrentDateTimeUtc).TotalMinutes <= 30).ToList())
             {
-                eventsToDisplay.AddRange(allUpcomingEvents.Where(a => a.Entity.EventDateTimeUtc == startTime));
+                eventsToDisplay.AddRange(allUpcomingEvents.Where(a => a.Entity.StartDateTimeUtc == startTime));
                 allUpcomingEventsDistinctStartingTimes.Remove(startTime);
             }
 
@@ -95,7 +95,7 @@ namespace Eurofurence.Companion.ViewModel.Local
             while (eventsToDisplay.Count < 4 && allUpcomingEventsDistinctStartingTimes.Count > 0)
             {
                 var startTime = allUpcomingEventsDistinctStartingTimes[0];
-                eventsToDisplay.AddRange(allUpcomingEvents.Where(a => a.Entity.EventDateTimeUtc == startTime));
+                eventsToDisplay.AddRange(allUpcomingEvents.Where(a => a.Entity.StartDateTimeUtc == startTime));
                 allUpcomingEventsDistinctStartingTimes.Remove(startTime);
             }
 

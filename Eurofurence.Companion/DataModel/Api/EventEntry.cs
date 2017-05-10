@@ -24,15 +24,12 @@ namespace Eurofurence.Companion.DataModel.Api
         public string PanelHosts { get; set; }
         public bool IsDeviatingFromConBook { get; set; }
 
+        public DateTime StartDateTimeUtc { get; set; }
+        public DateTime EndDateTimeUtc { get; set; }
+
 
         [JsonIgnore]
         public ExtensionProxy<EventEntry, EventEntryAttributes> AttributesProxy { get; set; }
-
-        [JsonIgnore]
-        public DateTime EventDateTimeUtc
-            => ConferenceDay == null
-                ? DateTime.MinValue
-                : new DateTime((ConferenceDay.Date + StartTime - TimeSpan.FromHours(2)).Ticks, DateTimeKind.Utc);
 
         [JsonIgnore]
         public virtual EventConferenceTrack ConferenceTrack { get; set; }
