@@ -18,7 +18,7 @@ namespace Eurofurence.Companion.ViewModel
         public InfoViewModelContext(IDataContext dataContext)
         {
             _dataContext = dataContext;
-            _dataContext.Refreshed += (s, e) => { MapToViewModels(); };
+            _dataContext.Refreshed += (s, e) => { if (e.HasFlag(DataContextDataAreaEnum.Knowledge)) MapToViewModels(); };
 
             Groups = new ObservableCollection<InfoGroupViewModel>();
 

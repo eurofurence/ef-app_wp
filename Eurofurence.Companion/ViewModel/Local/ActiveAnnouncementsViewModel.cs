@@ -25,7 +25,7 @@ namespace Eurofurence.Companion.ViewModel.Local
             InitializeDispatcherFromCurrentThread();
 
             _dataContext = dataContext;
-            _dataContext.Refreshed += (o, e) => { UpdateAnnouncements(); };
+            _dataContext.Refreshed += (o, e) => { if (e.HasFlag(DataContextDataAreaEnum.Announcements)) UpdateAnnouncements(); };
             _timeProvider = timeProvider;
 
             _timeProvider.PropertyChanged += _timeProvider_PropertyChanged;

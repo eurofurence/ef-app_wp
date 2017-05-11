@@ -50,8 +50,6 @@ namespace Eurofurence.Companion.ViewModel.Local
             _dealersViewModelContext = dealersViewModelContext;
 
             DealerSearchResults = new ObservableCollection<DealerViewModel>();
-
-            //if (DesignMode.DesignModeEnabled) SearchText = "";
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Eurofurence.Companion.DataStore
         private readonly IDataStore _dataStore;
         private readonly INavigationResolver _navigationResolver;
 
-        public event EventHandler Refreshed;
+        public event EventHandler<DataContextDataAreaEnum> Refreshed;
 
         public ObservableDataContext(IDataStore dataStore, INavigationResolver navigationResolver)
         {
@@ -73,8 +73,6 @@ namespace Eurofurence.Companion.DataStore
             await LoadEntityFromStoreAsync(MapEntries, nameof(MapEntries));
             await LoadEntityFromStoreAsync(EventEntryAttributes, nameof(EventEntryAttributes));
             _navigationResolver.Resolve(this);
-
-            Refreshed?.Invoke(this, null);
         }
 
 
@@ -105,6 +103,9 @@ namespace Eurofurence.Companion.DataStore
             }
         }
 
-
+        public void RaiseRefreshed(DataContextDataAreaEnum area)
+        {
+            Refreshed?.Invoke(this, area);
+        }
     }
 }

@@ -98,11 +98,13 @@ namespace Eurofurence.Companion.DataStore
             public Type EntityType { get; set; }
             public bool TruncateBeforeProcessing { get; set; }
             public List<EntityBase> Entities { get; set; }
+            public DataContextDataAreaEnum Area { get; set; }
         }
 
         public async Task InitializeAsync()
         {
             await _dataContext.LoadFromStoreAsync();
+            _dataContext.RaiseRefreshed(DataContextDataAreaEnum.All);
         }
 
         public async Task ClearAll()
@@ -113,6 +115,8 @@ namespace Eurofurence.Companion.DataStore
 
             _applicationSettingsContext.LastServerQueryDateTimeUtc = null;
             OnPropertyChanged(nameof(LastServerQueryDateTimeUtc));
+
+            _dataContext.RaiseRefreshed(DataContextDataAreaEnum.All);
         }
 
 
@@ -129,18 +133,19 @@ namespace Eurofurence.Companion.DataStore
                 }
 
                 var updateResults = new List<EntityUpdateResult>();
+                var affectedAreas = DataContextDataAreaEnum.None;
 
                 var sync = await _apiClient.GetDeltaAsync(LastServerQueryDateTimeUtc);
 
-                updateResults.Add(ProcessDelta(sync.Events));
-                updateResults.Add(ProcessDelta(sync.EventConferenceDays));
-                updateResults.Add(ProcessDelta(sync.EventConferenceRooms));
-                updateResults.Add(ProcessDelta(sync.EventConferenceTracks));
-                updateResults.Add(ProcessDelta(sync.Dealers));
-                updateResults.Add(ProcessDelta(sync.KnowledgeGroups));
-                updateResults.Add(ProcessDelta(sync.KnowledgeEntries));
-                updateResults.Add(ProcessDelta(sync.Images));
-                updateResults.Add(ProcessDelta(sync.Announcements));
+                updateResults.Add(ProcessDelta(sync.Events, DataContextDataAreaEnum.Events));
+                updateResults.Add(ProcessDelta(sync.EventConferenceDays, DataContextDataAreaEnum.Events));
+                updateResults.Add(ProcessDelta(sync.EventConferenceRooms, DataContextDataAreaEnum.Events));
+                updateResults.Add(ProcessDelta(sync.EventConferenceTracks, DataContextDataAreaEnum.Events));
+                updateResults.Add(ProcessDelta(sync.Dealers, DataContextDataAreaEnum.Dealers));
+                updateResults.Add(ProcessDelta(sync.KnowledgeGroups, DataContextDataAreaEnum.Knowledge));
+                updateResults.Add(ProcessDelta(sync.KnowledgeEntries, DataContextDataAreaEnum.Knowledge));
+                updateResults.Add(ProcessDelta(sync.Images, DataContextDataAreaEnum.Images));
+                updateResults.Add(ProcessDelta(sync.Announcements, DataContextDataAreaEnum.Announcements));
 
                 MainOperationMessage = $"{Translations.ContextManager_Update_DownloadingImageContent}...";
 
@@ -148,10 +153,17 @@ namespace Eurofurence.Companion.DataStore
 
                 MainOperationMessage = $"{Translations.ContextManager_Update_Synchronizing}...";
 
-
-                foreach (var entity in updateResults.Where(a => a.TruncateBeforeProcessing).Select(b => b.EntityType))
+                foreach(var entity in updateResults)
                 {
-                    await _dataStore.ClearAsync(entity);
+                    if (entity.TruncateBeforeProcessing)
+                    {
+                        await _dataStore.ClearAsync(entity.EntityType);
+                        affectedAreas |= entity.Area;
+                    }
+                    if (entity.Entities.Count > 0)
+                    {
+                        affectedAreas |= entity.Area;
+                    }
                 }
 
                 await _dataStore.ApplyDeltaAsync(updateResults.SelectMany(a => a.Entities), (current, max, id) =>
@@ -164,6 +176,7 @@ namespace Eurofurence.Companion.DataStore
                 _applicationSettingsContext.LastServerQueryDateTimeUtc = sync.CurrentDateTimeUtc;
                 OnPropertyChanged(nameof(LastServerQueryDateTimeUtc));
 
+
                 // Don't trigger a reload if we didn't touch anything.
                 if (updateResults.Any(a => a.TruncateBeforeProcessing || a.Entities.Count > 0))
                 {
@@ -171,6 +184,7 @@ namespace Eurofurence.Companion.DataStore
                     await _dataContext.SaveToStoreAsync();
                 }
 
+                _dataContext.RaiseRefreshed(affectedAreas);
 
                 UpdateStatus = TaskStatus.RanToCompletion;
                 MainOperationMessage = $"{Translations.ContextManager_Update_Done}!";
@@ -183,12 +197,13 @@ namespace Eurofurence.Companion.DataStore
             }
         }
 
-        private EntityUpdateResult ProcessDelta<T>(DeltaResponse<T> response) where T: EntityBase, new()
+        private EntityUpdateResult ProcessDelta<T>(DeltaResponse<T> response, DataContextDataAreaEnum area) where T: EntityBase, new()
         {
             var result = new EntityUpdateResult {
                 EntityType = typeof(T),
                 Entities = new List<EntityBase>(),
-                TruncateBeforeProcessing = response.RemoveAllBeforeInsert
+                TruncateBeforeProcessing = response.RemoveAllBeforeInsert,
+                Area = area
             };
 
             foreach(var id in response.DeletedEntities)

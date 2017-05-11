@@ -6,9 +6,24 @@ using Eurofurence.Companion.DataModel.Local;
 
 namespace Eurofurence.Companion.DataStore.Abstractions
 {
+    [Flags]
+    public enum DataContextDataAreaEnum : int
+    {
+        All = int.MaxValue,
+        None = 0,
+        Announcements = 1 << 0,
+        Events = 1 << 1,
+        Knowledge = 1 << 2,
+        Images = 1 << 3,
+        Dealers = 1 << 4,
+        Maps = 1 << 5
+    }
+
     public interface IDataContext
     {
-        event EventHandler Refreshed;
+        event EventHandler<DataContextDataAreaEnum> Refreshed;
+
+        void RaiseRefreshed(DataContextDataAreaEnum area);
 
         ObservableCollection<Announcement> Announcements { get; }
         ObservableCollection<EventEntry> EventEntries { get; }

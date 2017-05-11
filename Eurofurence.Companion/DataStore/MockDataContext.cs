@@ -40,7 +40,7 @@ namespace Eurofurence.Companion.DataStore
 
         private readonly INavigationResolver _navigationResolver;
 
-        public event EventHandler Refreshed;
+        public event EventHandler<DataContextDataAreaEnum> Refreshed;
 
         public MockDataContext(INavigationResolver navigationResolver)
         {
@@ -64,16 +64,21 @@ namespace Eurofurence.Companion.DataStore
             _navigationResolver.Resolve(this);
         }
 
-
+      
         public Task LoadFromStoreAsync()
         {
-            Refreshed?.Invoke(this, null);
+            Refreshed?.Invoke(this, DataContextDataAreaEnum.All);
             return Task.Delay(1);
         }
 
         public Task SaveToStoreAsync()
         {
             return Task.Delay(1);
+        }
+
+        public void RaiseRefreshed(DataContextDataAreaEnum area)
+        {
+            
         }
     }
 }

@@ -42,7 +42,9 @@ namespace Eurofurence.Companion.ViewModel
             InitializeDispatcherFromCurrentThread();
 
             _dataContext = dataContext;
-            _dataContext.Refreshed += (sender, args) => { MapToViewModels(); };
+            _dataContext.Refreshed += (sender, args) => {
+                if (args.HasFlag(DataContextDataAreaEnum.Events)) MapToViewModels();
+            };
 
             _timeProvider = timeProvider;
 

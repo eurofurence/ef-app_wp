@@ -19,7 +19,7 @@ namespace Eurofurence.Companion.ViewModel
         public DealersViewModelContext(IDataContext dataContext)
         {
             _dataContext = dataContext;
-            _dataContext.Refreshed += (s, e) => { MapToViewModels(); };
+            _dataContext.Refreshed += (s, e) => { if (e.HasFlag(DataContextDataAreaEnum.Dealers)) MapToViewModels(); };
 
             Dealers = new ObservableCollection<DealerViewModel>();
 

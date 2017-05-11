@@ -19,7 +19,7 @@ namespace Eurofurence.Companion.ViewModel
         public MapsViewModelContext(IDataContext dataContext)
         {
             _dataContext = dataContext;
-            _dataContext.Refreshed += (s, e) => { MapToViewModels(); };
+            _dataContext.Refreshed += (s, e) => { if (e.HasFlag(DataContextDataAreaEnum.Maps)) MapToViewModels(); };
 
             Maps = new ObservableCollection<MapViewModel>();
 
