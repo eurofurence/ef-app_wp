@@ -1,4 +1,5 @@
 ﻿using Eurofurence.Companion.Common;
+using Eurofurence.Companion.DataModel;
 using Eurofurence.Companion.DependencyResolution;
 using Eurofurence.Companion.Services;
 using System;

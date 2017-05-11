@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Windows.ApplicationModel;
@@ -30,6 +29,7 @@ using System.Threading.Tasks;
 using Eurofurence.Companion.Services.Abstractions;
 using Windows.ApplicationModel.Background;
 using Windows.UI.Core;
+using Eurofurence.Companion.DataModel;
 
 namespace Eurofurence.Companion
 {
@@ -77,6 +77,7 @@ namespace Eurofurence.Companion
             }
 
             _dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
+            BindableBase.InjectedCoreDispatcher = _dispatcher;
             KernelResolver.Current.Bind<CoreDispatcher>().ToMethod((c) => _dispatcher);
 
 
@@ -207,13 +208,16 @@ namespace Eurofurence.Companion
             taskBuilder.Name = "PushHandler";
             var trigger = new PushNotificationTrigger();
             taskBuilder.SetTrigger(trigger);
-            taskBuilder.TaskEntryPoint = typeof(Euforuence.Companion.PushHandlerBackgroundTask.TaskImplementation).FullName;
+            taskBuilder.TaskEntryPoint = typeof(PushHandlerBackgroundTask.TaskImplementation).FullName;
 
             BackgroundTaskRegistration registration = taskBuilder.Register();
         }
 
         private void HandleLaunchActivatedEvent(LaunchActivatedEventArgs e)
         {
+            // App tries to sync every time on startup - if the phone has internet connectivity, the data context will be up to date
+            // by the time this gets executed.
+
             if (e.Arguments.StartsWith("toast:"))
             {
                 var args = e.Arguments.Split(':');
@@ -223,6 +227,16 @@ namespace Eurofurence.Companion
                     var evm = KernelResolver.Current.Get<IEventsViewModelContext>();
                     var x = evm.EventEntries.Single(a => a.Entity.Id == eventId);
                     KernelResolver.Current.Get<NavigationViewModel>().NavigateToEventDetailPage.Execute(x);
+                }
+                else if (args[1] == "announcementDetail")
+                {
+                    var announcementId = Guid.Parse(args[2]);
+
+                    var item = KernelResolver.Current.Get<ActiveAnnouncementsViewModel>()
+                        .ActiveAnnouncements.SingleOrDefault(a => a.Id == announcementId);
+
+                    if (item == null) return;
+                    KernelResolver.Current.Get<NavigationViewModel>().NavigateToAnnouncementDetailPage.Execute(item);
                 }
             }
 

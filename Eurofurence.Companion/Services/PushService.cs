@@ -3,6 +3,7 @@ using Eurofurence.Companion.Common.Abstractions;
 using Eurofurence.Companion.DataModel;
 using Eurofurence.Companion.DataStore;
 using Eurofurence.Companion.DependencyResolution;
+using Eurofurence.Companion.PushHandlerBackgroundTask;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,7 +16,7 @@ using Windows.UI.Notifications;
 
 namespace Eurofurence.Companion.Services
 {
-    [IocBeacon(TargetType = typeof(PushService))]
+    [IocBeacon(TargetType = typeof(PushService), Scope =IocBeacon.ScopeEnum.Singleton)]
     public class PushService
     {
         private const string ChannelUriKey = "ChannelUri";
@@ -24,11 +25,12 @@ namespace Eurofurence.Companion.Services
         private PushNotificationChannel _channel;
 
         private string _channelUri;
-        private EurofurenceWebApiClient _apiClient;
+        private readonly EurofurenceWebApiClient _apiClient;
         private readonly ApplicationSettingsContext _applicationSettingsContext;
         private readonly ContextManager _contextManager;
         private readonly CoreDispatcher _dispatcher;
         private readonly IAppVersionProvider _appVersionProvider;
+        private readonly NotificationHandler _notificationHandler;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Services.PushService"/> class.
@@ -48,6 +50,8 @@ namespace Eurofurence.Companion.Services
             _contextManager = contextManager;
             _dispatcher = dispatcher;
             _appVersionProvider = appVersionProvider;
+
+            _notificationHandler = new NotificationHandler(true);
         }
 
         public string ChannelUri
@@ -109,7 +113,7 @@ namespace Eurofurence.Companion.Services
             return null;
         }
 
-        private void OnPushNotificationReceived(PushNotificationChannel sender, PushNotificationReceivedEventArgs args)
+        private async void OnPushNotificationReceived(PushNotificationChannel sender, PushNotificationReceivedEventArgs args)
         {
             switch (args.NotificationType)
             {
@@ -129,7 +133,10 @@ namespace Eurofurence.Companion.Services
 
                     if (args.RawNotification.Content == "update" && _contextManager.UpdateStatus == TaskStatus.RanToCompletion)
                     {
-                        _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => _contextManager.Update());
+                        await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => _contextManager.Update());
+                    } else
+                    {
+                        _notificationHandler.HandleRawNotification(args.RawNotification.Content);
                     }
                     break;
             }

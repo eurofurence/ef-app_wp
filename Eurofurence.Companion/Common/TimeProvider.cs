@@ -3,6 +3,7 @@ using System;
 using Windows.ApplicationModel;
 using Windows.UI.Xaml;
 using Eurofurence.Companion.Common.Abstractions;
+using Eurofurence.Companion.DataModel;
 // ReSharper disable ExplicitCallerInfoArgument
 
 namespace Eurofurence.Companion.Common

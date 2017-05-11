@@ -6,6 +6,7 @@ using Eurofurence.Companion.DataModel.Api;
 using System;
 using System.Linq;
 using Eurofurence.Companion.DependencyResolution;
+using Eurofurence.Companion.DataModel;
 
 namespace Eurofurence.Companion.ViewModel.Local
 {

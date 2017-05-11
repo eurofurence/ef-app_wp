@@ -3,24 +3,24 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.UI.Core;
 using Newtonsoft.Json;
-using Eurofurence.Companion.DependencyResolution;
-using Ninject;
 using Windows.ApplicationModel;
 
 // ReSharper disable ExplicitCallerInfoArgument
 
-namespace Eurofurence.Companion
+namespace Eurofurence.Companion.DataModel
 {
     public abstract class BindableBase : INotifyPropertyChanged
     {
         [JsonIgnore]
         public CoreDispatcher Dispatcher;
 
+        public static CoreDispatcher InjectedCoreDispatcher { get; set; }
+
         public BindableBase()
         {
-            if (!DesignMode.DesignModeEnabled)
+            if (!DesignMode.DesignModeEnabled && InjectedCoreDispatcher != null)
             {
-                Dispatcher = KernelResolver.Current.Get<CoreDispatcher>();
+                Dispatcher = InjectedCoreDispatcher;
             }
         }
 

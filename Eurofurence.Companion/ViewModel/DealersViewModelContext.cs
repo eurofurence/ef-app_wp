@@ -1,4 +1,5 @@
-﻿using Eurofurence.Companion.DataStore.Abstractions;
+﻿using Eurofurence.Companion.DataModel;
+using Eurofurence.Companion.DataStore.Abstractions;
 using Eurofurence.Companion.DependencyResolution;
 using Eurofurence.Companion.ViewModel.Abstractions;
 using Eurofurence.Companion.ViewModel.Local;

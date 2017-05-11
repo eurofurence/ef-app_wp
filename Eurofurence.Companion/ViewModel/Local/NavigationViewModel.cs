@@ -2,6 +2,7 @@
 using Eurofurence.Companion.Common;
 using Eurofurence.Companion.Common.Abstractions;
 using Eurofurence.Companion.DependencyResolution;
+using Eurofurence.Companion.DataModel;
 
 namespace Eurofurence.Companion.ViewModel.Local
 {

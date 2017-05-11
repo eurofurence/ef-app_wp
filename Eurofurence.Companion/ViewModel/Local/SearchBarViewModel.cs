@@ -1,4 +1,5 @@
 ﻿using Eurofurence.Companion.Common;
+using Eurofurence.Companion.DataModel;
 
 namespace Eurofurence.Companion.ViewModel.Local
 {

@@ -87,7 +87,6 @@
     </Compile>
     <Compile Include="Common\AppVersionProvider.cs" />
     <Compile Include="Common\AwaitableCommand.cs" />
-    <Compile Include="BindableBase.cs" />
     <Compile Include="Common\Consts.cs" />
     <Compile Include="Common\DependencyObjectExtensions.cs" />
     <Compile Include="Common\Abstractions\ITelemetryClientProvider.cs" />
@@ -95,14 +94,6 @@
     <Compile Include="Common\AsyncNavigationEvent.cs" />
     <Compile Include="Common\Abstractions\IAppVersionProvider.cs" />
     <Compile Include="Controls\TilePanel.cs" />
-    <Compile Include="DataModel\Api\AuthenticationResponse.cs" />
-    <Compile Include="DataModel\Api\LinkFragment.cs" />
-    <Compile Include="DataModel\Api\Map.cs" />
-    <Compile Include="DataModel\Api\MapEntry.cs" />
-    <Compile Include="DataModel\Api\NamedUrl.cs" />
-    <Compile Include="DataModel\Api\RegSysAuthenticationRequest.cs" />
-    <Compile Include="DataModel\Api\Sync.cs" />
-    <Compile Include="DataModel\ImageExtensions.cs" />
     <Compile Include="Common\NavigationHelper.cs" />
     <Compile Include="Common\NavigationMediator.cs" />
     <Compile Include="Common\ObservableDictionary.cs" />
@@ -112,21 +103,6 @@
     <Compile Include="Common\ThemeManager.cs" />
     <Compile Include="Common\TimeProvider.cs" />
     <Compile Include="Common\VisualTreeExtensions.cs" />
-    <Compile Include="DataModel\Api\Dealer.cs" />
-    <Compile Include="DataModel\Api\Endpoint.cs" />
-    <Compile Include="DataModel\Api\EndpointConfiguration.cs" />
-    <Compile Include="DataModel\Api\EndpointEntity.cs" />
-    <Compile Include="DataModel\Api\EventConferenceDay.cs" />
-    <Compile Include="DataModel\Api\EventConferenceRoom.cs" />
-    <Compile Include="DataModel\Api\EventConferenceTrack.cs" />
-    <Compile Include="DataModel\Api\EventEntry.cs" />
-    <Compile Include="DataModel\Api\Image.cs" />
-    <Compile Include="DataModel\Api\Announcement.cs" />
-    <Compile Include="DataModel\Api\Info.cs" />
-    <Compile Include="DataModel\Api\InfoGroup.cs" />
-    <Compile Include="DataModel\ExtensionProxy.cs" />
-    <Compile Include="DataModel\Local\EventEntryAttributes.cs" />
-    <Compile Include="DataModel\Abstractions\IEntityExtension.cs" />
     <Compile Include="DataStore\GzipCompressedJsonDataStore.cs" />
     <Compile Include="DependencyResolution\IocBeacon.cs" />
     <Compile Include="DependencyResolution\ServiceLocator.cs" />
@@ -149,11 +125,8 @@
     <Compile Include="ViewModel\Behaviors\MainMenuDataTemplateSelector.cs" />
     <Compile Include="ViewModel\Behaviors\RichTextBlockProperties.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
-    <Compile Include="DataModel\StringFormatConverter.cs" />
     <Compile Include="DataStore\ApplicationSettingsContext.cs" />
     <Compile Include="DataStore\ContextManager.cs" />
-    <Compile Include="DataModel\EurofurenceWebApiClient.cs" />
-    <Compile Include="DataModel\EntityBase.cs" />
     <Compile Include="DataStore\Abstractions\IApplicationSettingsManager.cs" />
     <Compile Include="DataStore\Abstractions\INavigationResolver.cs" />
     <Compile Include="DataStore\ApplicationSettingsManager.cs" />
@@ -204,7 +177,6 @@
     <Compile Include="ViewModel\Local\ConventionInfoViewModel.cs" />
     <Compile Include="ViewModel\Local\EventsViewModel.cs" />
     <Compile Include="ViewModel\ILayoutPage.cs" />
-    <Compile Include="DataModel\Abstractions\IOrderKeyProvider.cs" />
     <Compile Include="ViewModel\Local\LayoutViewModel.cs" />
     <Compile Include="ViewModel\Local\NavigationViewModel.cs" />
     <Compile Include="ViewModel\Local\SearchBarViewModel.cs" />
@@ -537,6 +509,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\_NonIncluded\" />
+    <Folder Include="DataModel\" />
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Translations.resw">
@@ -547,9 +520,13 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Euforuence.Companion.PushHandlerBackgroundTask\Euforuence.Companion.PushHandlerBackgroundTask.csproj">
-      <Project>{216d2444-4d5c-4537-b244-4f87a68efec3}</Project>
-      <Name>Euforuence.Companion.PushHandlerBackgroundTask</Name>
+    <ProjectReference Include="..\Eurofurence.Companion.DataModel\Eurofurence.Companion.DataModel.csproj">
+      <Project>{4892b473-f168-416a-ab5d-751998c965a2}</Project>
+      <Name>Eurofurence.Companion.DataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Eurofurence.Companion.PushHandlerBackgroundTask\Eurofurence.Companion.PushHandlerBackgroundTask.csproj">
+      <Project>{1064fec4-adeb-4e69-8ffd-c398a8af0446}</Project>
+      <Name>Eurofurence.Companion.PushHandlerBackgroundTask</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">

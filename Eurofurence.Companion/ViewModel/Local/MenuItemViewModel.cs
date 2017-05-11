@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Eurofurence.Companion.Common;
+using Eurofurence.Companion.DataModel;
 
 namespace Eurofurence.Companion.ViewModel.Local
 {

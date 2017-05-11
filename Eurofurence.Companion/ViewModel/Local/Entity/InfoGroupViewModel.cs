@@ -1,4 +1,5 @@
-﻿using Eurofurence.Companion.DataModel.Api;
+﻿using Eurofurence.Companion.DataModel;
+using Eurofurence.Companion.DataModel.Api;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
