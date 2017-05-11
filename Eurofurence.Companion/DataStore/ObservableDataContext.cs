@@ -89,17 +89,24 @@ namespace Eurofurence.Companion.DataStore
 
         private async Task LoadEntityFromStoreAsync<T>(ICollection<T> target, string propertyName) where T : EntityBase, new()
         {
-            var entities = await _dataStore.GetAsync<T>();
-
-            if (typeof (ISortOrderKeyProvider).GetTypeInfo().IsAssignableFrom(typeof (T).GetTypeInfo()))
+            try
             {
-                entities = entities.OrderBy(a => (a as ISortOrderKeyProvider).SortOrderKey).ToList();
+                var entities = await _dataStore.GetAsync<T>();
+
+                if (typeof (ISortOrderKeyProvider).GetTypeInfo().IsAssignableFrom(typeof (T).GetTypeInfo()))
+                {
+                    entities = entities.OrderBy(a => (a as ISortOrderKeyProvider).SortOrderKey).ToList();
+                }
+
+                target.Clear();
+                foreach (var entity in entities)
+                {
+                    target.Add(entity);
+                }
             }
-
-            target.Clear();
-            foreach (var entity in entities)
+            catch (Newtonsoft.Json.JsonSerializationException)
             {
-                target.Add(entity);
+                // This should only happen when namespaces change - and we'll clear data there anyway.
             }
         }
 
