@@ -15,6 +15,7 @@ namespace Eurofurence.Companion.Services
         {
             public bool IsAuthenticated { get; set; }
 
+            public string Uid { get; set; }
             public string Username { get; set; }
             public string Token { get; set; }
             public DateTime TokenExpiration { get; set; }
@@ -24,7 +25,6 @@ namespace Eurofurence.Companion.Services
         public AuthenticationState State { get; private set; }
 
 
-        private readonly ApplicationSettingsContext _applicationSettingsContext;
         private readonly EurofurenceWebApiClient _apiClient;
         private readonly ApplicationSettingsManager _applicationSettingsManager;
 
@@ -54,26 +54,27 @@ namespace Eurofurence.Companion.Services
 
         public async Task<bool> LoginAsync(int regNo, string username, string password)
         {
-            var response = await _apiClient.PostAsync<RegSysAuthenticationRequest, AuthenticationResponse>(
-                "Tokens/RegSys",
-                new RegSysAuthenticationRequest()
-                {
-                    RegNo = regNo,
-                    Username = username,
-                    Password = password
-                });
-
-            if (response.IsSuccessful)
+            try
             {
-                State = new AuthenticationState()
-                {
-                    IsAuthenticated = true,
-                    Username = response.Username,
-                    TokenExpiration = response.TokenValidUntil,
-                    Token = response.Token
-                };
+                var response = await _apiClient.PostAsync<RegSysAuthenticationRequest, AuthenticationResponse>(
+                    "Tokens/RegSys",
+                    new RegSysAuthenticationRequest()
+                    {
+                        RegNo = regNo,
+                        Username = username,
+                        Password = password
+                    });
+
+                    State = new AuthenticationState()
+                    {
+                        IsAuthenticated = true,
+                        Uid = response.Uid,
+                        Username = response.Username,
+                        TokenExpiration = response.TokenValidUntil,
+                        Token = response.Token
+                    };
             }
-            else
+            catch (Exception)
             {
                 State = new AuthenticationState()
                 {

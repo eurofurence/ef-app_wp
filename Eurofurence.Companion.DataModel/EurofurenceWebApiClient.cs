@@ -1,9 +1,6 @@
 ﻿using Eurofurence.Companion.DataModel.Api;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Security.Cryptography.Certificates;
 using Windows.Storage.Streams;
@@ -16,44 +13,9 @@ namespace Eurofurence.Companion.DataModel
     {
         private readonly string _endpointUrl;
 
-        private static readonly Dictionary<Type, string> _resourcePathMap = new Dictionary<Type, string>()
-        {
-            { typeof(Announcement), "Announcement" },
-            { typeof(EventEntry), "EventEntry" },
-            { typeof(EventConferenceDay), "EventConferenceDay" },
-            { typeof(EventConferenceRoom), "EventConferenceRoom" },
-            { typeof(EventConferenceTrack), "EventConferenceTrack" },
-            { typeof(Info), "Info" },
-            { typeof(InfoGroup), "InfoGroup" },
-            { typeof(Image), "Image" },
-            { typeof(Dealer), "Dealer" },
-            { typeof(Map), "Map" },
-            { typeof(MapEntry), "MapEntry" }
-        };
-     
         public EurofurenceWebApiClient(string endpointUrl)
         {
             _endpointUrl = endpointUrl;
-        }
-
-        public Task<Endpoint> GetEndpointMetadataAsync()
-        {
-            return GetAsync<Endpoint>("Endpoint");
-        }
-
-        public Type GetTypeForEntity(string name)
-        {
-            if (_resourcePathMap.ContainsValue(name))
-                return _resourcePathMap.Single(a => a.Value == name).Key;
-
-            return null;
-        }
-
-        private string GetResourcePath(Type type)
-        {
-            if (_resourcePathMap.ContainsKey(type)) return _resourcePathMap[type];
-
-            throw new NotSupportedException();
         }
 
         public Task<AggregatedDeltaResponse> GetDeltaAsync(DateTime? since = null, Action<HttpProgress> progressCallback = null)
@@ -65,18 +27,6 @@ namespace Eurofurence.Companion.DataModel
             }
 
             return GetAsync<AggregatedDeltaResponse>(uri, null);
-        }
-
-        public Task<List<T>> GetEntitiesAsync<T>(DateTime? since = null, Action<HttpProgress> progressCallback = null)
-        {
-            var uri = GetResourcePath(typeof(T));
-
-            if (since.HasValue)
-            {
-                uri = $"{uri}?since={since.Value.ToString("yyyy-MM-ddTHH:mm:ssZ")}";
-            } 
-
-            return GetAsync<List<T>>(uri, progressCallback);
         }
 
         private async Task<T> GetResponseAsync<T>(Func<HttpResponseMessage, Task<T>> selector,  string url, Action<HttpProgress> progressCallback = null)

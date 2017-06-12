@@ -31,6 +31,7 @@ namespace Eurofurence.Companion.Services
         private readonly CoreDispatcher _dispatcher;
         private readonly IAppVersionProvider _appVersionProvider;
         private readonly NotificationHandler _notificationHandler;
+        private readonly AuthenticationService _authenticationService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Services.PushService"/> class.
@@ -42,6 +43,7 @@ namespace Eurofurence.Companion.Services
             ApplicationSettingsContext applicationSettingsContext, 
             ContextManager contextManager, 
             CoreDispatcher dispatcher,
+            AuthenticationService authenticationService,
             IAppVersionProvider appVersionProvider)
         {
             _channelUri = LocalSettingsLoad(ApplicationData.Current.LocalSettings, ChannelUriKey, ChannelUriDefault);
@@ -49,9 +51,12 @@ namespace Eurofurence.Companion.Services
             _applicationSettingsContext = applicationSettingsContext;
             _contextManager = contextManager;
             _dispatcher = dispatcher;
+            _authenticationService = authenticationService;
             _appVersionProvider = appVersionProvider;
 
             _notificationHandler = new NotificationHandler(true);
+
+            _authenticationService.AuthenticationStateChanged += async (s, e) => { await UpdatePushNotificationChannelRegistrationAsync(); };
         }
 
         public string ChannelUri
@@ -65,6 +70,22 @@ namespace Eurofurence.Companion.Services
                     LocalSettingsStore(ApplicationData.Current.LocalSettings, ChannelUriKey, value);
                 }
             }
+        }
+
+        public async Task UpdatePushNotificationChannelRegistrationAsync()
+        {
+            var topics = new List<string>() { "Debug" };
+            topics.Add($"Version-{_appVersionProvider.GetAppVersion()}");
+            
+            if (Debugger.IsAttached) topics.Add("Emulator");
+
+            await _apiClient.PostAsync<object, object>("PushNotifications/WnsChannelRegistration", new
+            {
+                DeviceId = _applicationSettingsContext.UniqueRandomUserId,
+                ChannelUri = _channel.Uri,
+                Topics = topics,
+            }, 
+            _authenticationService.State.Token);
         }
 
         public async Task<string> UpdateChannelUri()
@@ -85,19 +106,9 @@ namespace Eurofurence.Companion.Services
                         ChannelUri = _channel.Uri;
                         this.RaiseChannelUriUpdated();
 
+                   }
 
-                        var topics = new List<string>() { "Debug" };
-                        topics.Add($"Version-{_appVersionProvider.GetAppVersion()}");
-                        if (Debugger.IsAttached) topics.Add("Emulator");
-
-                        await _apiClient.PostAsync<object, object>("PushNotifications/WnsChannelRegistration", new
-                        {
-                            DeviceId = _applicationSettingsContext.UniqueRandomUserId,
-                            ChannelUri = _channel.Uri,
-                            Topics = topics
-                        });
-
-                    }
+                    await UpdatePushNotificationChannelRegistrationAsync();
 
                     return _channel.Uri;
                 }

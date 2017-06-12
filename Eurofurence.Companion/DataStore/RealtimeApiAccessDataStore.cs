@@ -66,10 +66,9 @@ namespace Eurofurence.Companion.DataStore
             throw new NotImplementedException();
         }
 
-        public async Task<IList<T>> GetAsync<T>() where T : EntityBase, new()
+        public Task<IList<T>> GetAsync<T>() where T : EntityBase, new()
         {
-            var result = await _apiClient.GetEntitiesAsync<T>().ConfigureAwait(false);
-            return result;
+            throw new NotImplementedException();
         }
     }
 }
