@@ -40,6 +40,11 @@ namespace Eurofurence.Companion.Services
             State = _applicationSettingsManager.Get<AuthenticationState>("AuthenticationState", new AuthenticationState() { IsAuthenticated = false });
         }
 
+        public async Task EnforceTokenExpirationAsync()
+        {
+            if (State.TokenExpiration < DateTime.UtcNow) await LogoutAsync();
+        }
+
         public async Task LogoutAsync()
         {
             await Task.Delay(0);

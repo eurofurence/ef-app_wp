@@ -77,7 +77,7 @@ namespace Eurofurence.Companion.PushHandlerBackgroundTask
 
         private void PrivateMessageReceived()
         {
-            var payload = CreateToast("You have received a personal message!", "Open the Eurofurence App to read it.", "");
+            var payload = CreateToast("You have received a personal message!", "Open the Eurofurence app to read it.", "");
             var toast = new ScheduledToastNotification(payload, DateTime.UtcNow.AddSeconds(1))
             {
                 Id = new Random().Next(0, 100000).ToString()

@@ -93,7 +93,7 @@
                                     Background="#30000000"
                                     Visibility="{Binding Source={StaticResource ViewModelLocator}, Path=AuthenticationViewModel.IsAuthenticated, Converter={StaticResource TrueToVisibleConverter}}">
                                 <controls:UserWidgetControl
-                                Margin="20"/>
+                                Margin="0 20 0 20"/>
                             </Border>
                             
                             <controls:ActiveAnnouncementsControl DataContext="{Binding}" Visibility="{Binding HasActiveAnnouncements, Converter={StaticResource TrueToVisibleConverter}}" />

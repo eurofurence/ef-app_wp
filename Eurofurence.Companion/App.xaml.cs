@@ -79,6 +79,9 @@ namespace Eurofurence.Companion
         {
             if (_isInitialized)
             {
+                await KernelResolver.Current.Get<AuthenticationService>().EnforceTokenExpirationAsync();
+                await KernelResolver.Current.Get<PrivateMessageService>().QueryPrivateMessagesAsync();
+
                 HandleLaunchActivatedEvent(e);
                 return;
             }
@@ -122,6 +125,7 @@ namespace Eurofurence.Companion
                 return;
             }
 
+            await KernelResolver.Current.Get<AuthenticationService>().EnforceTokenExpirationAsync();
             await pushService.UpdateChannelUri();
 
 
@@ -278,6 +282,7 @@ namespace Eurofurence.Companion
         protected override void OnActivated(IActivatedEventArgs args)
         {
             HockeyClient.Current.HandleReactivationOfFeedbackFilePicker(args);
+
             base.OnActivated(args);
         }
 

@@ -24,24 +24,23 @@ namespace Eurofurence.Companion.ViewModel
         public bool HasMessages => Messages.Count > 0;
         public int UnreadMessagesCount => Messages.Count(a => !a.IsRead);
 
+        public event EventHandler Invalidated;
+
 
         public PrivateMessagesViewModelContext(PrivateMessageService privateMessageService)
         {
-            InitializeDispatcherFromCurrentThread();
-
             _privateMessageService = privateMessageService;
-            _privateMessageService.Updated += async (s, e) => await UpdatedAsync();
+            _privateMessageService.Updated += async (s, e) => await UpdateAsync();
 
             Messages = new ObservableCollection<PrivateMessageViewModel>();
 
             if (DesignMode.DesignModeEnabled)
             {
                 CreateMockData();
-
             }
             else
             {
-                Task.Run(async () => await UpdatedAsync());
+                Task.Run(async () => await UpdateAsync());
             }
         }
 
@@ -62,7 +61,7 @@ namespace Eurofurence.Companion.ViewModel
             }
         }
 
-        private async Task UpdatedAsync()
+        private async Task UpdateAsync()
         {
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
@@ -84,11 +83,9 @@ namespace Eurofurence.Companion.ViewModel
                     var target = Messages.SingleOrDefault(l => l.Entity.Id == message.Id);
                     target.Update(message);
                 }
-            });
 
-            OnPropertyChanged(nameof(HasUnreadMessages));
-            OnPropertyChanged(nameof(HasMessages));
-            OnPropertyChanged(nameof(UnreadMessagesCount));
+                Invalidated?.Invoke(this, null);
+            });
         }
 
         public Task MarkPrivateMessageAsReadAsync(PrivateMessageViewModel message)

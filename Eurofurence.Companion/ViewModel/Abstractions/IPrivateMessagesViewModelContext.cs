@@ -6,7 +6,7 @@ using System;
 
 namespace Eurofurence.Companion.ViewModel.Abstractions
 {
-    public interface IPrivateMessagesViewModelContext : INotifyPropertyChanged
+    public interface IPrivateMessagesViewModelContext
     {
         bool HasMessages { get; }
         bool HasUnreadMessages { get; }
@@ -14,5 +14,7 @@ namespace Eurofurence.Companion.ViewModel.Abstractions
         ObservableCollection<PrivateMessageViewModel> Messages { get; }
 
         Task MarkPrivateMessageAsReadAsync(PrivateMessageViewModel message);
+
+        event EventHandler Invalidated;
     }
 }

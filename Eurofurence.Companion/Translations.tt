@@ -33,7 +33,7 @@ namespace <#= GetNamespace() #>
             _resourceLoader = ResourceLoader.GetForViewIndependentUse("Translations");
         }
 
-		public static string GetString(string index) => _resourceLoader.GetString(index);
+		public static string GetString(string index) => _resourceLoader.GetString(index).Replace("\\n", "\n");
 
 <#
         foreach (string name in GetResourceKeys(reswPath).Where(n => !n.Contains(".")))
@@ -41,7 +41,7 @@ namespace <#= GetNamespace() #>
 #>
 
         public static string <#= provider.CreateEscapedIdentifier(name) #> 
-			=> _resourceLoader.GetString("<#= name #>"); 
+			=> GetString("<#= name #>"); 
 <#
         }
 #>

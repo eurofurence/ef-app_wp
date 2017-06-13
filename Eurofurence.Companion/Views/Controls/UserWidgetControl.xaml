@@ -14,6 +14,11 @@
     <Grid>
 
         <ListView>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.Items>
                 <ListViewItem>
                     <interactivity:Interaction.Behaviors>
@@ -26,6 +31,7 @@
 
                     <StackPanel>
                         <TextBlock TextAlignment="Left"
+                                   Margin="20 0 20 0"
                                    Style="{StaticResource BodyTextBlockStyle}"
                                    FontSize="{StaticResource TextStyleMediumFontSize}"
                                    >
@@ -38,21 +44,8 @@
 
                         <local:PrivateMessagesSectionControl
                             Margin="0 0 0 0"
-                            Visibility="{Binding 
-                                Source={StaticResource ViewModelLocator},
-                                Path=PrivateMessagesViewModel.HasUnreadMessages, 
-                                Converter={StaticResource TrueToVisibleConverter}}"
                             />
-                        <TextBlock
-                            Style="{StaticResource BodyTextBlockStyle}"
-                            FontSize="{StaticResource TextStyleSmallFontSize}"
-                            Margin="0 0 0 0"
-                            Visibility="{Binding 
-                                Source={StaticResource ViewModelLocator},
-                                Path=PrivateMessagesViewModel.HasUnreadMessages, 
-                                Converter={StaticResource FalseToVisibleConverter}}"
-                            Text="You have no unread personal messages."
-                            />
+
                     </StackPanel>
 
                 </ListViewItem>

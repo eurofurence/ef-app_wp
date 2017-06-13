@@ -165,4 +165,13 @@
   <data name="Login_Error_UsernamePasswordNotProvided" xml:space="preserve">
     <value>Username / Password cannot be blank.</value>
   </data>
+  <data name="PrivateMessages_HasRead" xml:space="preserve">
+    <value>You have {0} personal message(s).</value>
+  </data>
+  <data name="PrivateMessages_HasUnread" xml:space="preserve">
+    <value>You have {0} new personal message(s)!\n({1} messages in total).</value>
+  </data>
+  <data name="PrivateMessages_NoMessages" xml:space="preserve">
+    <value>You have no personal messages.</value>
+  </data>
 </root>

@@ -144,16 +144,23 @@
                 </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Name="_ue_grid" Background="Transparent">
+                        <Grid Name="_ue_grid">
+                            <Grid.Background>
+                                <SolidColorBrush Color="Transparent" Opacity="0.6" />
+                            </Grid.Background>
                             <Grid.Resources>
                                 <Storyboard x:Name="_ue_pulseItemStoryboard">
                                     <ColorAnimation AutoReverse="True"
-                                                    Duration="0:0:2.00"
+                                                    Duration="0:0:1.50"
                                                     From="{StaticResource EurofurenceThemeColorTransparent}"
                                                     RepeatBehavior="Forever"
                                                     Storyboard.TargetName="_ue_grid"
                                                     Storyboard.TargetProperty="(Grid.Background).(SolidColorBrush.Color)"
-                                                    To="{StaticResource EurofurenceThemeColor}" />
+                                                    To="{StaticResource EurofurenceThemeColor}" >
+                                        <ColorAnimation.EasingFunction>
+                                            <QuarticEase EasingMode="EaseInOut" />
+                                        </ColorAnimation.EasingFunction>
+                                    </ColorAnimation>
                                 </Storyboard>
                             </Grid.Resources>
                             <interactivity:Interaction.Behaviors>

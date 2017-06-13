@@ -22,7 +22,6 @@
             <Color x:Key="EurofurenceThemeColorLight">#90d3c7</Color>
             <SolidColorBrush x:Key="EurofurenceThemeColorBrush" Color="{StaticResource EurofurenceThemeColor}" />
 
-
             <SolidColorBrush x:Key="AppPageBackgroundBrush" Color="{StaticResource EurofurenceThemeColor}" />
 
             <SolidColorBrush x:Key="AppMidBrushAccent" Color="{StaticResource EurofurenceThemeColor}" Opacity="0.8"></SolidColorBrush>
