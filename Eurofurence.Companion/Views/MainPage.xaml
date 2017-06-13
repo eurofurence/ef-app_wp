@@ -85,7 +85,17 @@
                             </interactivity:BehaviorCollection>
                         </interactivity:Interaction.Behaviors>
 
+                        
+                        
                         <StackPanel Margin="0 0 0 20" DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=ActiveAnnouncementsViewModel}">
+
+                            <Border Margin="-20 -20 -20 20"
+                                    Background="#30000000"
+                                    Visibility="{Binding Source={StaticResource ViewModelLocator}, Path=AuthenticationViewModel.IsAuthenticated, Converter={StaticResource TrueToVisibleConverter}}">
+                                <controls:UserWidgetControl
+                                Margin="20"/>
+                            </Border>
+                            
                             <controls:ActiveAnnouncementsControl DataContext="{Binding}" Visibility="{Binding HasActiveAnnouncements, Converter={StaticResource TrueToVisibleConverter}}" />
                         </StackPanel>
 

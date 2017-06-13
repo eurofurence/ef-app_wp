@@ -23,5 +23,6 @@ namespace Eurofurence.Companion.DependencyResolution
         public MenuViewModel MenuViewModel => KernelResolver.Current.Get<MenuViewModel>();
         public MapsViewModel MapsViewModel => KernelResolver.Current.Get<MapsViewModel>();
         public AuthenticationViewModel AuthenticationViewModel => KernelResolver.Current.Get<AuthenticationViewModel>();
+        public PrivateMessagesViewModel PrivateMessagesViewModel => KernelResolver.Current.Get<PrivateMessagesViewModel>();
     }
 }

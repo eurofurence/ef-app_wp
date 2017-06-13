@@ -32,6 +32,7 @@ namespace Eurofurence.Companion.Services
         private readonly IAppVersionProvider _appVersionProvider;
         private readonly NotificationHandler _notificationHandler;
         private readonly AuthenticationService _authenticationService;
+        private readonly PrivateMessageService _privateMessageService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Services.PushService"/> class.
@@ -44,6 +45,7 @@ namespace Eurofurence.Companion.Services
             ContextManager contextManager, 
             CoreDispatcher dispatcher,
             AuthenticationService authenticationService,
+            PrivateMessageService privateMessageService,
             IAppVersionProvider appVersionProvider)
         {
             _channelUri = LocalSettingsLoad(ApplicationData.Current.LocalSettings, ChannelUriKey, ChannelUriDefault);
@@ -57,6 +59,7 @@ namespace Eurofurence.Companion.Services
             _notificationHandler = new NotificationHandler(true);
 
             _authenticationService.AuthenticationStateChanged += async (s, e) => { await UpdatePushNotificationChannelRegistrationAsync(); };
+            _privateMessageService = privateMessageService;
         }
 
         public string ChannelUri
@@ -147,7 +150,8 @@ namespace Eurofurence.Companion.Services
                         await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => _contextManager.Update());
                     } else
                     {
-                        _notificationHandler.HandleRawNotification(args.RawNotification.Content);
+                        if (args.RawNotification.Content == "privatemessage_received")
+                            await _privateMessageService.QueryPrivateMessagesAsync();
                     }
                     break;
             }

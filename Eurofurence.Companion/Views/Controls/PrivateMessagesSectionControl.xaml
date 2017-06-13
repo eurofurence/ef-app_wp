@@ -1,0 +1,42 @@
+﻿<UserControl
+    x:Class="Eurofurence.Companion.Views.Controls.PrivateMessagesSectionControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:local="using:Eurofurence.Companion.Views.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:media="using:Microsoft.Xaml.Interactions.Media"
+    DataContext="{Binding Source={StaticResource ViewModelLocator},
+                            Path=PrivateMessagesViewModel}"
+    mc:Ignorable="d"
+    d:DesignHeight="100"
+    d:DesignWidth="400">
+
+    <Grid>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                    Margin="5 2 0 0"
+                    FontFamily="{StaticResource IconFontFamily}"
+                    FontSize="24"
+                    Foreground="{ThemeResource PhoneForegroundBrush}"
+                    Text="&#xE119;" />
+            <StackPanel Grid.Column="1">
+                <TextBlock
+                                    Style="{StaticResource TitleTextBlockStyle}"
+                                    TextWrapping="Wrap" >
+                                <Run Text="You have"></Run>
+                                <Run Text="{Binding UnreadMessagesCount}" FontWeight="Bold"></Run>
+                                <Run Text="new personal messages!"></Run>
+                </TextBlock>
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+</UserControl>

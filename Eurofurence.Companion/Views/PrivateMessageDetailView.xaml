@@ -1,0 +1,73 @@
+﻿<Page
+    x:Class="Eurofurence.Companion.Views.PrivateMessageDetailView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Eurofurence.Companion.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=PrivateMessagesViewModel.Messages[0]}"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid x:Name="LayoutRoot">
+
+        <ScrollViewer>
+            <StackPanel Margin="20">
+                <TextBlock FontSize="{StaticResource TextStyleMediumFontSize}"
+                           Foreground="{StaticResource PhoneLowBrush}"
+                           Style="{StaticResource BaseTextBlockStyle}">
+                    Personal Message
+                </TextBlock>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="70" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Margin="5 5 0 0"
+                               FontFamily="{StaticResource IconFontFamily}"
+                               FontSize="50"
+                               Foreground="{ThemeResource PhoneLowBrush}"
+                               Text="&#xE119;" />
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Style="{StaticResource TitleTextBlockStyle}"
+                                   Text="{Binding Entity.Subject}"
+                                   TextTrimming="CharacterEllipsis"
+                                   TextWrapping="Wrap" />
+                        <TextBlock Margin="0 5 0 0"
+                                   FontSize="{StaticResource TextStyleMediumFontSize}"
+                                   Foreground="{ThemeResource PhoneLowBrush}"
+                                   LineHeight="25">
+                            <Run FontFamily="{StaticResource IconFontFamily}" Text="&#xE77B;" />
+                            <Run Text="{Binding Entity.AuthorName}" />
+                            <LineBreak />
+                            <Run FontFamily="{StaticResource IconFontFamily}" Text="&#xE121;" />
+                            <Run Text="{Binding Entity.CreatedDateTimeUtc}" />
+                            <LineBreak />
+                            <Run FontFamily="{StaticResource IconFontFamily}" Text="&#xE008;" />
+                            <Run Text="{Binding Entity.ReceivedDateTimeUtc}" />
+                        </TextBlock>                      
+                            
+                    </StackPanel>
+
+                </Grid>
+                <StackPanel Margin="10">
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}"
+                               Text="{Binding Entity.Message}"
+                               TextTrimming="CharacterEllipsis"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+
+
+        <!--<StackPanel>
+            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="{Binding Entity.Subject}" />
+            <TextBlock Style="{StaticResource BaseTextBlockStyle}" Text="{Binding Entity.Message}" />
+            <TextBlock Style="{StaticResource BaseTextBlockStyle}" Text="{Binding Entity.ReadDateTimeUtc}" />
+            <TextBlock Style="{StaticResource BaseTextBlockStyle}" Text="{Binding Entity.ReceivedDateTimeUtc}" />
+            <TextBlock Style="{StaticResource BaseTextBlockStyle}" Text="{Binding Entity.CreatedDateTimeUtc}" />
+            <TextBlock Style="{StaticResource BaseTextBlockStyle}" Text="{Binding IsRead}" />
+        </StackPanel>-->
+       
+    </Grid>
+</Page>

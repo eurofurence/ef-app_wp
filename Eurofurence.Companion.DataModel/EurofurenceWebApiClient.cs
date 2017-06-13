@@ -29,7 +29,7 @@ namespace Eurofurence.Companion.DataModel
             return GetAsync<AggregatedDeltaResponse>(uri, null);
         }
 
-        private async Task<T> GetResponseAsync<T>(Func<HttpResponseMessage, Task<T>> selector,  string url, Action<HttpProgress> progressCallback = null)
+        private async Task<T> GetResponseAsync<T>(Func<HttpResponseMessage, Task<T>> selector,  string url, Action<HttpProgress> progressCallback = null, string oAuthToken = null)
         {
             var filter = new HttpBaseProtocolFilter {AutomaticDecompression = true};
             filter.CacheControl.ReadBehavior = HttpCacheReadBehavior.MostRecent;
@@ -39,6 +39,12 @@ namespace Eurofurence.Companion.DataModel
             using (var client = new HttpClient(filter))
             {
                 client.DefaultRequestHeaders.Add("Cache-Control", "no-cache");
+
+                if (!string.IsNullOrWhiteSpace(oAuthToken))
+                {
+                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {oAuthToken}");
+                }
+
                 var responseOperation = client.GetAsync(new Uri(url));
 
                 if (progressCallback != null)
@@ -64,21 +70,21 @@ namespace Eurofurence.Companion.DataModel
         }
 
 
-        public Task<string> GetContentAsStringAsync(string url, Action<HttpProgress> progressCallback = null)
+        public Task<string> GetContentAsStringAsync(string url, Action<HttpProgress> progressCallback = null, string oAuthToken = null)
         {
-            return GetResponseAsync(async response => await response.Content.ReadAsStringAsync(), url, progressCallback);
+            return GetResponseAsync(async response => await response.Content.ReadAsStringAsync(), url, progressCallback, oAuthToken);
         }
 
-        public Task<IBuffer> GetContentAsBufferAsync(string url, Action<HttpProgress> progressCallback = null)
+        public Task<IBuffer> GetContentAsBufferAsync(string url, Action<HttpProgress> progressCallback = null, string oAuthToken = null)
         {
-            return GetResponseAsync(async response => await response.Content.ReadAsBufferAsync(), url, progressCallback);
+            return GetResponseAsync(async response => await response.Content.ReadAsBufferAsync(), url, progressCallback, oAuthToken);
         }
 
 
-        private async Task<T> GetAsync<T>(string resource, Action<HttpProgress> progressCallback = null)
+        public async Task<T> GetAsync<T>(string resource, Action<HttpProgress> progressCallback = null, string oAuthToken = null)
         {
             var url = $"{_endpointUrl}/{resource}";
-            var content = await GetContentAsStringAsync(url, progressCallback);
+            var content = await GetContentAsStringAsync(url, progressCallback, oAuthToken);
             return JsonConvert.DeserializeObject<T>(content, new JsonSerializerSettings() { DateTimeZoneHandling = DateTimeZoneHandling.Utc });
         }
 

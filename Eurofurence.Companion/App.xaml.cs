@@ -49,6 +49,8 @@ namespace Eurofurence.Companion
         {
             InitializeComponent();
             Suspending += OnSuspending;
+
+            NetworkInformation.NetworkStatusChanged += NetworkInformation_NetworkStatusChanged;
             
             HockeyClient.Current.Configure("790c6dfa20ff4523834501fcea150ec1");
 
@@ -58,6 +60,11 @@ namespace Eurofurence.Companion
 
             UnhandledException += App_UnhandledException;
 
+        }
+
+        private void NetworkInformation_NetworkStatusChanged(object sender)
+        {
+            
         }
 
         private async void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -173,7 +180,10 @@ namespace Eurofurence.Companion
                     var updateTask = KernelResolver.Current.Get<ContextManager>()
                         .Update(doSaveToStoreBeforeUpdate: false);
 
-                    await Task.Run(() => Task.WaitAll(new[] { updateTask }, TimeSpan.FromSeconds(10)));
+                    var queryPmTask = KernelResolver.Current.Get<PrivateMessageService>()
+                        .QueryPrivateMessagesAsync();
+
+                    await Task.Run(() => Task.WaitAll(new[] { updateTask, queryPmTask }, TimeSpan.FromSeconds(10)));
 
                     KernelResolver.Current.Get<IBackgroundUpdateService>().Start();
                 }
@@ -189,7 +199,6 @@ namespace Eurofurence.Companion
             Window.Current.Content = layoutPage;
 
             layoutPage.Reveal();
-
 
             await HockeyClient.Current.SendCrashesAsync();
         }

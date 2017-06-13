@@ -702,7 +702,7 @@
                                             <interactivity:Interaction.Behaviors>
                                                 <interactivity:BehaviorCollection>
                                                     <core:EventTriggerBehavior EventName="Tapped">
-                                                        <core:InvokeCommandAction Command="{Binding Source={StaticResource ViewModelLocator}, Path=NavigationViewModel.NavigateToLoginPage}" />
+                                                        <core:InvokeCommandAction Command="{Binding Source={StaticResource ViewModelLocator}, Path=NavigationViewModel.NavigateToUserCentralPage}" />
                                                     </core:EventTriggerBehavior>
                                                 </interactivity:BehaviorCollection>
                                             </interactivity:Interaction.Behaviors>
@@ -733,14 +733,14 @@
                                                         VerticalAlignment="Center">
                                                 <StackPanel
                                                     Visibility="{Binding Source={StaticResource ViewModelLocator}, Path=AuthenticationViewModel.IsAuthenticated, Converter={StaticResource FalseToVisibleConverter}}">
-                                                    <TextBlock Style="{StaticResource AppLayoutMenuItemTextBlockStyle}" Text="Login" />
+                                                    <TextBlock Style="{StaticResource AppLayoutMenuItemTextBlockStyle}" Text="My Account" />
                                                     <TextBlock Height="20" Style="{StaticResource AppLayoutMenuSubItemTextBlockStyle}">
-                                                    <Run Text="with your registration details"/>
+                                                    <Run Text="Login with your registration details"/>
                                                     </TextBlock>
                                                 </StackPanel>
                                                 <StackPanel
                                                     Visibility="{Binding Source={StaticResource ViewModelLocator}, Path=AuthenticationViewModel.IsAuthenticated, Converter={StaticResource TrueToVisibleConverter}}">
-                                                    <TextBlock Style="{StaticResource AppLayoutMenuItemTextBlockStyle}" Text="Logout" />
+                                                    <TextBlock Style="{StaticResource AppLayoutMenuItemTextBlockStyle}" Text="My Account" />
                                                     <TextBlock Height="20" Style="{StaticResource AppLayoutMenuSubItemTextBlockStyle}">
                                                     <Run Text="{Binding Source={StaticResource ViewModelLocator}, Path=AuthenticationViewModel.Username}" />
                                                     </TextBlock>

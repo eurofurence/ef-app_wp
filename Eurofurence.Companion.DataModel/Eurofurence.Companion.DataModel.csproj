@@ -98,6 +98,7 @@
     <Compile Include="Api\Map.cs" />
     <Compile Include="Api\MapEntry.cs" />
     <Compile Include="Api\NamedUrl.cs" />
+    <Compile Include="Api\PrivateMessage.cs" />
     <Compile Include="Api\RegSysAuthenticationRequest.cs" />
     <Compile Include="Api\Sync.cs" />
     <Compile Include="BindableBase.cs" />

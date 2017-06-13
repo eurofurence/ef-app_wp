@@ -26,7 +26,8 @@ namespace Eurofurence.Companion.ViewModel.Local
         public RelayCommand NavigateToAboutPage { get; set; }
         public RelayCommand NavigateToAnnouncementDetailPage { get; set; }
         public RelayCommand NavigateToImageViewerPage { get; set; }
-        public RelayCommand NavigateToLoginPage { get; set; }
+        public RelayCommand NavigateToUserCentralPage { get; set; }
+        public RelayCommand NavigateToPrivateMessageDetailPage { get; set; }
 
         public RelayCommand NavigateToMapDetailPage { get; set; }
 
@@ -53,7 +54,8 @@ namespace Eurofurence.Companion.ViewModel.Local
             NavigateToImageViewerPage = new RelayCommand(p => { _navigationMediator.NavigateAsync(typeof(Views.ImageViewerPage), p); });
             NavigateToMapDetailPage = new RelayCommand(p => { _navigationMediator.NavigateAsync(typeof(Views.MapDetailPage), p); });
 
-            NavigateToLoginPage = new RelayCommand(p => { _navigationMediator.NavigateAsync(typeof(Views.LoginPage)); });
+            NavigateToUserCentralPage = new RelayCommand(p => { _navigationMediator.NavigateAsync(typeof(Views.UserCentralPage)); });
+            NavigateToPrivateMessageDetailPage = new RelayCommand(p => { _navigationMediator.NavigateAsync(typeof(Views.PrivateMessageDetailView), p); });
         }
     }
 }

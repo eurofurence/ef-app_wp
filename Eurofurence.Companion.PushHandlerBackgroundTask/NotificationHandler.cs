@@ -23,6 +23,12 @@ namespace Eurofurence.Companion.PushHandlerBackgroundTask
 
         public void HandleRawNotification(string payload)
         {
+            if (payload.Equals("privatemessage_received", StringComparison.CurrentCultureIgnoreCase))
+            {
+                PrivateMessageReceived();
+                return;
+            }
+
             if (!payload.StartsWith("{")) return;
 
             try
@@ -69,7 +75,16 @@ namespace Eurofurence.Companion.PushHandlerBackgroundTask
             }
         }
 
+        private void PrivateMessageReceived()
+        {
+            var payload = CreateToast("You have received a personal message!", "Open the Eurofurence App to read it.", "");
+            var toast = new ScheduledToastNotification(payload, DateTime.UtcNow.AddSeconds(1))
+            {
+                Id = new Random().Next(0, 100000).ToString()
+            };
 
+            _toastNotificationManager.AddToSchedule(toast);
+        }
 
 
         private XmlDocument CreateToast(string title, string message, string launchUrl)

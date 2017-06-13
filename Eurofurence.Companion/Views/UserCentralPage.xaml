@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="Eurofurence.Companion.Views.LoginPage"
+    x:Class="Eurofurence.Companion.Views.UserCentralPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:behaviors="using:Eurofurence.Companion.ViewModel.Behaviors"
@@ -8,6 +8,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
       xmlns:local="using:Eurofurence.Companion.Views"
+      xmlns:controls="using:Eurofurence.Companion.Views.Controls"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       DataContext="{Binding Source={StaticResource ViewModelLocator},
                             Path=AuthenticationViewModel}"
@@ -62,75 +63,65 @@
                                 <Run Foreground="{StaticResource PhoneForegroundBrush}" 
                                      Text="{Binding TokenExpiration}" />
                             </TextBlock>
+
+                            <Button 
+                                Visibility="{Binding IsAuthenticated, Converter={StaticResource TrueToVisibleConverter}}"
+                                HorizontalAlignment="Right"
+                                Name="E_Button_Logout" Command="{Binding LogoutCommand}">Logout</Button>
+
                         </StackPanel>
 
                     </Grid>
 
 
-                    <Border BorderBrush="Red" 
-                            BorderThickness="3"
-                            Background="#60ff0000"
-                            Visibility="{Binding HasErrorMessage, Converter={StaticResource TrueToVisibleConverter}}"
-                            Padding="10">
-                        <TextBlock Text="{Binding ErrorMessage}" 
-                                   TextWrapping="WrapWholeWords"
-                                   Style="{StaticResource BodyTextBlockStyle}"
-                                   FontSize="{StaticResource TextStyleMediumFontSize}"
-                                   FontWeight="SemiBold" />
-                    </Border>
 
-                    <StackPanel Visibility="{Binding IsAuthenticated, Converter={StaticResource FalseToVisibleConverter}}">
-                        <StackPanel Visibility="{Binding IsBusy, Converter={StaticResource TrueToVisibleConverter}}">
-                            <TextBlock Style="{StaticResource BaseTextBlockStyle}"
-                                       FontSize="{StaticResource TextStyleMediumFontSize}">
-                                Authenticating...
-                            </TextBlock>
-                            <ProgressBar IsIndeterminate="True" Height="15" />
-                        </StackPanel>
-                        <StackPanel Visibility="{Binding IsBusy, Converter={StaticResource FalseToVisibleConverter}}">
-                            <TextBlock Style="{StaticResource ControlHeaderTextBlockStyle}">Nickname</TextBlock>
-                            <TextBox Name="E_TextBox_Nickname" 
-                                     InputScope="AlphanumericFullWidth" 
-                                     Text="{Binding RequestUsername, Mode=TwoWay}"
-                                     />
 
-                            <TextBlock Style="{StaticResource ControlHeaderTextBlockStyle}">Registration Number</TextBlock>
-                            <TextBox InputScope="Number" Text="{Binding RequestRegNo, Mode=TwoWay}" 
-                                     HorizontalAlignment="Left" MaxLength="4" Width="100"
-                                     />
 
-                            <TextBlock Style="{StaticResource ControlHeaderTextBlockStyle}">Password</TextBlock>
-                            <PasswordBox Password="{Binding RequestPassword, Mode=TwoWay}" 
-                                         />
 
-                            <TextBlock TextWrapping="WrapWholeWords"
-                                   FontSize="{StaticResource TextStyleSmallFontSize}"                                   
-                                       >
-                                Your login credentials for the app are the same as for the Eurofurence Registration System.
-                                <LineBreak /><LineBreak />Application telemetry is collected anonymously and will not be linked to your account at any time.
-                            </TextBlock>
-                            <Button Command="{Binding LoginCommand}" 
-                                    Name="E_Button_Login"
-                                    >Login</Button>
-
-                        </StackPanel>
-                    </StackPanel>
-                
                     <StackPanel Visibility="{Binding IsAuthenticated, Converter={StaticResource TrueToVisibleConverter}}">
 
 
-                        <TextBlock TextWrapping="WrapWholeWords"
+                        <Border Margin="{StaticResource AppGroupHeaderOuterMargin}" Style="{StaticResource AppGroupHeaderBorder}">
+                            <StackPanel Margin="{StaticResource AppGroupHeaderInnerMargin}">
+                                <TextBlock Style="{StaticResource AppGroupHeaderTextStyle}">
+                                    Personal Messages
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+
+                        <StackPanel DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=PrivateMessagesViewModel}">
+                        
+                            <controls:UserPrivateMessagesWidgetControl DataContext="{Binding}"
+                                                                       Margin="-20 0 -20 0"
+                                                                       />
+                            <TextBlock FontSize="{StaticResource TextStyleMediumFontSize}"
+                                       Visibility="{Binding HasMessages, Converter={StaticResource FalseToVisibleConverter}}"
+                                       TextWrapping="WrapWholeWords"
+                                       >
+                                You do not have any personal messages at this time.
+                                Personal messages will be sent to you by convention
+                                staff and departments only.</TextBlock>
+                        </StackPanel>
+
+
+
+
+                        <!--<TextBlock TextWrapping="WrapWholeWords"
                                    Margin="0 0 0 20"
                                    Style="{StaticResource BodyTextBlockStyle}"
                                    FontSize="{StaticResource TextStyleMediumFontSize}"
                                    >
                             You are currently logged on and can use all features in this app
                             that we can offer to attendees only.
-                        </TextBlock>
+                        </TextBlock>-->
 
-                        <Button Name="E_Button_Logout" Command="{Binding LogoutCommand}">Logout</Button>
                     </StackPanel>
-                
+
+                    <controls:UserLoginControl DataContext="{Binding}" 
+                        Visibility="{Binding IsAuthenticated, Converter={StaticResource FalseToVisibleConverter}}"
+                        />
+
+
                 </StackPanel>
             </Grid>
         </ScrollViewer>
