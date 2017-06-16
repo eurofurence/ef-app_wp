@@ -13,6 +13,7 @@ using Windows.Networking.PushNotifications;
 using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Notifications;
+using Eurofurence.Companion.Services.Abstractions;
 
 namespace Eurofurence.Companion.Services
 {
@@ -30,6 +31,7 @@ namespace Eurofurence.Companion.Services
         private readonly ContextManager _contextManager;
         private readonly CoreDispatcher _dispatcher;
         private readonly IAppVersionProvider _appVersionProvider;
+        private readonly INetworkConnectivityService _networkConnectivityService;
         private readonly NotificationHandler _notificationHandler;
         private readonly AuthenticationService _authenticationService;
         private readonly PrivateMessageService _privateMessageService;
@@ -46,7 +48,9 @@ namespace Eurofurence.Companion.Services
             CoreDispatcher dispatcher,
             AuthenticationService authenticationService,
             PrivateMessageService privateMessageService,
-            IAppVersionProvider appVersionProvider)
+            IAppVersionProvider appVersionProvider,
+            INetworkConnectivityService networkConnectivityService
+            )
         {
             _channelUri = LocalSettingsLoad(ApplicationData.Current.LocalSettings, ChannelUriKey, ChannelUriDefault);
             _apiClient = new EurofurenceWebApiClient(Consts.WEB_API_ENDPOINT_URL);
@@ -55,10 +59,20 @@ namespace Eurofurence.Companion.Services
             _dispatcher = dispatcher;
             _authenticationService = authenticationService;
             _appVersionProvider = appVersionProvider;
+            _networkConnectivityService = networkConnectivityService;
 
             _notificationHandler = new NotificationHandler(true);
 
-            _authenticationService.AuthenticationStateChanged += async (s, e) => { await UpdatePushNotificationChannelRegistrationAsync(); };
+            _networkConnectivityService.NetworkStatusChanged += async (s, e) =>
+            {
+                await TryUpdateChannelUri();
+            };
+
+            _authenticationService.AuthenticationStateChanged += async (s, e) =>
+            {
+                await TryUpdateChannelUri();
+            };
+
             _privateMessageService = privateMessageService;
         }
 
@@ -83,16 +97,25 @@ namespace Eurofurence.Companion.Services
             if (Debugger.IsAttached) topics.Add("Emulator");
 
             await _apiClient.PostAsync<object, object>("PushNotifications/WnsChannelRegistration", new
-            {
-                DeviceId = _applicationSettingsContext.UniqueRandomUserId,
-                ChannelUri = _channel.Uri,
-                Topics = topics,
-            }, 
-            _authenticationService.State.Token);
+                {
+                    DeviceId = _applicationSettingsContext.UniqueRandomUserId,
+                    ChannelUri = _channel.Uri,
+                    Topics = topics,
+                },
+                _authenticationService.State.Token);
         }
 
-        public async Task<string> UpdateChannelUri()
+        public async Task TryUpdateChannelUri()
         {
+            if (_networkConnectivityService.HasInternetAccess)
+            {
+                await UpdateChannelUri();
+            }
+        }
+
+        private async Task<string> UpdateChannelUri()
+        {
+
             var retries = 3;
             var difference = 1; // In seconds
 

@@ -112,6 +112,8 @@
     <Compile Include="Services\EventService.cs" />
     <Compile Include="Services\Abstractions\IAsyncImageLoaderService.cs" />
     <Compile Include="Services\Abstractions\IBackgroundUpdateService.cs" />
+    <Compile Include="Services\Abstractions\INetworkConnectivityService.cs" />
+    <Compile Include="Services\NetworkConnectivityService.cs" />
     <Compile Include="Services\PrivateMessageService.cs" />
     <Compile Include="Services\PushService.cs" />
     <Compile Include="Services\ToastNotificationService.cs" />
@@ -152,6 +154,7 @@
     <Compile Include="ViewModel\Abstractions\IPrivateMessagesViewModelContext.cs" />
     <Compile Include="ViewModel\Local\AuthenticationViewModel.cs" />
     <Compile Include="ViewModel\Local\Entity\PrivateMessageViewModel.cs" />
+    <Compile Include="ViewModel\Local\NetworkConnectivityViewModel.cs" />
     <Compile Include="ViewModel\PrivateMessagesViewModel.cs" />
     <Compile Include="ViewModel\PrivateMessagesViewModelContext.cs" />
     <Compile Include="ViewModel\MapsViewModelContext.cs" />

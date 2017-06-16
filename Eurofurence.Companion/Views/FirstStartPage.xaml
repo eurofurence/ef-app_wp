@@ -5,16 +5,22 @@
       xmlns:local="using:Eurofurence.Companion.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+      DataContext="{Binding Source={StaticResource ViewModelLocator},
+                            Path=NetworkConnectivityViewModel}"
       mc:Ignorable="d">
 
     <Grid x:Name="LayoutRoot" Background="Black">
-        <Viewbox Margin="-50">
-            <Path Data="{StaticResource EurofurenceWolfHead}" Fill="White" Opacity="0.1" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="250" />
+        </Grid.RowDefinitions>
+        <Viewbox Grid.RowSpan="2" Margin="-50">
+            <Path Data="{StaticResource EurofurenceWolfHead}"
+                  Fill="White"
+                  Opacity="0.1" />
         </Viewbox>
 
-        <StackPanel x:Name="ContentRoot"
-                    Margin="30"
-                    VerticalAlignment="Center">
+        <StackPanel Margin="20" VerticalAlignment="Center">
             <StackPanel>
 
                 <TextBlock Margin="0 0 0 40"
@@ -41,7 +47,18 @@
                     </Span>
 
                     <LineBreak />
-                    <LineBreak />
+
+                </TextBlock>
+
+
+            </StackPanel>
+
+        </StackPanel>
+        <StackPanel Grid.Row="1"
+                    Margin="0"
+                    VerticalAlignment="Center">
+            <StackPanel Margin="20" Visibility="{Binding HasInternetAccess, Converter={StaticResource TrueToVisibleConverter}}">
+                <TextBlock Style="{StaticResource BaseTextBlockStyle}" TextWrapping="Wrap">
 
                     <Span>Is it okay to download the data now?</Span>
                     <LineBreak />
@@ -61,9 +78,24 @@
                 <Button HorizontalAlignment="Stretch"
                         Click="ButtonCloseApplication_Click"
                         Content="No - Not right now." />
-
             </StackPanel>
 
+            <StackPanel Background="#60FF0000" Visibility="{Binding HasInternetAccess, Converter={StaticResource FalseToVisibleConverter}}">
+                <TextBlock Margin="20"
+                           Style="{StaticResource BaseTextBlockStyle}"
+                           TextWrapping="Wrap">
+                    <Span>
+                        Your phone currently indicates that it does not
+                        have any internet access. Please connect to a WiFi-Hotspot or enable
+                        data roaming to proceed.
+                    </Span>
+                    <LineBreak />
+                    <Span FontSize="{StaticResource TextStyleSmallFontSize}">
+                        (This page will automatically refresh.)
+                    </Span>
+                </TextBlock>
+
+            </StackPanel>
         </StackPanel>
 
 

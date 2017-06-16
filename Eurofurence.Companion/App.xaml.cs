@@ -126,7 +126,7 @@ namespace Eurofurence.Companion
             }
 
             await KernelResolver.Current.Get<AuthenticationService>().EnforceTokenExpirationAsync();
-            await pushService.UpdateChannelUri();
+            await pushService.TryUpdateChannelUri();
 
 
             _rootFrame = layoutPage.RootFrame;
@@ -288,7 +288,7 @@ namespace Eurofurence.Companion
 
 
         private bool HasInternetAccess => NetworkInformation
-            .GetInternetConnectionProfile()
+            .GetInternetConnectionProfile()?
             .GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess;
 
         public async Task<StartupMode> GetStartupModeAsync()

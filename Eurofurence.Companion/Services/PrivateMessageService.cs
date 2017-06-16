@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Eurofurence.Companion.Services.Abstractions;
 
 namespace Eurofurence.Companion.Services
 {
@@ -14,18 +15,23 @@ namespace Eurofurence.Companion.Services
     {
         private readonly EurofurenceWebApiClient _apiClient;
         private readonly AuthenticationService _authenticationService;
+        private readonly INetworkConnectivityService _networkConnectivityService;
         private List<PrivateMessage> _messages;
 
         public List<PrivateMessage> Messages => _messages;
         public event EventHandler Updated;
 
-        public PrivateMessageService(AuthenticationService authenticationService)
+        public PrivateMessageService(
+            AuthenticationService authenticationService, 
+            INetworkConnectivityService networkConnectivityService)
         {
             _authenticationService = authenticationService;
+            _networkConnectivityService = networkConnectivityService;
             _apiClient = new EurofurenceWebApiClient(Consts.WEB_API_ENDPOINT_URL);
             _messages = new List<PrivateMessage>();
 
             _authenticationService.AuthenticationStateChanged += (s, e) => { Task.Run(QueryPrivateMessagesAsync); };
+            _networkConnectivityService.NetworkStatusChanged += (s, e) => { Task.Run(QueryPrivateMessagesAsync); };
         }
 
         public async Task MarkPrivateMessageAsReadAsync(PrivateMessage message)
@@ -49,6 +55,11 @@ namespace Eurofurence.Companion.Services
 
         public async Task QueryPrivateMessagesAsync()
         {
+            if (!_networkConnectivityService.HasInternetAccess)
+            {
+                return;
+            }
+
             if (!_authenticationService.State.IsAuthenticated)
             {
                 _messages.Clear();
