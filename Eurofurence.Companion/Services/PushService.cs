@@ -63,6 +63,11 @@ namespace Eurofurence.Companion.Services
 
             _notificationHandler = new NotificationHandler(true);
 
+            _notificationHandler.PrivateMessageReceived += async (s, e) => 
+            {
+                await _privateMessageService.QueryPrivateMessagesAsync();
+            };
+
             _networkConnectivityService.NetworkStatusChanged += async (s, e) =>
             {
                 await TryUpdateChannelUri();
@@ -173,8 +178,7 @@ namespace Eurofurence.Companion.Services
                         await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => _contextManager.Update());
                     } else
                     {
-                        if (args.RawNotification.Content == "privatemessage_received")
-                            await _privateMessageService.QueryPrivateMessagesAsync();
+                        _notificationHandler.HandleRawNotification(args.RawNotification.Content);
                     }
                     break;
             }

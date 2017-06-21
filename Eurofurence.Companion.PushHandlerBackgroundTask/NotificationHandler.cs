@@ -15,6 +15,8 @@ namespace Eurofurence.Companion.PushHandlerBackgroundTask
         private readonly bool _isApplicationRunning;
         private readonly ToastNotifier _toastNotificationManager;
 
+        public event EventHandler<object> PrivateMessageReceived;
+
         public NotificationHandler(bool isApplicationRunning)
         {
             _isApplicationRunning = isApplicationRunning;
@@ -23,34 +25,26 @@ namespace Eurofurence.Companion.PushHandlerBackgroundTask
 
         public void HandleRawNotification(string payload)
         {
-            if (payload.Equals("privatemessage_received", StringComparison.CurrentCultureIgnoreCase))
-            {
-                PrivateMessageReceived();
-                return;
-            }
-
             if (!payload.StartsWith("{")) return;
 
             try
             {
 
-                var wrapper = new
+                var envelopeType = new
                 {
                     Event = "",
                     Content = new JObject()
                 };
 
-                var content = Newtonsoft.Json.JsonConvert.DeserializeAnonymousType(payload, wrapper);
+                var envelope = Newtonsoft.Json.JsonConvert.DeserializeAnonymousType(payload, envelopeType);
 
 
-                if (content?.Event.Equals("NewAnnouncement", StringComparison.OrdinalIgnoreCase) ?? false)
+                if (envelope?.Event.Equals("NewAnnouncement", StringComparison.OrdinalIgnoreCase) ?? false)
                 {
-                    var announcement = content.Content.ToObject<DataModel.Api.Announcement>();
+                    var announcement = envelope.Content.ToObject<DataModel.Api.Announcement>();
 
                     // Already expired or not ready yet - we won't toast that.
                     if (announcement.ValidUntilDateTimeUtc < DateTime.UtcNow || announcement.ValidFromDateTimeUtc > DateTime.UtcNow) return;
-
-
 
                     //var showOnDateTimeUtc = announcement.ValidFromDateTimeUtc < DateTime.UtcNow ? DateTime.UtcNow : announcement.ValidFromDateTimeUtc;
 
@@ -68,6 +62,18 @@ namespace Eurofurence.Companion.PushHandlerBackgroundTask
 
                     _toastNotificationManager.AddToSchedule(toast);
                 }
+
+                if (envelope?.Event.Equals("PrivateMessage_Received", StringComparison.OrdinalIgnoreCase) ?? false)
+                {
+                    ShowToast(
+                        envelope.Content["ToastTitle"].ToString(), 
+                        envelope.Content["ToastMessage"].ToString(),
+                        "");
+
+                    PrivateMessageReceived?.Invoke(this, null);
+                    
+                    return;
+                }
             }
             catch (Exception)
             {
@@ -75,9 +81,10 @@ namespace Eurofurence.Companion.PushHandlerBackgroundTask
             }
         }
 
-        private void PrivateMessageReceived()
+
+        private void ShowToast(string title, string message, string launchUrl)
         {
-            var payload = CreateToast("You have received a personal message!", "Open the Eurofurence app to read it.", "");
+            var payload = CreateToast(title, message, launchUrl);
             var toast = new ScheduledToastNotification(payload, DateTime.UtcNow.AddSeconds(1))
             {
                 Id = new Random().Next(0, 100000).ToString()
@@ -85,7 +92,6 @@ namespace Eurofurence.Companion.PushHandlerBackgroundTask
 
             _toastNotificationManager.AddToSchedule(toast);
         }
-
 
         private XmlDocument CreateToast(string title, string message, string launchUrl)
         {

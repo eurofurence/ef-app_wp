@@ -17,15 +17,19 @@
 
             <Color x:Key="EurofurenceThemeColor">#F29D42</Color>
             <!--<Color x:Key="EurofurenceThemeColor">#006357</Color>-->
-            
+
             <Color x:Key="EurofurenceThemeColorTransparent">#00006357</Color>
             <Color x:Key="EurofurenceThemeColorLight">#90d3c7</Color>
             <SolidColorBrush x:Key="EurofurenceThemeColorBrush" Color="{StaticResource EurofurenceThemeColor}" />
 
             <SolidColorBrush x:Key="AppPageBackgroundBrush" Color="{StaticResource EurofurenceThemeColor}" />
 
-            <SolidColorBrush x:Key="AppMidBrushAccent" Color="{StaticResource EurofurenceThemeColor}" Opacity="0.8"></SolidColorBrush>
-            <SolidColorBrush x:Key="AppLowBrushAccent" Color="{StaticResource EurofurenceThemeColor}" Opacity="0.5"></SolidColorBrush>
+            <SolidColorBrush x:Key="AppMidBrushAccent"
+                             Opacity="0.8"
+                             Color="{StaticResource EurofurenceThemeColor}" />
+            <SolidColorBrush x:Key="AppLowBrushAccent"
+                             Opacity="0.5"
+                             Color="{StaticResource EurofurenceThemeColor}" />
 
             <Style x:Key="AppLayoutBaseTextBlockStyle"
                    BasedOn="{StaticResource BaseTextBlockStyle}"
