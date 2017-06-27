@@ -84,6 +84,7 @@
             <FontFamily x:Key="EurofurenceAppIconsFontFamily">/Assets/Fonts/ef_app_icons.ttf#ef_app_icons</FontFamily>
             <FontFamily x:Key="FontelicoFontFamily">/Assets/Fonts/fontelico.ttf#fontelico</FontFamily>
             <FontFamily x:Key="SocialFontFamily">/Assets/Fonts/social.ttf#social</FontFamily>
+            <FontFamily x:Key="FontAwesomeFamily">/Assets/Fonts/fontawesome-webfont.ttf#FontAwesome</FontFamily>
 
             <dependencyResolution:ViewModelLocator x:Key="ViewModelLocator" />
             <dependencyResolution:ServiceLocator x:Key="ServiceLocator" />

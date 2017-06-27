@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace Eurofurence.Companion.DataModel.Api
 {
-    public class Info : EntityBase, ISortOrderKeyProvider
+    public class KnowledgeEntry : EntityBase, ISortOrderKeyProvider
     {
         public Guid KnowledgeGroupId { get; set; }
 
@@ -14,10 +14,11 @@ namespace Eurofurence.Companion.DataModel.Api
         public int Order { get; set; }
 
 
-        public List<Guid> ImageIds { get; set; }
-        public List<NamedUrl> Urls { get; set; }
+        public LinkFragment[] Links { get; set; }
 
-        public Info()
+        public Guid[] ImageIds { get; set; }
+
+        public KnowledgeEntry()
         {
             Images = new List<Image>();
         }
@@ -26,7 +27,7 @@ namespace Eurofurence.Companion.DataModel.Api
         public virtual List<Image> Images { get; set; }
 
         [JsonIgnore]
-        public virtual InfoGroup Group { get; set; }
+        public virtual KnowledgeGroup Group { get; set; }
 
         [JsonIgnore]
         public object SortOrderKey => Order;

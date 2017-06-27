@@ -151,7 +151,7 @@
     <Compile Include="ViewModel\Converter\StreamToImageConverter.cs" />
     <Compile Include="ViewModel\Converter\UriToStringConverter.cs" />
     <Compile Include="ViewModel\Converter\WikiTextToHtmlConverter.cs" />
-    <Compile Include="ViewModel\Abstractions\IInfoViewModelContext.cs" />
+    <Compile Include="ViewModel\Abstractions\IKnowledgeViewModelContext.cs" />
     <Compile Include="ViewModel\Abstractions\IPrivateMessagesViewModelContext.cs" />
     <Compile Include="ViewModel\Local\AuthenticationViewModel.cs" />
     <Compile Include="ViewModel\Local\Entity\PrivateMessageViewModel.cs" />
@@ -176,8 +176,8 @@
     <Compile Include="ViewModel\Local\Entity\DealerViewModel.cs" />
     <Compile Include="ViewModel\Local\Entity\EventEntryViewModel.cs" />
     <Compile Include="ViewModel\EventsViewModelContext.cs" />
-    <Compile Include="ViewModel\Local\Entity\InfoGroupViewModel.cs" />
-    <Compile Include="ViewModel\Local\Entity\InfoViewModel.cs" />
+    <Compile Include="ViewModel\Local\Entity\KnowledgeGroupViewModel.cs" />
+    <Compile Include="ViewModel\Local\Entity\KnowledgeEntryViewModel.cs" />
     <Compile Include="ViewModel\Local\EventsPageViewModel.cs" />
     <Compile Include="ViewModel\Local\UpcomingEventsViewModel.cs" />
     <Compile Include="ViewModel\Local\MenuItemViewModel.cs" />
@@ -316,6 +316,7 @@
     <Content Include="Assets\Eurofurence\Volatile\tile2.jpg" />
     <Content Include="Assets\Eurofurence\WolfHead.svg" />
     <None Include="app.config" />
+    <Content Include="Assets\Fonts\fontawesome-webfont.ttf" />
     <None Include="Assets\Fonts\fontelico-codes.css" />
     <Content Include="Assets\Fonts\social-codes.css" />
     <Content Include="Assets\Fonts\Volatile\info.txt" />

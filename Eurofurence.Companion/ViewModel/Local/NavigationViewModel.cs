@@ -13,8 +13,8 @@ namespace Eurofurence.Companion.ViewModel.Local
 
         public RelayCommand NavigateToMainPage { get; set; }
         public RelayCommand NavigateToDebugPage { get; set; }
-        public RelayCommand NavigateToInfoPage { get; set; }
-        public RelayCommand NavigateToInfoGroupDetailPage { get; set; }
+        public RelayCommand NavigateToKnowledgePage { get; set; }
+        public RelayCommand NavigateToKnowledgeDetailPage { get; set; }
         public RelayCommand NavigateToEventsPage { get; set; }
         public RelayCommand NavigateToEventsByDayPage { get; set; }
         public RelayCommand NavigateToEventsByTrackPage { get; set; }
@@ -37,8 +37,8 @@ namespace Eurofurence.Companion.ViewModel.Local
 
             NavigateToMainPage = new RelayCommand(_ => { _navigationMediator.NavigateAsync(typeof(Views.MainPage)); });
             NavigateToDebugPage = new RelayCommand(_ => { _navigationMediator.NavigateAsync(typeof(Views.DebugPage)); });
-            NavigateToInfoPage = new RelayCommand(_ => { _navigationMediator.NavigateAsync(typeof(Views.InfoPage)); });
-            NavigateToInfoGroupDetailPage = new RelayCommand(p => { _navigationMediator.NavigateAsync(typeof(Views.InfoGroupDetailPage), p); });
+            NavigateToKnowledgePage = new RelayCommand(_ => { _navigationMediator.NavigateAsync(typeof(Views.InfoPage)); });
+            NavigateToKnowledgeDetailPage = new RelayCommand(p => { _navigationMediator.NavigateAsync(typeof(Views.InfoGroupDetailPage), p); });
             NavigateToEventsPage = new RelayCommand(_ => { _navigationMediator.NavigateAsync(typeof(Views.EventsPage)); });
 
             NavigateToEventsByDayPage = new RelayCommand(p => { _navigationMediator.NavigateAsync(typeof(Views.EventsByDayPage), p); });

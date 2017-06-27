@@ -4,9 +4,9 @@ using Eurofurence.Companion.ViewModel.Local.Entity;
 
 namespace Eurofurence.Companion.ViewModel.Abstractions
 {
-    public interface IInfoViewModelContext
+    public interface IKnowledgeViewModelContext
     {
-        ObservableCollection<InfoGroupViewModel> Groups { get; }
+        ObservableCollection<KnowledgeGroupViewModel> Groups { get; }
 
         event EventHandler Invalidated;
     }

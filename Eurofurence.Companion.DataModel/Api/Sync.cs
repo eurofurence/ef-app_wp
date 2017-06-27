@@ -15,8 +15,8 @@ namespace Eurofurence.Companion.DataModel.Api
         public DeltaResponse<EventConferenceDay> EventConferenceDays { get; set; }
         public DeltaResponse<EventConferenceRoom> EventConferenceRooms { get; set; }
         public DeltaResponse<EventConferenceTrack> EventConferenceTracks { get; set; }
-        public DeltaResponse<InfoGroup> KnowledgeGroups { get; set; }
-        public DeltaResponse<Info> KnowledgeEntries { get; set; }
+        public DeltaResponse<KnowledgeGroup> KnowledgeGroups { get; set; }
+        public DeltaResponse<KnowledgeEntry> KnowledgeEntries { get; set; }
         public DeltaResponse<Image> Images { get; set; }
         public DeltaResponse<Dealer> Dealers { get; set; }
         public DeltaResponse<Announcement> Announcements { get; set; }

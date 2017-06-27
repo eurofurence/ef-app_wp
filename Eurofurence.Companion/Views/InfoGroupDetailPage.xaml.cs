@@ -15,7 +15,7 @@ namespace Eurofurence.Companion.Views
 {
     public sealed partial class InfoGroupDetailPage : Page, IPageProperties
     {
-        private InfoGroupViewModel typedViewModel => DataContext as InfoGroupViewModel;
+        private KnowledgeEntryViewModel typedViewModel => DataContext as KnowledgeEntryViewModel;
 
         public InfoGroupDetailPage()
         {
@@ -26,7 +26,7 @@ namespace Eurofurence.Companion.Views
             NavigationHelper.SaveState += NavigationHelper_SaveState;
         }
 
-        public string Title => typedViewModel?.Entity.Name ?? "";
+        public string Title => typedViewModel?.Entity.Title ?? "";
         public string Icon => "" + (char)0xEC42;
 
 
@@ -34,9 +34,9 @@ namespace Eurofurence.Companion.Views
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            if (e.NavigationParameter is InfoGroupViewModel)
+            if (e.NavigationParameter is KnowledgeEntryViewModel)
             {
-                var t = e.NavigationParameter as InfoGroupViewModel;
+                var t = e.NavigationParameter as KnowledgeEntryViewModel;
                 DataContext = t;
             }
         }
@@ -64,12 +64,12 @@ namespace Eurofurence.Companion.Views
         {
             await Task.Delay(1);
 
-            var cont = icDetail.ContainerFromItem(e.ClickedItem);
+            //var cont = icDetail.ContainerFromItem(e.ClickedItem);
 
-            var transform = (cont as FrameworkElement).TransformToVisual(svMain);
-            var positionInScrollViewer = transform.TransformPoint(new Point(0, 0));
+            //var transform = (cont as FrameworkElement).TransformToVisual(svMain);
+            //var positionInScrollViewer = transform.TransformPoint(new Point(0, 0));
 
-            svMain.ChangeView(null, positionInScrollViewer.Y, null, false);
+            //svMain.ChangeView(null, positionInScrollViewer.Y, null, false);
 
         }
 
@@ -83,6 +83,16 @@ namespace Eurofurence.Companion.Views
         {
             var uri = new Uri(((NamedUrl)((FrameworkElement)e.OriginalSource).DataContext).Target);
             await Launcher.LaunchUriAsync(uri);
+        }
+
+        private void NextTapped(object sender, TappedRoutedEventArgs e)
+        {
+            DataContext = typedViewModel.NextEntry;
+        }
+
+        private void PreviousTapped(object sender, TappedRoutedEventArgs e)
+        {
+            DataContext = typedViewModel.PreviousEntry;
         }
     }
 }

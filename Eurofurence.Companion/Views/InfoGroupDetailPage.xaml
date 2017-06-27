@@ -6,105 +6,139 @@
       xmlns:local="using:Eurofurence.Companion.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       d:DataContext="{Binding Source={StaticResource ViewModelLocator},
-                              Path=ConventionInfoViewModel.Groups[0]}"
+                              Path=ConventionInfoViewModel.Groups[3].Entries[0]}"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
       mc:Ignorable="d">
 
     <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        <ScrollViewer x:Name="svMain">
-            <StackPanel Margin="19,9.5,19,0">
-                <TextBlock Foreground="{ThemeResource EurofurenceThemeColorBrush}"
-                           Style="{StaticResource GroupHeaderTextBlockStyle}"
-                           Text="Table of Contents" />
 
-                <ListView Name="lvToc"
-                          Margin="0 0 0 30"
-                          IsItemClickEnabled="True"
-                          ItemClick="lvToc_ItemClick"
-                          ItemsSource="{Binding Entries}">
+        <StackPanel Grid.Row="0" Margin="0 10 0 0">
+            <TextBlock Margin="20 0 20 0" FontSize="{StaticResource TextStyleMediumFontSize}"
+                           Foreground="{StaticResource PhoneLowBrush}"
+                           Style="{StaticResource BaseTextBlockStyle}">
+                    <Run Text="{Binding Parent.FontAwesomeCharacter}"
+                         FontFamily="{StaticResource FontAwesomeFamily}" />
+                    <Run Text=" " />
+                    <Run Text="{Binding Parent.Entity.Name}" />
+            </TextBlock>
+            <Grid Margin="0 5 0 0" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <ListView Visibility="{Binding HasPreviousEntry, Converter={StaticResource TrueToVisibleConverter}}">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
-                            <Setter Property="Height" Value="35" />
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                         </Style>
                     </ListView.ItemContainerStyle>
-
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <TextBlock Grid.Column="1"
-                                           Margin="0"
-                                           Foreground="White"
-                                           Style="{StaticResource GroupHeaderTextBlockStyle}"
-                                           Text="{Binding Entity.Title}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
+                    <ListViewItem Tapped="PreviousTapped">
+                        <Grid Height="50" Background="#30000000">
+                            <TextBlock 
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="{StaticResource PhoneLowBrush}"
+                                                   FontFamily="{StaticResource IconFontFamily}"
+                                                   FontSize="15"
+                                                   Margin="5"
+                                                   Text="&#xE096;" />
+                            <TextBlock Style="{StaticResource BaseTextBlockStyle}" 
+                                       VerticalAlignment="Center"
+                                       FontSize="{StaticResource TextStyleMediumFontSize}"
+                                       Margin="25 0 5 0"
+                                       Text="{Binding PreviousEntry.Entity.Title}"
+                                   />
+                        </Grid>
+                    </ListViewItem>
                 </ListView>
 
+                <ListView 
+                    Visibility="{Binding HasNextEntry, Converter={StaticResource TrueToVisibleConverter}}"
+                    Grid.Column="1">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListViewItem Tapped="NextTapped">
 
-                <ItemsControl Name="icDetail" ItemsSource="{Binding Entries}">
+                        <Grid Height="50" Background="#30000000">
+                            <TextBlock 
+                                                   HorizontalAlignment="Right"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="{StaticResource PhoneLowBrush}"
+                                                   FontFamily="{StaticResource IconFontFamily}"
+                                                   FontSize="15"
+                                                   Margin="5"
+                                                   Text="&#xE097;" />
+                            <TextBlock Style="{StaticResource BaseTextBlockStyle}" 
+                                       VerticalAlignment="Center"
+                                       FontSize="{StaticResource TextStyleMediumFontSize}"
+                                       Margin="5 0 25 0"
+                                       Text="{Binding NextEntry.Entity.Title}"
+                                   />
+                        </Grid>
+                    </ListViewItem>
+                </ListView>
+
+            </Grid>
+        </StackPanel>
+
+
+        <ScrollViewer x:Name="svMain" Grid.Row="1">
+            <StackPanel Margin="19,9.5,19,0">
+
+
+                <TextBlock Style="{StaticResource SubheaderTextBlockStyle}"
+                           Text="{Binding Entity.Title}" />
+
+
+                <ItemsControl ItemsSource="{Binding Entity.Images}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Margin="0 0 0 20">
-                                <Grid>
-                                    <TextBlock Foreground="{ThemeResource EurofurenceThemeColorBrush}"
-                                               Style="{StaticResource GroupHeaderTextBlockStyle}"
-                                               Text="{Binding Entity.Title}" />
-                                    <TextBlock Margin="0 0 0 0"
-                                               HorizontalAlignment="Right"
-                                               FontFamily="{StaticResource IconFontFamily}"
-                                               FontSize="{StaticResource TextStyleExtraLargeFontSize}"
-                                               Tapped="TextBlock_Tapped"
-                                               Text="&#xE898;" />
-
-                                </Grid>
-
-                                <Grid>
-                                    <StackPanel>
-                                        <ItemsControl ItemsSource="{Binding Entity.Images}">
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
-                                                    <Image MaxHeight="250"
+                            <Image MaxHeight="250"
                                                            behaviors:AsyncImageLoaderProperties.ImageId="{Binding Id}"
                                                            Stretch="Uniform" />
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
-                                        </ItemsControl>
-
-
-
-                                        <RichTextBlock Margin="15"
-                                                       behaviors:RichTextBlockProperties.Html="{Binding Entity.Text,
-                                                                                                        Converter={StaticResource WikiTextToHtmlConverter}}"
-                                                       FontSize="{StaticResource TextStyleMediumFontSize}"
-                                                       TextWrapping="WrapWholeWords" />
-
-                                        <ItemsControl Margin="15 0 15 0" ItemsSource="{Binding Entity.Urls}">
-                                            <ItemsControl.ItemContainerStyle>
-                                                <Style TargetType="ContentPresenter">
-                                                    <Setter Property="HorizontalAlignment" Value="Stretch" />
-                                                </Style>
-                                            </ItemsControl.ItemContainerStyle>
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
-                                                    <Button HorizontalAlignment="Stretch" Click="OnWebsiteUriClick">
-                                                        <Viewbox StretchDirection="DownOnly">
-                                                            <TextBlock Text="{Binding Text}" />
-                                                        </Viewbox>
-                                                    </Button>
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
-                                        </ItemsControl>
-                                    </StackPanel>
-
-                                </Grid>
-                            </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
+
+
+                <Grid>
+                    <RichTextBlock Margin="15"
+                                                       behaviors:RichTextBlockProperties.Html="{Binding Entity.Text,
+                                                                                                        Converter={StaticResource WikiTextToHtmlConverter}}"
+                                                       FontSize="{StaticResource TextStyleMediumFontSize}"
+                                                       TextWrapping="WrapWholeWords" />
+                </Grid>
+
+                <ItemsControl Margin="15 0 15 0" ItemsSource="{Binding Entity.Urls}">
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="ContentPresenter">
+                            <Setter Property="HorizontalAlignment" Value="Stretch" />
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button HorizontalAlignment="Stretch" Click="OnWebsiteUriClick">
+                                <Viewbox StretchDirection="DownOnly">
+                                    <TextBlock Text="{Binding Text}" />
+                                </Viewbox>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </StackPanel>
+
         </ScrollViewer>
+
+
     </Grid>
 </Page>

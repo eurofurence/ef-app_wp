@@ -31,8 +31,8 @@ namespace Eurofurence.Companion.DataStore
             EventConferenceDays = new ObservableCollection<EventConferenceDay>();
             EventConferenceRooms = new ObservableCollection<EventConferenceRoom>();
             EventConferenceTracks = new ObservableCollection<EventConferenceTrack>();
-            Infos = new ObservableCollection<Info>();
-            InfoGroups = new ObservableCollection<InfoGroup>();
+            KnowledgeEntries = new ObservableCollection<KnowledgeEntry>();
+            KnowledgeGroups = new ObservableCollection<KnowledgeGroup>();
             Images = new ObservableCollection<Image>();
             Dealers = new ObservableCollection<Dealer>();
             Maps = new ObservableCollection<Map>();
@@ -48,8 +48,8 @@ namespace Eurofurence.Companion.DataStore
         public ObservableCollection<EventConferenceDay> EventConferenceDays { get; }
         public ObservableCollection<EventConferenceRoom> EventConferenceRooms { get; }
         public ObservableCollection<EventConferenceTrack> EventConferenceTracks { get; }
-        public ObservableCollection<Info> Infos { get; }
-        public ObservableCollection<InfoGroup> InfoGroups { get; }
+        public ObservableCollection<KnowledgeEntry> KnowledgeEntries { get; }
+        public ObservableCollection<KnowledgeGroup> KnowledgeGroups { get; }
         public ObservableCollection<Image> Images { get; }
         public ObservableCollection<Dealer> Dealers { get; }
         public ObservableCollection<Map> Maps { get; }
@@ -65,8 +65,8 @@ namespace Eurofurence.Companion.DataStore
             await LoadEntityFromStoreAsync(EventConferenceDays, nameof(EventConferenceDays));
             await LoadEntityFromStoreAsync(EventConferenceRooms, nameof(EventConferenceRooms));
             await LoadEntityFromStoreAsync(EventConferenceTracks, nameof(EventConferenceTracks));
-            await LoadEntityFromStoreAsync(Infos, nameof(Infos));
-            await LoadEntityFromStoreAsync(InfoGroups, nameof(InfoGroups));
+            await LoadEntityFromStoreAsync(KnowledgeEntries, nameof(KnowledgeEntries));
+            await LoadEntityFromStoreAsync(KnowledgeGroups, nameof(KnowledgeGroups));
             await LoadEntityFromStoreAsync(Images, nameof(Images));
             await LoadEntityFromStoreAsync(Dealers, nameof(Dealers));
             await LoadEntityFromStoreAsync(Maps, nameof(Maps));

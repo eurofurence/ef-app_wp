@@ -9,15 +9,15 @@ namespace Eurofurence.Companion.ViewModel.Local
     [IocBeacon]
     public class ConventionInfoViewModel : BindableBase
     {
-        private IInfoViewModelContext _infoViewModelContext;
+        private IKnowledgeViewModelContext _knowledgeViewModelContext;
 
-        public ObservableCollection<InfoGroupViewModel> Groups => _infoViewModelContext.Groups;
+        public ObservableCollection<KnowledgeGroupViewModel> Groups => _knowledgeViewModelContext.Groups;
 
 
-        public ConventionInfoViewModel(IInfoViewModelContext infoViewModelContext)
+        public ConventionInfoViewModel(IKnowledgeViewModelContext knowledgeViewModelContext)
         {
-            _infoViewModelContext = infoViewModelContext;
-            _infoViewModelContext.Invalidated += (s, e) => { OnPropertyChanged(nameof(Groups)); };
+            _knowledgeViewModelContext = knowledgeViewModelContext;
+            _knowledgeViewModelContext.Invalidated += (s, e) => { OnPropertyChanged(nameof(Groups)); };
         }
     }
 }

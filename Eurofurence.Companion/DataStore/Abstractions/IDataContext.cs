@@ -30,8 +30,8 @@ namespace Eurofurence.Companion.DataStore.Abstractions
         ObservableCollection<EventConferenceDay> EventConferenceDays { get; }
         ObservableCollection<EventConferenceRoom> EventConferenceRooms { get; }
         ObservableCollection<EventConferenceTrack> EventConferenceTracks { get; }
-        ObservableCollection<Info> Infos { get; }
-        ObservableCollection<InfoGroup> InfoGroups { get; }
+        ObservableCollection<KnowledgeEntry> KnowledgeEntries { get; }
+        ObservableCollection<KnowledgeGroup> KnowledgeGroups { get; }
         ObservableCollection<Image> Images { get; }
         ObservableCollection<Dealer> Dealers { get; }
         ObservableCollection<Map> Maps { get; }

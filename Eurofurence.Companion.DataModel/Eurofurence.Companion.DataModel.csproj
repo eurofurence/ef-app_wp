@@ -92,8 +92,8 @@
     <Compile Include="Api\EventConferenceTrack.cs" />
     <Compile Include="Api\EventEntry.cs" />
     <Compile Include="Api\Image.cs" />
-    <Compile Include="Api\Info.cs" />
-    <Compile Include="Api\InfoGroup.cs" />
+    <Compile Include="Api\KnowledgeEntry.cs" />
+    <Compile Include="Api\KnowledgeGroup.cs" />
     <Compile Include="Api\LinkFragment.cs" />
     <Compile Include="Api\Map.cs" />
     <Compile Include="Api\MapEntry.cs" />

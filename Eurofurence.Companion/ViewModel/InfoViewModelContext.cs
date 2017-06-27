@@ -9,19 +9,19 @@ using System.Linq;
 
 namespace Eurofurence.Companion.ViewModel
 {
-    [IocBeacon(TargetType = typeof(IInfoViewModelContext), Scope = IocBeacon.ScopeEnum.Singleton)]
-    public class InfoViewModelContext : BindableBase, IInfoViewModelContext
+    [IocBeacon(TargetType = typeof(IKnowledgeViewModelContext), Scope = IocBeacon.ScopeEnum.Singleton)]
+    public class KnowledgeViewModelContext : BindableBase, IKnowledgeViewModelContext
     {
         private IDataContext _dataContext;
 
-        public ObservableCollection<InfoGroupViewModel> Groups { get; }
+        public ObservableCollection<KnowledgeGroupViewModel> Groups { get; }
 
-        public InfoViewModelContext(IDataContext dataContext)
+        public KnowledgeViewModelContext(IDataContext dataContext)
         {
             _dataContext = dataContext;
             _dataContext.Refreshed += (s, e) => { if (e.HasFlag(DataContextDataAreaEnum.Knowledge)) MapToViewModels(); };
 
-            Groups = new ObservableCollection<InfoGroupViewModel>();
+            Groups = new ObservableCollection<KnowledgeGroupViewModel>();
 
             MapToViewModels();
         }
@@ -32,13 +32,15 @@ namespace Eurofurence.Companion.ViewModel
         {
             Groups.Clear();
             
-            var groups = _dataContext.InfoGroups.Select(entity => new InfoGroupViewModel(entity)).ToList();
+            var groups = _dataContext.KnowledgeGroups.Select(entity => new KnowledgeGroupViewModel(entity)).ToList();
             foreach (var group in groups)
             {
                 foreach (var entry in group.Entity.Entries)
                 {
-                    group.Entries.Add(new InfoViewModel(entry));
+                    group.Entries.Add(new KnowledgeEntryViewModel(entry));
                 }
+
+                group.Resolve();
             }
             
 

@@ -29,10 +29,10 @@ namespace Eurofurence.Companion.DataStore
                 e.AttributesProxy = new ExtensionProxy<DataModel.Api.EventEntry, DataModel.Local.EventEntryAttributes>(dataContext.EventEntryAttributes, e);
             }
 
-            foreach (var e in dataContext.InfoGroups) e.Entries.Clear();
-            foreach (var e in dataContext.Infos)
+            foreach (var e in dataContext.KnowledgeGroups) e.Entries.Clear();
+            foreach (var e in dataContext.KnowledgeEntries)
             {
-                e.Group = dataContext.InfoGroups.SingleOrDefault(a => a.Id == e.KnowledgeGroupId);
+                e.Group = dataContext.KnowledgeGroups.SingleOrDefault(a => a.Id == e.KnowledgeGroupId);
 
                 e.Group?.Entries.Add(e);
             }
@@ -44,7 +44,7 @@ namespace Eurofurence.Companion.DataStore
                 e.ArtPreviewImage = dataContext.Images.SingleOrDefault(a => a.Id == e.ArtPreviewImageId);
             }
 
-            foreach (var e in dataContext.Infos)
+            foreach (var e in dataContext.KnowledgeEntries)
             {
                 e.Images.Clear();
                 if (e.ImageIds != null)

@@ -1,5 +1,10 @@
 ﻿using Eurofurence.Companion.Common;
+using Eurofurence.Companion.Controls;
+using System;
+using Windows.Foundation;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
@@ -90,5 +95,36 @@ namespace Eurofurence.Companion.Views
         }
 
         #endregion
+
+        private void ItemTapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            var fe = (sender as FrameworkElement);
+
+            foreach(var sibling in (fe.Parent as Panel).Children)
+            {
+                if (sibling is ExpandPanel)
+                {
+                    var ep = (sibling as ExpandPanel);
+                    ep.IsExpanded = !ep.IsExpanded;
+
+                    SizeChangedEventHandler adapt = null;
+                    adapt = new SizeChangedEventHandler((a, b) =>
+                    {
+                        var tvv = ep.TransformToVisual(ScrollViewer).TransformPoint(new Point(0, 0));
+
+                        var height = ScrollViewer.ActualHeight;
+
+                        var minScrollOffset = (tvv.Y + ScrollViewer.VerticalOffset) + ep.ActualHeight - height;
+
+                        if (ScrollViewer.VerticalOffset < minScrollOffset)
+                            ScrollViewer.ChangeView(null, minScrollOffset, null, false);
+
+                        ep.SizeChanged -= adapt;
+                    });
+
+                    ep.SizeChanged += adapt;
+                }
+            }
+        }
     }
 }

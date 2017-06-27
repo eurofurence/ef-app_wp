@@ -5,11 +5,11 @@ using Newtonsoft.Json;
 
 namespace Eurofurence.Companion.DataModel.Api
 {
-    public class InfoGroup : EntityBase, ISortOrderKeyProvider
+    public class KnowledgeGroup : EntityBase, ISortOrderKeyProvider
     {
-        public InfoGroup()
+        public KnowledgeGroup()
         {
-            Entries = new Collection<Info>();
+            Entries = new Collection<KnowledgeEntry>();
         }
 
         public string Name { get; set; }
@@ -18,8 +18,10 @@ namespace Eurofurence.Companion.DataModel.Api
 
         public bool ShowInHamburgerMenu { get; set; }
 
+        public string FontAwesomeIconCharacterUnicodeAddress { get; set; }
+
         [JsonIgnore]
-        public ICollection<Info> Entries { get; set; }
+        public ICollection<KnowledgeEntry> Entries { get; set; }
 
         [JsonIgnore]
         public object SortOrderKey => Order;
