@@ -8,11 +8,10 @@ namespace Eurofurence.Companion.DataModel.Api
     {
         public Guid ImageId { get; set; }
         public string Description { get; set; }
-        public int IsBrowseable { get; set; }
+        public bool IsBrowseable { get; set; }
         [JsonIgnore]
         public Image Image { get; set; }
-        
-        [JsonIgnore]
+
         public List<MapEntry>  Entries { get; set; }
 
         public Map()

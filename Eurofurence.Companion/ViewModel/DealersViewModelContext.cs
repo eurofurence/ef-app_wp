@@ -38,8 +38,8 @@ namespace Eurofurence.Companion.ViewModel
 
             foreach(var viewModel in viewModels.OrderBy(viewModel => viewModel.DisplayName))
             {
-                var mapEntry = _dataContext.MapEntries.SingleOrDefault(
-                    a => a.MarkerType == "Dealer" && a.TargetId == viewModel.Entity.Id);
+                var mapEntry = _dataContext.Maps.SelectMany(a => a.Entries).SingleOrDefault(
+                    a => a.Link?.FragmentType == DataModel.Api.LinkFragment.FragmentTypeEnum.DealerDetail && a.Link.Target == viewModel.Entity.Id.ToString());
 
                 if (mapEntry != null)
                 {
