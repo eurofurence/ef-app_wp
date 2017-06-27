@@ -10,6 +10,7 @@ namespace Eurofurence.Companion.ViewModel.Local.Entity
         public KnowledgeEntryViewModel NextEntry { get; set; }
         public bool HasPreviousEntry => PreviousEntry != null;
         public bool HasNextEntry => NextEntry != null;
+        public bool HasPreviousOrNextEntry => HasPreviousEntry || HasNextEntry;
 
 
         public KnowledgeEntry Entity { get; }

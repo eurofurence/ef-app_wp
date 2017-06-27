@@ -9,80 +9,97 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:media="using:Microsoft.Xaml.Interactions.Media"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-      DataContext="{Binding Source={StaticResource ViewModelLocator},
-                            Path=ConventionInfoViewModel}"
+      DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=ConventionInfoViewModel}"
       mc:Ignorable="d">
 
     <Grid x:Name="LayoutRoot">
         <ScrollViewer x:Name="ScrollViewer">
-            <ItemsControl ItemsSource="{Binding Groups}">
+            <ItemsControl Margin="20"
+                          ItemsSource="{Binding Groups}">
                 <ItemsControl.ItemContainerStyle>
                     <Style TargetType="ContentPresenter">
-                        <Setter Property="HorizontalAlignment" Value="Stretch" />
+                        <Setter Property="HorizontalAlignment"
+                                Value="Stretch" />
                     </Style>
                 </ItemsControl.ItemContainerStyle>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid>
                             <controls:ExpandPanel VerticalAlignment="Top"
-                                                  IsExpanded="False"
-                                                  >
+                                                  IsExpanded="False">
                                 <controls:ExpandPanel.HeaderContent>
-                                    <Border Height="70"
-                                            IsHitTestVisible="False"
-                                            HorizontalAlignment="Stretch"
-                                            VerticalAlignment="Top">
-                                        <TextBlock Margin="20"
+                                    <Grid Height="60"
+                                          HorizontalAlignment="Stretch"
+                                          VerticalAlignment="Top"
+                                          IsHitTestVisible="False">
+                                        <Border Width="50"
+                                                Height="50"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Top">
+                                            <TextBlock HorizontalAlignment="Stretch"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{StaticResource FontAwesomeFamily}"
+                                                       FontSize="30"
+                                                       Foreground="{ThemeResource PhoneLowBrush}"
+                                                       Text="{Binding FontAwesomeCharacter}"
+                                                       TextAlignment="Center" />
+                                        </Border>
+
+                                        <TextBlock Margin="0"
                                                    HorizontalAlignment="Right"
                                                    VerticalAlignment="Center"
-                                                   Foreground="{StaticResource PhoneLowBrush}"
                                                    FontFamily="{StaticResource IconFontFamily}"
-                                                   FontSize="{StaticResource TextStyleExtraLargeFontSize}"
+                                                   FontSize="{StaticResource TextStyleMediumFontSize}"
+                                                   Foreground="{StaticResource PhoneLowBrush}"
                                                    Text="&#xE099;" />
-                                    </Border>
+                                    </Grid>
                                 </controls:ExpandPanel.HeaderContent>
                                 <controls:ExpandPanel.SelectedHeaderContent>
-                                    <Grid Height="70"
-                                          IsHitTestVisible="False"
-                                            HorizontalAlignment="Stretch"
-                                            VerticalAlignment="Top">
+                                    <Grid Height="60"
+                                          HorizontalAlignment="Stretch"
+                                          VerticalAlignment="Top"
+                                          IsHitTestVisible="False">
+                                        <Border Width="50"
+                                                Height="50"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Top">
+                                            <Border.Background>
+                                                <SolidColorBrush Opacity="0.5"
+                                                                 Color="{StaticResource EurofurenceThemeColor}" />
+                                            </Border.Background>
+                                            <TextBlock HorizontalAlignment="Stretch"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{StaticResource FontAwesomeFamily}"
+                                                       FontSize="30"
+                                                       Foreground="{ThemeResource PhoneForegroundBrush}"
+                                                       Text="{Binding FontAwesomeCharacter}"
+                                                       TextAlignment="Center" />
+                                        </Border>
 
-                                        <Rectangle
-                                            VerticalAlignment="Center"
-                                            HorizontalAlignment="Left"
-                                            Height="50"
-                                            Width="50"
-                                            Fill="{StaticResource EurofurenceThemeColorBrush}"
-                                            Opacity="0.5"
-                                            Margin="5 0 0 0"
-                                            />
-
-
-                                        <TextBlock Margin="20"
+                                        <TextBlock Margin="0"
                                                    HorizontalAlignment="Right"
                                                    VerticalAlignment="Center"
-                                                   Foreground="{StaticResource PhoneLowBrush}"
                                                    FontFamily="{StaticResource IconFontFamily}"
-                                                   FontSize="{StaticResource TextStyleExtraLargeFontSize}"
+                                                   FontSize="{StaticResource TextStyleMediumFontSize}"
+                                                   Foreground="{StaticResource PhoneLowBrush}"
                                                    Text="&#xE098;" />
                                     </Grid>
                                 </controls:ExpandPanel.SelectedHeaderContent>
                                 <controls:ExpandPanel.Content>
                                     <Grid>
 
-                                        <Rectangle
-                                            VerticalAlignment="Stretch"
-                                            HorizontalAlignment="Left"
-                                            Width="5"
-                                            Fill="{StaticResource EurofurenceThemeColorBrush}"
-                                            Opacity="0.5"
-                                            Margin="50 -10 0 10"
-                                            />
-
-                                        <ListView Margin="65 0 20 0" ItemsSource="{Binding Entries}">
+                                        <Rectangle Width="5"
+                                                   Margin="45,-10,0,10"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Stretch"
+                                                   Fill="{StaticResource EurofurenceThemeColorBrush}"
+                                                   Opacity="0.5" />
+                                        <ListView Margin="65,0,20,0"
+                                                  ItemsSource="{Binding Entries}">
                                             <ListView.ItemContainerStyle>
                                                 <Style TargetType="ListViewItem">
-                                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                                    <Setter Property="HorizontalContentAlignment"
+                                                            Value="Stretch" />
                                                 </Style>
                                             </ListView.ItemContainerStyle>
                                             <ListView.ItemTemplate>
@@ -91,7 +108,8 @@
                                                         <interactivity:Interaction.Behaviors>
                                                             <interactivity:BehaviorCollection>
                                                                 <core:EventTriggerBehavior EventName="Tapped">
-                                                                    <core:InvokeCommandAction Command="{Binding Source={StaticResource ViewModelLocator}, Path=NavigationViewModel.NavigateToKnowledgeDetailPage}" CommandParameter="{Binding}" />
+                                                                    <core:InvokeCommandAction Command="{Binding Source={StaticResource ViewModelLocator}, Path=NavigationViewModel.NavigateToKnowledgeDetailPage}"
+                                                                                              CommandParameter="{Binding}" />
                                                                 </core:EventTriggerBehavior>
                                                             </interactivity:BehaviorCollection>
                                                         </interactivity:Interaction.Behaviors>
@@ -106,34 +124,23 @@
                                 </controls:ExpandPanel.Content>
                             </controls:ExpandPanel>
 
-                            <Border Height="70"
+                            <Border Height="60"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Top"
-                                    Tapped="ItemTapped"
-                                    >
+                                    Tapped="ItemTapped">
                                 <Grid>
-                                    <TextBlock
-                                        FontFamily="{StaticResource FontAwesomeFamily}"
-                                        Text="{Binding FontAwesomeCharacter}"
-                                        FontSize="30"
-                                        Foreground="{ThemeResource PhoneMidBrush}"
-                                        Width="60"
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Left"
-                                        TextAlignment="Center"
-                                        ></TextBlock>
-                                <StackPanel Margin="65 10 20 5">
-
-                                    <TextBlock Style="{StaticResource BaseTextBlockStyle}"
-                                               FontSize="{StaticResource TextStyleExtraLargeFontSize}"
-                                               Text="{Binding Entity.Name}" />
-                                    <TextBlock 
-                                        Style="{StaticResource BaseTextBlockStyle}"
-                                               FontSize="{StaticResource TextStyleSmallFontSize}"
-                                        Foreground="{ThemeResource PhoneMidBrush}" Text="{Binding Entity.Description}" />
-                                </StackPanel>
+                                    <StackPanel Margin="65,0,20,5">
+                                        <TextBlock FontSize="{StaticResource TextStyleExtraLargeFontSize}"
+                                                   Style="{StaticResource BaseTextBlockStyle}"
+                                                   Text="{Binding Entity.Name}" />
+                                        <TextBlock FontSize="{StaticResource TextStyleSmallFontSize}"
+                                                   Foreground="{ThemeResource PhoneMidBrush}"
+                                                   Style="{StaticResource BaseTextBlockStyle}"
+                                                   Text="{Binding Entity.Description}" />
+                                    </StackPanel>
                                 </Grid>
                             </Border>
+
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
