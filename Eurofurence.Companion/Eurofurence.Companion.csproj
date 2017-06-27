@@ -93,6 +93,7 @@
     <Compile Include="Common\Abstractions\ITimeProvider.cs" />
     <Compile Include="Common\AsyncNavigationEvent.cs" />
     <Compile Include="Common\Abstractions\IAppVersionProvider.cs" />
+    <Compile Include="Controls\ExpandPanel.cs" />
     <Compile Include="Controls\TilePanel.cs" />
     <Compile Include="Common\NavigationHelper.cs" />
     <Compile Include="Common\NavigationMediator.cs" />
