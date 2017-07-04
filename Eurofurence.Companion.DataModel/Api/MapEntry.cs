@@ -10,9 +10,8 @@ namespace Eurofurence.Companion.DataModel.Api
         public double RelativeY { get; set; }
         public double RelativeTapRadius { get; set; }
 
-        public string MarkerType  { get; set; }
-        public Guid? TargetId { get; set; }
-        public string TargetDescription { get; set; }
+        public LinkFragment Link { get; set; }
+
 
         [JsonIgnore]
         public Map Map { get; set; }

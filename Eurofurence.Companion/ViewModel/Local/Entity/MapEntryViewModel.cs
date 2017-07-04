@@ -14,8 +14,8 @@ namespace Eurofurence.Companion.ViewModel.Local.Entity
 
         public Thickness CenterShiftMargin => new Thickness(0-Radius, 0-Radius, Radius, Radius);
 
-        public double X => Map?.Entity.Image?.Width * (Entity.RelativeX / 100) ?? 0;
-        public double Y => Map?.Entity.Image?.Height * (Entity.RelativeY / 100) ?? 0;
+        public double X => Map?.Entity.Image?.Width * (Entity.RelativeX) ?? 0;
+        public double Y => Map?.Entity.Image?.Height * (Entity.RelativeY) ?? 0;
 
         public MapEntryViewModel(MapEntry entity)
         {

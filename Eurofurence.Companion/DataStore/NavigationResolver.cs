@@ -55,26 +55,24 @@ namespace Eurofurence.Companion.DataStore
 
             foreach (var e in dataContext.Maps)
             {
-                e.Entries.Clear();
                 e.Image = dataContext.Images.SingleOrDefault(a => a.Id == e.ImageId);
-            }
-            foreach (var e in dataContext.MapEntries)
-            {
-                e.Map = dataContext.Maps.SingleOrDefault(a => a.Id == e.MapId);
-                e.Map?.Entries.Add(e);
 
-                switch (e.MarkerType)
+
+                foreach(var me in e.Entries)
                 {
-                    case "Dealer":
-                        if (e.TargetId.HasValue)
-                        {
-                            e.TargetEntity = dataContext.Dealers.SingleOrDefault(a => a.Id == e.TargetId);
-                        }
-                        
-                        break;
+                    me.Map = e;
+                    switch (me.Link.FragmentType)
+                    {
+                        case DataModel.Api.LinkFragment.FragmentTypeEnum.DealerDetail:
+                            me.TargetEntity = dataContext.Dealers.SingleOrDefault(a => a.Id.ToString() == me.Link.Target);
 
+                            break;
+
+                    }
                 }
-            }
+
+
+            }          
         }
     }
 }
