@@ -61,13 +61,16 @@ namespace Eurofurence.Companion.DataStore
                 foreach(var me in e.Entries)
                 {
                     me.Map = e;
-                    switch (me.Link.FragmentType)
+                    foreach (var link in me.Links)
                     {
-                        case DataModel.Api.LinkFragment.FragmentTypeEnum.DealerDetail:
-                            me.TargetEntity = dataContext.Dealers.SingleOrDefault(a => a.Id.ToString() == me.Link.Target);
+                        switch (link.FragmentType)
+                        {
+                            case DataModel.Api.LinkFragment.FragmentTypeEnum.DealerDetail:
+                                me.TargetEntity = dataContext.Dealers.SingleOrDefault(a => a.Id.ToString() == link.Target);
 
-                            break;
+                                break;
 
+                        }
                     }
                 }
 

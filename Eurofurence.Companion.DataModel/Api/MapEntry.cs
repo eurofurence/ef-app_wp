@@ -6,11 +6,11 @@ namespace Eurofurence.Companion.DataModel.Api
     public class MapEntry : EntityBase
     {
         public Guid MapId { get; set; }
-        public double RelativeX { get; set; }
-        public double RelativeY { get; set; }
-        public double RelativeTapRadius { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int TapRadius { get; set; }
 
-        public LinkFragment Link { get; set; }
+        public LinkFragment[] Links { get; set; }
 
 
         [JsonIgnore]

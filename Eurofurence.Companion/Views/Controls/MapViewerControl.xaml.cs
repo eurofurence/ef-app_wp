@@ -87,17 +87,21 @@ namespace Eurofurence.Companion.Views.Controls
             // More than 45% outside the radius isn't accurate enough.
             if (closestMatch.Distance > closestMatch.Entry.Radius * 1.45) return;
 
-            switch (closestMatch.Entry.Entity.Link.FragmentType)
+            foreach (var link in closestMatch.Entry.Entity.Links)
             {
-                case DataModel.Api.LinkFragment.FragmentTypeEnum.DealerDetail:
 
-                    var context = KernelResolver.Current.Get<IDealersViewModelContext>();
-                    var dealer = context.Dealers.SingleOrDefault(a => a.Entity.Id.ToString() == closestMatch.Entry.Entity.Link.Target);
+                switch (link.FragmentType)
+                {
+                    case DataModel.Api.LinkFragment.FragmentTypeEnum.DealerDetail:
 
-                    if (dealer == null) return;
-                    ViewModelLocator.Current.NavigationViewModel.NavigateToDealerDetailPage.Execute(dealer);
+                        var context = KernelResolver.Current.Get<IDealersViewModelContext>();
+                        var dealer = context.Dealers.SingleOrDefault(a => a.Entity.Id.ToString() == link.Target);
 
-                    break;
+                        if (dealer == null) return;
+                        ViewModelLocator.Current.NavigationViewModel.NavigateToDealerDetailPage.Execute(dealer);
+
+                        return;
+                }
             }
         }
 
