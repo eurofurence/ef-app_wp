@@ -19,8 +19,9 @@ namespace Eurofurence.Companion.DataStore
                 e.ConferenceDay = dataContext.EventConferenceDays.SingleOrDefault(a => a.Id == e.ConferenceDayId);
                 e.ConferenceRoom = dataContext.EventConferenceRooms.SingleOrDefault(a => a.Id == e.ConferenceRoomId);
                 e.ConferenceTrack = dataContext.EventConferenceTracks.SingleOrDefault(a => a.Id == e.ConferenceTrackId);
-                e.Image = dataContext.Images.SingleOrDefault(a => a.Id == e.ImageId);
-                
+                e.PosterImage = dataContext.Images.SingleOrDefault(a => a.Id == e.PosterImageId);
+                e.BannerImage = dataContext.Images.SingleOrDefault(a => a.Id == e.BannerImageId);
+
 
                 e.ConferenceDay?.Entries.Add(e);
                 e.ConferenceRoom?.Entries.Add(e);

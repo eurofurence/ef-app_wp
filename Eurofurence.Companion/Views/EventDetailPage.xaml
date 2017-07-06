@@ -40,9 +40,9 @@
     </Page.BottomAppBar>
     <Grid x:Name="LayoutRoot">
         <Grid x:Name="ContentRoot">
-            <Image VerticalAlignment="Center"
+            <!--<Image VerticalAlignment="Center"
                                behaviors:AsyncImageLoaderProperties.ImageId="{Binding Entity.ImageId}"
-                               Stretch="UniformToFill" Opacity="0.08" />
+                               Stretch="UniformToFill" Opacity="0.08" />-->
             <ScrollViewer>
                 <StackPanel Margin="20">
                     <StackPanel.ChildrenTransitions>
@@ -51,20 +51,14 @@
                         </TransitionCollection>
                     </StackPanel.ChildrenTransitions>
 
+
+
                     <Grid MaxHeight="200"
                           Margin="-20 -20 -20 20"
-                          Visibility="{Binding HasImage,
+                          Visibility="{Binding HasBannerImage,
                                                Converter={StaticResource TrueToVisibleConverter}}">
-                        <interactivity:Interaction.Behaviors>
-                            <interactivity:BehaviorCollection>
-                                <core:EventTriggerBehavior EventName="Tapped">
-                                    <core:InvokeCommandAction Command="{Binding Source={StaticResource ViewModelLocator}, Path=NavigationViewModel.NavigateToImageViewerPage}" CommandParameter="{Binding Entity.ImageId}" />
-                                </core:EventTriggerBehavior>
-                            </interactivity:BehaviorCollection>
-                        </interactivity:Interaction.Behaviors>
-
                         <Image VerticalAlignment="Center"
-                               behaviors:AsyncImageLoaderProperties.ImageId="{Binding Entity.ImageId}"
+                               behaviors:AsyncImageLoaderProperties.ImageId="{Binding Entity.BannerImageId}"
                                Stretch="Uniform" />
 
                     </Grid>
@@ -172,6 +166,22 @@
                                    TextWrapping="Wrap" />
                     </StackPanel>
 
+                    <Grid Visibility="{Binding HasPosterImage, Converter={StaticResource TrueToVisibleConverter}}">
+                        <interactivity:Interaction.Behaviors>
+                            <interactivity:BehaviorCollection>
+                                <core:EventTriggerBehavior EventName="Tapped">
+                                    <core:InvokeCommandAction Command="{Binding Source={StaticResource ViewModelLocator}, Path=NavigationViewModel.NavigateToImageViewerPage}" CommandParameter="{Binding Entity.PosterImageId}" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:BehaviorCollection>
+                        </interactivity:Interaction.Behaviors>
+
+                        <Image VerticalAlignment="Center"
+                               behaviors:AsyncImageLoaderProperties.ImageId="{Binding Entity.PosterImageId}"
+                               Stretch="Uniform" />
+
+                    </Grid>
+
+
                     <!--<Button Command="{Binding Source={StaticResource ViewModelLocator}, Path=EventsViewModel.AddEventToCalendarCommand}" CommandParameter="{Binding}">Add to Calendar</Button>-->
 
                     <!--<TextBlock Margin="0 0 0 0"
@@ -183,6 +193,7 @@
                                FontWeight="Light"
                                Style="{StaticResource SubheaderTextBlockStyle}"
                                Text="{Binding Entity.SubTitle}" />
+
 
 
 
