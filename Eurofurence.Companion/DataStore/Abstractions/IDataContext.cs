@@ -35,7 +35,6 @@ namespace Eurofurence.Companion.DataStore.Abstractions
         ObservableCollection<Image> Images { get; }
         ObservableCollection<Dealer> Dealers { get; }
         ObservableCollection<Map> Maps { get; }
-        ObservableCollection<MapEntry> MapEntries { get; }
 
         ObservableCollection<EventEntryAttributes> EventEntryAttributes { get; }
 

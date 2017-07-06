@@ -146,6 +146,7 @@ namespace Eurofurence.Companion.DataStore
                 updateResults.Add(ProcessDelta(sync.KnowledgeEntries, DataContextDataAreaEnum.Knowledge));
                 updateResults.Add(ProcessDelta(sync.Images, DataContextDataAreaEnum.Images));
                 updateResults.Add(ProcessDelta(sync.Announcements, DataContextDataAreaEnum.Announcements));
+                updateResults.Add(ProcessDelta(sync.Maps, DataContextDataAreaEnum.Maps));
 
                 MainOperationMessage = $"{Translations.ContextManager_Update_DownloadingImageContent}...";
 

@@ -12,7 +12,8 @@ namespace Eurofurence.Companion.DataModel.Api
         {
             WebExternal,
             MapExternal,
-            MapInternal
+            MapInternal,
+            DealerDetail
         }
 
         public FragmentTypeEnum FragmentType { get; set; }
