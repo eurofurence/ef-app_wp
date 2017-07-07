@@ -53,7 +53,8 @@ namespace Eurofurence.Companion.ViewModel.Local.Entity
         }
 
         public bool HasSubTitle => !string.IsNullOrEmpty(Entity?.SubTitle);
-        public bool HasImage => Entity?.ImageId.HasValue ?? false;
+        public bool HasPosterImage => Entity?.PosterImageId.HasValue ?? false;
+        public bool HasBannerImage => Entity?.BannerImageId.HasValue ?? false;
 
         private TimeSpan _timeToStart = TimeSpan.Zero;
         public TimeSpan TimeToStart { get { return _timeToStart; } set { SetProperty(ref _timeToStart, value); } }

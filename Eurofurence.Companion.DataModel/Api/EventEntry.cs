@@ -16,7 +16,8 @@ namespace Eurofurence.Companion.DataModel.Api
         public string Abstract { get; set; }
         public string Description { get; set; }
         public Guid ConferenceDayId { get; set; }
-        public Guid? ImageId { get; set; }
+        public Guid? PosterImageId { get; set; }
+        public Guid? BannerImageId { get; set; }
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
         public TimeSpan Duration { get; set; }
@@ -41,7 +42,9 @@ namespace Eurofurence.Companion.DataModel.Api
         public virtual EventConferenceRoom ConferenceRoom { get; set; }
 
         [JsonIgnore]
-        public virtual Image Image { get; set; }
+        public virtual Image PosterImage { get; set; }
+        [JsonIgnore]
+        public virtual Image BannerImage { get; set; }
 
         [JsonIgnore]
         public object SortOrderKey => (ConferenceDay?.Date.Ticks ?? 0) + StartTime.TotalSeconds;

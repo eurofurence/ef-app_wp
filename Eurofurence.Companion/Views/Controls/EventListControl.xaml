@@ -1,12 +1,12 @@
 ﻿<UserControl x:Class="Eurofurence.Companion.Views.Controls.EventListControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:behaviors="using:Eurofurence.Companion.ViewModel.Behaviors"
              xmlns:core="using:Microsoft.Xaml.Interactions.Core"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
              xmlns:local="using:Eurofurence.Companion.Views.Controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:behaviors="using:Eurofurence.Companion.ViewModel.Behaviors"
              x:Name="_this"
              d:DataContext="{Binding Source={StaticResource ViewModelLocator},
                                      Path=EventsViewModel.EventEntries}"
@@ -14,9 +14,9 @@
 
     <Grid>
         <ListView x:Name="EventList"
-                  ScrollViewer.IsDeferredScrollingEnabled="True"
                   IsItemClickEnabled="True"
-                  ItemsSource="{Binding}">
+                  ItemsSource="{Binding}"
+                  ScrollViewer.IsDeferredScrollingEnabled="True">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -26,8 +26,8 @@
                 <DataTemplate>
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <interactivity:Interaction.Behaviors>
                             <interactivity:BehaviorCollection>
@@ -102,23 +102,23 @@
 
                             </StackPanel>
                         </Grid>
-                        <Grid Visibility="{Binding HasImage, Converter={StaticResource TrueToVisibleConverter}}"
-                              Height="80" Grid.Row="1"
-                              Margin="20 0 20 0"
-                              >
-                            <Image behaviors:AsyncImageLoaderProperties.ImageId="{Binding Entity.ImageId}" 
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center" 
-                                   Stretch="UniformToFill"
-                                   />
-                        </Grid>
 
-                        <Border Grid.RowSpan="2" 
+                        <Border Grid.RowSpan="2"
                                 Margin="17 0 17 -3"
-                                Visibility="{Binding HasImage,
-                            Converter={StaticResource TrueToVisibleConverter}}" BorderBrush="#09FFFFFF"
+                                BorderBrush="#09FFFFFF"
                                 BorderThickness="2"
-                                />
+                                Visibility="{Binding HasBannerImage,
+                                                     Converter={StaticResource TrueToVisibleConverter}}" />
+                        <Grid Grid.Row="1"
+                              Margin="20 0 20 0"
+                              Visibility="{Binding HasBannerImage,
+                                                   Converter={StaticResource TrueToVisibleConverter}}">
+                            <!--  Height="80"  -->
+                            <Image HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   behaviors:AsyncImageLoaderProperties.ImageId="{Binding Entity.BannerImageId}"
+                                   Stretch="UniformToFill" />
+                        </Grid>
 
                     </Grid>
                 </DataTemplate>
