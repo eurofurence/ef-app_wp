@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="Eurofurence.Companion.Views.Controls.NotLoggedInControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:Eurofurence.Companion.Views.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+             xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+             xmlns:media="using:Microsoft.Xaml.Interactions.Media"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="400">
+
+    <Grid>
+        <ListView>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment"
+                            Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListViewItem>
+                
+                <Grid Margin="20 0 40 0">
+                    <interactivity:Interaction.Behaviors>
+                        <interactivity:BehaviorCollection>
+                            <core:EventTriggerBehavior EventName="Tapped">
+                                <core:InvokeCommandAction Command="{Binding Source={StaticResource ViewModelLocator}, Path=NavigationViewModel.NavigateToUserCentralPage}" />
+                            </core:EventTriggerBehavior>
+                        </interactivity:BehaviorCollection>
+                    </interactivity:Interaction.Behaviors>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="_pm_icon"
+                               Opacity="1"
+                               Margin="5 2 0 0"
+                               FontFamily="{StaticResource IconFontFamily}"
+                               FontSize="24"
+                               Foreground="{ThemeResource PhoneMidBrush}"
+                               Text="&#xE8D7;" />
+                    <StackPanel Grid.Column="1">
+                        <TextBlock  Style="{StaticResource TextBlockMediumSmallStyle}"
+                                    TextWrapping="Wrap">
+                                    <Run FontWeight="Bold">You are currently not logged in.</Run> 
+                                    <LineBreak />
+                                    <Run>Tap here to login using your registration details
+                                    and receive personalized information from Eurofurence!</Run>
+                        </TextBlock>
+                    </StackPanel>
+                </Grid>
+            </ListViewItem>
+        </ListView>
+    </Grid>
+</UserControl>

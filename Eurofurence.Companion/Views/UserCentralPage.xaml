@@ -32,19 +32,24 @@
                             <TextBlock Style="{StaticResource TitleTextBlockStyle}"
                                        Text="Welcome!"
                                        TextTrimming="CharacterEllipsis"
-                                       TextWrapping="Wrap" />
+                                       TextWrapping="Wrap" 
+                                       />
 
-                            <TextBlock Margin="0 5 0 0"
-                                       FontSize="{StaticResource TextStyleMediumFontSize}"
-                                       Foreground="{ThemeResource PhoneLowBrush}"
-                                       LineHeight="25"
-                                       TextWrapping="WrapWholeWords"
-                                       Visibility="{Binding IsAuthenticated,
+                            <StackPanel Visibility="{Binding IsAuthenticated,
                                                             Converter={StaticResource FalseToVisibleConverter}}">
+                                <TextBlock Margin="0 5 0 0"
+                                           FontSize="{StaticResource TextStyleMediumFontSize}"
+                                           Foreground="{ThemeResource PhoneLowBrush}"
+                                           LineHeight="25"
+                                           TextWrapping="WrapWholeWords">
                                 You are currently not logged on.
-                                <LineBreak />
-                                Some features are only available to logged on attendees.
-                            </TextBlock>
+                                </TextBlock>
+                                <Button Name="E_Button_WhyLogin"
+                                        HorizontalAlignment="Left"
+                                        Content="Why should I login?"
+                                        Tapped="E_Button_WhyLogin_Tapped"
+                                        />
+                            </StackPanel>
 
                             <TextBlock Margin="0 5 0 0"
                                        FontSize="{StaticResource TextStyleMediumFontSize}"

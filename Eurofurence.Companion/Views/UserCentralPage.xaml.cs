@@ -1,4 +1,6 @@
 ﻿using Eurofurence.Companion.Common;
+using System;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -51,5 +53,11 @@ namespace Eurofurence.Companion.Views
             NavigationHelper.OnNavigatedFrom(e);
         }
 
+
+        private async void E_Button_WhyLogin_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            var uri = new Uri(@"https://app.eurofurence.org/redir/why-login");
+            await Launcher.LaunchUriAsync(uri);
+        }
     }
 }

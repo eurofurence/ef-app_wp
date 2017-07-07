@@ -57,9 +57,8 @@
                     <TextBlock TextWrapping="WrapWholeWords"
                                FontSize="{StaticResource TextStyleMediumFontSize}"
                                Margin="0 0 0 20">
-                                Your login credentials for the app are the same as for the Eurofurence Registration System.
-                                <LineBreak />
-                                <LineBreak />If you do not remember or have access to them, you can ask for a PIN code to sign in at the ConOps or Security office.
+                                Please log in with your credentials for the Eurofurence Registration System.
+                                <LineBreak /><LineBreak />If you do not have access to them, come to our ConOps or Security office. They can help you with an alternative login. Please bring your badge and a valid legal form of identification.
                     </TextBlock>
 
                     <Button Command="{Binding LoginCommand}" 

@@ -212,6 +212,9 @@
     <Compile Include="Views\Controls\MapViewerControl.xaml.cs">
       <DependentUpon>MapViewerControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\NotLoggedInControl.xaml.cs">
+      <DependentUpon>NotLoggedInControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\PostConMessageControl.xaml.cs">
       <DependentUpon>PostConMessageControl.xaml</DependentUpon>
     </Compile>
@@ -382,6 +385,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\MapViewerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\NotLoggedInControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
