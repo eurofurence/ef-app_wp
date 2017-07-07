@@ -35,27 +35,33 @@
                     <ProgressBar IsIndeterminate="True" Height="15" />
                 </StackPanel>
                 <StackPanel Visibility="{Binding IsBusy, Converter={StaticResource FalseToVisibleConverter}}">
-                    <TextBlock Style="{StaticResource ControlHeaderTextBlockStyle}">Nickname</TextBlock>
-                    <TextBox Name="E_TextBox_Nickname" 
-                                     InputScope="AlphanumericFullWidth" 
-                                     Text="{Binding RequestUsername, Mode=TwoWay}"
-                                     />
+
+                    
 
                     <TextBlock Style="{StaticResource ControlHeaderTextBlockStyle}">Registration Number</TextBlock>
                     <TextBox InputScope="Number" Text="{Binding RequestRegNo, Mode=TwoWay}" 
                                      HorizontalAlignment="Left" MaxLength="4" Width="100"
                                      />
+                    <TextBlock Style="{StaticResource ControlHeaderTextBlockStyle}">Username</TextBlock>
+                    <TextBox Name="E_TextBox_Nickname"
+                             InputScope="AlphanumericFullWidth"
+                             Text="{Binding RequestUsername, Mode=TwoWay}" 
+                             KeyUp="E_TextBox_Nickname_KeyUp"
+                             />
 
-                    <TextBlock Style="{StaticResource ControlHeaderTextBlockStyle}">Password</TextBlock>
-                    <PasswordBox Password="{Binding RequestPassword, Mode=TwoWay}" 
-                                         />
+                    <TextBlock Style="{StaticResource ControlHeaderTextBlockStyle}">Password / PIN</TextBlock>
+                    <PasswordBox Name="E_PasswordBox"
+                                 Password="{Binding RequestPassword, Mode=TwoWay}"
+                                 KeyUp="E_PasswordBox_KeyUp" />
 
                     <TextBlock TextWrapping="WrapWholeWords"
-                                   FontSize="{StaticResource TextStyleSmallFontSize}"                                   
-                                       >
+                               FontSize="{StaticResource TextStyleMediumFontSize}"
+                               Margin="0 0 0 20">
                                 Your login credentials for the app are the same as for the Eurofurence Registration System.
-                                <LineBreak /><LineBreak />Application telemetry is collected anonymously and will not be linked to your account at any time.
+                                <LineBreak />
+                                <LineBreak />If you do not remember or have access to them, you can ask for a PIN code to sign in at the ConOps or Security office.
                     </TextBlock>
+
                     <Button Command="{Binding LoginCommand}" 
                                     Name="E_Button_Login"
                                     >Login</Button>
