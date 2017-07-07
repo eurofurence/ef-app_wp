@@ -79,9 +79,9 @@
                         <TextBlock Style="{StaticResource TextBlockStylePosition}"
                             Text="iOS Developer" />
                         <TextBlock Style="{StaticResource TextBlockStyleName}"
-                            Text="Omega Wolfblood" Margin="0 0 0 0" />
+                            Text="Fenrikur" Margin="0 0 0 0" />
                         <TextBlock Style="{StaticResource TextBlockStyleName}"
-                            Text="Fenrikur" Margin="0 0 0 40" />
+                            Text="Shez" Margin="0 0 0 20" />
 
 
                         <TextBlock Style="{StaticResource TextBlockStylePosition}"
@@ -89,7 +89,7 @@
                         <TextBlock Style="{StaticResource TextBlockStyleName}"
                             Text="Zefiro" Margin="0 0 0 0" />
                         <TextBlock Style="{StaticResource TextBlockStyleName}"
-                            Text="Luchs" Margin="0 0 0 40" />
+                            Text="Luchs" Margin="0 0 0 20" />
 
 
 
