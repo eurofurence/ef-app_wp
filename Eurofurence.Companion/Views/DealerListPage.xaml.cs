@@ -1,18 +1,29 @@
 ﻿using Eurofurence.Companion.Common;
 using System;
 using System.Linq;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
+using Eurofurence.Companion.ViewModel.Local;
 
 namespace Eurofurence.Companion.Views
 {
 
     public sealed partial class DealerListPage : Page, IPageProperties
     {
+        class PageState
+        {
+            public double ScrollViewerOffsetY { get; set; }
+            public bool IsSearchEnabled { get; set; }
+            public string SearchText { get; set; }
+        }
+
+
         public const string PAGE_ICON = "\uE13D";
         public string Title => Translations.Dealers_Title;
+        private DealersViewModel TypedViewModel => (DataContext as DealersViewModel);
 
-        private const string STATE_SCROLLVIEWER_OFFSET_Y = "scrollViewer.OffsetY";
 
         public DealerListPage()
         {
@@ -39,16 +50,25 @@ namespace Eurofurence.Companion.Views
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            if (!(e.PageState?.ContainsKey(STATE_SCROLLVIEWER_OFFSET_Y) ?? false)) return;
+            if (!(e.PageState?.ContainsKey("state") ?? false)) return;
+            var state = (e.PageState["state"] as PageState);
+            if (state == null) return;
 
-            var verticalOffset = Convert.ToDouble(e.PageState?[STATE_SCROLLVIEWER_OFFSET_Y] ?? 0);
-            GetListViewScrollViewer().ChangeView(null, verticalOffset, null);
+           
+            TypedViewModel.IsSearchEnabled = state.IsSearchEnabled;
+            TypedViewModel.SearchText = state.SearchText;
+            GetListViewScrollViewer().ChangeView(null, state.ScrollViewerOffsetY, null);
         }
 
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
-            e.PageState[STATE_SCROLLVIEWER_OFFSET_Y] = GetListViewScrollViewer().VerticalOffset;
+            e.PageState["state"] = new PageState()
+            {
+                IsSearchEnabled = TypedViewModel.IsSearchEnabled,
+                SearchText = TypedViewModel.SearchText,
+                ScrollViewerOffsetY = GetListViewScrollViewer().VerticalOffset
+            };
         }
 
 
@@ -66,5 +86,11 @@ namespace Eurofurence.Companion.Views
         }
 
         #endregion
+
+        private void E_AppBar_ToggleSearch_OnTapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (E_TextBox_SearchText.Visibility == Visibility.Visible)
+                E_TextBox_SearchText.Focus(FocusState.Keyboard);
+        }
     }
 }
