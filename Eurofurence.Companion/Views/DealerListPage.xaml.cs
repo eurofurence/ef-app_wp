@@ -1,6 +1,7 @@
 ﻿using Eurofurence.Companion.Common;
 using System;
 using System.Linq;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -32,6 +33,14 @@ namespace Eurofurence.Companion.Views
             NavigationHelper = new NavigationHelper(this);
             NavigationHelper.LoadState += NavigationHelper_LoadState;
             NavigationHelper.SaveState += NavigationHelper_SaveState;
+
+
+            TypedViewModel.WatchProperty(nameof(TypedViewModel.IsSearchEnabled), async (e) =>
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                {
+                    if (TypedViewModel.IsSearchEnabled)
+                        E_TextBox_SearchText.Focus(FocusState.Keyboard);
+                }));
         }
 
 
@@ -87,10 +96,9 @@ namespace Eurofurence.Companion.Views
 
         #endregion
 
-        private void E_AppBar_ToggleSearch_OnTapped(object sender, TappedRoutedEventArgs e)
+        private async void E_AppBar_ToggleSearch_OnTapped(object sender, TappedRoutedEventArgs e)
         {
-            if (E_TextBox_SearchText.Visibility == Visibility.Visible)
-                E_TextBox_SearchText.Focus(FocusState.Keyboard);
+
         }
     }
 }

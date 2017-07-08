@@ -18,8 +18,7 @@
                                 Command="{Binding ToggleSearchEnabled}"
                                 Icon="Filter"
                                 IsChecked="{Binding IsSearchEnabled}"
-                                Label="Filter"
-                                Tapped="E_AppBar_ToggleSearch_OnTapped" />
+                                Label="Filter" />
         </CommandBar>
     </Page.BottomAppBar>
     <Grid x:Name="LayoutRoot">
@@ -50,7 +49,7 @@
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid MinWidth="{Binding ActualWidth, ElementName=E_ListView_Dealers}">
+                    <Grid MinWidth="{Binding ActualWidth, ElementName=E_ListView_Dealers}" Background="Transparent">
                         <interactivity:Interaction.Behaviors>
                             <interactivity:BehaviorCollection>
                                 <core:EventTriggerBehavior EventName="Tapped">
