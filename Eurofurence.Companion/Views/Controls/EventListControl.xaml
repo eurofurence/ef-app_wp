@@ -77,6 +77,11 @@
                                            Text="&#xE1CE;"
                                            Visibility="{Binding Entity.AttributesProxy.Extension.IsFavorite,
                                                                 Converter={StaticResource TrueToVisibleConverter}}" />
+                                <TextBlock Margin="0 6.5 0 0"
+                                           VerticalAlignment="Center"
+                                           FontFamily="{StaticResource FontAwesomeFamily}"
+                                           Text="{Binding FontAwesomeDecoratorIcon}"
+                                           TextAlignment="Center" />
                             </StackPanel>
 
                             <StackPanel Grid.Column="3">

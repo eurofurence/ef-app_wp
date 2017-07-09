@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Eurofurence.Companion.Common;
 using Eurofurence.Companion.Common.Abstractions;
 using Eurofurence.Companion.DataModel.Api;
@@ -64,5 +66,15 @@ namespace Eurofurence.Companion.ViewModel.Local.Entity
 
         private bool _isFavoriteAndStartingSoon = false;
         public bool IsFavoriteAndStartingSoon { get { return _isFavoriteAndStartingSoon; } set { SetProperty(ref _isFavoriteAndStartingSoon, value); } }
+
+        public string FontAwesomeDecoratorIcon
+        {
+            get
+            {
+                if (Entity.PanelHosts.Contains("Kage"))
+                    return "\uf188 \uf000";
+                 return string.Empty;
+            }
+        }
     }
 }

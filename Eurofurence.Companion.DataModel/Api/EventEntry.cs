@@ -28,7 +28,6 @@ namespace Eurofurence.Companion.DataModel.Api
         public DateTime StartDateTimeUtc { get; set; }
         public DateTime EndDateTimeUtc { get; set; }
 
-
         [JsonIgnore]
         public ExtensionProxy<EventEntry, EventEntryAttributes> AttributesProxy { get; set; }
 
