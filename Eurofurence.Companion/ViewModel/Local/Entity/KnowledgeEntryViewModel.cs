@@ -12,6 +12,7 @@ namespace Eurofurence.Companion.ViewModel.Local.Entity
         public bool HasNextEntry => NextEntry != null;
         public bool HasPreviousOrNextEntry => HasPreviousEntry || HasNextEntry;
 
+        public LinkFragmentAction[] LinkActions { get; set; }
 
         public KnowledgeEntry Entity { get; }
 

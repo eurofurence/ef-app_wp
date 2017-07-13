@@ -13,6 +13,9 @@ using Eurofurence.Companion.ViewModel.Abstractions;
 using Eurofurence.Companion.ViewModel.Local.Entity;
 using Ninject;
 using NotificationsExtensions.TileContent;
+using System.Collections.Generic;
+using Eurofurence.Companion.Common;
+using Eurofurence.Companion.ViewModel;
 
 namespace Eurofurence.Companion.Views.Controls
 {
@@ -87,22 +90,29 @@ namespace Eurofurence.Companion.Views.Controls
             // More than 45% outside the radius isn't accurate enough.
             if (closestMatch.Distance > closestMatch.Entry.Radius * 1.45) return;
 
-            foreach (var link in closestMatch.Entry.Entity.Links)
+
+            var actions = LinkFragmentActionFactory.ConvertFragments(closestMatch.Entry.Entity.Links);
+            
+            if (actions.Length == 0) return;
+
+            if (actions.Length == 1)
             {
-
-                switch (link.FragmentType)
-                {
-                    case DataModel.Api.LinkFragment.FragmentTypeEnum.DealerDetail:
-
-                        var context = KernelResolver.Current.Get<IDealersViewModelContext>();
-                        var dealer = context.Dealers.SingleOrDefault(a => a.Entity.Id.ToString() == link.Target);
-
-                        if (dealer == null) return;
-                        ViewModelLocator.Current.NavigationViewModel.NavigateToDealerDetailPage.Execute(dealer);
-
-                        return;
-                }
+                actions[0].Execute.Invoke();
+                return;
             }
+
+            var flyout = new MenuFlyout() { Placement = Windows.UI.Xaml.Controls.Primitives.FlyoutPlacementMode.Bottom  };
+
+            foreach (var action in actions)
+            {
+                flyout.Items.Add(new MenuFlyoutItem()
+                {
+                    Text = action.TargetName,
+                    Command = action.Command
+                });
+            }
+
+            flyout.ShowAt((FrameworkElement)sender);
         }
 
         public void DisposeMapImage()

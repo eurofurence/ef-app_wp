@@ -119,7 +119,7 @@
                         TextWrapping="WrapWholeWords" />
                 </Grid>
 
-                <ItemsControl Margin="15,0,15,0" ItemsSource="{Binding Entity.Urls}">
+                <ItemsControl ItemsSource="{Binding LinkActions}">
                     <ItemsControl.ItemContainerStyle>
                         <Style TargetType="ContentPresenter">
                             <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -127,9 +127,10 @@
                     </ItemsControl.ItemContainerStyle>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Button HorizontalAlignment="Stretch" Click="OnWebsiteUriClick">
+                            <Button Margin="0 10 0 0" HorizontalAlignment="Stretch"
+                                    Command="{Binding Command}">
                                 <Viewbox StretchDirection="DownOnly">
-                                    <TextBlock Text="{Binding Text}" />
+                                    <TextBlock Text="{Binding TargetName}" />
                                 </Viewbox>
                             </Button>
                         </DataTemplate>

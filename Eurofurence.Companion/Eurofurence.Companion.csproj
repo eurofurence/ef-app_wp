@@ -153,7 +153,9 @@
     <Compile Include="ViewModel\Converter\WikiTextToHtmlConverter.cs" />
     <Compile Include="ViewModel\Abstractions\IKnowledgeViewModelContext.cs" />
     <Compile Include="ViewModel\Abstractions\IPrivateMessagesViewModelContext.cs" />
+    <Compile Include="ViewModel\LinkFragmentActionFactory.cs" />
     <Compile Include="ViewModel\Local\AuthenticationViewModel.cs" />
+    <Compile Include="ViewModel\Local\Entity\LinkFragmentAction.cs" />
     <Compile Include="ViewModel\Local\Entity\PrivateMessageViewModel.cs" />
     <Compile Include="ViewModel\Local\NetworkConnectivityViewModel.cs" />
     <Compile Include="ViewModel\PrivateMessagesViewModel.cs" />

@@ -33,11 +33,15 @@ namespace Eurofurence.Companion.ViewModel
             Groups.Clear();
             
             var groups = _dataContext.KnowledgeGroups.Select(entity => new KnowledgeGroupViewModel(entity)).ToList();
+
             foreach (var group in groups)
             {
                 foreach (var entry in group.Entity.Entries)
                 {
-                    group.Entries.Add(new KnowledgeEntryViewModel(entry));
+                    var vm = new KnowledgeEntryViewModel(entry);
+                    vm.LinkActions = LinkFragmentActionFactory.ConvertFragments(entry.Links);
+
+                    group.Entries.Add(vm);
                 }
 
                 group.Resolve();
