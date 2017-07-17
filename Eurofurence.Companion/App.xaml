@@ -95,6 +95,8 @@
             <converter:BooleanInvertConverter x:Key="BooleanInvertConverter" />
             <converter:WikiTextToHtmlConverter x:Key="WikiTextToHtmlConverter" />
             <converter:UriToStringConverter x:Key="UriToStringConverter" />
+            <converter:FursuitBadgeIdToUriConverter x:Key="FursuitBadgeIdToUriConverter" />
+            <converter:ValueMatchToVisibilityConverter x:Key="ValueMatchToVisibilityConverter" />
 
             <viewModelLocal:TranslationViewModel x:Key="Translations" />
 

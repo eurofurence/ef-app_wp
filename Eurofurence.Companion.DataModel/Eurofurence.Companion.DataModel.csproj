@@ -83,6 +83,10 @@
     <Compile Include="Abstractions\IOrderKeyProvider.cs" />
     <Compile Include="Api\Announcement.cs" />
     <Compile Include="Api\AuthenticationResponse.cs" />
+    <Compile Include="Api\CollectingGame\FursuitBadgeRecord.cs" />
+    <Compile Include="Api\CollectingGame\FursuitParticipationInfo.cs" />
+    <Compile Include="Api\CollectingGame\FursuitParticipationRecord.cs" />
+    <Compile Include="Api\CollectingGame\PlayerParticipationInfo.cs" />
     <Compile Include="Api\Dealer.cs" />
     <Compile Include="Api\Endpoint.cs" />
     <Compile Include="Api\EndpointConfiguration.cs" />

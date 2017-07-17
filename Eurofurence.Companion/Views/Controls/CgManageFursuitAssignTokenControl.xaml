@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="Eurofurence.Companion.Views.Controls.CgManageFursuitAssignTokenControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:Eurofurence.Companion.Views.Controls"
+             xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="600"
+             d:DesignWidth="400"
+             d:DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=CollectionGameManageFursuitsViewModel}">
+
+    <Grid>
+
+        <ScrollViewer>
+            <StackPanel Margin="20 10 20 10">
+                <TextBlock Style="{StaticResource SubheaderTextBlockStyle}"
+                           Text="Signup / Connect Token" />
+
+                <Image Source="{Binding SelectedBadge.Id, Converter={StaticResource FursuitBadgeIdToUriConverter}}"
+                       Width="90"
+                       Height="120"
+                       VerticalAlignment="Center" />
+                <TextBlock Text="{Binding SelectedBadge.Name}" />
+
+                <local:ErrorMessageControl ErrorMessage="{Binding ErrorMessage}" 
+                                           />
+
+                <TextBox PlaceholderText="Enter token here" Text="{Binding TokenValue, Mode=TwoWay}"></TextBox>
+                <Button Command="{Binding SubmitTokenAssignmentCommand}">Link</Button>
+                <Button Command="{Binding CancelTokenAssignmentCommand}">Cancel</Button>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

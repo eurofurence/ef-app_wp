@@ -62,7 +62,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_PHONE_APP</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_PHONE_APP;DISABLE_XAML_GENERATED_BREAK_ON_UNHANDLED_EXCEPTION</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -110,6 +110,7 @@
     <Compile Include="Services\AsyncImageLoaderService.cs" />
     <Compile Include="Services\AuthenticationService.cs" />
     <Compile Include="Services\BackgroundUpdateService.cs" />
+    <Compile Include="Services\CollectingGameService.cs" />
     <Compile Include="Services\EventService.cs" />
     <Compile Include="Services\Abstractions\IAsyncImageLoaderService.cs" />
     <Compile Include="Services\Abstractions\IBackgroundUpdateService.cs" />
@@ -145,11 +146,15 @@
     <Compile Include="DependencyResolution\ViewModelLocator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\Behaviors\WikiTextBoxProperties.cs" />
+    <Compile Include="ViewModel\CollectionGameManageFursuitsViewModel.cs" />
+    <Compile Include="ViewModel\CollectionGamePlayerViewModel.cs" />
     <Compile Include="ViewModel\Converter\BooleanInvertConverter.cs" />
     <Compile Include="ViewModel\Converter\BooleanToVisibilityConverter.cs" />
     <Compile Include="ViewModel\Converter\BytesToImageConverter.cs" />
     <Compile Include="ViewModel\Converter\StreamToImageConverter.cs" />
+    <Compile Include="ViewModel\Converter\FursuitBadgeIdToUriConverter.cs" />
     <Compile Include="ViewModel\Converter\UriToStringConverter.cs" />
+    <Compile Include="ViewModel\Converter\ValueMatchToVisibilityConverter.cs" />
     <Compile Include="ViewModel\Converter\WikiTextToHtmlConverter.cs" />
     <Compile Include="ViewModel\Abstractions\IKnowledgeViewModelContext.cs" />
     <Compile Include="ViewModel\Abstractions\IPrivateMessagesViewModelContext.cs" />
@@ -201,16 +206,34 @@
     <Compile Include="Views\BasicPage1.xaml.cs">
       <DependentUpon>BasicPage1.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CollectionGameManageFursuitsView.xaml.cs">
+      <DependentUpon>CollectionGameManageFursuitsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CollectionGamePlayerView.xaml.cs">
+      <DependentUpon>CollectionGamePlayerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\CgManageFursuitAssignTokenControl.xaml.cs">
+      <DependentUpon>CgManageFursuitAssignTokenControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\CgManageFursuitListControl.xaml.cs">
+      <DependentUpon>CgManageFursuitListControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\DebugControl.xaml.cs">
       <DependentUpon>DebugControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\ActiveAnnouncementsControl.xaml.cs">
       <DependentUpon>ActiveAnnouncementsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\ErrorMessageControl.xaml.cs">
+      <DependentUpon>ErrorMessageControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\EventListControl.xaml.cs">
       <DependentUpon>EventListControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\FixedFlipView.cs" />
+    <Compile Include="Views\Controls\LoadingBoxControl.xaml.cs">
+      <DependentUpon>LoadingBoxControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\MapViewerControl.xaml.cs">
       <DependentUpon>MapViewerControl.xaml</DependentUpon>
     </Compile>
@@ -374,6 +397,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\CollectionGameManageFursuitsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CollectionGamePlayerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\CgManageFursuitAssignTokenControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\CgManageFursuitListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Controls\DebugControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -382,7 +421,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Controls\ErrorMessageControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Controls\EventListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\LoadingBoxControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

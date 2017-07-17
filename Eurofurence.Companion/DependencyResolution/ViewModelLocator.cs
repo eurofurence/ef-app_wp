@@ -25,5 +25,8 @@ namespace Eurofurence.Companion.DependencyResolution
         public AuthenticationViewModel AuthenticationViewModel => KernelResolver.Current.Get<AuthenticationViewModel>();
         public PrivateMessagesViewModel PrivateMessagesViewModel => KernelResolver.Current.Get<PrivateMessagesViewModel>();
         public NetworkConnectivityViewModel NetworkConnectivityViewModel => KernelResolver.Current.Get<NetworkConnectivityViewModel>();
+
+        public CollectionGameManageFursuitsViewModel CollectionGameManageFursuitsViewModel => KernelResolver.Current.Get<CollectionGameManageFursuitsViewModel>();
+        public CollectionGamePlayerViewModel CollectionGamePlayerViewModel => KernelResolver.Current.Get<CollectionGamePlayerViewModel>();
     }
 }

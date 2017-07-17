@@ -50,29 +50,21 @@ namespace Eurofurence.Companion
             InitializeComponent();
             Suspending += OnSuspending;
 
-            NetworkInformation.NetworkStatusChanged += NetworkInformation_NetworkStatusChanged;
-            
             HockeyClient.Current.Configure("790c6dfa20ff4523834501fcea150ec1");
 
             _telemetryClientProvider = KernelResolver.Current.Get<ITelemetryClientProvider>();
             _telemetryClientProvider.Client.TrackEvent("Application started");
 
-
             UnhandledException += App_UnhandledException;
-
         }
 
-        private void NetworkInformation_NetworkStatusChanged(object sender)
-        {
-            
-        }
 
         private async void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             _telemetryClientProvider.Client.TrackException(e.Exception);
             _telemetryClientProvider.Client.Flush();
 
-            await new MessageDialog(e.Exception.Message).ShowAsync();
+            //await new MessageDialog(e.Exception.Message).ShowAsync();
         }
 
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
@@ -85,6 +77,7 @@ namespace Eurofurence.Companion
                 HandleLaunchActivatedEvent(e);
                 return;
             }
+
 
             _dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
             BindableBase.InjectedCoreDispatcher = _dispatcher;
@@ -169,8 +162,8 @@ namespace Eurofurence.Companion
 
             if (_rootFrame.Content == null)
             {
-
-                if (!await navigationMediator.NavigateAsync(typeof (MainPage), e.Arguments, useTransition: false))
+                if (!await navigationMediator.NavigateAsync(typeof(CollectionGamePlayerView), e.Arguments, useTransition: false))
+                //if (!await navigationMediator.NavigateAsync(typeof (CollectionGameManageFursuitsView), e.Arguments, useTransition: false))
                 {
                     throw new Exception("Failed to create initial page");
                 }
