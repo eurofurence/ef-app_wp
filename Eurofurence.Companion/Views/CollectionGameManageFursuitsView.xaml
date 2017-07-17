@@ -1,16 +1,17 @@
 ﻿<Page x:Class="Eurofurence.Companion.Views.CollectionGameManageFursuitsView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:local="using:Eurofurence.Companion.Views"
       xmlns:controls="using:Eurofurence.Companion.Views.Controls"
       xmlns:core="using:Microsoft.Xaml.Interactions.Core"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:local="using:Eurofurence.Companion.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       x:Name="self"
-      mc:Ignorable="d"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-      DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=CollectionGameManageFursuitsViewModel}">
+      DataContext="{Binding Source={StaticResource ViewModelLocator},
+                            Path=CollectionGameManageFursuitsViewModel}"
+      mc:Ignorable="d">
 
     <interactivity:Interaction.Behaviors>
         <interactivity:BehaviorCollection>
@@ -27,12 +28,8 @@
         </Grid>
 
         <StackPanel Visibility="{Binding IsBusy, Converter={StaticResource FalseToVisibleConverter}}">
-            <controls:CgManageFursuitListControl DataContext="{Binding}" 
-                                                 Visibility="{Binding PageIndex, Converter={StaticResource ValueMatchToVisibilityConverter}, ConverterParameter=0}"
-                                                 />
-            <controls:CgManageFursuitAssignTokenControl DataContext="{Binding}"
-                                                        Visibility="{Binding PageIndex, Converter={StaticResource ValueMatchToVisibilityConverter}, ConverterParameter=1}"
-                                                        />
+            <controls:CgManageFursuitListControl DataContext="{Binding}" Visibility="{Binding PageIndex, Converter={StaticResource ValueMatchToVisibilityConverter}, ConverterParameter=0}" />
+            <controls:CgManageFursuitAssignTokenControl DataContext="{Binding}" Visibility="{Binding PageIndex, Converter={StaticResource ValueMatchToVisibilityConverter}, ConverterParameter=1}" />
         </StackPanel>
 
     </Grid>
