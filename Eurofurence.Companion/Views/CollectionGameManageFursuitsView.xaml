@@ -27,10 +27,13 @@
             <controls:LoadingBoxControl />
         </Grid>
 
-        <StackPanel Visibility="{Binding IsBusy, Converter={StaticResource FalseToVisibleConverter}}">
-            <controls:CgManageFursuitListControl DataContext="{Binding}" Visibility="{Binding PageIndex, Converter={StaticResource ValueMatchToVisibilityConverter}, ConverterParameter=0}" />
-            <controls:CgManageFursuitAssignTokenControl DataContext="{Binding}" Visibility="{Binding PageIndex, Converter={StaticResource ValueMatchToVisibilityConverter}, ConverterParameter=1}" />
-        </StackPanel>
+        <ScrollViewer>
+            <StackPanel Visibility="{Binding IsBusy, Converter={StaticResource FalseToVisibleConverter}}">
+                <controls:CgManageFursuitListControl DataContext="{Binding}" Visibility="{Binding PageIndex, Converter={StaticResource ValueMatchToVisibilityConverter}, ConverterParameter=0}" />
+                <controls:CgManageFursuitAssignTokenControl DataContext="{Binding}"
+                                                            Visibility="{Binding PageIndex, Converter={StaticResource ValueMatchToVisibilityConverter}, ConverterParameter=1}" />
+            </StackPanel>
+        </ScrollViewer>
 
     </Grid>
 </Page>

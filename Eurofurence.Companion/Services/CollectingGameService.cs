@@ -51,18 +51,12 @@ namespace Eurofurence.Companion.Services
         }
 
 
-        public async Task<bool> LinkAsync(Guid fursuitBadgeId, string tokenValue)
+        public async Task<ApiResult<object>> LinkAsync(Guid fursuitBadgeId, string tokenValue)
         {
-            try
-            {
-                var result = await _apiClient.PostAsync<string, object>($"Fursuits/CollectingGame/FursuitParticpation/Badges/{fursuitBadgeId}/Token", 
-                    tokenValue, oAuthToken: _authenticationService.State.Token);
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-            return true;
+            var result = await _apiClient.PostAsyncAcceptErrors<string, object>($"Fursuits/CollectingGame/FursuitParticpation/Badges/{fursuitBadgeId}/Token", 
+                tokenValue, oAuthToken: _authenticationService.State.Token);
+
+            return result;
         }
     }
 }

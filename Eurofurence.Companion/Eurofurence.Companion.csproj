@@ -154,6 +154,7 @@
     <Compile Include="ViewModel\Converter\StreamToImageConverter.cs" />
     <Compile Include="ViewModel\Converter\FursuitBadgeIdToUriConverter.cs" />
     <Compile Include="ViewModel\Converter\UriToStringConverter.cs" />
+    <Compile Include="ViewModel\Converter\ValueMatchToBooleanConverter.cs" />
     <Compile Include="ViewModel\Converter\ValueMatchToVisibilityConverter.cs" />
     <Compile Include="ViewModel\Converter\WikiTextToHtmlConverter.cs" />
     <Compile Include="ViewModel\Abstractions\IKnowledgeViewModelContext.cs" />

@@ -97,6 +97,7 @@
             <converter:UriToStringConverter x:Key="UriToStringConverter" />
             <converter:FursuitBadgeIdToUriConverter x:Key="FursuitBadgeIdToUriConverter" />
             <converter:ValueMatchToVisibilityConverter x:Key="ValueMatchToVisibilityConverter" />
+            <converter:ValueMatchToBooleanConverter x:Key="ValueMatchToBooleanConverter" />
 
             <viewModelLocal:TranslationViewModel x:Key="Translations" />
 

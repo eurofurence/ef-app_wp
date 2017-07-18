@@ -60,8 +60,16 @@ namespace Eurofurence.Companion.ViewModel
             FursuitParticipations = new ObservableCollection<FursuitParticipationInfo>();
         }
 
-        private void DoSelect(FursuitParticipationInfo p)
+        private async void DoSelect(FursuitParticipationInfo p)
         {
+            if (p.IsParticipating)
+            {
+                await new MessageDialog(
+                        "This suit is already participating. There'll be a fancy page here some day with statistics.")
+                    .ShowAsync();
+                return;
+            }
+
             SelectedBadge = p.Badge;
             TokenValue = string.Empty;
             ErrorMessage = string.Empty;
@@ -73,12 +81,12 @@ namespace Eurofurence.Companion.ViewModel
             IsBusy = true;
             var result = await _service.LinkAsync(SelectedBadge.Id, TokenValue);
 
-            if (result) {
+            if (result.IsSuccessful) {
                 await RefreshAsync();
                 PageIndex = 0;
             }  else
             {
-                ErrorMessage = "The token you specified could not be linked to the fursuit.\n\nEither the token is invalid, or the fursuit is already linked to an existing token.\n\nEach token can only be linked to a fursuit once.";
+                ErrorMessage = result.ErrorMessage;
             }
 
             IsBusy = false;

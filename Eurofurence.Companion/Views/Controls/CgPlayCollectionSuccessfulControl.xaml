@@ -172,7 +172,7 @@
                            Foreground="{StaticResource EurofurenceThemeColorBrush}"
                            Opacity="0.3"
                            RenderTransformOrigin="0.500,0.550"
-                           Text="&#xE249;"
+                           Text="&#xE1CF;"
                            TextAlignment="Center">
                     <TextBlock.RenderTransform>
                         <CompositeTransform ScaleX="1.2"
@@ -188,7 +188,7 @@
                            Foreground="{StaticResource EurofurenceThemeColorBrush}"
                            Opacity="0.3"
                            RenderTransformOrigin="0.500,0.550"
-                           Text="&#xE24A;"
+                           Text="&#xE1CE;"
                            TextAlignment="Center">
                     <TextBlock.RenderTransform>
                         <CompositeTransform ScaleX="0.8"
