@@ -82,6 +82,7 @@
     <Compile Include="Abstractions\IEntityExtension.cs" />
     <Compile Include="Abstractions\IOrderKeyProvider.cs" />
     <Compile Include="Api\Announcement.cs" />
+    <Compile Include="Api\ApiResult.cs" />
     <Compile Include="Api\AuthenticationResponse.cs" />
     <Compile Include="Api\CollectingGame\FursuitBadgeRecord.cs" />
     <Compile Include="Api\CollectingGame\FursuitParticipationInfo.cs" />

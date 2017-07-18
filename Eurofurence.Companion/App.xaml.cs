@@ -162,8 +162,7 @@ namespace Eurofurence.Companion
 
             if (_rootFrame.Content == null)
             {
-                if (!await navigationMediator.NavigateAsync(typeof(CollectionGamePlayerView), e.Arguments, useTransition: false))
-                //if (!await navigationMediator.NavigateAsync(typeof (CollectionGameManageFursuitsView), e.Arguments, useTransition: false))
+                if (!await navigationMediator.NavigateAsync(typeof(MainPage), e.Arguments, useTransition: false))
                 {
                     throw new Exception("Failed to create initial page");
                 }

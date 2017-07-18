@@ -218,6 +218,9 @@
     <Compile Include="Views\Controls\CgManageFursuitListControl.xaml.cs">
       <DependentUpon>CgManageFursuitListControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\CgPlayCollectionSuccessfulControl.xaml.cs">
+      <DependentUpon>CgPlayCollectionSuccessfulControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\DebugControl.xaml.cs">
       <DependentUpon>DebugControl.xaml</DependentUpon>
     </Compile>
@@ -410,6 +413,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\CgManageFursuitListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\CgPlayCollectionSuccessfulControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

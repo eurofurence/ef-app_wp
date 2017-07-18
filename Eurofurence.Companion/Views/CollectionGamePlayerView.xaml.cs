@@ -23,7 +23,7 @@ namespace Eurofurence.Companion.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class CollectionGamePlayerView : Page
+    public sealed partial class CollectionGamePlayerView : Page, IPageProperties
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
@@ -107,5 +107,7 @@ namespace Eurofurence.Companion.Views
         }
 
         #endregion
+
+        public string Title => "Catch'em'all!";
     }
 }

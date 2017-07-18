@@ -54,7 +54,7 @@ namespace Eurofurence.Companion.Views
             get { return this.defaultViewModel; }
         }
 
-        public string Title => "Collect'em'all";
+        public string Title => "Catch'em'all!";
 
         /// <summary>
         /// Populates the page with content passed during navigation.  Any saved state is also

@@ -88,7 +88,9 @@ namespace Eurofurence.Companion.DataModel
             return JsonConvert.DeserializeObject<T>(content, new JsonSerializerSettings() { DateTimeZoneHandling = DateTimeZoneHandling.Utc });
         }
 
-        public async Task<TResponse> PostAsync<TPayload, TResponse>(string resource, TPayload payload, string oAuthToken = null)
+
+        public async Task<ApiResult<TResponse>> PostAsyncAcceptErrors<TPayload, TResponse>(string resource, TPayload payload,
+            string oAuthToken = null)
         {
             var url = $"{_endpointUrl}/{resource}";
             var postContent = new HttpStringContent(JsonConvert.SerializeObject(payload), Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/json");
@@ -108,13 +110,36 @@ namespace Eurofurence.Companion.DataModel
                 }
 
                 var responseOperation = client.PostAsync(new Uri(url), postContent);
-
                 var response = await responseOperation;
-                response.EnsureSuccessStatusCode();
-
                 var resultContent = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<TResponse>(resultContent);
+
+                var apiResult = new ApiResult<TResponse>();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    apiResult.Value = JsonConvert.DeserializeObject<TResponse>(resultContent);
+                    apiResult.IsSuccessful = true;
+                }
+                else
+                {
+                    var error = new {Code = "", Message = ""};
+                    error = JsonConvert.DeserializeAnonymousType(resultContent, error);
+
+                    apiResult.ErrorMessage = error.Message;
+                    apiResult.ErrorCode = error.Code;
+                }
+
+                return apiResult;
             }
+        }
+
+
+        public async Task<TResponse> PostAsync<TPayload, TResponse>(string resource, TPayload payload, string oAuthToken = null)
+        {
+            var result = await PostAsyncAcceptErrors<TPayload, TResponse>(resource, payload, oAuthToken: oAuthToken);
+            if (result.IsSuccessful) return result.Value;
+
+            throw new Exception(result.ErrorMessage);
         }
 
 

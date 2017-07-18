@@ -5,6 +5,7 @@ using Eurofurence.Companion.DependencyResolution;
 using Eurofurence.Companion.Services.Abstractions;
 using System;
 using System.Threading.Tasks;
+using Eurofurence.Companion.DataModel.Api;
 
 namespace Eurofurence.Companion.Services
 {
@@ -41,9 +42,9 @@ namespace Eurofurence.Companion.Services
             return result;
         }
 
-        public async Task<CollectTokenResponse> CollectAsync(string tokenValue)
+        public async Task<ApiResult<CollectTokenResponse>> CollectAsync(string tokenValue)
         {
-            var result = await _apiClient.PostAsync<string, CollectTokenResponse>("Fursuits/CollectingGame/PlayerParticipation/CollectToken",
+            var result = await _apiClient.PostAsyncAcceptErrors<string, CollectTokenResponse>("Fursuits/CollectingGame/PlayerParticipation/CollectToken",
                 tokenValue, oAuthToken: _authenticationService.State.Token);
 
             return result;

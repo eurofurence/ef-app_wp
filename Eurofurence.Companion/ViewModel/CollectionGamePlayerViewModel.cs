@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Eurofurence.Companion.Common;
@@ -28,6 +29,8 @@ namespace Eurofurence.Companion.ViewModel
         public int CollectionCount { get; set; }
         public bool HasScoreboardRank { get; set; }
         public CollectTokenResponse Response { get; set; }
+        public string PlayerName { get; set; }
+
 
 
         public int PageIndex { get { return _pageIndex; } set { SetProperty(ref _pageIndex, value); } }
@@ -35,10 +38,19 @@ namespace Eurofurence.Companion.ViewModel
         public bool IsBusy { get { return _isBusy; } set { SetProperty(ref _isBusy, value); } }
         public string TokenValue { get { return _tokenValue; } set { SetProperty(ref _tokenValue, value); } }
         public string ErrorMessage { get { return _errorMessage; } set { SetProperty(ref _errorMessage, value); } }
-        public string Username => _authenticationViewModel.Username;
 
+        public string TextTitle => $"Hey, {PlayerName}!";
 
+        public string TextHeader
+        {
+            get
+            {
+                var sb = new StringBuilder();
+                sb.Append($"You've already caught {CollectionCount} fursuits!");
 
+                return sb.ToString();
+            }  
+        } 
 
 
         public ICommand Load { get; }
@@ -74,12 +86,12 @@ namespace Eurofurence.Companion.ViewModel
 
             if (!response.IsSuccessful)
             {
-                ErrorMessage = response.FailureMessage;
+                ErrorMessage = response.ErrorMessage;
                 await RefreshAsync();
             }
             else
             {
-                Response = response;
+                Response = response.Value;
                 OnPropertyChanged(nameof(Response));
                 PageIndex = 1;
             }
@@ -93,9 +105,13 @@ namespace Eurofurence.Companion.ViewModel
 
             CollectionCount = info.CollectionCount;
             HasScoreboardRank = info.ScoreboardRank.HasValue;
+            PlayerName = info.Name;
 
             OnPropertyChanged(nameof(CollectionCount));
             OnPropertyChanged(nameof(HasScoreboardRank));
+            OnPropertyChanged(nameof(PlayerName));
+            OnPropertyChanged(nameof(TextTitle));
+            OnPropertyChanged(nameof(TextHeader));
         }
 
         private async Task LoadAsync()

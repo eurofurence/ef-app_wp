@@ -14,127 +14,8 @@
                             Path=CollectionGamePlayerViewModel}"
       mc:Ignorable="d">
     <Page.Resources>
-        <Storyboard x:Key="FursuitImageExit">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="FursuitImage" Storyboard.TargetProperty="Opacity">
-                <LinearDoubleKeyFrame KeyTime="00:00:00.000" Value="0" />
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
 
-        <Storyboard x:Key="FursuitImageEntrance">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="FursuitImage" Storyboard.TargetProperty="Opacity">
-                <LinearDoubleKeyFrame KeyTime="00:00:00.000" Value="0" />
-                <LinearDoubleKeyFrame KeyTime="00:00:01.000" Value="1" />
-            </DoubleAnimationUsingKeyFrames>
-
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="FursuitImage" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)">
-
-                <LinearDoubleKeyFrame KeyTime="00:00:00.000" Value="0" />
-                <EasingDoubleKeyFrame KeyTime="00:00:01.000" Value="1.3">
-                    <EasingDoubleKeyFrame.EasingFunction>
-                        <PowerEase EasingMode="EaseInOut" />
-                    </EasingDoubleKeyFrame.EasingFunction>
-                </EasingDoubleKeyFrame>
-                <LinearDoubleKeyFrame KeyTime="00:00:01.300" Value="1.3" />
-                <EasingDoubleKeyFrame KeyTime="00:00:02.000" Value="1">
-                    <EasingDoubleKeyFrame.EasingFunction>
-                        <PowerEase EasingMode="EaseInOut" />
-                    </EasingDoubleKeyFrame.EasingFunction>
-                </EasingDoubleKeyFrame>
-            </DoubleAnimationUsingKeyFrames>
-
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="FursuitImage" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)">
-
-                <LinearDoubleKeyFrame KeyTime="00:00:00.000" Value="0" />
-                <EasingDoubleKeyFrame KeyTime="00:00:01.000" Value="1.3">
-                    <EasingDoubleKeyFrame.EasingFunction>
-                        <PowerEase EasingMode="EaseInOut" />
-                    </EasingDoubleKeyFrame.EasingFunction>
-                </EasingDoubleKeyFrame>
-                <LinearDoubleKeyFrame KeyTime="00:00:01.300" Value="1.3" />
-                <EasingDoubleKeyFrame KeyTime="00:00:02.000" Value="1">
-                    <EasingDoubleKeyFrame.EasingFunction>
-                        <PowerEase EasingMode="EaseInOut" />
-                    </EasingDoubleKeyFrame.EasingFunction>
-                </EasingDoubleKeyFrame>
-            </DoubleAnimationUsingKeyFrames>
-
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="FursuitImage" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)">
-
-                <LinearDoubleKeyFrame KeyTime="00:00:00.000" Value="720" />
-                <EasingDoubleKeyFrame KeyTime="00:00:01.000" Value="0">
-                    <EasingDoubleKeyFrame.EasingFunction>
-                        <PowerEase EasingMode="EaseInOut" />
-                    </EasingDoubleKeyFrame.EasingFunction>
-                </EasingDoubleKeyFrame>
-
-            </DoubleAnimationUsingKeyFrames>
-
-        </Storyboard>
-        <Storyboard x:Key="Storyboard"
-                    AutoReverse="True"
-                    RepeatBehavior="Forever">
-            <DoubleAnimation BeginTime="00:00:00.000"
-                             Duration="00:00:02.000"
-                             From="0.8"
-                             Storyboard.TargetName="StarInner"
-                             Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)"
-                             To="1.2">
-                <DoubleAnimation.EasingFunction>
-                    <PowerEase EasingMode="EaseInOut" />
-                </DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
-            <DoubleAnimation BeginTime="00:00:00.000"
-                             Duration="00:00:02.000"
-                             From="0.8"
-                             Storyboard.TargetName="StarInner"
-                             Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)"
-                             To="1.2">
-                <DoubleAnimation.EasingFunction>
-                    <PowerEase EasingMode="EaseInOut" />
-                </DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
-            <DoubleAnimation BeginTime="00:00:00.000"
-                             Duration="00:00:02.000"
-                             From="1.2"
-                             Storyboard.TargetName="StarOuter"
-                             Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)"
-                             To="0.8">
-                <DoubleAnimation.EasingFunction>
-                    <PowerEase EasingMode="EaseInOut" />
-                </DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
-            <DoubleAnimation BeginTime="00:00:00.000"
-                             Duration="00:00:02.000"
-                             From="1.2"
-                             Storyboard.TargetName="StarOuter"
-                             Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)"
-                             To="0.8">
-                <DoubleAnimation.EasingFunction>
-                    <PowerEase EasingMode="EaseInOut" />
-                </DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
-
-        </Storyboard>
     </Page.Resources>
-
-    <interactivity:Interaction.Behaviors>
-        <interactivity:BehaviorCollection>
-            <core:EventTriggerBehavior EventName="Loaded">
-                <core:InvokeCommandAction Command="{Binding Load}" />
-                <!--<media:ControlStoryboardAction Storyboard="{StaticResource Storyboard}" ControlStoryboardOption="Play" />-->
-            </core:EventTriggerBehavior>
-            <core:DataTriggerBehavior Binding="{Binding PageIndex}" Value="1">
-                <media:ControlStoryboardAction ControlStoryboardOption="Play" Storyboard="{StaticResource FursuitImageExit}" />
-                <media:ControlStoryboardAction ControlStoryboardOption="Play" Storyboard="{StaticResource Storyboard}" />
-            </core:DataTriggerBehavior>
-            <core:DataTriggerBehavior Binding="{Binding PageIndex}" Value="0">
-                <media:ControlStoryboardAction ControlStoryboardOption="Stop" Storyboard="{StaticResource Storyboard}" />
-                <media:ControlStoryboardAction ControlStoryboardOption="Stop" Storyboard="{StaticResource FursuitImageEntrance}" />
-                <media:ControlStoryboardAction ControlStoryboardOption="Play" Storyboard="{StaticResource FursuitImageExit}" />
-            </core:DataTriggerBehavior>
-        </interactivity:BehaviorCollection>
-
-    </interactivity:Interaction.Behaviors>
 
     <Grid x:Name="LayoutRoot">
         <Grid Visibility="{Binding IsBusy, Converter={StaticResource TrueToVisibleConverter}}">
@@ -145,112 +26,80 @@
 
                 <StackPanel Visibility="{Binding PageIndex, Converter={StaticResource ValueMatchToVisibilityConverter}, ConverterParameter=0}">
 
-                    <!--<TextBlock Text="{Binding CollectionCount}" />-->
-                    <TextBlock>One day, I'll be a sexy UI.</TextBlock>
+                    <TextBlock Style="{StaticResource SubheaderTextBlockStyle}"
+                               Text="{Binding TextTitle}"
+                               />
+                               
 
-                    <TextBox Text="{Binding TokenValue, Mode=TwoWay}" />
-                    <Button Command="{Binding SubmitTokenCommand}">Submit</Button>
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}"
+                               Margin="0 10 0 0"
+                               TextWrapping="WrapWholeWords" 
+                               Text="{Binding TextHeader}">
+
+                    </TextBlock>
+                    <Border Margin="5" />
+                    <Border Margin="{StaticResource AppGroupHeaderOuterMargin}"
+                            Style="{StaticResource AppGroupHeaderBorder}">
+                        <Grid Margin="{StaticResource AppGroupHeaderInnerMargin}">
+                            <TextBlock Style="{StaticResource AppGroupHeaderTextStyle}">
+                                Catch a Fursuit!
+                            </TextBlock>
+                        </Grid>
+                    </Border>
+                    <Border Margin="5" />
+
+                    <!--<TextBlock Text="{Binding CollectionCount}" />-->
+                    <TextBlock Style="{StaticResource TextBlockMediumSmallStyle}"
+                               Margin="0 0 0 0"
+                               TextWrapping="WrapWholeWords">
+                        Did you get the {secret?} code of a {fursuiter?, creature?} you encountered? Enter it here to catch them and add them to your collection!</TextBlock>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox PlaceholderText="Enter code here"
+                                 Text="{Binding TokenValue, Mode=TwoWay}"
+                                 Grid.Column="0"
+                                 VerticalAlignment="Center"
+                                 />
+
+                        <Button Command="{Binding SubmitTokenCommand}"
+                                Grid.Column="1"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Margin="10 0 0 0">Catch!</Button>
+                    </Grid>
 
                     <controls:ErrorMessageControl ErrorMessage="{Binding ErrorMessage}" />
+
+                    <Border Margin="15" />
+                    <Border Margin="{StaticResource AppGroupHeaderOuterMargin}"
+                            Style="{StaticResource AppGroupHeaderBorder}">
+                        <Grid Margin="{StaticResource AppGroupHeaderInnerMargin}">
+                            <TextBlock Style="{StaticResource AppGroupHeaderTextStyle}">
+                                Participate with your own Fursuits
+                            </TextBlock>
+                        </Grid>
+                    </Border>
+                    <Border Margin="5" />
+
+                    <!--<TextBlock Text="{Binding CollectionCount}" />-->
+                    <TextBlock Style="{StaticResource TextBlockMediumSmallStyle}"
+                               Margin="0 0 0 0"
+                               TextWrapping="WrapWholeWords">
+                        If you want players to be able to catch your Fursuit, you have to register the
+                        code on the fursuit badge sticker first.
+                    </TextBlock>
+                    <Button
+                        Command="{Binding Source={StaticResource ViewModelLocator}, Path=NavigationViewModel.NavigateToCollectionGameFursuitManagementPage}"
+                        >Manage my Fursuits</Button>
+
                 </StackPanel>
 
                 <StackPanel Visibility="{Binding PageIndex, Converter={StaticResource ValueMatchToVisibilityConverter}, ConverterParameter=1}">
-
-                    <Grid>
-                        <TextBlock x:Name="StarInner"
-                                   Width="330"
-                                   Height="330"
-                                   FontFamily="{StaticResource IconFontFamily}"
-                                   FontSize="330"
-                                   Foreground="{StaticResource EurofurenceThemeColorBrush}"
-                                   Opacity="0.3"
-                                   RenderTransformOrigin="0.500,0.550"
-                                   Text="&#xE249;"
-                                   TextAlignment="Center">
-                            <TextBlock.RenderTransform>
-                                <CompositeTransform ScaleX="1.2"
-                                                    ScaleY="1.2"
-                                                    TranslateY="-10" />
-                            </TextBlock.RenderTransform>
-                        </TextBlock>
-                        <TextBlock x:Name="StarOuter"
-                                   Width="330"
-                                   Height="330"
-                                   FontFamily="{StaticResource IconFontFamily}"
-                                   FontSize="330"
-                                   Foreground="{StaticResource EurofurenceThemeColorBrush}"
-                                   Opacity="0.3"
-                                   RenderTransformOrigin="0.500,0.550"
-                                   Text="&#xE24A;"
-                                   TextAlignment="Center">
-                            <TextBlock.RenderTransform>
-                                <CompositeTransform ScaleX="0.8"
-                                                    ScaleY="0.8"
-                                                    TranslateY="-10" />
-                            </TextBlock.RenderTransform>
-                        </TextBlock>
-                        <Border x:Name="FursuitImage"
-                                Width="190"
-                                Height="250"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Background="{StaticResource EurofurenceThemeColorBrush}"
-                                CornerRadius="15"
-                                Padding="5"
-                                RenderTransformOrigin="0.5,0.5">
-                            <Border.RenderTransform>
-                                <CompositeTransform Rotation="0"
-                                                    ScaleX="1"
-                                                    ScaleY="1"
-                                                    TranslateX="0"
-                                                    TranslateY="0" />
-                            </Border.RenderTransform>
-                            <Rectangle RadiusX="10" RadiusY="10">
-                                <Rectangle.Fill>
-                                    <ImageBrush ImageSource="{Binding Response.FursuitBadgeId, Converter={StaticResource FursuitBadgeIdToUriConverter}}">
-                                        <interactivity:Interaction.Behaviors>
-                                            <interactivity:BehaviorCollection>
-                                                <core:EventTriggerBehavior EventName="ImageOpened">
-                                                    <media:ControlStoryboardAction ControlStoryboardOption="Play" Storyboard="{StaticResource FursuitImageEntrance}" />
-                                                </core:EventTriggerBehavior>
-                                            </interactivity:BehaviorCollection>
-                                        </interactivity:Interaction.Behaviors>
-                                    </ImageBrush>
-                                </Rectangle.Fill>
-                            </Rectangle>
-                        </Border>
-
-                    </Grid>
-
-                    <Border Margin="-20 0 -20 0"
-                            Background="#30000000"
-                            Padding="10">
-                        <StackPanel>
-                            <TextBlock Style="{StaticResource BodyTextBlockStyle}" TextAlignment="Center">Congratulations! You found:</TextBlock>
-                            <TextBlock FontSize="{StaticResource TextStyleExtraExtraLargeFontSize}"
-                                       FontWeight="Bold"
-                                       Foreground="{StaticResource EurofurenceThemeColorBrush}"
-                                       Style="{StaticResource BaseTextBlockStyle}"
-                                       Text="{Binding Response.Name}"
-                                       TextAlignment="Center" />
-                            <TextBlock Style="{StaticResource BodyTextBlockStyle}" TextAlignment="Center">
-                                <Run Text="{Binding Response.Species}" />
-                                <Run Text=" - " />
-                                <Run Text="{Binding Response.Gender}" />
-                            </TextBlock>
-
-                            <TextBlock Margin="0 5 0 0" TextAlignment="Center">
-                                <Run Text="{Binding Response.Name}" />
-                                <Run Text="has been found by" />
-                                <Run Text="{Binding CollectionCount}" />
-                                <Run Text="people so far!" />
-                            </TextBlock>
-
-                        </StackPanel>
-                    </Border>
-
-                    <Button HorizontalAlignment="Center" Command="{Binding BackCommand}">Close</Button>
-
+                    <controls:CgPlayCollectionSuccessfulControl DataContext="{Binding}" />
                 </StackPanel>
             </StackPanel>
 
