@@ -24,14 +24,8 @@ namespace Eurofurence.Companion.ViewModel
         private string _tokenValue = string.Empty;
         private string _errorMessage = string.Empty;
 
-
-
-        public int CollectionCount { get; set; }
-        public bool HasScoreboardRank { get; set; }
+        public PlayerParticipationInfo ParticipationInfo { get; set; }
         public CollectTokenResponse Response { get; set; }
-        public string PlayerName { get; set; }
-
-
 
         public int PageIndex { get { return _pageIndex; } set { SetProperty(ref _pageIndex, value); } }
 
@@ -39,14 +33,14 @@ namespace Eurofurence.Companion.ViewModel
         public string TokenValue { get { return _tokenValue; } set { SetProperty(ref _tokenValue, value); } }
         public string ErrorMessage { get { return _errorMessage; } set { SetProperty(ref _errorMessage, value); } }
 
-        public string TextTitle => $"Hey, {PlayerName}!";
+        public string TextTitle => $"Hey, {ParticipationInfo?.Name ?? ""}!";
 
         public string TextHeader
         {
             get
             {
                 var sb = new StringBuilder();
-                sb.Append($"You've already caught {CollectionCount} fursuits!");
+                sb.Append($"You've already caught {ParticipationInfo?.CollectionCount ?? 0} fursuits!");
 
                 return sb.ToString();
             }  
@@ -103,13 +97,9 @@ namespace Eurofurence.Companion.ViewModel
         {
             var info = await _service.GetPlayerParticipationInfoAsync();
 
-            CollectionCount = info.CollectionCount;
-            HasScoreboardRank = info.ScoreboardRank.HasValue;
-            PlayerName = info.Name;
+            ParticipationInfo = info;
 
-            OnPropertyChanged(nameof(CollectionCount));
-            OnPropertyChanged(nameof(HasScoreboardRank));
-            OnPropertyChanged(nameof(PlayerName));
+            OnPropertyChanged(nameof(ParticipationInfo));
             OnPropertyChanged(nameof(TextTitle));
             OnPropertyChanged(nameof(TextHeader));
         }
