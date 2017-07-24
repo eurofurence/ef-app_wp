@@ -93,6 +93,7 @@
     <Compile Include="Common\Abstractions\ITimeProvider.cs" />
     <Compile Include="Common\AsyncNavigationEvent.cs" />
     <Compile Include="Common\Abstractions\IAppVersionProvider.cs" />
+    <Compile Include="Common\AwaitableCommandExceptionHandlerFactory.cs" />
     <Compile Include="Controls\ExpandPanel.cs" />
     <Compile Include="Controls\TilePanel.cs" />
     <Compile Include="Common\NavigationHelper.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\Behaviors\WikiTextBoxProperties.cs" />
     <Compile Include="ViewModel\CollectionGameManageFursuitsViewModel.cs" />
+    <Compile Include="ViewModel\CollectionGameScoreboardViewModel.cs" />
     <Compile Include="ViewModel\CollectionGamePlayerViewModel.cs" />
     <Compile Include="ViewModel\Converter\BooleanInvertConverter.cs" />
     <Compile Include="ViewModel\Converter\BooleanToVisibilityConverter.cs" />
@@ -212,6 +214,9 @@
     </Compile>
     <Compile Include="Views\CollectionGamePlayerView.xaml.cs">
       <DependentUpon>CollectionGamePlayerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CollectionGameScoreboardView.xaml.cs">
+      <DependentUpon>CollectionGameScoreboardView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\CgManageFursuitAssignTokenControl.xaml.cs">
       <DependentUpon>CgManageFursuitAssignTokenControl.xaml</DependentUpon>
@@ -406,6 +411,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CollectionGamePlayerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CollectionGameScoreboardView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

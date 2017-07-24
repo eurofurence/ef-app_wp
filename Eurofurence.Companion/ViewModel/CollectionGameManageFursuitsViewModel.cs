@@ -51,11 +51,13 @@ namespace Eurofurence.Companion.ViewModel
             _service = service;
             _navigationViewModel = navigationViewModel;
 
-            Load = new AwaitableCommand(LoadAsync, (ex) => _navigationViewModel.NavigateToMainPage.Execute(null));
+
+            Load = new AwaitableCommand(LoadAsync, (e, t) => AwaitableCommandExceptionHandlerFactory.RetryOrReturnToMainPage(e, t));
+                
             Select = new RelayCommand(p => DoSelect((FursuitParticipationInfo)p));
 
             CancelTokenAssignmentCommand = new RelayCommand((p) => { ErrorMessage = string.Empty; PageIndex = 0; });
-            SubmitTokenAssignmentCommand = new AwaitableCommand(LinkTokenAsync);
+            SubmitTokenAssignmentCommand = new AwaitableCommand(LinkTokenAsync, (e, t) => AwaitableCommandExceptionHandlerFactory.RetryOrReturnToMainPage(e, t));
 
             FursuitParticipations = new ObservableCollection<FursuitParticipationInfo>();
         }
@@ -104,12 +106,8 @@ namespace Eurofurence.Companion.ViewModel
         private async Task LoadAsync()
         {
             IsBusy = true;
-            await Task.Delay(300); // Todo- Remove.
             await RefreshAsync();
             IsBusy = false;
         }
-
-
-
     }
 }

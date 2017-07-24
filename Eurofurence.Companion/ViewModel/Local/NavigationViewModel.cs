@@ -32,6 +32,7 @@ namespace Eurofurence.Companion.ViewModel.Local
         public RelayCommand NavigateToMapDetailPage { get; set; }
         public RelayCommand NavigateToCollectionGameMainPage { get; set; }
         public RelayCommand NavigateToCollectionGameFursuitManagementPage { get; set; }
+        public RelayCommand NavigateToCollectionGameScoreboardPage { get; set; }
 
         public NavigationViewModel(INavigationMediator navigationMediator)
         {
@@ -61,6 +62,7 @@ namespace Eurofurence.Companion.ViewModel.Local
 
             NavigateToCollectionGameMainPage = new RelayCommand(p => { _navigationMediator.NavigateAsync(typeof(Views.CollectionGamePlayerView), p); });
             NavigateToCollectionGameFursuitManagementPage = new RelayCommand(p => { _navigationMediator.NavigateAsync(typeof(Views.CollectionGameManageFursuitsView), p); });
+            NavigateToCollectionGameScoreboardPage = new RelayCommand(p => { _navigationMediator.NavigateAsync(typeof(Views.CollectionGameScoreboardView), p); });
 
         }
     }

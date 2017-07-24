@@ -1,8 +1,8 @@
 using System;
-using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.UI.Popups;
 using Eurofurence.Companion.Common;
 using Eurofurence.Companion.DataModel;
 using Eurofurence.Companion.DataModel.Api.CollectingGame;
@@ -61,15 +61,16 @@ namespace Eurofurence.Companion.ViewModel
             _service = service;
             _navigationViewModel = navigationViewModel;
 
-            Load = new AwaitableCommand(LoadAsync, (ex) => _navigationViewModel.NavigateToMainPage.Execute(null));
+            Load = new AwaitableCommand(LoadAsync, (e, t) => AwaitableCommandExceptionHandlerFactory.RetryOrReturnToMainPage(e, t));
+
             BackCommand = new AwaitableCommand(() => LoadAsync().ContinueWith(_ =>
             {
                 ErrorMessage = string.Empty;
                 PageIndex = 0;
                 TokenValue = string.Empty;
             }));
-            SubmitTokenCommand = new AwaitableCommand(SubmitTokenAsync);
 
+            SubmitTokenCommand = new AwaitableCommand(SubmitTokenAsync, (e, t) => AwaitableCommandExceptionHandlerFactory.RetryOrReturnToMainPage(e, t));
         }
 
 
@@ -95,9 +96,25 @@ namespace Eurofurence.Companion.ViewModel
 
         private async Task RefreshAsync()
         {
-            var info = await _service.GetPlayerParticipationInfoAsync();
+            if (!_authenticationViewModel.IsAuthenticated)
+            {
 
-            ParticipationInfo = info;
+                await new MessageDialog(
+                    "You must be logged on to play.\n\nWould you like to login now?",
+                    "Login Required")
+                {
+                    Commands =
+                    {
+                        new UICommand("Cancel", _ => _navigationViewModel.NavigateToMainPage.Execute(null)),
+                        new UICommand("Login", _ => _navigationViewModel.NavigateToUserCentralPage.Execute(null))
+                    },
+                    DefaultCommandIndex = 1
+                }.ShowAsync();
+
+                return;
+            }
+
+            ParticipationInfo = await _service.GetPlayerParticipationInfoAsync(); ;
 
             OnPropertyChanged(nameof(ParticipationInfo));
             OnPropertyChanged(nameof(TextTitle));
@@ -107,12 +124,8 @@ namespace Eurofurence.Companion.ViewModel
         private async Task LoadAsync()
         {
             IsBusy = true;
-            await Task.Delay(300); // Todo- Remove.
             await RefreshAsync();
             IsBusy = false;
         }
-
-
-
     }
 }

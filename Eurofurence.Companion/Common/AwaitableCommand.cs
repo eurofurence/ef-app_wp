@@ -6,7 +6,7 @@ namespace Eurofurence.Companion.Common
 {
     public class AwaitableCommand: AwaitableCommand<object>
     {
-        public AwaitableCommand(Func<Task> executeMethod, Action<Exception> exceptionHandler = null)
+        public AwaitableCommand(Func<Task> executeMethod, Action<Exception, Func<Task>> exceptionHandler = null)
             :base(o=>executeMethod(), exceptionHandler)
         {
 
@@ -18,9 +18,9 @@ namespace Eurofurence.Companion.Common
     {
         private readonly Func<T, Task> _executeMethod;
         private bool _isExecuting;
-        private readonly Action<Exception> _exceptionHandler;
+        private readonly Action<Exception, Func<Task>> _exceptionHandler;
 
-        public AwaitableCommand(Func<T, Task> executeMethod, Action<Exception> exceptionHandler = null)
+        public AwaitableCommand(Func<T, Task> executeMethod, Action<Exception, Func<Task>> exceptionHandler = null)
         {
             _executeMethod = executeMethod;
             _exceptionHandler = exceptionHandler;
@@ -36,7 +36,7 @@ namespace Eurofurence.Companion.Common
             }
             catch (Exception ex)
             {
-                _exceptionHandler?.Invoke(ex);
+                _exceptionHandler?.Invoke(ex, () => ExecuteAsync(obj));
             }
             finally
             {

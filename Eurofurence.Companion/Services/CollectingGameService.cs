@@ -58,5 +58,20 @@ namespace Eurofurence.Companion.Services
 
             return result;
         }
+
+        public async Task<FursuitScoreboardEntry[]> GetFursuitScoreboardAsync()
+        {
+            var result = await _apiClient.GetAsync<FursuitScoreboardEntry[]>("Fursuits/CollectingGame/FursuitParticipation/Scoreboard",
+                oAuthToken: _authenticationService.State.Token);
+
+            return result;
+        }
+        public async Task<PlayerScoreboardEntry[]> GetPlayerScoreboardAsync()
+        {
+            var result = await _apiClient.GetAsync<PlayerScoreboardEntry[]>("Fursuits/CollectingGame/PlayerParticipation/Scoreboard",
+                oAuthToken: _authenticationService.State.Token);
+
+            return result;
+        }
     }
 }

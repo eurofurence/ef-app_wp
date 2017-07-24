@@ -84,10 +84,14 @@
     <Compile Include="Api\Announcement.cs" />
     <Compile Include="Api\ApiResult.cs" />
     <Compile Include="Api\AuthenticationResponse.cs" />
+    <Compile Include="Api\CollectingGame\CollectTokenResponse.cs" />
     <Compile Include="Api\CollectingGame\FursuitBadgeRecord.cs" />
     <Compile Include="Api\CollectingGame\FursuitParticipationInfo.cs" />
     <Compile Include="Api\CollectingGame\FursuitParticipationRecord.cs" />
+    <Compile Include="Api\CollectingGame\FursuitScoreboardEntry.cs" />
     <Compile Include="Api\CollectingGame\PlayerParticipationInfo.cs" />
+    <Compile Include="Api\CollectingGame\PlayerScoreboardEntry.cs" />
+    <Compile Include="Api\CollectingGame\ScoreboardEntry.cs" />
     <Compile Include="Api\Dealer.cs" />
     <Compile Include="Api\Endpoint.cs" />
     <Compile Include="Api\EndpointConfiguration.cs" />

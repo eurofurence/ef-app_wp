@@ -129,6 +129,25 @@
                     </TextBlock>
                     <Button Command="{Binding Source={StaticResource ViewModelLocator}, Path=NavigationViewModel.NavigateToCollectionGameFursuitManagementPage}">Manage my Fursuits</Button>
 
+                    <Border Margin="15" />
+                    <Border Margin="{StaticResource AppGroupHeaderOuterMargin}"
+                            Style="{StaticResource AppGroupHeaderBorder}">
+                        <Grid Margin="{StaticResource AppGroupHeaderInnerMargin}">
+                            <TextBlock Style="{StaticResource AppGroupHeaderTextStyle}">
+                                Scoreboards
+                            </TextBlock>
+                        </Grid>
+                    </Border>
+                    <Border Margin="5" />
+
+                    <!--<TextBlock Text="{Binding CollectionCount}" />-->
+                    <TextBlock Margin="0 0 0 0"
+                               Style="{StaticResource TextBlockMediumSmallStyle}"
+                               TextWrapping="WrapWholeWords">
+                        Who has collected most creatures? Which creature has been found most often? Find out!
+                    </TextBlock>
+                    <Button Command="{Binding Source={StaticResource ViewModelLocator}, Path=NavigationViewModel.NavigateToCollectionGameScoreboardPage}">View Scoreboards</Button>
+
                 </StackPanel>
 
                 <StackPanel Visibility="{Binding PageIndex, Converter={StaticResource ValueMatchToVisibilityConverter}, ConverterParameter=1}">

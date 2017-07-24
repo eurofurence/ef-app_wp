@@ -1,0 +1,205 @@
+﻿<Page x:Class="Eurofurence.Companion.Views.CollectionGameScoreboardView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:controls="using:Eurofurence.Companion.Views.Controls"
+      xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:local="using:Eurofurence.Companion.Views"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      x:Name="self"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+      DataContext="{Binding Source={StaticResource ViewModelLocator},
+                            Path=CollectionGameScoreboardViewModel}"
+      mc:Ignorable="d">
+
+    <interactivity:Interaction.Behaviors>
+        <interactivity:BehaviorCollection>
+            <core:EventTriggerBehavior EventName="Loaded">
+                <core:InvokeCommandAction Command="{Binding Load}" />
+            </core:EventTriggerBehavior>
+        </interactivity:BehaviorCollection>
+    </interactivity:Interaction.Behaviors>
+
+    <Grid x:Name="LayoutRoot">
+
+        <Grid Visibility="{Binding IsBusy, Converter={StaticResource TrueToVisibleConverter}}">
+            <controls:LoadingBoxControl />
+        </Grid>
+
+        <ScrollViewer>
+            <StackPanel Visibility="{Binding IsBusy, Converter={StaticResource FalseToVisibleConverter}}">
+
+                <StackPanel Margin="20 10 20 10">
+                    <TextBlock Style="{StaticResource SubheaderTextBlockStyle}"
+                               Text="Scoreboards" />
+
+                    <TextBlock Style="{StaticResource TextBlockMediumSmallStyle}"
+                               Margin="0 10 0 0"
+                               TextWrapping="WrapWholeWords">
+                        When two or more players/fursuits share the same number of 'catches', those who
+                        achieved their number first are ranked higher.
+                    </TextBlock>
+
+                    <Border Margin="5" />
+                    <Border Margin="{StaticResource AppGroupHeaderOuterMargin}"
+                            Style="{StaticResource AppGroupHeaderBorder}">
+                        <Grid Margin="{StaticResource AppGroupHeaderInnerMargin}">
+                            <TextBlock Style="{StaticResource AppGroupHeaderTextStyle}">
+                                Players
+                            </TextBlock>
+                        </Grid>
+                    </Border>
+                    <Border Margin="5" />
+
+                    <ItemsControl ItemsSource="{Binding PlayerScoreboardEntries}">
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ContentPresenter">
+                                <Setter Property="HorizontalAlignment"
+                                        Value="Stretch" />
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0 0 0 10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="50" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Width="40"
+                                            Height="40"
+                                            CornerRadius="25"
+                                            Grid.Column="0">
+                                        <Border.Background>
+                                            <SolidColorBrush Color="{StaticResource EurofurenceThemeColor}"
+                                                             Opacity="0.4"></SolidColorBrush>
+                                        </Border.Background>
+                                        <TextBlock Margin="0.5 3.5 0 0"
+                                                   FontSize="{StaticResource TextStyleExtraLargeFontSize}"
+                                                   Text="{Binding Rank}"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center" />
+                                    </Border>
+
+
+                                    <StackPanel Grid.Column="1"
+                                                Margin="15 0 0 0"
+                                                VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Name}"
+                                                   FontWeight="Bold"
+                                                   Style="{StaticResource BaseTextBlockStyle}"
+                                                   FontSize="{StaticResource TextStyleLargeFontSize}" />
+                                        <TextBlock Margin="0 0 0 0"
+                                                   Style="{StaticResource BaseTextBlockStyle}"
+                                                   FontSize="{StaticResource TextStyleMediumSmallFontSize}">
+                                            
+                                            <Run Text="Caught: " /><Run Text="{Binding CollectionCount}"
+                                                                        FontWeight="Bold" /><Run Text=" creatures" />
+                                        </TextBlock>
+
+                                    </StackPanel>
+
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>                    
+                    
+                    <Border Margin="5" />
+                    <Border Margin="{StaticResource AppGroupHeaderOuterMargin}"
+                            Style="{StaticResource AppGroupHeaderBorder}">
+                        <Grid Margin="{StaticResource AppGroupHeaderInnerMargin}">
+                            <TextBlock Style="{StaticResource AppGroupHeaderTextStyle}">
+                                Fursuits
+                            </TextBlock>
+                        </Grid>
+                    </Border>
+                    <Border Margin="5" />
+
+                    <ItemsControl ItemsSource="{Binding FursuitScoreboardEntries}">
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ContentPresenter">
+                                <Setter Property="HorizontalAlignment"
+                                        Value="Stretch" />
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0 0 0 10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="50" />
+                                        <ColumnDefinition Width="80" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Width="40"
+                                            Height="40"
+                                            CornerRadius="25"
+                                            Grid.Column="0">
+                                        <Border.Background>
+                                            <SolidColorBrush Color="{StaticResource EurofurenceThemeColor}"
+                                                             Opacity="0.4"></SolidColorBrush>
+                                        </Border.Background>
+                                        <TextBlock Margin="0.5 3.5 0 0"
+                                                   FontSize="{StaticResource TextStyleExtraLargeFontSize}"
+                                                   Text="{Binding Rank}"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center" />
+                                    </Border>
+
+                                    <Border Grid.Column="1"
+                                            Width="60"
+                                            Height="80"
+                                            Background="{StaticResource EurofurenceThemeColorBrush}"
+                                            CornerRadius="5"
+                                            Padding="2">
+                                        <Rectangle RadiusX="3"
+                                                   RadiusY="3">
+                                            <Rectangle.Fill>
+                                                <ImageBrush ImageSource="{Binding BadgeId, Converter={StaticResource FursuitBadgeIdToUriConverter}}" />
+                                            </Rectangle.Fill>
+                                        </Rectangle>
+                                    </Border>
+
+                                    <StackPanel Grid.Column="2"
+                                                VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Name}"
+                                                   FontWeight="Bold"
+                                                   Style="{StaticResource BaseTextBlockStyle}"
+                                                   FontSize="{StaticResource TextStyleLargeFontSize}" />
+                                        <TextBlock Foreground="{ThemeResource PhoneMidBrush}"
+                                                   Style="{StaticResource BaseTextBlockStyle}"
+                                                   FontSize="{StaticResource TextStyleMediumSmallFontSize}">
+                                        
+                                            <Run Text="{Binding Species}" /><Run Text="," />
+                                            <Run Text="{Binding Gender}" />
+                                        </TextBlock>
+                                        <TextBlock Margin="0 10 0 0"
+                                                   Style="{StaticResource BaseTextBlockStyle}"
+                                                   FontSize="{StaticResource TextStyleMediumSmallFontSize}">
+                                            
+                                            <Run Text="Caught: " /><Run Text="{Binding CollectionCount}"
+                                                                        FontWeight="Bold" /><Run Text=" times" />
+                                        </TextBlock>
+
+                                    </StackPanel>
+
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                </StackPanel>
+
+            </StackPanel>
+        </ScrollViewer>
+
+    </Grid>
+</Page>
+
+
+
