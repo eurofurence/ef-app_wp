@@ -97,14 +97,15 @@ namespace Eurofurence.Companion.ViewModel.Local
                 },
                 new MenuItemViewModel{
                     Title = "Catch'em'all!",
-                    Icon = "\uE899",
+                    Icon = "\uE722 ",
                     Description = "Participate in the Fursuit catching game!",
                     NavigationCommand = new RelayCommand(p => {
                         _navigationMediator.NavigateAsync(typeof(Views.CollectionGamePlayerView), forceNewStack: true);
                     }),
                     ChildTypes = new List<Type>() {
-                        typeof(Views.MapsPage),
-                        typeof(Views.MapDetailPage)
+                        typeof(Views.CollectionGamePlayerView),
+                        typeof(Views.CollectionGameManageFursuitsView),
+                        typeof(Views.CollectionGameScoreboardView),
                     }
                 },
                 new object(),
