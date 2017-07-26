@@ -147,7 +147,7 @@ namespace Eurofurence.Companion.Views
 
             await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                if (forceNewStack && !_forceNewStack()) return;
+                if (forceNewStack && !_forceNewStack(sourcePageType)) return;
                 _menuViewModel.Value.IsMenuVisible = false;
                 _telemetryClientProvider.Client.TrackPageView(sourcePageType.FullName);
 
@@ -168,13 +168,14 @@ namespace Eurofurence.Companion.Views
 
         }
 
-        private bool _forceNewStack()
+        private bool _forceNewStack(Type sourcePageType)
         {
             if (RootFrame.CurrentSourcePageType == typeof(MainPage)) return true;
 
             if (RootFrame.BackStack.Count == 0 || RootFrame.BackStack[0].SourcePageType != typeof(MainPage)) {
 
-                if (!RootFrame.Navigate(typeof(MainPage), null, null)) return false;
+                if (sourcePageType != typeof(MainPage) && !RootFrame.Navigate(typeof(MainPage), null, null))
+                    return false;
                 RootFrame.BackStack.Clear();
                 RootFrame.ForwardStack.Clear();
             }

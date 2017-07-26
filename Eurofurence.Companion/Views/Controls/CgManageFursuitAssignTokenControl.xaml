@@ -16,20 +16,65 @@
         <ScrollViewer>
             <StackPanel Margin="20 10 20 10">
                 <TextBlock Style="{StaticResource SubheaderTextBlockStyle}"
-                           Text="Signup / Connect Token" />
+                           Text="Register Fursuit Participation" />
 
-                <Image Source="{Binding SelectedBadge.Id, Converter={StaticResource FursuitBadgeIdToUriConverter}}"
-                       Width="90"
-                       Height="120"
-                       VerticalAlignment="Center" />
-                <TextBlock Text="{Binding SelectedBadge.Name}" />
+                <Border Margin="0 20 0 0"
+                        Grid.Column="1"
+                        Width="120"
+                        Height="160"
+                        Background="{StaticResource EurofurenceThemeColorBrush}"
+                        CornerRadius="5"
+                        Padding="2">
+                    <Rectangle RadiusX="3"
+                               RadiusY="3">
+                        <Rectangle.Fill>
+                            <ImageBrush ImageSource="{Binding SelectedBadge.Id, Converter={StaticResource FursuitBadgeIdToUriConverter}}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Border>
+                <TextBlock Style="{StaticResource BaseTextBlockStyle}"
+                           TextAlignment="Center"
+                           FontSize="{StaticResource TextStyleMediumFontSize}">
+                    
+                    <Run Text="{Binding SelectedBadge.Name}"
+                         FontWeight="Bold"
+                         FontSize="{StaticResource TextStyleLargeFontSize}" />
+                    <LineBreak />
+                    <Run Foreground="{StaticResource PhoneMidBrush}"
+                         Text="{Binding SelectedBadge.Species}" />
+                    <LineBreak />
+                    <Run Foreground="{StaticResource PhoneMidBrush}"
+                         Text="{Binding SelectedBadge.Gender}" />
 
-                <local:ErrorMessageControl ErrorMessage="{Binding ErrorMessage}" 
-                                           />
+                </TextBlock>
 
-                <TextBox PlaceholderText="Enter token here" Text="{Binding TokenValue, Mode=TwoWay}"></TextBox>
-                <Button Command="{Binding SubmitTokenAssignmentCommand}">Link</Button>
-                <Button Command="{Binding CancelTokenAssignmentCommand}">Cancel</Button>
+                <TextBlock Style="{StaticResource TextBlockMediumSmallStyle}"
+                           Margin="0 20 0 10"
+                           TextWrapping="WrapWholeWords">
+                    If the sticker with the code is not applied to the fursuit badge yet, please put it on (on the back).
+                    Afterwards, type in the code here and tap "Register". Others can 'catch' your creature from this
+                    moment on using the code on the sticker.
+
+                </TextBlock>
+
+                <local:ErrorMessageControl ErrorMessage="{Binding ErrorMessage}" />
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" PlaceholderText="Code"
+                             Text="{Binding TokenValue, Mode=TwoWay}"></TextBox>
+                    <Button Grid.Column="1" 
+                            Margin="5 0 0 0"
+                            Command="{Binding SubmitTokenAssignmentCommand}">Register</Button>
+                    <Button Grid.Column="2"
+                            Margin="5 0 0 0"
+                            Command="{Binding CancelTokenAssignmentCommand}">Cancel</Button>
+
+                </Grid>
             </StackPanel>
         </ScrollViewer>
     </Grid>

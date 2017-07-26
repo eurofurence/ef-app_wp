@@ -4,10 +4,7 @@ using Eurofurence.Companion.DataModel.Api.CollectingGame;
 using Eurofurence.Companion.Services;
 using Eurofurence.Companion.ViewModel.Local;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Popups;
@@ -17,7 +14,6 @@ namespace Eurofurence.Companion.ViewModel
     public class CollectionGameManageFursuitsViewModel : BindableBase
     {
         private readonly CollectingGameService _service;
-        private readonly NavigationViewModel _navigationViewModel;
 
 
         private int _pageIndex = 0;
@@ -49,8 +45,6 @@ namespace Eurofurence.Companion.ViewModel
             NavigationViewModel navigationViewModel)
         {
             _service = service;
-            _navigationViewModel = navigationViewModel;
-
 
             Load = new AwaitableCommand(LoadAsync, (e, t) => AwaitableCommandExceptionHandlerFactory.RetryOrReturnToMainPage(e, t));
                 
@@ -67,7 +61,7 @@ namespace Eurofurence.Companion.ViewModel
             if (p.IsParticipating)
             {
                 await new MessageDialog(
-                        "This suit is already participating. There'll be a fancy page here some day with statistics.")
+                        "This suit is already participating, no need to register it again.")
                     .ShowAsync();
                 return;
             }

@@ -57,7 +57,7 @@ namespace Eurofurence.Companion.ViewModel.Local
             NavigateToImageViewerPage = new RelayCommand(p => { _navigationMediator.NavigateAsync(typeof(Views.ImageViewerPage), p); });
             NavigateToMapDetailPage = new RelayCommand(p => { _navigationMediator.NavigateAsync(typeof(Views.MapDetailPage), p); });
 
-            NavigateToUserCentralPage = new RelayCommand(p => { _navigationMediator.NavigateAsync(typeof(Views.UserCentralPage)); });
+            NavigateToUserCentralPage = new RelayCommand(p => { _navigationMediator.NavigateAsync(typeof(Views.UserCentralPage), p); });
             NavigateToPrivateMessageDetailPage = new RelayCommand(p => { _navigationMediator.NavigateAsync(typeof(Views.PrivateMessageDetailView), p); });
 
             NavigateToCollectionGameMainPage = new RelayCommand(p => { _navigationMediator.NavigateAsync(typeof(Views.CollectionGamePlayerView), p); });

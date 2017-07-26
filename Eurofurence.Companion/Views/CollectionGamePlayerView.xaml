@@ -35,7 +35,7 @@
                     <Border Margin="{StaticResource AppGroupHeaderOuterMargin}" Style="{StaticResource AppGroupHeaderBorder}">
                         <Grid Margin="{StaticResource AppGroupHeaderInnerMargin}">
                             <TextBlock Style="{StaticResource AppGroupHeaderTextStyle}">
-                                Catch a Fursuit!
+                                Catch a Creature!
                             </TextBlock>
                         </Grid>
                     </Border>
@@ -45,7 +45,7 @@
                     <TextBlock Margin="0 0 0 0"
                                Style="{StaticResource TextBlockMediumSmallStyle}"
                                TextWrapping="WrapWholeWords">
-                        Did you get the {secret?} code of a {fursuiter?, creature?} you encountered? Enter it here to catch them and add them to your collection!
+                        Did you get the code of a creature you encountered? Enter it here to catch them and add them to your collection!
                     </TextBlock>
 
                     <Grid>

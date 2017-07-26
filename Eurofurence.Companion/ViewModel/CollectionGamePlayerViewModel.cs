@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Popups;
 using Eurofurence.Companion.Common;
+using Eurofurence.Companion.Common.Abstractions;
 using Eurofurence.Companion.DataModel;
 using Eurofurence.Companion.DataModel.Api.CollectingGame;
 using Eurofurence.Companion.Services;
@@ -16,7 +17,7 @@ namespace Eurofurence.Companion.ViewModel
         private readonly AuthenticationViewModel _authenticationViewModel;
         private readonly CollectingGameService _service;
         private readonly NavigationViewModel _navigationViewModel;
-
+        private readonly INavigationMediator _navigationMediator;
 
 
         private int _pageIndex = 0;
@@ -55,11 +56,14 @@ namespace Eurofurence.Companion.ViewModel
         public CollectionGamePlayerViewModel(
             AuthenticationViewModel authenticationViewModel,
             CollectingGameService service,
-            NavigationViewModel navigationViewModel)
+            NavigationViewModel navigationViewModel,
+            INavigationMediator navigationMediator
+            )
         {
             _authenticationViewModel = authenticationViewModel;
             _service = service;
             _navigationViewModel = navigationViewModel;
+            _navigationMediator = navigationMediator;
 
             Load = new AwaitableCommand(LoadAsync, (e, t) => AwaitableCommandExceptionHandlerFactory.RetryOrReturnToMainPage(e, t));
 
@@ -105,8 +109,9 @@ namespace Eurofurence.Companion.ViewModel
                 {
                     Commands =
                     {
-                        new UICommand("Cancel", _ => _navigationViewModel.NavigateToMainPage.Execute(null)),
-                        new UICommand("Login", _ => _navigationViewModel.NavigateToUserCentralPage.Execute(null))
+                        new UICommand("Cancel", _ => _navigationMediator.NavigateAsync(typeof(Views.MainPage), forceNewStack: true)),
+                        new UICommand("Login", _ => _navigationMediator.NavigateAsync(typeof(Views.UserCentralPage), new Action(
+                            () => { _navigationMediator.NavigateAsync(typeof(Views.CollectionGamePlayerView), forceNewStack: true); }))),
                     },
                     DefaultCommandIndex = 1
                 }.ShowAsync();

@@ -254,7 +254,7 @@
                                TextAlignment="Center">
                         <Run Text="{Binding Response.Name}" />
                         <Run Text="has been found by" />
-                        <Run Text="{Binding CollectionCount}" />
+                        <Run Text="{Binding Response.FursuitCollectionCount}" />
                         <Run Text="people so far!" />
                     </TextBlock>
 
