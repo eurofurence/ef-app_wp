@@ -39,7 +39,7 @@ namespace Eurofurence.Companion.Views.Controls
 
         private void SetTime_ConStart(object sender, TappedRoutedEventArgs e)
         {
-            SetConLocalTime(2016, 08, 16, 9, 00, 00);
+            SetConLocalTime(2017, 08, 16, 9, 0, 0);
         }
 
         private void SetTime_AddDay(object sender, TappedRoutedEventArgs e)

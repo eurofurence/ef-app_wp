@@ -43,7 +43,8 @@
 
     <Grid x:Name="LayoutRoot">
         <ScrollViewer>
-            <StackPanel Margin="0 0 0 20">
+            <StackPanel Margin="0 0 0 20"
+                        MinWidth="{Binding ActualWidth, ElementName=LayoutRoot}">
                 <Grid DoubleTapped="Banner_OnDoubleTapped" IsDoubleTapEnabled="True">
                     <Canvas Height="150">
                         <Canvas.Clip>
