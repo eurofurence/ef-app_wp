@@ -77,9 +77,9 @@ namespace Eurofurence.Companion.Common
 
             ForcedOffset = TimeSpan.Zero;
 
-            //if (DesignMode.DesignModeEnabled) {
+            if (DesignMode.DesignModeEnabled) {
                 ForcedOffset = new DateTime(2017, 08, 16, 14, 55, 00, DateTimeKind.Utc) - DateTime.UtcNow;
-            //}
+            }
 
             var updateTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
             updateTimer.Tick += _updateTimer_Tick;
