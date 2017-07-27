@@ -54,7 +54,7 @@ namespace Eurofurence.Companion.Views
             get { return this.defaultViewModel; }
         }
 
-        public string Title => "Catch'em'all!";
+        public string Title => Translations.FursuitCollectingGame_Title;
 
         /// <summary>
         /// Populates the page with content passed during navigation.  Any saved state is also

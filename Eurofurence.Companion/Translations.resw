@@ -174,4 +174,7 @@
   <data name="PrivateMessages_NoMessages" xml:space="preserve">
     <value>You have no personal messages.</value>
   </data>
+  <data name="FursuitCollectingGame_Title" xml:space="preserve">
+    <value>Collect'em all!</value>
+  </data>
 </root>

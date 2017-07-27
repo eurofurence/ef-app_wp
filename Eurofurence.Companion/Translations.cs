@@ -71,5 +71,8 @@ namespace Eurofurence.Companion
 
         public static string PrivateMessages_NoMessages 
 			=> GetString("PrivateMessages_NoMessages"); 
+
+        public static string FursuitCollectingGame_Title 
+			=> GetString("FursuitCollectingGame_Title"); 
     }
 }

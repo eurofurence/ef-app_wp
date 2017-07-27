@@ -108,6 +108,6 @@ namespace Eurofurence.Companion.Views
 
         #endregion
 
-        public string Title => "Catch'em'all!";
+        public string Title => Translations.FursuitCollectingGame_Title;
     }
 }

@@ -96,7 +96,7 @@ namespace Eurofurence.Companion.ViewModel.Local
                     }
                 },
                 new MenuItemViewModel{
-                    Title = "Catch'em'all!",
+                    Title = Translations.FursuitCollectingGame_Title,
                     Icon = "\uE722 ",
                     Description = "Participate in the Fursuit catching game!",
                     NavigationCommand = new RelayCommand(p => {
