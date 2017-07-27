@@ -73,5 +73,13 @@ namespace Eurofurence.Companion.Services
 
             return result;
         }
+
+        public async Task<PlayerCollectionEntry[]> GetPlayerCollectionEntriesAsync()
+        {
+            var result = await _apiClient.GetAsync<PlayerCollectionEntry[]>("Fursuits/CollectingGame/PlayerParticipation/CollectionEntries",
+                oAuthToken: _authenticationService.State.Token);
+
+            return result;
+        }
     }
 }

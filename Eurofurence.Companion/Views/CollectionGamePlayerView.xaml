@@ -32,122 +32,13 @@
                                Text="{Binding TextHeader}"
                                TextWrapping="WrapWholeWords" />
                     <Border Margin="5" />
-                    <Border Margin="{StaticResource AppGroupHeaderOuterMargin}" Style="{StaticResource AppGroupHeaderBorder}">
-                        <Grid Margin="{StaticResource AppGroupHeaderInnerMargin}">
-                            <TextBlock Style="{StaticResource AppGroupHeaderTextStyle}">
-                                Catch a Creature!
-                            </TextBlock>
-                        </Grid>
-                    </Border>
+                    
+                    <controls:CgCatchACreatureControl DataContext="{Binding}"/>
+
                     <Border Margin="5" />
-
-                    <!--<TextBlock Text="{Binding CollectionCount}" />-->
-                    <TextBlock Margin="0 0 0 0"
-                               Style="{StaticResource TextBlockMediumSmallStyle}"
-                               TextWrapping="WrapWholeWords">
-                        Did you get the code of a creature you encountered? Enter it here to catch them and add them to your collection!
-                    </TextBlock>
-
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBox Grid.Column="0"
-                                 VerticalAlignment="Center"
-                                 PlaceholderText="Enter code here"
-                                 Text="{Binding TokenValue,
-                                                Mode=TwoWay,
-                                                UpdateSourceTrigger=PropertyChanged}" />
-
-                        <Button Grid.Column="1"
-                                Margin="10 0 0 0"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Center"
-                                Command="{Binding SubmitTokenCommand}">
-                            Catch!
-                        </Button>
-                    </Grid>
-
-                    <controls:ErrorMessageControl ErrorMessage="{Binding ErrorMessage}" />
-
-
-                    <StackPanel Margin="0 20 0 0" Visibility="{Binding ParticipationInfo.HasRecentlyCollected, Converter={StaticResource TrueToVisibleConverter}}">
-
-                        <TextBlock Margin="0 0 0 10" Style="{StaticResource TextBlockMediumSmallStyle}">Your recent catches:</TextBlock>
-                        <ItemsControl ItemsSource="{Binding ParticipationInfo.RecentlyCollected}">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <WrapGrid Orientation="Horizontal" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Margin="0 0 10 0">
-                                        <Border Width="60"
-                                                Height="80"
-                                                Background="{StaticResource EurofurenceThemeColorBrush}"
-                                                CornerRadius="5"
-                                                Padding="2">
-                                            <Rectangle RadiusX="3" RadiusY="3">
-                                                <Rectangle.Fill>
-                                                    <ImageBrush ImageSource="{Binding Id, Converter={StaticResource FursuitBadgeIdToUriConverter}}" />
-                                                </Rectangle.Fill>
-                                            </Rectangle>
-                                        </Border>
-                                        <TextBlock Height="30"
-                                                   Text="{Binding Name}"
-                                                   TextAlignment="Center"
-                                                   TextWrapping="Wrap" />
-                                    </StackPanel>
-
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-
-                        </ItemsControl>
-                    </StackPanel>
-
-
-
-                    <Border Margin="15" />
-                    <Border Margin="{StaticResource AppGroupHeaderOuterMargin}" Style="{StaticResource AppGroupHeaderBorder}">
-                        <Grid Margin="{StaticResource AppGroupHeaderInnerMargin}">
-                            <TextBlock Style="{StaticResource AppGroupHeaderTextStyle}">
-                                Participate with your own Fursuits
-                            </TextBlock>
-                        </Grid>
-                    </Border>
+                    <controls:CgScoreboardsWidgetControl />
                     <Border Margin="5" />
-
-                    <!--<TextBlock Text="{Binding CollectionCount}" />-->
-                    <TextBlock Margin="0 0 0 0"
-                               Style="{StaticResource TextBlockMediumSmallStyle}"
-                               TextWrapping="WrapWholeWords">
-                        If you want players to be able to catch your Fursuit, you have to register the
-                        code on the fursuit badge sticker first.
-                    </TextBlock>
-                    <Button Command="{Binding Source={StaticResource ViewModelLocator}, Path=NavigationViewModel.NavigateToCollectionGameFursuitManagementPage}">Manage my Fursuits</Button>
-
-                    <Border Margin="15" />
-                    <Border Margin="{StaticResource AppGroupHeaderOuterMargin}"
-                            Style="{StaticResource AppGroupHeaderBorder}">
-                        <Grid Margin="{StaticResource AppGroupHeaderInnerMargin}">
-                            <TextBlock Style="{StaticResource AppGroupHeaderTextStyle}">
-                                Scoreboards
-                            </TextBlock>
-                        </Grid>
-                    </Border>
-                    <Border Margin="5" />
-
-                    <!--<TextBlock Text="{Binding CollectionCount}" />-->
-                    <TextBlock Margin="0 0 0 0"
-                               Style="{StaticResource TextBlockMediumSmallStyle}"
-                               TextWrapping="WrapWholeWords">
-                        Who has collected most creatures? Which creature has been found most often? Find out!
-                    </TextBlock>
-                    <Button Command="{Binding Source={StaticResource ViewModelLocator}, Path=NavigationViewModel.NavigateToCollectionGameScoreboardPage}">View Scoreboards</Button>
-
+                    <controls:CgManageFursuitsWidgetControl />
                 </StackPanel>
 
                 <StackPanel Visibility="{Binding PageIndex, Converter={StaticResource ValueMatchToVisibilityConverter}, ConverterParameter=1}">

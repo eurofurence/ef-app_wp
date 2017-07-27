@@ -1,0 +1,100 @@
+﻿<UserControl
+    x:Class="Eurofurence.Companion.Views.Controls.CgCatchACreatureControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Eurofurence.Companion.Views.Controls"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    
+    <Grid>
+        <StackPanel>
+            <Border Margin="{StaticResource AppGroupHeaderOuterMargin}"
+                    Style="{StaticResource AppGroupHeaderBorder}">
+                <Grid Margin="{StaticResource AppGroupHeaderInnerMargin}">
+                    <TextBlock Style="{StaticResource AppGroupHeaderTextStyle}">
+                        Catch a Creature!
+                    </TextBlock>
+                </Grid>
+            </Border>
+            <Border Margin="5" />
+
+            <!--<TextBlock Text="{Binding CollectionCount}" />-->
+            <TextBlock Margin="0 0 0 0"
+                       Style="{StaticResource TextBlockMediumSmallStyle}"
+                       TextWrapping="WrapWholeWords">
+                Did you get the code of a creature you encountered? Enter it here to catch them and add them to your collection!
+            </TextBlock>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0"
+                         VerticalAlignment="Center"
+                         PlaceholderText="Enter code here"
+                         Text="{Binding TokenValue,
+                                                    Mode=TwoWay,
+                                                    UpdateSourceTrigger=PropertyChanged}" />
+
+                <Button Grid.Column="1"
+                        Margin="10 0 0 0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Command="{Binding SubmitTokenCommand}">
+                    Catch!
+                </Button>
+            </Grid>
+
+            <controls:ErrorMessageControl ErrorMessage="{Binding ErrorMessage}" />
+
+            <StackPanel Margin="0 20 0 0"
+                        Visibility="{Binding ParticipationInfo.HasRecentlyCollected, Converter={StaticResource TrueToVisibleConverter}}">
+
+                <TextBlock Margin="0 0 0 10"
+                           Style="{StaticResource TextBlockMediumSmallStyle}">Your recent catches:</TextBlock>
+                <ItemsControl ItemsSource="{Binding ParticipationInfo.RecentlyCollected}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapGrid Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0 0 10 0">
+                                <Border Width="60"
+                                        Height="80"
+                                        Background="{StaticResource EurofurenceThemeColorBrush}"
+                                        CornerRadius="5"
+                                        Padding="2">
+                                    <Rectangle RadiusX="3"
+                                               RadiusY="3">
+                                        <Rectangle.Fill>
+                                            <ImageBrush ImageSource="{Binding Id, Converter={StaticResource FursuitBadgeIdToUriConverter}}" />
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                </Border>
+                                <TextBlock Height="30"
+                                           Text="{Binding Name}"
+                                           TextAlignment="Center"
+                                           TextWrapping="Wrap" />
+                            </StackPanel>
+
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+
+                </ItemsControl>
+
+                <Button 
+                    Command="{Binding Source={StaticResource ViewModelLocator}, Path=NavigationViewModel.NavigateToCollectionGameMyCollectionPage}"
+                    >View my collection</Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

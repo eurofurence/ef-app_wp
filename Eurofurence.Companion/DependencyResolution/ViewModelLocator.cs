@@ -29,5 +29,6 @@ namespace Eurofurence.Companion.DependencyResolution
         public CollectionGameManageFursuitsViewModel CollectionGameManageFursuitsViewModel => KernelResolver.Current.Get<CollectionGameManageFursuitsViewModel>();
         public CollectionGamePlayerViewModel CollectionGamePlayerViewModel => KernelResolver.Current.Get<CollectionGamePlayerViewModel>();
         public CollectionGameScoreboardViewModel CollectionGameScoreboardViewModel => KernelResolver.Current.Get<CollectionGameScoreboardViewModel>();
+        public CollectionGameMyCollectionViewModel CollectionGameMyCollectionViewModel => KernelResolver.Current.Get<CollectionGameMyCollectionViewModel>();
     }
 }

@@ -98,6 +98,7 @@
             <converter:FursuitBadgeIdToUriConverter x:Key="FursuitBadgeIdToUriConverter" />
             <converter:ValueMatchToVisibilityConverter x:Key="ValueMatchToVisibilityConverter" />
             <converter:ValueMatchToBooleanConverter x:Key="ValueMatchToBooleanConverter" />
+            <converter:DateHumanizerConverter x:Key="DateHumanizerConverter" />
 
             <viewModelLocal:TranslationViewModel x:Key="Translations" />
 
