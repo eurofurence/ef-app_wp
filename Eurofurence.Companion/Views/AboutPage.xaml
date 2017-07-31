@@ -58,7 +58,7 @@
                     <StackPanel Margin="20 20 0 0">
 
                         <TextBlock Style="{StaticResource TextBlockStylePosition}"
-                                   Text="Windows Phone App Developer" />
+                                   Text="Windows Mobile" />
                         <TextBlock Style="{StaticResource TextBlockStyleName}"
                                    Text="Luchs"
                                    Margin="0 0 0 0" />
@@ -79,16 +79,16 @@
                         </TextBlock>
 
                         <TextBlock Style="{StaticResource TextBlockStylePosition}"
-                                   Text="Android App Developers" />
-                        <TextBlock Style="{StaticResource TextBlockStyleName}"
-                                   Text="Requinard"
-                                   Margin="0 0 0 0" />
+                                   Text="Android" />
                         <TextBlock Style="{StaticResource TextBlockStyleName}"
                                    Text="Pazuzu"
+                                   Margin="0 0 0 0" />
+                        <TextBlock Style="{StaticResource TextBlockStyleName}"
+                                   Text="Requinard"
                                    Margin="0 0 0 20" />
 
                         <TextBlock Style="{StaticResource TextBlockStylePosition}"
-                                   Text="iOS Developer" />
+                                   Text="iOS" />
                         <TextBlock Style="{StaticResource TextBlockStyleName}"
                                    Text="Fenrikur"
                                    Margin="0 0 0 0" />
@@ -99,10 +99,10 @@
                         <TextBlock Style="{StaticResource TextBlockStylePosition}"
                                    Text="Program Management" />
                         <TextBlock Style="{StaticResource TextBlockStyleName}"
-                                   Text="Zefiro"
+                                   Text="Luchs"
                                    Margin="0 0 0 0" />
                         <TextBlock Style="{StaticResource TextBlockStyleName}"
-                                   Text="Luchs"
+                                   Text="Zefiro"
                                    Margin="0 0 0 20" />
 
                         <TextBlock Style="{StaticResource TextBlockStylePosition}"
@@ -111,19 +111,35 @@
                                    Text="Akulatraxas"
                                    Margin="0 0 0 0" />
                         <TextBlock Style="{StaticResource TextBlockStyleName}"
+                                   Text="Aragon Tigerseye"
+                                   Margin="0 0 0 0" />
+                        <TextBlock Style="{StaticResource TextBlockStyleName}"
+                                   Text="Atkelar"
+                                   Margin="0 0 0 0" />
+                        <TextBlock Style="{StaticResource TextBlockStyleName}"
+                                   Text="Cairyn"
+                                   Margin="0 0 0 0" />
+                        <TextBlock Style="{StaticResource TextBlockStyleName}"
                                    Text="Jul"
+                                   Margin="0 0 0 0" />
+                        <TextBlock Style="{StaticResource TextBlockStyleName}"
+                                   Text="Liam"
+                                   Margin="0 0 0 0" />
+                        <TextBlock Style="{StaticResource TextBlockStyleName}"
+                                   Text="NordicFuzzCon (Catch'em' all)"
+                                   Margin="0 0 0 0" />
+                        <TextBlock Style="{StaticResource TextBlockStyleName}"
+                                   Text="Pattarchus"
+                                   Margin="0 0 0 0" />
+                        <TextBlock Style="{StaticResource TextBlockStyleName}"
+                                   Text="Snow-wolf"
                                    Margin="0 0 0 0" />
                         <TextBlock Style="{StaticResource TextBlockStyleName}"
                                    Text="StreifiGreif"
                                    Margin="0 0 0 0" />
                         <TextBlock Style="{StaticResource TextBlockStyleName}"
-                                   Text="NordicFuzzCon"
+                                   Text="Xil"
                                    Margin="0 0 0 0" />
-                        <TextBlock Style="{StaticResource TextBlockMediumSmallStyle}"
-                                   Foreground="{StaticResource PhoneMidBrush}"
-                                   Margin="0 0 0 0">
-                            For the idea behind "Collect'em all!".
-                        </TextBlock>
 
                     </StackPanel>
                 </Grid>
