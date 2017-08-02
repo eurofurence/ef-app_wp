@@ -45,7 +45,7 @@
 
                 </Grid>
 
-                <StackPanel Margin="20">
+                <StackPanel Margin="20" >
                    
                     <TextBlock Style="{ThemeResource GroupHeaderTextBlockStyle}" Text="{Binding DisplayName}" />
  
@@ -59,24 +59,65 @@
                             <TextBlock FontSize="{StaticResource TextStyleLargeFontSize}" 
                                        Text="{Binding Entity.AttendeeNickname}" />
                         </StackPanel>
-           
-                        <StackPanel Orientation="Horizontal" Margin="15 5 15 0"
-                                    Visibility="{Binding HasTwitterHandle, Converter={StaticResource TrueToVisibleConverter}}"
-                                    >
-                            <TextBlock FontSize="{StaticResource TextStyleLargeFontSize}" Width="30"
-                                       FontFamily="{StaticResource SocialFontFamily}" Text="&#xF099;" />
-                            <TextBlock FontSize="{StaticResource TextStyleLargeFontSize}" 
-                                       Text="{Binding Entity.TwitterHandle}" />
-                        </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" Margin="15 5 15 0"
+                        <Grid Margin="5 -5 5 -5"
+                            Visibility="{Binding HasTwitterHandle, Converter={StaticResource TrueToVisibleConverter}}"
+                                    >
+                            <Button HorizontalAlignment="Stretch" Tapped="Twitter_Tapped"
+                                    HorizontalContentAlignment="Left"
+                                    >
+                                <Grid>
+                                    <TextBlock FontSize="{StaticResource TextStyleLargeFontSize}"
+                                               Margin="0 5 0 0"
+                                               HorizontalAlignment="Left"
+                                               FontFamily="{StaticResource FontAwesomeFamily}"
+                                               Text="&#xF099;" />
+                                    <TextBlock FontSize="{StaticResource TextStyleLargeFontSize}"
+                                               HorizontalAlignment="Left"
+                                               Margin="30 0 0 0"
+                                               Text="{Binding Entity.TwitterHandle}" />
+                                </Grid>
+                            </Button>
+                        </Grid>
+
+                        <Grid Margin="5 -5 5 -5"
+                                    HorizontalAlignment="Stretch"
                                     Visibility="{Binding HasTelegramHandle, Converter={StaticResource TrueToVisibleConverter}}"
                                     >
-                            <TextBlock FontSize="{StaticResource TextStyleLargeFontSize}" Width="30"
-                                       FontFamily="{StaticResource SocialFontFamily}" Text="&#xF2c6;" />
-                            <TextBlock FontSize="{StaticResource TextStyleLargeFontSize}" 
-                                       Text="{Binding Entity.TelegramHandle}" />
-                        </StackPanel>
+                            <Button HorizontalAlignment="Stretch"
+                                    Tapped="Telegram_Tapped"
+                                    HorizontalContentAlignment="Left">
+                                <Grid>
+                                    <TextBlock FontSize="{StaticResource TextStyleLargeFontSize}" 
+                                               Margin="0 5 0 0"
+                                               HorizontalAlignment="Left"
+                                               FontFamily="{StaticResource FontAwesomeFamily}" Text="&#xF2c6;" />
+                                    <TextBlock FontSize="{StaticResource TextStyleLargeFontSize}"
+                                               HorizontalAlignment="Left"
+                                               Margin="30 0 0 0"
+                                               Text="{Binding Entity.TelegramHandle}" />
+                                </Grid>
+                            </Button>
+                        </Grid>
+                        <Grid Margin="5 -5 5 -5"
+                              HorizontalAlignment="Stretch"
+                              Visibility="{Binding HasWebsiteUris, Converter={StaticResource TrueToVisibleConverter}}">
+                            <Button HorizontalAlignment="Stretch"
+                                    HorizontalContentAlignment="Left"
+                                    Tapped="Website_Tapped">
+                                <Grid>
+                                    <TextBlock FontSize="{StaticResource TextStyleLargeFontSize}"
+                                               Margin="0 5 0 0"
+                                               HorizontalAlignment="Left"
+                                               FontFamily="{StaticResource FontAwesomeFamily}"
+                                               Text="&#xF0ac;" />
+                                    <TextBlock FontSize="{StaticResource TextStyleLargeFontSize}"
+                                               HorizontalAlignment="Left"
+                                               Margin="30 0 0 0"
+                                               Text="{Binding ParsedWebsiteUris[0].AbsoluteUri}" />
+                                </Grid>
+                            </Button>
+                        </Grid>
                     </StackPanel>
 
 
@@ -180,7 +221,7 @@
                                Visibility="{Binding HasAboutTheArtistText,
                                                     Converter={StaticResource FalseToVisibleConverter}}" />
 
-                    <StackPanel Visibility="{Binding HasWebsiteUris, Converter={StaticResource TrueToVisibleConverter}}">
+                    <!--<StackPanel Visibility="{Binding HasWebsiteUris, Converter={StaticResource TrueToVisibleConverter}}">
                         <ItemsControl Margin="15 0 15 0" ItemsSource="{Binding ParsedWebsiteUris}">
                             <ItemsControl.ItemContainerStyle>
                                 <Style TargetType="ContentPresenter">
@@ -197,7 +238,7 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                    </StackPanel>
+                    </StackPanel>-->
 
                     <StackPanel Visibility="{Binding HasAboutTheArtistText, Converter={StaticResource TrueToVisibleConverter}}">
                         <TextBlock FontSize="{StaticResource TextStyleMediumFontSize}"

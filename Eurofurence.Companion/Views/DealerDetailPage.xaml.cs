@@ -1,6 +1,7 @@
 ﻿using Eurofurence.Companion.Common;
 using Eurofurence.Companion.ViewModel.Local.Entity;
 using System;
+using System.Linq;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -70,6 +71,21 @@ namespace Eurofurence.Companion.Views
         private void MapTapped(object sender, TappedRoutedEventArgs e)
         {
             
+        }
+
+        private async void Twitter_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            await Launcher.LaunchUriAsync(new Uri($"https://twitter.com/{CurrentDealer.Entity.TwitterHandle}"));
+        }
+
+        private async void Telegram_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            await Launcher.LaunchUriAsync(new Uri($"https://telegram.me/{CurrentDealer.Entity.TelegramHandle}"));
+        }
+
+        private async void Website_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            await Launcher.LaunchUriAsync(CurrentDealer.ParsedWebsiteUris.First());
         }
     }
 }
