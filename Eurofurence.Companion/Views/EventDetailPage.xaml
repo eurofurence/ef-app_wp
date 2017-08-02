@@ -8,6 +8,7 @@
       xmlns:local="using:Eurofurence.Companion.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:Eurofurence.Companion.ViewModel"
+      xmlns:controls="using:Eurofurence.Companion.Views.Controls"
       d:DataContext="{Binding Source={StaticResource ViewModelLocator},
                               Path=EventsViewModel.EventEntries[11]}"
       mc:Ignorable="d">
@@ -164,6 +165,26 @@
                                    Style="{StaticResource BodyTextBlockStyle}"
                                    TextTrimming="CharacterEllipsis"
                                    TextWrapping="Wrap" />
+                    </StackPanel>
+
+                    <StackPanel 
+                        Margin="10"
+                        Visibility="{Binding ConferenceRoom.HasMapEntry, Converter={StaticResource TrueToVisibleConverter}}">
+                        <TextBlock Style="{StaticResource BodyTextBlockStyle}">Location:</TextBlock>
+                        <ScrollViewer Margin="0 5 0 15"
+                                      x:Name="E_ScrollViewer_Map"
+                                      Height="200"
+                                      HorizontalScrollBarVisibility="Visible"
+                                      VerticalScrollBarVisibility="Visible"
+                                      HorizontalScrollMode="Enabled"
+                                      VerticalScrollMode="Enabled"
+                                      IsHitTestVisible="False"
+                                      Tapped="E_ScrollViewer_Map_OnTapped">
+                            <controls:MapViewerControl x:Name="E_MapViewerControl_Room"
+                                                       DataContext="{Binding ConferenceRoom.MapEntry.Map}"
+                                                       MarkerScale="1.5"
+                                                       MarkerFill="Transparent" />
+                        </ScrollViewer>
                     </StackPanel>
 
                     <Grid Visibility="{Binding HasPosterImage, Converter={StaticResource TrueToVisibleConverter}}">

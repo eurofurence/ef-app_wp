@@ -102,7 +102,8 @@ namespace Eurofurence.Companion.ViewModel
                     () => entity.Entries.Select(e => _eventEntryMapping[e])
                         .OrderBy(e => e.ConferenceDay.Entity.Date)
                         .ThenBy(e => e.Entity.StartTime)
-                        .ToList()
+                        .ToList(),
+                    maps: _dataContext.Maps
                     )
                 );
 
