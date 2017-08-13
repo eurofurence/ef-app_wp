@@ -9,6 +9,7 @@ using Eurofurence.Companion.DataModel;
 using Eurofurence.Companion.DataModel.Api;
 using Eurofurence.Companion.DataStore.Abstractions;
 using Eurofurence.Companion.DependencyResolution;
+using System.Threading;
 
 // ReSharper disable ExplicitCallerInfoArgument
 
@@ -224,11 +225,13 @@ namespace Eurofurence.Companion.DataStore
             return result;
         }
 
+        private SemaphoreSlim _imageLimiter = new SemaphoreSlim(4, 4);
+
         private async Task UpdateImageDataAsync(IEnumerable<Image> images)
         {
             var imageList = images.ToList();
 
-            MainOperationCurrentValue = (ulong) imageList.Count;
+            MainOperationMaxValue = (ulong) imageList.Count;
             MainOperationCurrentValue = 0;
 
             var tasks = imageList.Select(imageEntity => Task.Run(async () =>
@@ -238,9 +241,18 @@ namespace Eurofurence.Companion.DataStore
                     await _dataStore.ClearBlobAsync(imageEntity.Id, "ImageData");
                 }
                 else {
-                    var content = await _apiClient.GetImageContentAsBufferAsync(imageEntity.Id);
-                    var bytes = content.ToArray();
-                    await _dataStore.SaveBlobAsync(imageEntity.Id, "ImageData", bytes);
+                    try
+                    {
+                        await _imageLimiter.WaitAsync();
+                        var content = await _apiClient.GetImageContentAsBufferAsync(imageEntity.Id);
+                        var bytes = content.ToArray();
+                        await _dataStore.SaveBlobAsync(imageEntity.Id, "ImageData", bytes);
+                    }
+                    finally
+                    {
+                        _imageLimiter.Release();
+                    }
+
                 }
 
                 MainOperationCurrentValue++;
