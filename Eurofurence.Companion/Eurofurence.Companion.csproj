@@ -370,6 +370,7 @@
     <Content Include="Assets\Fonts\fontawesome-webfont.ttf" />
     <None Include="Assets\Fonts\fontelico-codes.css" />
     <Content Include="Assets\Fonts\social-codes.css" />
+    <Content Include="Assets\Fonts\Volatile\flaticon.css" />
     <Content Include="Assets\Fonts\Volatile\info.txt" />
     <Content Include="Assets\Logo.scale-240.png" />
     <Content Include="Assets\LuchsAvatar.jpg" />
@@ -390,6 +391,7 @@
     <Content Include="Assets\Fonts\fontelico.ttf" />
     <Content Include="Assets\Fonts\Volatile\Hieroglify.ttf" />
     <Content Include="Assets\Fonts\social.ttf" />
+    <Content Include="Assets\Fonts\Volatile\Flaticon.ttf" />
     <None Include="Package.StoreAssociation.xml" />
   </ItemGroup>
   <ItemGroup>

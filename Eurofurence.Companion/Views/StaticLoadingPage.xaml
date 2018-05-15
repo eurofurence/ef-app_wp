@@ -4,7 +4,6 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:Eurofurence.Companion.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      
       x:Name="_this"
       mc:Ignorable="d">
     <Page.Resources>
@@ -13,8 +12,7 @@
                              From="0"
                              Storyboard.TargetName="_this"
                              Storyboard.TargetProperty="Opacity"
-                             To="1">
-            </DoubleAnimation>
+                             To="1" />
         </Storyboard>
         <Storyboard x:Name="pageFadeOut" AutoReverse="False">
             <DoubleAnimation Duration="0:0:0.3"
@@ -31,49 +29,47 @@
     </Page.Resources>
 
     <Grid>
-        <StackPanel VerticalAlignment="Center" Margin="0 100 0 0">
+        <StackPanel Margin="0 100 0 0" VerticalAlignment="Center">
             <Grid Margin="0 0 0 50">
-                <TextBlock FontFamily="{StaticResource HieroglifyFontFamily}" FontSize="130" Margin="0 -8 0 0"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"
-                           Name="E_TextBlock_Glyph"
-                           
-                       >
+                <TextBlock Margin="0 -8 0 0"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontFamily="{StaticResource IconFontFamily}"
+                           FontSize="30">
 
-                <Run>Z</Run>
+                    <Run>&#x1f43e;</Run>
                 </TextBlock>
 
-                <ProgressBar IsIndeterminate="True" VerticalAlignment="Bottom" Height="10" />
-
-                <!--<ProgressRing Margin="0"
-                              
-                          Background="Transparent"
-                          Foreground="White"
-                          IsActive="True" RenderTransformOrigin="0.5,0.5" >
+                <ProgressRing Margin="0"
+                              Background="Transparent"
+                              Foreground="White"
+                              IsActive="True"
+                              RenderTransformOrigin="0.5,0.5">
                     <ProgressRing.RenderTransform>
-                        <CompositeTransform ScaleX="3.3" ScaleY="3.3"/>
+                        <CompositeTransform ScaleX="1.3" ScaleY="1.3" />
                     </ProgressRing.RenderTransform>
-                </ProgressRing>-->
+                </ProgressRing>
             </Grid>
 
 
             <Grid Margin="40">
                 <StackPanel>
-                    <TextBlock
-                        Style="{StaticResource BodyTextBlockStyle}"
-                        x:Name="E_TextBlock_Quote"
-                        FontSize="24"
-                        LineHeight="30"
-                        TextAlignment="Left"
-                        >"Quote"</TextBlock>
-                    <TextBlock
-                        Style="{StaticResource BodyTextBlockStyle}"
-                        x:Name="E_TextBlock_Author"
-                        FontSize="18"
-                        Foreground="{ThemeResource PhoneMidBrush}"
-                        LineHeight="18"
-                        TextAlignment="Right"
-                        >- Author</TextBlock>
+                    <TextBlock x:Name="E_TextBlock_Quote"
+                               FontSize="14"
+                               LineHeight="18"
+                               Style="{StaticResource BodyTextBlockStyle}"
+                               TextAlignment="Left">
+                        &quot;Quote&quot;
+                    </TextBlock>
+                    <TextBlock x:Name="E_TextBlock_Author"
+                               FontSize="12"
+                               FontStyle="Italic"
+                               Foreground="{ThemeResource PhoneMidBrush}"
+                               LineHeight="18"
+                               Style="{StaticResource BodyTextBlockStyle}"
+                               TextAlignment="Right">
+                        - Author
+                    </TextBlock>
                 </StackPanel>
             </Grid>
         </StackPanel>

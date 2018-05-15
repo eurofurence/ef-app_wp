@@ -16,10 +16,10 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="300" />
         </Grid.RowDefinitions>
-        <Image Width="120"
+        <!--<Image Width="120"
                Margin="0 20 0 0"
                VerticalAlignment="Top"
-               Source="ms-appx:///Assets/Eurofurence/Volatile/logo.png" />
+               Source="ms-appx:///Assets/Eurofurence/Volatile/logo.png" />-->
         <StackPanel Grid.Row="2"
                     Margin="0"
                     VerticalAlignment="Bottom"
@@ -48,10 +48,11 @@
 
 
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                    <TextBlock HorizontalAlignment="Center"
-                               FontFamily="{StaticResource HieroglifyFontFamily}"
-                               FontSize="100"
-                               Text="Z" />
+                    <TextBlock Margin="20"
+                               HorizontalAlignment="Center"
+                               FontFamily="{StaticResource AviationFontFamily}"
+                               FontSize="50"
+                               Text="&#xf105;" />
                     <TextBlock Margin="20"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
@@ -60,10 +61,11 @@
                                Foreground="{ThemeResource PhoneLowBrush}"
                                Opacity="0.0"
                                Text="&#xE26B;&#xE26B;&#xE26B;" />
-                    <TextBlock HorizontalAlignment="Center"
-                               FontFamily="{StaticResource HieroglifyFontFamily}"
-                               FontSize="100"
-                               Text="U" />
+                    <TextBlock Margin="20"
+                               HorizontalAlignment="Center"
+                               FontFamily="{StaticResource AviationFontFamily}"
+                               FontSize="50"
+                               Text="&#xf107;" />
                 </StackPanel>
             </Grid>
 

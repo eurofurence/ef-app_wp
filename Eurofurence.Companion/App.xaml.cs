@@ -170,6 +170,7 @@ namespace Eurofurence.Companion
                 if (startupMode == StartupMode.RunAsFirstStart)
                 {
                     await navigationMediator.NavigateAsync(typeof(FirstStartPage), null, useTransition: false);
+                    //await navigationMediator.NavigateAsync(typeof(LoadingPage), null, useTransition: false);
                 }
                 else if (HasInternetAccess)
                 {

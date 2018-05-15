@@ -142,16 +142,16 @@
     <value>Disclaimer</value>
   </data>
   <data name="ContextManager_Update_Initializing" xml:space="preserve">
-    <value>Praying to the Old Gods</value>
+    <value>Contacting Ground</value>
   </data>
   <data name="ContextManager_Update_Synchronizing" xml:space="preserve">
-    <value>Deciphering Prophecy</value>
+    <value>Takeoff</value>
   </data>
   <data name="ContextManager_Update_Done" xml:space="preserve">
     <value>Done</value>
   </data>
   <data name="ContextManager_Update_DownloadingImageContent" xml:space="preserve">
-    <value>Transcribing Hieroglyphs</value>
+    <value>Requesting Takeoff Clearance</value>
   </data>
   <data name="ContextManager_Update_Downloading_arg0" xml:space="preserve">
     <value>Downloading {0}</value>
