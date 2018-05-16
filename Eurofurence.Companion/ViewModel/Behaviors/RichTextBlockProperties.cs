@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
 using Windows.Data.Xml.Xsl;
+using Windows.System;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -194,9 +195,11 @@ namespace Eurofurence.Companion.ViewModel.Behaviors
                     return GenerateLI(node);
                 case "b":
                 case "B":
+                case "strong":
                     return GenerateBold(node);
                 case "i":
                 case "I":
+                case "em":
                     return GenerateItalic(node);
                 case "u":
                 case "U":
@@ -309,16 +312,25 @@ namespace Eurofurence.Companion.ViewModel.Behaviors
         {
             Span s = new Span();
             InlineUIContainer iui = new InlineUIContainer();
-            HyperlinkButton hb = new HyperlinkButton() { NavigateUri = new Uri(node.Attributes["href"].Value, UriKind.Absolute), Content = CleanText(node.InnerText) };
+            //HyperlinkButton hb = new HyperlinkButton() { NavigateUri = new Uri(node.Attributes["href"].Value, UriKind.Absolute), Content = CleanText(node.InnerText) };
 
-            if (node.ParentNode != null && (node.ParentNode.Name == "li" || node.ParentNode.Name == "LI"))
-                hb.Style = (Style)Application.Current.Resources["RTLinkLI"];
-            else if ((node.NextSibling == null || string.IsNullOrWhiteSpace(node.NextSibling.InnerText)) && (node.PreviousSibling == null || string.IsNullOrWhiteSpace(node.PreviousSibling.InnerText)))
-                hb.Style = (Style)Application.Current.Resources["RTLinkOnly"];
-            else
-                hb.Style = (Style)Application.Current.Resources["RTLink"];
+            var b = new Button() { Content = CleanText(node.InnerText) };
+            b.Tapped += async (e, a) =>
+                {
+                    await Launcher.LaunchUriAsync(new Uri(node.Attributes["href"].Value, UriKind.Absolute));
+                };
 
-            iui.Child = hb;
+            //if (node.ParentNode != null && (node.ParentNode.Name == "li" || node.ParentNode.Name == "LI"))
+            //    hb.Style = (Style)Application.Current.Resources["RTLinkLI"];
+            //else if ((node.NextSibling == null || string.IsNullOrWhiteSpace(node.NextSibling.InnerText)) && (node.PreviousSibling == null || string.IsNullOrWhiteSpace(node.PreviousSibling.InnerText)))
+            //    hb.Style = (Style)Application.Current.Resources["RTLinkOnly"];
+            //else
+            //    hb.Style = (Style)Application.Current.Resources["RTLink"];
+
+            
+            
+
+            iui.Child = b;
             s.Inlines.Add(iui);
             return s;
         }

@@ -114,7 +114,7 @@
                 <Grid>
                     <RichTextBlock
                         Margin="0,10,0,10"
-                        behaviors:RichTextBlockProperties.Html="{Binding Entity.Text, Converter={StaticResource WikiTextToHtmlConverter}}"
+                        behaviors:RichTextBlockProperties.Html="{Binding Entity.Text, Converter={StaticResource MarkdownToHtmlConverter}}"
                         FontSize="{StaticResource TextStyleMediumFontSize}"
                         TextWrapping="WrapWholeWords" />
                 </Grid>

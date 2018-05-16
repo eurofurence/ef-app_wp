@@ -55,11 +55,11 @@
       <Span><InlineUIContainer><Ellipse Style="{{StaticResource Bullet}}"/></InlineUIContainer><xsl:apply-templates /><LineBreak /></Span>
     </xsl:template>
 
-    <xsl:template match="B | b">
+    <xsl:template match="B | b | strong">
       <Bold><xsl:apply-templates /></Bold>
     </xsl:template>
 
-    <xsl:template match="I | i">
+    <xsl:template match="I | i | em">
       <Italic><xsl:apply-templates /></Italic>
     </xsl:template>
 

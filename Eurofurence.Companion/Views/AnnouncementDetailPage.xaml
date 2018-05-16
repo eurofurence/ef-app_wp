@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:Eurofurence.Companion.Views"
+      xmlns:behaviors="using:Eurofurence.Companion.ViewModel.Behaviors"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       d:DataContext="{Binding Source={StaticResource ViewModelLocator},
                               Path=ActiveAnnouncementsViewModel.ActiveAnnouncements[0]}"
@@ -49,10 +50,11 @@
 
                 </Grid>
                 <StackPanel Margin="10">
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}"
-                               Text="{Binding Content}"
-                               TextTrimming="CharacterEllipsis"
-                               TextWrapping="Wrap" />
+                    <RichTextBlock 
+                                   behaviors:RichTextBlockProperties.Html="{Binding Content, Converter={StaticResource MarkdownToHtmlConverter}}"
+                                   Style="{StaticResource BodyRichTextBlockStyle}"
+                                   TextTrimming="CharacterEllipsis"
+                                   TextWrapping="WrapWholeWords" />
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>

@@ -95,6 +95,7 @@
             <converter:BooleanToVisibilityConverter x:Key="FalseToVisibleConverter" IsReversed="True" />
             <converter:BooleanInvertConverter x:Key="BooleanInvertConverter" />
             <converter:WikiTextToHtmlConverter x:Key="WikiTextToHtmlConverter" />
+            <converter:MarkdownToHtmlConverter x:Key="MarkdownToHtmlConverter" />
             <converter:UriToStringConverter x:Key="UriToStringConverter" />
             <converter:FursuitBadgeIdToUriConverter x:Key="FursuitBadgeIdToUriConverter" />
             <converter:ValueMatchToVisibilityConverter x:Key="ValueMatchToVisibilityConverter" />
