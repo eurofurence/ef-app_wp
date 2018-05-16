@@ -47,5 +47,12 @@ namespace Eurofurence.Companion.ViewModel.Local.Entity
 
         private Color _dominantColor = Colors.Transparent;
         public Color DominantColor {  get { return _dominantColor; } set { SetProperty(ref _dominantColor, value); } }
+
+        public bool IsAfterDark => Entity.IsAfterDark;
+        public string[] Categories => Entity.Categories;
+        public string CategoriesAsString => string.Join(", ", Entity.Categories);
+        public bool HasCategories => Entity.Categories != null && Entity.Categories.Length > 0;
+
+        public bool HasAvailabilityInformation => !AttendsOnAllDays || IsAfterDark || HasMapEntry;
     }
 }

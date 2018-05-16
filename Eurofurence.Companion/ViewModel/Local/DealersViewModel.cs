@@ -13,9 +13,12 @@ namespace Eurofurence.Companion.ViewModel.Local
     [IocBeacon]
     public class DealersViewModel : BindableBase
     {
+        private const string ALL_CATEGORIES = "All Categories";
 
         public ObservableCollection<DealerViewModel> Dealers => _dealersViewModelContext.Dealers;
         public ObservableCollection<DealerViewModel> DealerSearchResults { get; set; }
+
+        public ObservableCollection<string> Categories { get; set; }
 
         private bool _isSearchEnabled = false;
 
@@ -30,6 +33,7 @@ namespace Eurofurence.Companion.ViewModel.Local
         }
 
         private string _searchText = "";
+        private string _searchCategory = ALL_CATEGORIES;
         private readonly IDealersViewModelContext _dealersViewModelContext;
 
         public ICommand ToggleSearchEnabled { get; private set; }
@@ -44,19 +48,33 @@ namespace Eurofurence.Companion.ViewModel.Local
             }
         }
 
+        public string SearchCategory
+        {
+            get { return _searchCategory; }
+            set
+            {
+                SetProperty(ref _searchCategory, value);
+                UpdateSearchResults();
+            }
+        }
+
         private void UpdateSearchResults()
         {
             DealerSearchResults.Clear();
-            if (string.IsNullOrWhiteSpace(_searchText))
+
+            var results = Dealers.AsEnumerable();
+            if (!string.IsNullOrWhiteSpace(_searchText))
             {
-                foreach(var dealer in Dealers)
-                {
-                    DealerSearchResults.Add(dealer);
-                }
-                return;
+                results = results.Where(e => e.Entity.DisplayName.ToLower().Contains(_searchText.ToLower()));
             }
 
-            foreach (var result in Dealers.Where(e => e.Entity.DisplayName.ToLower().Contains(_searchText.ToLower())))
+            if (_searchCategory != ALL_CATEGORIES)
+            {
+                results = results.Where(e => e.Entity.Categories.Contains(_searchCategory));
+            }
+
+
+            foreach (var result in results)
             {
                 DealerSearchResults.Add(result);
             }
@@ -67,9 +85,27 @@ namespace Eurofurence.Companion.ViewModel.Local
             _dealersViewModelContext = dealersViewModelContext;
 
             DealerSearchResults = new ObservableCollection<DealerViewModel>();
+            Categories = new ObservableCollection<string>();
             ToggleSearchEnabled = new RelayCommand(() => IsSearchEnabled = !IsSearchEnabled);
 
+            CalculateCategories();
             UpdateSearchResults();
+        }
+
+        private void CalculateCategories()
+        {
+            Categories.Clear();
+            Categories.Add(ALL_CATEGORIES);
+
+
+            var distinctCategories = _dealersViewModelContext
+                .Dealers
+                .SelectMany(a => a.Categories)
+                .Distinct()
+                .OrderBy(a => a);
+
+            foreach (var category in distinctCategories)
+                Categories.Add(category);
         }
     }
 }

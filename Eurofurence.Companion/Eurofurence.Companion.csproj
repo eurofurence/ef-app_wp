@@ -154,6 +154,7 @@
     <Compile Include="ViewModel\Converter\BooleanInvertConverter.cs" />
     <Compile Include="ViewModel\Converter\BooleanToVisibilityConverter.cs" />
     <Compile Include="ViewModel\Converter\BytesToImageConverter.cs" />
+    <Compile Include="ViewModel\Converter\DoubleMathConverter.cs" />
     <Compile Include="ViewModel\Converter\StreamToImageConverter.cs" />
     <Compile Include="ViewModel\Converter\FursuitBadgeIdToUriConverter.cs" />
     <Compile Include="ViewModel\Converter\DateHumanizerConverter.cs" />

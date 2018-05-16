@@ -27,16 +27,20 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+        <StackPanel Grid.Row="0" Margin="20 20 20 0">
+        <ComboBox Name="E_ComboBox_Category" 
+                  ItemsSource="{Binding Categories}"
+                  SelectedValue="{Binding SearchCategory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  />
 
         <TextBox Name="E_TextBox_SearchText"
-                 Grid.Row="0"
-                 Margin="20 20 20 0"
                  PlaceholderText="Search..."
                  Text="{Binding SearchText,
                                 Mode=TwoWay,
                                 UpdateSourceTrigger=PropertyChanged}"
                  Visibility="{Binding IsSearchEnabled,
                                       Converter={StaticResource TrueToVisibleConverter}}" />
+        </StackPanel>
 
         <ListView x:Name="E_ListView_Dealers"
                   Grid.Row="1"
@@ -49,7 +53,8 @@
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid MinWidth="{Binding ActualWidth, ElementName=E_ListView_Dealers}" Background="Transparent">
+                    <Grid MinWidth="{Binding ActualWidth, ElementName=E_ListView_Dealers, Converter={StaticResource DoubleMathConverter}, ConverterParameter=-40}"
+                          Background="Transparent">
                         <interactivity:Interaction.Behaviors>
                             <interactivity:BehaviorCollection>
                                 <core:EventTriggerBehavior EventName="Tapped">
@@ -62,6 +67,7 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="70" />
                                 <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="40" />
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0"
                                   Width="60"
@@ -104,6 +110,29 @@
 
 
                             </StackPanel>
+                            <Grid Grid.Column="2" VerticalAlignment="Center">
+                                <StackPanel>
+
+                                <TextBlock FontFamily="{StaticResource IconFontFamily}"
+                                           Text="&#xE7BA;"
+                                           Foreground="{StaticResource EurofurenceThemeColorBrush}"
+                                           FontSize="{StaticResource TextStyleLargeFontSize}"
+                                           HorizontalAlignment="Stretch"
+                                           TextAlignment="Center"
+                                           Visibility="{Binding AttendsOnAllDays, Converter={StaticResource FalseToVisibleConverter}}"
+                                           Margin="3" />
+                                
+                                <TextBlock FontFamily="{StaticResource IconFontFamily}"
+                                           Text="&#xE708;"
+                                           FontSize="{StaticResource TextStyleLargeFontSize}"
+                                            Foreground="{StaticResource EurofurenceThemeColorBrush}"
+                                           HorizontalAlignment="Stretch"
+                                           TextAlignment="Center"
+                                           Margin="3" 
+                                           Visibility="{Binding IsAfterDark, Converter={StaticResource TrueToVisibleConverter}}"
+                                           />
+                                </StackPanel>
+                            </Grid>
                         </Grid>
 
 

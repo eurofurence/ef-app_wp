@@ -23,6 +23,8 @@ namespace Eurofurence.Companion.DataModel.Api
         public bool AttendsOnSaturday { get; set; }
         public string TwitterHandle { get; set; }
         public string TelegramHandle { get; set; }
+        public bool IsAfterDark { get; set; }
+        public string[] Categories { get; set; }
 
         [JsonIgnore]
         public virtual Image ArtistThumbnailImage { get; set; }

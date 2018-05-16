@@ -138,66 +138,91 @@
 
                         <TextBlock Margin="15"
                                FontSize="{StaticResource TextStyleMediumFontSize}"
-                               Text="{Binding Entity.Merchandise}"
+                               Text="{Binding CategoriesAsString}"
                                TextWrapping="WrapWholeWords" />
 
                     </StackPanel>
 
 
-                    <StackPanel Visibility="{Binding AttendsOnAllDays, Converter={StaticResource FalseToVisibleConverter}}"
+                    <StackPanel Visibility="{Binding HasAvailabilityInformation, Converter={StaticResource TrueToVisibleConverter}}"
                                 Margin="0 0 0 10">
+                        
                         <TextBlock FontSize="{StaticResource TextStyleMediumFontSize}"
                                Foreground="{StaticResource PhoneLowBrush}"
                                Style="{StaticResource BaseTextBlockStyle}">
                         Availability
                         </TextBlock>
 
-                        <TextBlock Margin="15"
-                               FontSize="{StaticResource TextStyleMediumFontSize}"
-                               Text="This dealer is only present in the Dealers Den on the following days of the convention:"
-                               TextWrapping="WrapWholeWords" />
-
-                        <TextBlock  FontSize="{StaticResource TextStyleMediumFontSize}"
-                                    FontWeight="Bold"
-                                    Visibility="{Binding Entity.AttendsOnThursday, Converter={StaticResource TrueToVisibleConverter}}"
-                                    Margin="15 0 15 5"
-                                    Text="Thursday" />
-                        <TextBlock  FontSize="{StaticResource TextStyleMediumFontSize}"
-                                    FontWeight="Bold"
-                                    Visibility="{Binding Entity.AttendsOnFriday, Converter={StaticResource TrueToVisibleConverter}}"
-                                    Margin="15 0 15 5"
-                                    Text="Friday" />
-                        <TextBlock  FontSize="{StaticResource TextStyleMediumFontSize}"
-                                    FontWeight="Bold"
-                                    Visibility="{Binding Entity.AttendsOnSaturday, Converter={StaticResource TrueToVisibleConverter}}"
-                                    Margin="15 0 15 5"
-                                    Text="Saturday" />
-
-                    </StackPanel>
-
-
-                    <StackPanel Visibility="{Binding HasMapEntry, Converter={StaticResource TrueToVisibleConverter}}">
-                        <TextBlock FontSize="{StaticResource TextStyleMediumFontSize}"
-                               Foreground="{StaticResource PhoneLowBrush}"
-                               Style="{StaticResource BaseTextBlockStyle}">
-                        Dealers Den Location
-                        </TextBlock>
-                        <ScrollViewer Margin="15" Name="E_ScrollViewer_Map" Height="200" 
-                                  HorizontalScrollBarVisibility="Visible"
-                                  VerticalScrollBarVisibility="Visible"
-                                  HorizontalScrollMode="Enabled"
-                                  VerticalScrollMode="Enabled"
-                                  Visibility="{Binding HasMapEntry, Converter={StaticResource TrueToVisibleConverter}}"
-                                  IsHitTestVisible="False">
-                            <controls:MapViewerControl 
-                                x:Name="E_MapViewerControl_DealersPosition"
-                                DataContext="{Binding MapEntry.Map}"
+                        <ScrollViewer Margin="15"
+                                      Name="E_ScrollViewer_Map"
+                                      Height="200"
+                                      HorizontalScrollBarVisibility="Visible"
+                                      VerticalScrollBarVisibility="Visible"
+                                      HorizontalScrollMode="Enabled"
+                                      VerticalScrollMode="Enabled"
+                                      Visibility="{Binding HasMapEntry, Converter={StaticResource TrueToVisibleConverter}}"
+                                      IsHitTestVisible="False">
+                            <controls:MapViewerControl x:Name="E_MapViewerControl_DealersPosition"
+                                                       DataContext="{Binding MapEntry.Map}"
                                                        MarkerScale="1.3"
                                                        MarkerFill="Transparent"
-                                                       Tapped="MapTapped"
-                                                       />
-                            
+                                                       Tapped="MapTapped" />
+
                         </ScrollViewer>
+
+                        <StackPanel Visibility="{Binding AttendsOnAllDays, Converter={StaticResource FalseToVisibleConverter}}">
+                            <Grid>
+                                <TextBlock FontFamily="{StaticResource IconFontFamily}"
+                                           Text="&#xE7BA;"
+                                           Foreground="{StaticResource EurofurenceThemeColorBrush}"
+                                           FontSize="{StaticResource TextStyleExtraLargeFontSize}"
+                                           HorizontalAlignment="Left"
+                                           TextAlignment="Center"
+                                           Margin="0 10 0 0"
+                                           Width="40"/>
+                                <StackPanel Margin="35 0 0 0">
+                            <TextBlock Margin="15"
+                                   FontSize="{StaticResource TextStyleMediumFontSize}"
+                                   Text="This dealer is only present in the Dealers Den on the following days of the convention:"
+                                   TextWrapping="WrapWholeWords" />
+
+                            <TextBlock  FontSize="{StaticResource TextStyleMediumFontSize}"
+                                        FontWeight="Bold"
+                                        Visibility="{Binding Entity.AttendsOnThursday, Converter={StaticResource TrueToVisibleConverter}}"
+                                        Margin="15 0 15 5"
+                                        Text="Thursday" />
+                            <TextBlock  FontSize="{StaticResource TextStyleMediumFontSize}"
+                                        FontWeight="Bold"
+                                        Visibility="{Binding Entity.AttendsOnFriday, Converter={StaticResource TrueToVisibleConverter}}"
+                                        Margin="15 0 15 5"
+                                        Text="Friday" />
+                            <TextBlock  FontSize="{StaticResource TextStyleMediumFontSize}"
+                                        FontWeight="Bold"
+                                        Visibility="{Binding Entity.AttendsOnSaturday, Converter={StaticResource TrueToVisibleConverter}}"
+                                        Margin="15 0 15 5"
+                                        Text="Saturday" />
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                        
+                        <StackPanel Visibility="{Binding IsAfterDark, Converter={StaticResource TrueToVisibleConverter}}">
+                            <Grid>
+                                <TextBlock FontFamily="{StaticResource IconFontFamily}"
+                                           Text="&#xE708;"
+                                           Foreground="{StaticResource EurofurenceThemeColorBrush}"
+                                           FontSize="{StaticResource TextStyleExtraLargeFontSize}"
+                                           HorizontalAlignment="Left"
+                                           TextAlignment="Center"
+                                           Margin="0 10 0 0"
+                                           Width="40" />
+                                <TextBlock Margin="50 15 15 15"
+                                       FontSize="{StaticResource TextStyleMediumFontSize}"
+                                       Text="This dealer is found in the After Dark Dealers Den."
+                                       TextWrapping="WrapWholeWords" />
+                            </Grid>
+                        </StackPanel>
+
+                   
                     </StackPanel>
 
                     <TextBlock FontSize="{StaticResource TextStyleMediumFontSize}"
