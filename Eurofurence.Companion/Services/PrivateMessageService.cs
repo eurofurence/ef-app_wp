@@ -40,7 +40,7 @@ namespace Eurofurence.Companion.Services
 
             try
             {
-                var readDateTime = await _apiClient.PostAsync<object, DateTime>($"Communication/PrivateMessages/{message.Id}/Read", null,
+                var readDateTime = await _apiClient.PostAsync<bool, DateTime>($"Communication/PrivateMessages/{message.Id}/Read", true,
                 oAuthToken: _authenticationService.State.Token);
 
                 message.ReadDateTimeUtc = readDateTime;
