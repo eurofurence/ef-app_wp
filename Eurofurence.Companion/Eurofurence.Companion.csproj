@@ -384,7 +384,7 @@
     <Content Include="Assets\SquareLogo44x44.scale-240.png" />
     <Content Include="Assets\StoreLogo120x120.scale-240.png" />
     <Content Include="Assets\SplashScreen.scale-240.png" />
-    <Content Include="Assets\WideLogo310x150.scale-240.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-240.jpg" />
     <Content Include="StoreManifest.xml" />
     <Content Include="Translations.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="39573Luchs.Eurofurence" Publisher="CN=AAED0F9A-6B66-4A56-87EA-4BD972161DF2" Version="2.0.0.5" />
+  <Identity Name="39573Luchs.Eurofurence" Publisher="CN=AAED0F9A-6B66-4A56-87EA-4BD972161DF2" Version="2.1.0.0" />
   <mp:PhoneIdentity PhoneProductId="5af61433-27f6-4b03-9719-878acd4babb1" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Eurofurence</DisplayName>
@@ -17,7 +17,7 @@
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Eurofurence.Companion.App">
       <m3:VisualElements DisplayName="Eurofurence" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\SquareLogo44x44.png" Description="Eurofurence.Companion" ForegroundText="light" BackgroundColor="#086155" ToastCapable="true">
-        <m3:DefaultTile Wide310x150Logo="Assets\WideLogo310x150.png" Square71x71Logo="Assets\Square71x71Logo.png">
+        <m3:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.jpg" Square71x71Logo="Assets\Square71x71Logo.png">
         </m3:DefaultTile>
         <m3:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#086155" />
         <m3:InitialRotationPreference>
