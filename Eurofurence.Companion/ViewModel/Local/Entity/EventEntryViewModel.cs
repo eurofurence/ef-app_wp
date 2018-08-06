@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Eurofurence.Companion.Common;
 using Eurofurence.Companion.Common.Abstractions;
 using Eurofurence.Companion.DataModel.Api;
@@ -71,9 +72,21 @@ namespace Eurofurence.Companion.ViewModel.Local.Entity
         {
             get
             {
-                if (Entity.PanelHosts.Contains("Kage"))
-                    return "\uf188 \uf000";
-                 return string.Empty;
+                var icons = new List<string>();
+
+                if (Entity.Tags != null)
+                {
+                    if (Entity.Tags.Contains("kage")) icons.Add("\uf188\uf000");
+                    if (Entity.Tags.Contains("main_stage")) icons.Add("\uf069");
+                    if (Entity.Tags.Contains("sponsors_only")) icons.Add("\uf123");
+                    if (Entity.Tags.Contains("supersponsors_only")) icons.Add("\uf005");
+
+                    if (Entity.Tags.Contains("art_show")) icons.Add("\uf03e");
+                    if (Entity.Tags.Contains("dealers_den")) icons.Add("\uf07a");
+                    if (Entity.Tags.Contains("photoshoot")) icons.Add("\uf030");
+                }
+
+                return string.Join(" ", icons);
             }
         }
     }
