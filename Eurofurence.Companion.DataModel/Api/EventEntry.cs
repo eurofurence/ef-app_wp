@@ -24,6 +24,7 @@ namespace Eurofurence.Companion.DataModel.Api
         public Guid ConferenceRoomId { get; set; }
         public string PanelHosts { get; set; }
         public bool IsDeviatingFromConBook { get; set; }
+        public string[] Tags { get; set; }
 
         public DateTime StartDateTimeUtc { get; set; }
         public DateTime EndDateTimeUtc { get; set; }
