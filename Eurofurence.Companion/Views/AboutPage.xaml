@@ -120,6 +120,9 @@
                                    Text="Cairyn"
                                    Margin="0 0 0 0" />
                         <TextBlock Style="{StaticResource TextBlockStyleName}"
+                                   Text="Carenath Stormwind"
+                                   Margin="0 0 0 0" />
+                        <TextBlock Style="{StaticResource TextBlockStyleName}"
                                    Text="Jul"
                                    Margin="0 0 0 0" />
                         <TextBlock Style="{StaticResource TextBlockStyleName}"
