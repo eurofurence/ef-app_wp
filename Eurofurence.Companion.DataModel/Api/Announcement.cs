@@ -13,8 +13,12 @@ namespace Eurofurence.Companion.DataModel.Api
         public string Author{ get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
+        public Guid? ImageId { get; set; }
 
         [JsonIgnore]
         public object SortOrderKey => ValidFromDateTimeUtc;
+
+        [JsonIgnore]
+        public bool HasImage => ImageId.HasValue;
     }
 }

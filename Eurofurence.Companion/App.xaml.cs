@@ -294,9 +294,9 @@ namespace Eurofurence.Companion
                 switch (applicationSettingsContext.LastPackageVersionRunning)
                 {
                     // Accepted previous versions that won't require a reset
-                    case "2.2.0.0":
+                    /*case "2.2.0.0":
                     case "2.2.0.1":
-                        break;
+                        break;*/
                     default:
                         var contextManager = KernelResolver.Current.Get<ContextManager>();
                         await contextManager.ClearAll();

@@ -56,6 +56,15 @@
                                    TextTrimming="CharacterEllipsis"
                                    TextWrapping="WrapWholeWords" />
                 </StackPanel>
+
+                <StackPanel Visibility="{Binding HasImage,
+                                               Converter={StaticResource TrueToVisibleConverter}}">
+                    <Image VerticalAlignment="Center"
+                           behaviors:AsyncImageLoaderProperties.ImageId="{Binding ImageId}"
+                           Stretch="Uniform" />
+
+                </StackPanel>
+
             </StackPanel>
         </ScrollViewer>
 
