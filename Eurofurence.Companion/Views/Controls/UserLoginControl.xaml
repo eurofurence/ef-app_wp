@@ -58,7 +58,7 @@
                                FontSize="{StaticResource TextStyleMediumFontSize}"
                                Margin="0 0 0 20">
                                 Please log in with your credentials for the Eurofurence Registration System.
-                                <LineBreak /><LineBreak />If you do not have access to them, come to our ConOps or Security office. They can help you with an alternative login. Please bring your badge and a valid legal form of identification.
+                                <LineBreak /><LineBreak />If you do not have access to them, come to our registration desk or security office. They can help you with an alternative login. Please bring your badge and a valid legal form of identification.
                     </TextBlock>
 
                     <Button Command="{Binding LoginCommand}" 
