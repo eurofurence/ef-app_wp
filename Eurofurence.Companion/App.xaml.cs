@@ -295,6 +295,7 @@ namespace Eurofurence.Companion
                 {
                     // Accepted previous versions that won't require a reset
                     case "2.2.0.3":
+                    case "2.2.0.4":
                         break;
                     default:
                         var contextManager = KernelResolver.Current.Get<ContextManager>();

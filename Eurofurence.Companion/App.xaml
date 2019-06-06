@@ -16,14 +16,16 @@
             </ResourceDictionary.MergedDictionaries>-->
 
 
-            <Color x:Key="EurofurenceThemeColor">#71adcf</Color>
+            <Color x:Key="EurofurenceThemeColor">#5a4036</Color>
             <!--<Color x:Key="EurofurenceThemeColor">#006357</Color>-->
 
             <Color x:Key="EurofurenceThemeColorTransparent">#00006357</Color>
-            <Color x:Key="EurofurenceThemeColorLight">#90d3c7</Color>
+            <Color x:Key="EurofurenceThemeColorLight">#936c5d</Color>
             <SolidColorBrush x:Key="EurofurenceThemeColorBrush" Color="{StaticResource EurofurenceThemeColor}" />
+            <SolidColorBrush x:Key="EurofurenceThemeLightColorBrush" Color="{StaticResource EurofurenceThemeColorLight}" />
 
             <SolidColorBrush x:Key="AppPageBackgroundBrush" Color="{StaticResource EurofurenceThemeColor}" />
+
 
             <SolidColorBrush x:Key="AppMidBrushAccent"
                              Opacity="0.8"
@@ -147,7 +149,7 @@
                 <Setter Property="FontFamily" Value="{ThemeResource PhoneFontFamilyNormal}" />
                 <Setter Property="FontSize" Value="14" />
                 <!--<Setter Property="Foreground" Value="{ThemeResource PhoneMidBrush}" />-->
-                <Setter Property="Foreground" Value="{ThemeResource AppMidBrushAccent}" />
+                <Setter Property="Foreground" Value="{ThemeResource EurofurenceThemeLightColorBrush}" />
                 <Setter Property="FontWeight" Value="SemiBold" />
                 <Setter Property="TextTrimming" Value="Clip" />
                 <Setter Property="TextWrapping" Value="WrapWholeWords" />

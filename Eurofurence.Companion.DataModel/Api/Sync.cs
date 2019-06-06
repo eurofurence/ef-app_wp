@@ -9,6 +9,7 @@ namespace Eurofurence.Companion.DataModel.Api
     public class AggregatedDeltaResponse
     {
         public DateTime? Since { get; set; }
+        public string ConventionIdentifier { get; set; }
         public DateTime CurrentDateTimeUtc { get; set; }
 
         public DeltaResponse<EventEntry> Events { get; set; }

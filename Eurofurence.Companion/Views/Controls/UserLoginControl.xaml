@@ -1,69 +1,68 @@
-﻿<UserControl
-    x:Class="Eurofurence.Companion.Views.Controls.UserLoginControl"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Eurofurence.Companion.Views.Controls"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    d:DesignHeight="450"
-    d:DesignWidth="400"
-    d:DataContext="{Binding Source={StaticResource ViewModelLocator},
-                            Path=AuthenticationViewModel}"    
-    >
-    
+﻿<UserControl x:Class="Eurofurence.Companion.Views.Controls.UserLoginControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="using:Eurofurence.Companion.Views.Controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DataContext="{Binding Source={StaticResource ViewModelLocator},
+                                     Path=AuthenticationViewModel}"
+             d:DesignHeight="450"
+             d:DesignWidth="400"
+             mc:Ignorable="d">
+
     <Grid>
         <StackPanel>
-            <Border BorderBrush="Red" 
-                            BorderThickness="3"
-                            Background="#60ff0000"
-                            Visibility="{Binding HasErrorMessage, Converter={StaticResource TrueToVisibleConverter}}"
-                            Padding="10">
-                <TextBlock Text="{Binding ErrorMessage}" 
-                                   TextWrapping="WrapWholeWords"
-                                   Style="{StaticResource BodyTextBlockStyle}"
-                                   FontSize="{StaticResource TextStyleMediumFontSize}"
-                                   FontWeight="SemiBold" />
+            <Border Background="#60ff0000"
+                    BorderBrush="Red"
+                    BorderThickness="3"
+                    Padding="10"
+                    Visibility="{Binding HasErrorMessage,
+                                         Converter={StaticResource TrueToVisibleConverter}}">
+                <TextBlock FontSize="{StaticResource TextStyleMediumFontSize}"
+                           FontWeight="SemiBold"
+                           Style="{StaticResource BodyTextBlockStyle}"
+                           Text="{Binding ErrorMessage}"
+                           TextWrapping="WrapWholeWords" />
             </Border>
 
             <StackPanel Visibility="{Binding IsAuthenticated, Converter={StaticResource FalseToVisibleConverter}}">
                 <StackPanel Visibility="{Binding IsBusy, Converter={StaticResource TrueToVisibleConverter}}">
-                    <TextBlock Style="{StaticResource BaseTextBlockStyle}"
-                                       FontSize="{StaticResource TextStyleMediumFontSize}">
-                                Authenticating...
+                    <TextBlock FontSize="{StaticResource TextStyleMediumFontSize}" Style="{StaticResource BaseTextBlockStyle}">
+                        Authenticating...
                     </TextBlock>
-                    <ProgressBar IsIndeterminate="True" Height="15" />
+                    <ProgressBar Height="15" IsIndeterminate="True" />
                 </StackPanel>
                 <StackPanel Visibility="{Binding IsBusy, Converter={StaticResource FalseToVisibleConverter}}">
 
-                    
+
 
                     <TextBlock Style="{StaticResource ControlHeaderTextBlockStyle}">Registration Number</TextBlock>
-                    <TextBox InputScope="Number" Text="{Binding RequestRegNo, Mode=TwoWay}" 
-                                     HorizontalAlignment="Left" MaxLength="4" Width="100"
-                                     />
+                    <TextBox Width="100"
+                             HorizontalAlignment="Left"
+                             InputScope="Number"
+                             MaxLength="4"
+                             Text="{Binding RequestRegNo,
+                                            Mode=TwoWay}" />
                     <TextBlock Style="{StaticResource ControlHeaderTextBlockStyle}">Username</TextBlock>
                     <TextBox Name="E_TextBox_Nickname"
                              InputScope="AlphanumericFullWidth"
-                             Text="{Binding RequestUsername, Mode=TwoWay}" 
                              KeyUp="E_TextBox_Nickname_KeyUp"
-                             />
+                             Text="{Binding RequestUsername,
+                                            Mode=TwoWay}" />
 
                     <TextBlock Style="{StaticResource ControlHeaderTextBlockStyle}">Password / PIN</TextBlock>
                     <PasswordBox Name="E_PasswordBox"
-                                 Password="{Binding RequestPassword, Mode=TwoWay}"
-                                 KeyUp="E_PasswordBox_KeyUp" />
+                                 KeyUp="E_PasswordBox_KeyUp"
+                                 Password="{Binding RequestPassword,
+                                                    Mode=TwoWay}" />
 
-                    <TextBlock TextWrapping="WrapWholeWords"
+                    <TextBlock Margin="0 0 0 20"
                                FontSize="{StaticResource TextStyleMediumFontSize}"
-                               Margin="0 0 0 20">
-                                Please log in with your credentials for the Eurofurence Registration System.
-                                <LineBreak /><LineBreak />If you do not have access to them, come to our registration desk or security office. They can help you with an alternative login. Please bring your badge and a valid legal form of identification.
-                    </TextBlock>
+                               TextWrapping="WrapWholeWords">
+                        Please log in with your credentials for the Eurofurence Registration System.<LineBreak /><LineBreak />
+                        If you do not have access to them, come to our registration desk or security office. They can help you with an alternative login. Please bring your badge and a valid legal form of identification.</TextBlock>
 
-                    <Button Command="{Binding LoginCommand}" 
-                                    Name="E_Button_Login"
-                                    >Login</Button>
+                    <Button Name="E_Button_Login" Command="{Binding LoginCommand}">Login</Button>
 
                 </StackPanel>
             </StackPanel>

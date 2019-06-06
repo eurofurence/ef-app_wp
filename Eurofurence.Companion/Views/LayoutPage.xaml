@@ -171,7 +171,7 @@
 
                 <Border Grid.Column="0"
                         Width="60"
-                        Height="60"
+                        Height="55"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top">
                     <TextBlock Name="_mi_tbIcon"
@@ -276,19 +276,19 @@
                     </interactivity:BehaviorCollection>
                 </interactivity:Interaction.Behaviors>
 
-                <!--<TextBlock HorizontalAlignment="Center"
+                <TextBlock HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            FontFamily="{StaticResource IconFontFamily}"
                            FontSize="25"
                            FontWeight="ExtraBlack"
-                           Text="&#xE700;" />-->
+                           Text="&#xE700;" />
 
-                <TextBlock HorizontalAlignment="Center"
+                <!--<TextBlock HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            FontFamily="{StaticResource AviationFontFamily}"
                            FontSize="25"
                            FontWeight="ExtraBlack"
-                           Text="&#xf104;" />
+                           Text="&#xf104;" />-->
             </Border>
 
             <TextBlock x:Name="tbIcon"
@@ -444,8 +444,10 @@
                     <TranslateTransform X="0" Y="0" />
                 </Canvas.RenderTransform>
                 <Canvas.Resources />
-                --><!--  Unknown tag: sodipodi:namedview  -->
-                <!--  Unknown tag: metadata  --><!--
+        -->
+        <!--  Unknown tag: sodipodi:namedview  -->
+        <!--  Unknown tag: metadata  -->
+        <!--
                 <Canvas Name="layer1">
                     <Canvas.RenderTransform>
                         <TranslateTransform X="-24.530046" Y="-51.762021" />
@@ -694,7 +696,7 @@
 
                                             <Border Grid.Column="0"
                                                     Width="60"
-                                                    Height="60"
+                                                    Height="55"
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Top">
                                                 <Grid>
@@ -763,7 +765,7 @@
 
                                             <Border Grid.Column="0"
                                                     Width="60"
-                                                    Height="60"
+                                                    Height="55"
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Top">
                                                 <Grid>
@@ -814,7 +816,7 @@
 
                                             <Border Grid.Column="0"
                                                     Width="60"
-                                                    Height="60"
+                                                    Height="55"
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Top">
                                                 <Grid>

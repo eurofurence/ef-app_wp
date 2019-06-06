@@ -46,12 +46,10 @@
             <TextBlock FontSize="{StaticResource TextStyleSmallFontSize}"
                        Style="{StaticResource BaseTextBlockStyle}"
                        TextWrapping="Wrap">
-                During the convention days, this place will show you upcoming and running events and their locations.
-                <LineBreak />
+                During the convention days, this place will show you upcoming and running events and their locations.<LineBreak />
                 <LineBreak />
                 You can already browse through the preliminary convention information, event schedule &amp; dealers listings
-                via the application menu on the top left.
-            </TextBlock>
+                via the application menu on the top left.</TextBlock>
 
         </StackPanel>
 

@@ -10,6 +10,7 @@ using Eurofurence.Companion.Common;
 using Eurofurence.Companion.Common.Abstractions;
 using Eurofurence.Companion.DependencyResolution;
 using Eurofurence.Companion.DataModel;
+using Eurofurence.Companion.Services;
 
 namespace Eurofurence.Companion.ViewModel.Local
 {
@@ -18,18 +19,22 @@ namespace Eurofurence.Companion.ViewModel.Local
     {
         private readonly INavigationMediator _navigationMediator;
         private bool _isMenuVisible = false;
+        private readonly AuthenticationService _authenticationService;
+
         public bool IsMenuVisible {  get { return _isMenuVisible; } set { SetProperty(ref _isMenuVisible, value); } }
 
         public RelayCommand ToggleMenuCommand => new RelayCommand(p => IsMenuVisible = !IsMenuVisible);
         public RelayCommand OpenMenuCommand => new RelayCommand(p => IsMenuVisible = true);
         public RelayCommand CloseMenuCommand => new RelayCommand(p => IsMenuVisible = false);
 
-        public MenuViewModel(INavigationMediator navigationMediator)
+        public MenuViewModel(INavigationMediator navigationMediator, AuthenticationService authenticationService)
         {
             InitializeDispatcherFromCurrentThread();
 
             _navigationMediator = navigationMediator;
             _navigationMediator.OnPageLoaded += (s, e) => UpdateActiveMenuItem(e);
+
+            _authenticationService = authenticationService;
 
             BuildMainMenu();
         }
@@ -99,14 +104,19 @@ namespace Eurofurence.Companion.ViewModel.Local
                     Title = Translations.FursuitCollectingGame_Title,
                     Icon = "\uE722 ",
                     Description = "Participate in the Fursuit catching game!",
-                    NavigationCommand = new RelayCommand(p => {
-                        _navigationMediator.NavigateAsync(typeof(Views.CollectionGamePlayerView), forceNewStack: true);
+                    NavigationCommand = new RelayCommand(async p => {
+                        await Launcher.LaunchUriAsync(new Uri($"https://app.eurofurence.org/{Consts.CONVENTION_IDENTIFIER}/companion/#/login?returnPath=/collect&token={(_authenticationService.State.IsAuthenticated ? _authenticationService.State.Token : "empty")}"));
                     }),
-                    ChildTypes = new List<Type>() {
-                        typeof(Views.CollectionGamePlayerView),
-                        typeof(Views.CollectionGameManageFursuitsView),
-                        typeof(Views.CollectionGameScoreboardView),
-                    }
+                    ChildTypes = new List<Type>() {}
+                },
+                new MenuItemViewModel{
+                    Title = "Additional Services",
+                    Icon = "\uE1D3",
+                    Description = "(Requires internet connectivity)",
+                    NavigationCommand = new RelayCommand(async p => {
+                        await Launcher.LaunchUriAsync(new Uri($"https://app.eurofurence.org/{Consts.CONVENTION_IDENTIFIER}/companion/#/login?returnPath=/&token={(_authenticationService.State.IsAuthenticated ? _authenticationService.State.Token : "empty")}"));
+                    }),
+                    ChildTypes = new List<Type>() {}
                 },
                 new object(),
                 new MenuItemViewModel{

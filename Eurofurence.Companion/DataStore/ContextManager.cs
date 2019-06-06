@@ -138,6 +138,11 @@ namespace Eurofurence.Companion.DataStore
 
                 var sync = await _apiClient.GetDeltaAsync(LastServerQueryDateTimeUtc);
 
+                if (sync.ConventionIdentifier != Consts.CONVENTION_IDENTIFIER)
+                {
+                    throw new InvalidOperationException($"Expected CID={Consts.CONVENTION_IDENTIFIER}, Server sent CID={sync.ConventionIdentifier}");
+                }
+
                 updateResults.Add(ProcessDelta(sync.Events, DataContextDataAreaEnum.Events));
                 updateResults.Add(ProcessDelta(sync.EventConferenceDays, DataContextDataAreaEnum.Events));
                 updateResults.Add(ProcessDelta(sync.EventConferenceRooms, DataContextDataAreaEnum.Events));
